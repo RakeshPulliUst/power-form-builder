@@ -2,12 +2,18 @@
   "name": "@power-form-builder/root",
   "private": true,
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "applications/*"
   ],
   "devDependencies": {
     "lerna": "^6.0.1"
   },
   "dependencies": {
-    "@types/node": "^18.11.9"
+    "@types/node": "^18.11.9",
+    "cra-template-typescript": "^1.2.0"
+  },
+  "scripts": {
+    "start": "lerna run start --scope={ui-form-builder}",
+    "test": "lerna run test --scope={ui-form-builder}"
   }
 }
