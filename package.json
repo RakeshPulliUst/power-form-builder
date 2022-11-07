@@ -13,7 +13,7 @@
     "cra-template-typescript": "^1.2.0"
   },
   "scripts": {
-    "start": "lerna run start --scope={ui-form-builder}",
-    "test": "lerna run test --scope={ui-form-builder}"
+    "start": "lerna run start",
+    "test": "lerna run test"
   }
 }

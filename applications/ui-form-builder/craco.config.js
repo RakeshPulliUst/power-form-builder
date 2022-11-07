@@ -2,8 +2,8 @@ const path = require("path");
 const { getLoader, loaderByName } = require("@craco/craco");
 
 const packages = [];
-packages.push(path.join(__dirname, "../ui-components"));
-packages.push(path.join(__dirname, "../ui-translation"));
+packages.push(path.join(__dirname, "../../packages/ui-components"));
+packages.push(path.join(__dirname, "../../packages/ui-translation"));
 
 module.exports = {
   webpack: {
