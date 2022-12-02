@@ -8,6 +8,7 @@ import MuiTextArea from "./components/MuiTextArea";
 import MuiCheckBox from "./components/MuiCheckBox";
 import MuiSelect from "./components/MuiSelect";
 import MuiGrid from "./components/MuiGrid";
+import MuiGridItem from "./components/MuiGridItem";
 
 export {
   Button,
@@ -19,5 +20,6 @@ export {
   MuiTextArea,
   MuiCheckBox,
   MuiSelect,
-  MuiGrid
+  MuiGrid,
+  MuiGridItem,
 };

@@ -11,7 +11,7 @@ type Props = {
     | "info"
     | "warning";
   size: "small" | "medium" | "large" | undefined;
-  onClick: React.MouseEventHandler<HTMLButtonElement>;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
 };
 
 const MuiButton = (props: Props) => {

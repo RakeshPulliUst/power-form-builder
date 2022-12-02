@@ -12,8 +12,10 @@ import React from "react";
 type Props = {
   label: string;
   required: boolean;
-  radioInputs: {
-    name: string;
+  options: "end" | "start" | "top" | "bottom";
+  radioItems: {
+    radioButtonDataLabel: string;
+    radioButtonDataValue: string;
   }[];
 };
 
@@ -34,12 +36,12 @@ function MuiRadioButton(props: Props) {
         value={value}
         onChange={handleChange}
       >
-        {props.radioInputs.map((item, index) => (
+        {props.radioItems.map((item, index) => (
           <FormControlLabel
-            labelPlacement="start"
-            value={item.name}
+            labelPlacement={props.options}
+            value={item.radioButtonDataValue}
             control={<Radio size="small" color="secondary" />}
-            label={item.name}
+            label={item.radioButtonDataLabel}
           />
         ))}
       </RadioGroup>

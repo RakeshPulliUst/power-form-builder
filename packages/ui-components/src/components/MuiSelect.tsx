@@ -7,20 +7,16 @@ type Props = {
   size: "small" | "medium";
   required: boolean;
   menuItems: {
-    label: string;
-    value: string;
+    selectDataLabel: string;
+    selectDataValue: string;
   }[];
+  placeholder: string;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  values: string[] | string;
+  defaultValue?: string | number | boolean;
 };
 
 const MuiSelect = (props: Props) => {
-  const [values, setValues] = useState<string[]>([]);
-  console.log(values);
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    setValues(typeof value === "string" ? value.split(",") : value);
-  };
-
   return (
     <TextField
       label={props.label}
@@ -30,13 +26,15 @@ const MuiSelect = (props: Props) => {
       }}
       size={props.size}
       color="secondary"
-      value={values}
-      onChange={handleChange}
+      value={props.values}
+      onChange={props.onChange}
       required={props.required}
+      placeholder={props.placeholder}
       fullWidth
+      defaultValue={props.defaultValue}
     >
       {props.menuItems.map((item, index) => (
-        <MenuItem value={item.value}>{item.label}</MenuItem>
+        <MenuItem value={item.selectDataValue}>{item.selectDataLabel}</MenuItem>
       ))}
     </TextField>
   );

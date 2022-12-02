@@ -4,7 +4,7 @@ import {
   MuiRadioButton,
   MuiTextArea,
   MuiCheckBox,
-  MuiSelect
+  MuiSelect,
 } from "@power-form-builder/ui-components";
 import { MuiCard } from "@power-form-builder/ui-components";
 import { MuiStack } from "@power-form-builder/ui-components";
@@ -14,15 +14,15 @@ import { useRef } from "react";
 function UIComponents() {
   const inputRef = useRef<HTMLInputElement>(null);
   const radioInputs = [
-    { name: "radio_1"},
-    { name: "radio_2"},
-    { name: "radio_3"},
-    { name: "radio_4"}
+    { name: "radio_1" },
+    { name: "radio_2" },
+    { name: "radio_3" },
+    { name: "radio_4" },
   ];
 
   const menuItems = [
-    { label: "Select1",  value:  "select_1"},
-    { label: "Select2", value: "select_2"}
+    { selectDataLabel: "Select1", selectDataValue: "select_1" },
+    { selectDataLabel: "Select2", selectDataValue: "select_2" },
   ];
 
   return (
@@ -30,12 +30,24 @@ function UIComponents() {
       <MuiStack width="200px" direction="row" spacing={2} padding={5}>
         <MuiCard minWidth={275}>
           {/* <MuiButton label="Click Me" color="success" size="medium" /> */}
-          <MuiTextField label="FirstName" required={true} />
+          {/* <MuiTextField label="FirstName" required={true} />
           <MuiTextArea placeholder="Enter Text" required={true} width={180} />
-          <MuiTextField label="Password" required={true} type={"password"} />
-          <MuiCheckBox label="Checkbox" required={true} />
-          <MuiRadioButton label="RadioButton" radioInputs={radioInputs} required={true} />
-          <MuiSelect label="Select" menuItems={menuItems} multiple={false} size="medium" required={true} />
+          <MuiTextField label="Password" required={true} type={"password"} /> */}
+          {/* <MuiCheckBox label="Checkbox" required={true} /> */}
+          {/* <MuiRadioButton
+            label="RadioButton"
+            radioInputs={radioInputs}
+            required={true}
+          /> */}
+          {/* <MuiSelect
+            label="Select"
+            placeholder="Enter "
+            values=
+            menuItems={menuItems}
+            multiple={false}
+            size="medium"
+            required={true}
+          /> */}
         </MuiCard>
 
         <MuiCard minWidth={275}>

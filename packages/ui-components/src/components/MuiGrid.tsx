@@ -1,17 +1,14 @@
-import { Grid } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import React from "react";
 
 type Props = {
-    xs: number,
-    children: React.ReactNode
+  children: React.ReactNode;
 };
 
 const MuiGrid = (props: Props) => {
   return (
-    <Grid container spacing={2}>
-      <Grid item xs={props.xs}>
-        {props.children}
-      </Grid>
+    <Grid container spacing={10} columns={16}>
+      {props.children}
     </Grid>
   );
 };

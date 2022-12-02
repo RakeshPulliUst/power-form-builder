@@ -44,5 +44,10 @@ export interface Element {
       id: 7,
       element: "RadioButton",
       required: false,
+    },
+    {
+      id: 8,
+      element: "Column",
+      required: false,
     }
   ];
