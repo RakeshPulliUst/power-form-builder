@@ -2,21 +2,8 @@ import React from "react";
 import { Element } from "./ElementInterface";
 import SingleElement from "./SingleElement";
 import { Droppable } from "react-beautiful-dnd";
-import {
-  MuiButton,
-  MuiGrid,
-  MuiGridItem,
-  MuiTextField,
-} from "@power-form-builder/ui-components";
+import { MuiGrid, MuiGridItem } from "@power-form-builder/ui-components";
 import FixedComponentList from "./FixedComponentList";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import Box from "@mui/material/Box";
-import Tab from "@mui/material/Tab";
-import { TabContext, TabList, TabPanel } from "@material-ui/lab";
 
 interface props {
   elements: Array<Element>;
@@ -27,7 +14,6 @@ interface props {
 
 const ElementList: React.FC<props> = ({
   elements,
-  setElements,
   CompletedElements,
   setCompletedElements,
 }) => {

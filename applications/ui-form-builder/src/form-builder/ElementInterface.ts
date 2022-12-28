@@ -1,5 +1,3 @@
-import { TextFieldDiaglog, ButtonDialog } from "./DialogInterface";
-
 export interface FormJson{
   title: string,
   components: Element[]
@@ -117,6 +115,15 @@ export interface Element {
     },
     {
       id: 8,
+      element: "Email",
+      label : '',
+      placeholder: '',
+      required: false,
+      minLength: '',
+      maxLength: ''
+    },
+    {
+      id: 9,
       element: "Column",
     }
   ];

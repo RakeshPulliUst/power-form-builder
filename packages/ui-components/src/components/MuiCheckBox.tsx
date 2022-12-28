@@ -9,7 +9,7 @@ type Props = {
     checked: boolean
   ) => void;
   checked: boolean;
-  defaultChecked: boolean;
+  defaultChecked?: boolean;
   name?: string;
   value?: string;
 };

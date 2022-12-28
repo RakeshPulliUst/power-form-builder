@@ -7,127 +7,11 @@ import {
   MuiCheckBox,
   MuiButton,
 } from "@power-form-builder/ui-components";
-import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
-import { sample } from "../form-builder/ElementInterface";
+import MuiGrid from "@material-ui/core/Grid";
+import { MuiGridItem } from "@power-form-builder/ui-components";
 import { FormJson } from "../form-builder/ElementInterface";
 import { useLocation } from "react-router-dom";
 
-// const data = {
-//   title: "",
-//   components: [
-//     {
-//       name: "firstname",
-//       label: "FirstName",
-//       maxLength: "11",
-//       minLength: "1",
-//       placeholder: "Enter FirstName",
-//       html_element: "TextField",
-//       data_type: "String",
-//       required: true,
-//     },
-//     {
-//       name: "email",
-//       label: "Email",
-//       maxLength: "40",
-//       minLength: "10",
-//       placeholder: "Enter Email",
-//       html_element: "Email",
-//       data_type: "email",
-//       required: true,
-//     },
-//     {
-//       name: "password",
-//       label: "Password",
-//       maxLength: "12",
-//       minLength: "6",
-//       placeholder: "Enter Password",
-//       html_element: "Password",
-//       data_type: "password",
-//       required: true,
-//     },
-//     {
-//       name: "address",
-//       label: "Address",
-//       minRows: "3",
-//       placeholder: "Enter Address",
-//       html_element: "TextArea",
-//       width: "100",
-//       required: true,
-//     },
-//     {
-//       name: "country",
-//       label: "Country",
-//       required: true,
-//       placeholder: "Choose Country",
-//       textFieldWidth: 220,
-//       multipleValues: false,
-//       size: ["medium"],
-//       menuItems: [
-//         {
-//           selectDataLabel: "India",
-//           selectDataValue: "india",
-//         },
-//         {
-//           selectDataLabel: "Canada",
-//           selectDataValue: "canada",
-//         },
-//         {
-//           selectDataLabel: "England",
-//           selectDataValue: "england",
-//         },
-//       ],
-//       html_element: "Select",
-//     },
-//     {
-//       name: "gender",
-//       label: "Choose Gender",
-//       required: true,
-//       options: ["start"],
-//       html_element: "RadioButton",
-//       radioItems: [
-//         {
-//           radioButtonDataLabel: "Male",
-//           radioButtonDataValue: "Male",
-//         },
-//         {
-//           radioButtonDataLabel: "Female",
-//           radioButtonDataValue: "Female",
-//         },
-//       ],
-//     },
-//     {
-//       name: "checkbox1",
-//       label: "AcceptTerms",
-//       value: "accept",
-//       required: false,
-//       default: false,
-//       error: "Invalid",
-//       html_element: "CheckBox",
-//     },
-//     {
-//       name: "checkbox2",
-//       label: "RejectTerms",
-//       value: "reject",
-//       required: false,
-//       default: false,
-//       error: "Invalid",
-//       html_element: "CheckBox",
-//     },
-//     {
-//       name: "button",
-//       label: "hello",
-//       theme: ["secondary"],
-//       size: ["medium"],
-//       html_element: "Button",
-//     },
-//   ],
-// };
-
-// const MaterialForm: React.FC<{
-//   formJsonData: FormJson;
-// }> = ({ formJsonData }) => {
-// const [formData, setFormData] = useState<FormJson>(sample);
 function MaterialForm() {
   const location = useLocation();
   const { formData1 } = location.state;
@@ -157,11 +41,12 @@ function MaterialForm() {
       | React.ChangeEvent<HTMLInputElement>
       | React.ChangeEvent<HTMLTextAreaElement>
   ) => {
-    console.log("e.target.value", e.target.value);
     setVal({
       ...val,
       [e.target.name]: e.target.value,
     });
+    console.log("e.target.value", e.target.value);
+
     if (
       val.firstname !== "" &&
       val.email !== "" &&
@@ -179,6 +64,7 @@ function MaterialForm() {
         setEmailHelperText("");
       } else {
         setEmailHelperText("Not Valid Email");
+        setError(true);
       }
     }
   };
@@ -193,9 +79,10 @@ function MaterialForm() {
   const submitForm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("select", val, "checkbox", checkbox);
+    var regex1 = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     if (
       val.firstname !== "" ||
-      val.email !== "" ||
+      (val.email !== "" && regex1.test(val.email)) ||
       val.password !== "" ||
       val.country !== "" ||
       val.address !== "" ||
@@ -226,8 +113,8 @@ function MaterialForm() {
       {formJsonData.title !== "" ? (
         <form onSubmit={submitForm}>
           <>
-            {console.log("values.....", val, error, checkbox)}
-            {show ? (
+            {console.log("values.....", val, "Error", error)}
+            {show && !error ? (
               <ul style={{ listStyle: "none" }}>
                 <li>Name:{val.firstname}</li>
                 <li>Email:{val.email}</li>
@@ -242,27 +129,24 @@ function MaterialForm() {
             )}
           </>
           {
-            <Grid item xs={12} sm={12}>
-              {" "}
+            <MuiGridItem xs={12} sm={12}>
               <h2>{formJsonData.title}</h2>
-            </Grid>
+            </MuiGridItem>
           }
           {formJsonData.components.map((data) => {
             console.log("data", data);
             return (
-              <Grid
+              <MuiGrid
                 container
                 spacing={2}
                 alignItems="center"
                 justifyContent="center"
               >
-                <Grid item xs={12} sm={6}>
+                <MuiGridItem xs={12} sm={6}>
                   {data.element === "TextField" ? (
                     <MuiTextField
                       label={data.label!}
                       name={data.label?.toLocaleLowerCase()}
-                      // type={data.data_type === "Integer" ? "number" : "String"}
-                      //
                       value={val.firstname}
                       onChange={onHandleChange}
                       placeholder={data.placeholder}
@@ -275,12 +159,14 @@ function MaterialForm() {
                       label={data.label!}
                       name={data.label?.toLocaleLowerCase()}
                       value={val.email}
+                      type="email"
                       onChange={onHandleChange}
                       placeholder={data.placeholder}
                       required={data.required!}
                       minLength={parseInt(data.minLength!)}
                       maxLength={parseInt(data.maxLength!)}
                       helperText={emailHelperText}
+                      error={error}
                     />
                   ) : data.element === "Password" ? (
                     <MuiTextField
@@ -387,14 +273,10 @@ function MaterialForm() {
                   ) : (
                     ""
                   )}
-                </Grid>
-              </Grid>
+                </MuiGridItem>
+              </MuiGrid>
             );
           })}
-
-          {/* <Button type="submit" variant="contained" color="primary">
-        Submit
-      </Button> */}
         </form>
       ) : (
         <></>

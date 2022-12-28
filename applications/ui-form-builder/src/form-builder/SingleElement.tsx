@@ -3,8 +3,6 @@ import { useRef } from "react";
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 import { Element } from "./ElementInterface";
 import { Draggable } from "react-beautiful-dnd";
-import { BsAsterisk } from "react-icons/bs";
-import { TbSquareAsterisk } from "react-icons/tb";
 import { FaEdit } from "react-icons/fa";
 
 import "./styles.css";
@@ -106,22 +104,11 @@ const SingleElement: React.FC<{
   };
 
   const [edit, setEdit] = useState<boolean>(false);
-  const [editElement, setEditElement] = useState<string>(element.element);
 
   const inputRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
     inputRef.current?.focus();
   });
-
-  const handleEdit = (e: React.FormEvent, id: number) => {
-    e.preventDefault();
-    setElements(
-      elements.map((element) =>
-        element.id === id ? { ...element, element: editElement } : element
-      )
-    );
-    setEdit(false);
-  };
 
   const handleDelete = (id: number) => {
     setElements(elements.filter((element) => element.id !== id));
@@ -153,6 +140,14 @@ const SingleElement: React.FC<{
       element.minLength = textFieldValues.minLength;
       element.required = textFieldValues.required;
     } else if (element.element === "Password") {
+      console.log(textFieldValues.label);
+      console.log("JSON", JSON.stringify(textFieldValues));
+      element.label = textFieldValues.label;
+      element.placeholder = textFieldValues.placeholder;
+      element.maxLength = textFieldValues.maxLength;
+      element.minLength = textFieldValues.minLength;
+      element.required = textFieldValues.required;
+    } else if (element.element === "Email") {
       console.log(textFieldValues.label);
       console.log("JSON", JSON.stringify(textFieldValues));
       element.label = textFieldValues.label;
@@ -218,11 +213,6 @@ const SingleElement: React.FC<{
       console.log("JSON", JSON.stringify(radiobuttonValues));
     }
     setEdit(!edit);
-
-    // console.log(selectValues.menuItems);
-    //console.log(menuItemsData);
-    //menuItemsData.push({ id: "4", selectDataLabel: "2", selectDataValue: "2" });
-    // console.log(menuItemsData);
   };
 
   // Final TextField
@@ -264,20 +254,7 @@ const SingleElement: React.FC<{
     console.log("Button Clicked");
   };
 
-  //Final Radio Button
-  const [radioButtonData, setRadioButtonData] = useState<string[]>([]);
-
-  const handleRadioButtonData = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const radioButtonDatavalue = event.target.value;
-    setRadioButtonData(
-      typeof radioButtonDatavalue === "string"
-        ? radioButtonDatavalue.split(",")
-        : radioButtonDatavalue
-    );
-  };
-
+  //Final
   const [radioValue, setRadioValue] = useState("");
 
   const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -353,6 +330,27 @@ const SingleElement: React.FC<{
                   minLength={parseInt(textFieldValues.minLength)}
                   maxLength={parseInt(textFieldValues.maxLength)}
                   type="password"
+                ></MuiTextField>
+              </>
+            ) : element.element === "Email" ? (
+              <>
+                <TextFieldData
+                  open={open}
+                  handleClose={handleClose}
+                  textFieldValues={textFieldValues}
+                  handleOpen={handleOpen}
+                  textFieldStatus={textFieldStatus}
+                />
+
+                <MuiTextField
+                  label={textFieldValues.label}
+                  required={textFieldValues.required}
+                  placeholder={textFieldValues.placeholder}
+                  value={textFieldValue}
+                  onChange={handleTextFieldValue}
+                  minLength={parseInt(textFieldValues.minLength)}
+                  maxLength={parseInt(textFieldValues.maxLength)}
+                  type="email"
                 ></MuiTextField>
               </>
             ) : element.element === "CheckBox" ? (
@@ -488,7 +486,7 @@ const SingleElement: React.FC<{
             ) : (
               <></>
             )}
-{textFieldStatus ? (
+            {textFieldStatus ? (
               <MuiTextField
                 label={textFieldValues.label}
                 required={textFieldValues.required}

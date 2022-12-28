@@ -9,7 +9,6 @@ import Tab from "@mui/material/Tab";
 import { TabContext, TabList, TabPanel } from "@material-ui/lab";
 import {
   MuiButton,
-  MuiCheckBox,
   MuiSelect,
   MuiTextField,
 } from "@power-form-builder/ui-components";

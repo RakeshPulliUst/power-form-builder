@@ -1,7 +1,5 @@
 import React from "react";
-import { useEffect } from "react";
 import { useState } from "react";
-import { NavLink as ReactLink, useNavigate } from "react-router-dom";
 import {
   Navbar,
   NavbarBrand,
@@ -9,12 +7,6 @@ import {
   Collapse,
   Nav,
   NavItem,
-  NavLink,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  NavbarText,
 } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import FormNameInput from "./FormNameInput";

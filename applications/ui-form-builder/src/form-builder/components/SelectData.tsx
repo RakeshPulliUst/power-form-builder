@@ -35,8 +35,6 @@ const SelectData: React.FC<{
     setValue(newValue);
   };
 
-  // const menuItemsData: Props = [{ selectDataLabel: "", selectDataValue: "" }];
-
   //Select
   const [selectLabel, setSelectLabel] = useState("");
   const [selectWidth, setSelectWidth] = useState("");

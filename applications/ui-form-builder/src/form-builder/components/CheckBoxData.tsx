@@ -87,7 +87,6 @@ const CheckBoxData: React.FC<{
                 label="Default Value"
                 required={true}
                 checked={defaultValue}
-                defaultChecked={defaultValue}
                 onChange={handleDefaultValue}
               />
             </DialogContentText>

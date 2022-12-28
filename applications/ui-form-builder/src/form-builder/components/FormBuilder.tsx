@@ -1,24 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import ElementList from "../ElementList";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import { Element, FormJson } from "../ElementInterface";
-import {
-  MuiButton,
-  MuiStack,
-  MuiTextField,
-} from "@power-form-builder/ui-components";
-import MUIComponents from "../MUIComponents";
-import UIComponents from "../UIComponents";
+import { MuiButton, MuiStack } from "@power-form-builder/ui-components";
 import { components, sample } from "../ElementInterface";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import Box from "@mui/material/Box";
-import Tab from "@mui/material/Tab";
-import { TabContext, TabList, TabPanel } from "@material-ui/lab";
-import MaterialForm from "../../form-renderer/material-form";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const FormBuilder = () => {
@@ -72,9 +57,7 @@ const FormBuilder = () => {
     // Source Logic
     if (source.droppableId === "ElementsList") {
       add = active[source.index];
-      // active.splice(source.index, 1);
       console.log("Add-Source", add);
-      // console.log("AA", active.splice(source.index, 1));
       console.log("Source[Active]:", active);
     } else {
       add = complete[source.index];

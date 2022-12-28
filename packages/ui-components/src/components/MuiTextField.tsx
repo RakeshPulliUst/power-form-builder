@@ -14,6 +14,7 @@ type Props = {
   maxLength?: number;
   ref?: (instance: HTMLDivElement | null) => void;
   helperText?: string;
+  error?: boolean;
 };
 
 const MuiTextField = (props: Props) => {
@@ -29,6 +30,7 @@ const MuiTextField = (props: Props) => {
       onChange={props.onChange}
       inputProps={{ maxLength: props.maxLength, minLength: props.minLength }}
       helperText={props.helperText}
+      error={props.error}
     />
 
     /* <TextField
