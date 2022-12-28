@@ -10,6 +10,7 @@ import { TabContext, TabList, TabPanel } from "@material-ui/lab";
 import {
   MuiButton,
   MuiCheckBox,
+  MuiSelect,
   MuiTextField,
 } from "@power-form-builder/ui-components";
 import { SelectDiaglog } from "../DialogInterface";
@@ -26,8 +27,9 @@ type Props = {
 const SelectData: React.FC<{
   open: boolean;
   handleClose: () => void;
+  handleOpen: () => void;
   selectValues: SelectDiaglog;
-}> = ({ open, handleClose, selectValues }) => {
+}> = ({ open, handleClose, selectValues, handleOpen }) => {
   const [value, setValue] = React.useState("1");
   const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
     setValue(newValue);
@@ -37,6 +39,7 @@ const SelectData: React.FC<{
 
   //Select
   const [selectLabel, setSelectLabel] = useState("");
+  const [selectWidth, setSelectWidth] = useState("");
   const [textPlaceholder, setTextPlaceholder] = useState("");
   const [multipleValues, setMultipleValues] = useState(false);
   const [menuItemsData, setMenuItemsData] = useState<Props>([
@@ -46,6 +49,11 @@ const SelectData: React.FC<{
   const handleSelectLabel = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectLabel(event.target.value);
     console.log(selectLabel);
+  };
+
+  const handleSelectWidth = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectWidth(event.target.value);
+    console.log(selectWidth);
   };
 
   const handleTextPlaceholder = (
@@ -64,12 +72,31 @@ const SelectData: React.FC<{
     setRequired(event.target.checked);
   };
 
+  //size
+  const SelectSizeDataValues = [
+    { selectDataLabel: "small", selectDataValue: "small" },
+    { selectDataLabel: "medium", selectDataValue: "medium" },
+    { selectDataLabel: "large", selectDataValue: "large" },
+  ];
+  const [selectSize, setSelectSize] = useState<string[]>([]);
+
+  const handleSelectSize = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const selectvalue = event.target.value;
+    setSelectSize(
+      typeof selectvalue === "string" ? selectvalue.split(",") : selectvalue
+    );
+  };
+
   const handleData = () => {
-    console.log(selectValues);
     selectValues.label = selectLabel;
     selectValues.placeholder = textPlaceholder;
     selectValues.multipleValues = multipleValues;
     selectValues.required = required;
+    selectValues.size = selectSize;
+    selectValues.textFieldWidth = parseInt(selectWidth);
+    selectValues.menuItems = menuItemsData;
+    console.log(selectValues);
+    handleOpen();
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -139,12 +166,36 @@ const SelectData: React.FC<{
                 onChange={handleSelectLabel}
               />
               <br />
+              <br />
               <MuiTextField
                 label="Placeholder"
                 required={true}
                 placeholder={textPlaceholder}
                 value={textPlaceholder}
                 onChange={handleTextPlaceholder}
+              />
+              <br />
+              <br />
+              <MuiTextField
+                label="Width"
+                required={true}
+                placeholder="Enter Width"
+                value={selectWidth}
+                onChange={handleSelectWidth}
+              />
+              <br />
+              <br />
+              <MuiSelect
+                label="Size"
+                placeholder="Type To Search"
+                menuItems={SelectSizeDataValues}
+                multiple={false}
+                values={selectSize}
+                textFieldWidth={225}
+                onChange={handleSelectSize}
+                size="medium"
+                defaultValue={"medium"}
+                required={false}
               />
             </DialogContentText>
           </TabPanel>
@@ -197,6 +248,7 @@ const SelectData: React.FC<{
                     </span>
                   </div>
                 ))}
+                <br />
                 <button>Done</button>
               </form>
             </DialogContentText>

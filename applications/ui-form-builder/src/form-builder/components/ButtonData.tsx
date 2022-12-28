@@ -19,7 +19,8 @@ const ButtonData: React.FC<{
   open: boolean;
   handleClose: () => void;
   buttonValues: ButtonDialog;
-}> = ({ open, handleClose, buttonValues }) => {
+  handleOpen: () => void;
+}> = ({ open, handleClose, buttonValues, handleOpen }) => {
   const [value, setValue] = React.useState("1");
   const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
     setValue(newValue);
@@ -66,10 +67,11 @@ const ButtonData: React.FC<{
   };
 
   const handleData = () => {
-    console.log(buttonValues);
     buttonValues.label = buttonLabel;
     buttonValues.theme = buttonTheme;
     buttonValues.size = buttonSize;
+    console.log(buttonValues);
+    handleOpen();
   };
   return (
     <Dialog
@@ -103,6 +105,7 @@ const ButtonData: React.FC<{
                 multiple={false}
                 values={buttonTheme}
                 onChange={handleButtonTheme}
+                textFieldWidth={225}
                 size="medium"
                 required={false}
                 defaultValue={"primary"}
@@ -115,6 +118,7 @@ const ButtonData: React.FC<{
                 menuItems={ButtonSizeDataValues}
                 multiple={false}
                 values={buttonSize}
+                textFieldWidth={225}
                 onChange={handleButtonSize}
                 size="medium"
                 defaultValue={"medium"}

@@ -13,6 +13,7 @@ type Props = {
   minLength?: number;
   maxLength?: number;
   ref?: (instance: HTMLDivElement | null) => void;
+  helperText?: string;
 };
 
 const MuiTextField = (props: Props) => {
@@ -22,11 +23,12 @@ const MuiTextField = (props: Props) => {
       label={props.label}
       placeholder={props.placeholder}
       required={props.required}
-      variant="standard"
+      variant="outlined"
       type={props.type}
       value={props.value}
       onChange={props.onChange}
       inputProps={{ maxLength: props.maxLength, minLength: props.minLength }}
+      helperText={props.helperText}
     />
 
     /* <TextField

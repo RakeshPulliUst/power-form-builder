@@ -18,7 +18,9 @@ const TextFieldData: React.FC<{
   open: boolean;
   handleClose: () => void;
   textFieldValues: TextFieldDiaglog;
-}> = ({ open, handleClose, textFieldValues }) => {
+  handleOpen: () => void;
+  textFieldStatus: boolean;
+}> = ({ open, handleClose, textFieldValues, handleOpen, textFieldStatus }) => {
   const [value, setValue] = React.useState("1");
   const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
     setValue(newValue);
@@ -56,12 +58,15 @@ const TextFieldData: React.FC<{
   };
 
   const handleData = () => {
-    console.log(textFieldValues);
+    console.log(open);
     textFieldValues.label = textValue;
     textFieldValues.placeholder = textPlaceholder;
     textFieldValues.maxLength = textMaxLength;
     textFieldValues.minLength = textMinLength;
     textFieldValues.required = required;
+    console.log(textFieldValues);
+    textFieldStatus = true;
+    handleOpen();
   };
   return (
     <Dialog
@@ -88,6 +93,7 @@ const TextFieldData: React.FC<{
                 onChange={handleTextChange}
               />
               <br />
+              <br />
               <MuiTextField
                 label="Placeholder"
                 required={true}
@@ -106,6 +112,7 @@ const TextFieldData: React.FC<{
               onChange={handleCheckboxChange}
             />
             <br />
+
             <MuiTextField
               label="Minimum Length"
               required={true}
@@ -113,6 +120,7 @@ const TextFieldData: React.FC<{
               placeholder="Enter Minimum Length"
               onChange={handleTextMinLength}
             />
+            <br />
             <br />
             <MuiTextField
               label="Maximum Length"

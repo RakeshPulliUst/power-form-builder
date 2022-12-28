@@ -14,6 +14,8 @@ type Props = {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   values: string[] | string;
   defaultValue?: string | number | boolean;
+  textFieldWidth?: number;
+  name?: string;
 };
 
 const MuiSelect = (props: Props) => {
@@ -30,8 +32,9 @@ const MuiSelect = (props: Props) => {
       onChange={props.onChange}
       required={props.required}
       placeholder={props.placeholder}
-      fullWidth
       defaultValue={props.defaultValue}
+      name={props.name}
+      style={{ width: props.textFieldWidth }}
     >
       {props.menuItems.map((item, index) => (
         <MenuItem value={item.selectDataValue}>{item.selectDataLabel}</MenuItem>

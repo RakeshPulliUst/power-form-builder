@@ -29,8 +29,9 @@ type Props = {
 const RadioButtonData: React.FC<{
   open: boolean;
   handleClose: () => void;
+  handleOpen: () => void;
   radiobuttonValues: RadioButtonDialog;
-}> = ({ open, handleClose, radiobuttonValues }) => {
+}> = ({ open, handleClose, radiobuttonValues, handleOpen }) => {
   const [value, setValue] = React.useState("1");
   const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
     setValue(newValue);
@@ -81,6 +82,7 @@ const RadioButtonData: React.FC<{
     radiobuttonValues.options = radioOptionLabelPosition;
     radiobuttonValues.required = required;
     radiobuttonValues.radioItems = radioItems;
+    handleOpen();
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -160,6 +162,7 @@ const RadioButtonData: React.FC<{
                 onChange={handleRadioOptionLabelPosition}
                 required={false}
                 multiple={false}
+                textFieldWidth={225}
               />
             </DialogContentText>
           </TabPanel>

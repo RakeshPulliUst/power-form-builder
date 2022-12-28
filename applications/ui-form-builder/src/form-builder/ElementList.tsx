@@ -58,7 +58,7 @@ const ElementList: React.FC<props> = ({
           </Droppable>
         </MuiGridItem>
 
-        <MuiGridItem xs={10} md={11}>
+        <MuiGridItem xs={10} md={12}>
           <Droppable droppableId="FormElements">
             {(provided, snapshot) => (
               <div

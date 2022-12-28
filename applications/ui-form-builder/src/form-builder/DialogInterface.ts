@@ -28,6 +28,8 @@ export interface TextFieldDiaglog {
     placeholder: string;
     multipleValues: boolean
     required: boolean;
+    size: string[],
+    textFieldWidth: number,
     menuItems: {
       id: string
       selectDataLabel: string

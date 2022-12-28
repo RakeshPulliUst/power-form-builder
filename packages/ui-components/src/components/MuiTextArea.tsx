@@ -9,12 +9,14 @@ type Props = {
   minRows: string | number;
   value: string;
   onChange: React.ChangeEventHandler<HTMLTextAreaElement>;
+  name?: string;
 };
 
 const MuiTextArea = (props: Props) => {
   return (
     <>
       <label>{props.label}</label>
+      <br />
       <TextareaAutosize
         aria-label="empty textarea"
         placeholder={props.placeholder}
@@ -23,6 +25,7 @@ const MuiTextArea = (props: Props) => {
         required={props.required}
         value={props.value}
         onChange={props.onChange}
+        name={props.name}
       />
     </>
   );

@@ -21,6 +21,7 @@ const MuiButton = (props: Props) => {
       onClick={props.onClick}
       color={props.color}
       size={props.size}
+      type="submit"
     >
       {props.label}
     </Button>

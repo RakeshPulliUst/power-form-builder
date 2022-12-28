@@ -17,30 +17,36 @@ type Props = {
     radioButtonDataLabel: string;
     radioButtonDataValue: string;
   }[];
+  name?: string;
+  onChange: (
+    event: React.ChangeEvent<HTMLInputElement>,
+    value: string
+  ) => void;
+  value: string;
 };
 
 function MuiRadioButton(props: Props) {
-  const [value, setValue] = useState("");
-  console.log(value);
+  // const [value, setValue] = useState("");
+  // console.log(value);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value);
-  };
+  // const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   setValue(event.target.value);
+  // };
 
   return (
     <FormControl required={props.required}>
       <FormLabel id="radio-button">{props.label}</FormLabel>
       <RadioGroup
         row
-        name="radio-button `{props.label}`"
-        value={value}
-        onChange={handleChange}
+        name={props.name}
+        value={props.value}
+        onChange={props.onChange}
       >
         {props.radioItems.map((item, index) => (
           <FormControlLabel
             labelPlacement={props.options}
             value={item.radioButtonDataValue}
-            control={<Radio size="small" color="secondary" />}
+            control={<Radio name={props.name} size="small" color="secondary" />}
             label={item.radioButtonDataLabel}
           />
         ))}

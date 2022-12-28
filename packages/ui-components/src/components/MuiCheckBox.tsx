@@ -10,6 +10,8 @@ type Props = {
   ) => void;
   checked: boolean;
   defaultChecked: boolean;
+  name?: string;
+  value?: string;
 };
 
 const MuiCheckBox = (props: Props) => {
@@ -17,11 +19,12 @@ const MuiCheckBox = (props: Props) => {
     <FormControlLabel
       control={
         <Checkbox
-          name="checkbox"
+          name={props.name}
           onChange={props.onChange}
           checked={props.checked}
           required={props.required}
           defaultChecked={props.defaultChecked}
+          value={props.value}
         />
       }
       label={props.label}

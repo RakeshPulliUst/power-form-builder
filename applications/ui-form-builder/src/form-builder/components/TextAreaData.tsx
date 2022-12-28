@@ -17,8 +17,9 @@ import { TextAreaDiaglog } from "../DialogInterface";
 const TextAreaData: React.FC<{
   open: boolean;
   handleClose: () => void;
+  handleOpen: () => void;
   textAreaValues: TextAreaDiaglog;
-}> = ({ open, handleClose, textAreaValues }) => {
+}> = ({ open, handleClose, textAreaValues, handleOpen }) => {
   const [value, setValue] = React.useState("1");
   const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
     setValue(newValue);
@@ -62,6 +63,7 @@ const TextAreaData: React.FC<{
     textAreaValues.minRows = textMinRows;
     textAreaValues.width = textWidth;
     textAreaValues.required = required;
+    handleOpen();
   };
   return (
     <Dialog
@@ -88,6 +90,7 @@ const TextAreaData: React.FC<{
                 onChange={handleTextChange}
               />
               <br />
+              <br />
               <MuiTextField
                 label="Placeholder"
                 required={true}
@@ -113,6 +116,7 @@ const TextAreaData: React.FC<{
               placeholder="Enter Minimum Rows"
               onChange={handleTextMinRows}
             />
+            <br />
             <br />
             <MuiTextField
               label="Text Area Width"

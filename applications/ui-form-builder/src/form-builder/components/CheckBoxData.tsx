@@ -17,8 +17,9 @@ import { CheckBoxDiaglog } from "../DialogInterface";
 const CheckBoxData: React.FC<{
   open: boolean;
   handleClose: () => void;
+  handleOpen: () => void;
   checkBoxValues: CheckBoxDiaglog;
-}> = ({ open, handleClose, checkBoxValues }) => {
+}> = ({ open, handleClose, checkBoxValues, handleOpen }) => {
   const [value, setValue] = React.useState("1");
   const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
     setValue(newValue);
@@ -54,6 +55,7 @@ const CheckBoxData: React.FC<{
     checkBoxValues.error = errorLabel;
     checkBoxValues.required = required;
     console.log(checkBoxValues);
+    handleOpen();
   };
   return (
     <Dialog

@@ -1,0 +1,37 @@
+.home-container{
+    height: 100vh;
+    width: 100%;
+    background-image: url(formbuilder.jpg);
+    background-size: cover;
+    background-attachment: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: insert 0 0 0 1000px;
+    object-fit: contain;
+    }
+    
+    .home-container > h1{
+    color: rgb(59, 57, 57);
+    font-size: 42px;
+    margin-top: -150px;
+    }
+    
+    .home-btns{
+    margin-top: 32px;
+    }
+    
+    @media screen and (max-width: 960px){
+    .home-container > h1{
+    font-size: 28px;
+    margin-top: -150px;
+    }
+    }
+    
+    @media screen and (max-width: 768px){
+    .home-container > h1{
+    font-size: 25px;
+    margin-top: -100px;
+    }
+    }

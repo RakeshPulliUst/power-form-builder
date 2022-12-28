@@ -50,9 +50,9 @@ const SingleElement: React.FC<{
   editable: boolean;
 }> = ({ index, element, elements, setElements, editable }) => {
   const textFieldValues: TextFieldDiaglog = {
-    label: "",
+    label: "default",
     required: false,
-    placeholder: "",
+    placeholder: "default",
     minLength: "",
     maxLength: "",
   };
@@ -80,8 +80,7 @@ const SingleElement: React.FC<{
   };
 
   const menuItemsData: Props = [
-    { id: "1", selectDataLabel: "1", selectDataValue: "1" },
-    { id: "2", selectDataLabel: "2", selectDataValue: "2" },
+    { id: "", selectDataLabel: "", selectDataValue: "" },
   ];
 
   const selectValues: SelectDiaglog = {
@@ -89,6 +88,8 @@ const SingleElement: React.FC<{
     placeholder: "",
     multipleValues: false,
     required: false,
+    size: [],
+    textFieldWidth: 0,
     menuItems: menuItemsData,
   };
 
@@ -131,23 +132,97 @@ const SingleElement: React.FC<{
 
   const handleClickOpen = () => {
     console.log("Opened");
-    setOpen(true);
+    console.log(open);
+    setOpen(!open);
+  };
+
+  const handleOpen = () => {
+    setOpen(!open);
+    if (element.element === "Button") {
+      console.log(buttonValues);
+      console.log("JSON", JSON.stringify(buttonValues));
+      element.label = buttonValues.label;
+      element.theme = buttonValues.theme;
+      element.size = buttonValues.size;
+    } else if (element.element === "TextField") {
+      console.log(textFieldValues.label);
+      console.log("JSON", JSON.stringify(textFieldValues));
+      element.label = textFieldValues.label;
+      element.placeholder = textFieldValues.placeholder;
+      element.maxLength = textFieldValues.maxLength;
+      element.minLength = textFieldValues.minLength;
+      element.required = textFieldValues.required;
+    } else if (element.element === "Password") {
+      console.log(textFieldValues.label);
+      console.log("JSON", JSON.stringify(textFieldValues));
+      element.label = textFieldValues.label;
+      element.placeholder = textFieldValues.placeholder;
+      element.maxLength = textFieldValues.maxLength;
+      element.minLength = textFieldValues.minLength;
+      element.required = textFieldValues.required;
+    } else if (element.element === "TextArea") {
+      console.log(textAreaValues);
+      console.log("JSON", JSON.stringify(textAreaValues));
+      element.label = textAreaValues.label;
+      element.placeholder = textAreaValues.placeholder;
+      element.minRows = textAreaValues.minRows;
+      element.width = textAreaValues.width;
+      element.required = textAreaValues.required;
+    } else if (element.element === "Select") {
+      console.log(selectValues);
+      console.log("JSON", JSON.stringify(selectValues));
+      element.label = selectValues.label;
+      element.placeholder = selectValues.placeholder;
+      element.multipleValues = selectValues.multipleValues;
+      element.menuItems = selectValues.menuItems;
+      element.required = selectValues.required;
+      element.size = selectValues.size;
+      element.textFieldWidth = selectValues.textFieldWidth;
+    } else if (element.element === "CheckBox") {
+      console.log(checkBoxValues);
+      console.log("JSON", JSON.stringify(checkBoxValues));
+      element.label = checkBoxValues.label;
+      element.default = checkBoxValues.default;
+      element.error = checkBoxValues.error;
+      element.required = checkBoxValues.required;
+    } else if (element.element === "RadioButton") {
+      console.log(radiobuttonValues);
+      console.log("JSON", JSON.stringify(radiobuttonValues));
+      element.label = radiobuttonValues.label;
+      element.options = radiobuttonValues.options;
+      element.radioItems = radiobuttonValues.radioItems;
+      element.required = radiobuttonValues.required;
+    }
   };
 
   const handleClose = () => {
-    console.log(element);
+    console.log(element.element);
     setOpen(!open);
-    console.log(textFieldValues);
-    console.log(textAreaValues);
-    console.log(checkBoxValues);
-    console.log(selectValues);
+    if (element.element === "Button") {
+      console.log(buttonValues);
+      console.log("JSON", JSON.stringify(buttonValues));
+    } else if (element.element === "TextField") {
+      console.log(textFieldValues.label);
+      console.log("JSON", JSON.stringify(textFieldValues));
+    } else if (element.element === "TextArea") {
+      console.log(textAreaValues);
+      console.log("JSON", JSON.stringify(textAreaValues));
+    } else if (element.element === "Select") {
+      console.log(selectValues);
+      console.log("JSON", JSON.stringify(selectValues));
+    } else if (element.element === "CheckBox") {
+      console.log(checkBoxValues);
+      console.log("JSON", JSON.stringify(checkBoxValues));
+    } else if (element.element === "RadioButton") {
+      console.log(radiobuttonValues);
+      console.log("JSON", JSON.stringify(radiobuttonValues));
+    }
     setEdit(!edit);
-    console.log(selectValues.menuItems);
-    console.log(menuItemsData);
-    menuItemsData.push({ id: "4", selectDataLabel: "2", selectDataValue: "2" });
-    console.log(menuItemsData);
-    console.log(buttonValues);
-    console.log(radiobuttonValues);
+
+    // console.log(selectValues.menuItems);
+    //console.log(menuItemsData);
+    //menuItemsData.push({ id: "4", selectDataLabel: "2", selectDataValue: "2" });
+    // console.log(menuItemsData);
   };
 
   // Final TextField
@@ -203,6 +278,13 @@ const SingleElement: React.FC<{
     );
   };
 
+  const [radioValue, setRadioValue] = useState("");
+
+  const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setRadioValue(event.target.value);
+  };
+
+  const [textFieldStatus, setTextFieldStatus] = useState(false);
   return (
     <Draggable draggableId={element.id.toString()} index={index}>
       {(provided, snapshot) => (
@@ -219,6 +301,8 @@ const SingleElement: React.FC<{
                   open={open}
                   handleClose={handleClose}
                   textFieldValues={textFieldValues}
+                  handleOpen={handleOpen}
+                  textFieldStatus={textFieldStatus}
                 />
                 <MuiTextField
                   label={textFieldValues.label}
@@ -237,6 +321,7 @@ const SingleElement: React.FC<{
                   open={open}
                   handleClose={handleClose}
                   textAreaValues={textAreaValues}
+                  handleOpen={handleOpen}
                 ></TextAreaData>
 
                 <MuiTextArea
@@ -255,6 +340,8 @@ const SingleElement: React.FC<{
                   open={open}
                   handleClose={handleClose}
                   textFieldValues={textFieldValues}
+                  handleOpen={handleOpen}
+                  textFieldStatus={textFieldStatus}
                 />
 
                 <MuiTextField
@@ -274,6 +361,7 @@ const SingleElement: React.FC<{
                   open={open}
                   handleClose={handleClose}
                   checkBoxValues={checkBoxValues}
+                  handleOpen={handleOpen}
                 ></CheckBoxData>
 
                 <MuiCheckBox
@@ -290,6 +378,7 @@ const SingleElement: React.FC<{
                   open={open}
                   handleClose={handleClose}
                   selectValues={selectValues}
+                  handleOpen={handleOpen}
                 ></SelectData>
 
                 <MuiSelect
@@ -309,6 +398,7 @@ const SingleElement: React.FC<{
                   open={open}
                   handleClose={handleClose}
                   buttonValues={buttonValues}
+                  handleOpen={handleOpen}
                 ></ButtonData>
 
                 <MuiButton
@@ -344,6 +434,7 @@ const SingleElement: React.FC<{
                   open={open}
                   handleClose={handleClose}
                   radiobuttonValues={radiobuttonValues}
+                  handleOpen={handleOpen}
                 />
 
                 <MuiRadioButton
@@ -351,14 +442,16 @@ const SingleElement: React.FC<{
                   options={
                     radiobuttonValues.options.pop() === "top"
                       ? "top"
-                      : buttonValues.size.pop() === "bottom"
+                      : radiobuttonValues.options.pop() === "bottom"
                       ? "bottom"
-                      : buttonValues.size.pop() === "start"
+                      : radiobuttonValues.options.pop() === "start"
                       ? "start"
                       : "end"
                   }
                   radioItems={radiobuttonValues.radioItems}
                   required={radiobuttonValues.required}
+                  value={radioValue}
+                  onChange={handleRadioChange}
                 />
               </>
             ) : element.element === "Column" ? (
@@ -394,6 +487,22 @@ const SingleElement: React.FC<{
               </>
             ) : (
               <></>
+            )}
+{textFieldStatus ? (
+              <MuiTextField
+                label={textFieldValues.label}
+                required={textFieldValues.required}
+                placeholder={textFieldValues.placeholder}
+                value={textFieldValue}
+                onChange={handleTextFieldValue}
+                minLength={parseInt(textFieldValues.minLength)}
+                maxLength={parseInt(textFieldValues.maxLength)}
+                // type="password"
+              ></MuiTextField>
+            ) : (
+              <>
+                <h1>Hello</h1>
+              </>
             )}
           </>
         </form>
