@@ -12,7 +12,7 @@ import {
   MuiRadioButton,
   MuiSelect,
   MuiTextArea,
-  MuiTextField,
+  TextField,
 } from "@power-form-builder/ui-components";
 import TextFieldData from "./components/TextFieldData";
 import {
@@ -48,23 +48,39 @@ const SingleElement: React.FC<{
   editable: boolean;
 }> = ({ index, element, elements, setElements, editable }) => {
   const textFieldValues: TextFieldDiaglog = {
-    label: "default",
+    label: "TextField",
     required: false,
-    placeholder: "default",
-    minLength: "",
-    maxLength: "",
+    placeholder: "Enter TextField",
+    minLength: 0,
+    maxLength: 0,
+  };
+
+  const passwordValues: TextFieldDiaglog = {
+    label: "Password",
+    required: false,
+    placeholder: "Enter Password",
+    minLength: 0,
+    maxLength: 0,
+  };
+
+  const emailValues: TextFieldDiaglog = {
+    label: "Email",
+    required: false,
+    placeholder: "Enter Email",
+    minLength: 0,
+    maxLength: 0,
   };
 
   const textAreaValues: TextAreaDiaglog = {
-    label: "",
+    label: "TextArea",
     required: false,
-    placeholder: "",
+    placeholder: "Enter TextArea",
     minRows: "",
     width: "",
   };
 
   const checkBoxValues: CheckBoxDiaglog = {
-    label: "",
+    label: "Checkbox",
     required: false,
     default: false,
     checked: false,
@@ -72,22 +88,22 @@ const SingleElement: React.FC<{
   };
 
   const buttonValues: ButtonDialog = {
-    label: "",
-    theme: [],
-    size: [],
+    label: "Button",
+    theme: ["secondary"],
+    size: ["large"],
   };
 
   const menuItemsData: Props = [
-    { id: "", selectDataLabel: "", selectDataValue: "" },
+    { id: "Select1", selectDataLabel: "Select1", selectDataValue: "Select1" },
   ];
 
   const selectValues: SelectDiaglog = {
-    label: "",
-    placeholder: "",
+    label: "Select",
+    placeholder: "Select the option",
     multipleValues: false,
     required: false,
-    size: [],
-    textFieldWidth: 0,
+    size: ["medium"],
+    textFieldWidth: 220,
     menuItems: menuItemsData,
   };
 
@@ -97,7 +113,7 @@ const SingleElement: React.FC<{
   ];
 
   const radiobuttonValues: RadioButtonDialog = {
-    label: "",
+    label: "RadioButton",
     options: [],
     radioItems: radioItemsData,
     required: false,
@@ -142,19 +158,19 @@ const SingleElement: React.FC<{
     } else if (element.element === "Password") {
       console.log(textFieldValues.label);
       console.log("JSON", JSON.stringify(textFieldValues));
-      element.label = textFieldValues.label;
-      element.placeholder = textFieldValues.placeholder;
-      element.maxLength = textFieldValues.maxLength;
-      element.minLength = textFieldValues.minLength;
-      element.required = textFieldValues.required;
+      element.label = passwordValues.label;
+      element.placeholder = passwordValues.placeholder;
+      element.maxLength = passwordValues.maxLength;
+      element.minLength = passwordValues.minLength;
+      element.required = passwordValues.required;
     } else if (element.element === "Email") {
       console.log(textFieldValues.label);
       console.log("JSON", JSON.stringify(textFieldValues));
-      element.label = textFieldValues.label;
-      element.placeholder = textFieldValues.placeholder;
-      element.maxLength = textFieldValues.maxLength;
-      element.minLength = textFieldValues.minLength;
-      element.required = textFieldValues.required;
+      element.label = emailValues.label;
+      element.placeholder = emailValues.placeholder;
+      element.maxLength = emailValues.maxLength;
+      element.minLength = emailValues.minLength;
+      element.required = emailValues.required;
     } else if (element.element === "TextArea") {
       console.log(textAreaValues);
       console.log("JSON", JSON.stringify(textAreaValues));
@@ -199,6 +215,12 @@ const SingleElement: React.FC<{
     } else if (element.element === "TextField") {
       console.log(textFieldValues.label);
       console.log("JSON", JSON.stringify(textFieldValues));
+    } else if (element.element === "Password") {
+      console.log(passwordValues.label);
+      console.log("JSON", JSON.stringify(passwordValues));
+    } else if (element.element === "Email") {
+      console.log(emailValues.label);
+      console.log("JSON", JSON.stringify(emailValues));
     } else if (element.element === "TextArea") {
       console.log(textAreaValues);
       console.log("JSON", JSON.stringify(textAreaValues));
@@ -221,6 +243,22 @@ const SingleElement: React.FC<{
   const handleTextFieldValue = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTextFieldValue(event.target.value);
     console.log(textFieldValue);
+  };
+
+  // Final Password
+  const [passwordValue, setPasswordValue] = useState("");
+
+  const handlePasswordValue = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPasswordValue(event.target.value);
+    console.log(passwordValue);
+  };
+
+  // Final Email
+  const [emailValue, setEmailValue] = useState("");
+
+  const handleEmailValue = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEmailValue(event.target.value);
+    console.log(emailValue);
   };
 
   //Final TextArea
@@ -279,18 +317,19 @@ const SingleElement: React.FC<{
                   handleClose={handleClose}
                   textFieldValues={textFieldValues}
                   handleOpen={handleOpen}
+                  element={element.element}
                   textFieldStatus={textFieldStatus}
                 />
-                <MuiTextField
+                <TextField
                   label={textFieldValues.label}
                   required={textFieldValues.required}
                   placeholder={textFieldValues.placeholder}
                   value={textFieldValue}
                   onChange={handleTextFieldValue}
-                  minLength={parseInt(textFieldValues.minLength)}
-                  maxLength={parseInt(textFieldValues.maxLength)}
+                  minLength={textFieldValues.minLength}
+                  maxLength={textFieldValues.maxLength}
                   // type="password"
-                ></MuiTextField>
+                ></TextField>
               </>
             ) : element.element === "TextArea" ? (
               <>
@@ -315,45 +354,47 @@ const SingleElement: React.FC<{
               <>
                 <TextFieldData
                   open={open}
+                  element={element.element}
                   handleClose={handleClose}
-                  textFieldValues={textFieldValues}
+                  textFieldValues={passwordValues}
                   handleOpen={handleOpen}
                   textFieldStatus={textFieldStatus}
                 />
 
-                <MuiTextField
-                  label={textFieldValues.label}
-                  required={textFieldValues.required}
-                  placeholder={textFieldValues.placeholder}
-                  value={textFieldValue}
-                  onChange={handleTextFieldValue}
-                  minLength={parseInt(textFieldValues.minLength)}
-                  maxLength={parseInt(textFieldValues.maxLength)}
+                <TextField
+                  label={passwordValues.label}
+                  required={passwordValues.required}
+                  placeholder={passwordValues.placeholder}
+                  value={passwordValue}
+                  onChange={handlePasswordValue}
+                  minLength={passwordValues.minLength}
+                  maxLength={passwordValues.maxLength}
                   type="password"
-                ></MuiTextField>
+                ></TextField>
               </>
             ) : element.element === "Email" ? (
               <>
                 <TextFieldData
                   open={open}
+                  element={element.element}
                   handleClose={handleClose}
-                  textFieldValues={textFieldValues}
+                  textFieldValues={emailValues}
                   handleOpen={handleOpen}
                   textFieldStatus={textFieldStatus}
                 />
 
-                <MuiTextField
-                  label={textFieldValues.label}
-                  required={textFieldValues.required}
-                  placeholder={textFieldValues.placeholder}
-                  value={textFieldValue}
-                  onChange={handleTextFieldValue}
-                  minLength={parseInt(textFieldValues.minLength)}
-                  maxLength={parseInt(textFieldValues.maxLength)}
+                <TextField
+                  label={emailValues.label}
+                  required={emailValues.required}
+                  placeholder={emailValues.placeholder}
+                  value={emailValue}
+                  onChange={handleEmailValue}
+                  minLength={emailValues.minLength}
+                  maxLength={emailValues.maxLength}
                   type="email"
-                ></MuiTextField>
+                ></TextField>
               </>
-            ) : element.element === "CheckBox" ? (
+            ) : element.element === "Checkbox" ? (
               <>
                 <CheckBoxData
                   open={open}
@@ -365,8 +406,7 @@ const SingleElement: React.FC<{
                 <MuiCheckBox
                   label={checkBoxValues.label}
                   required={checkBoxValues.required}
-                  defaultChecked={checkBoxValues.default}
-                  checked={checked}
+                  checked={checkBoxValues.default}
                   onChange={handleCheck}
                 />
               </>
@@ -386,8 +426,11 @@ const SingleElement: React.FC<{
                   multiple={selectValues.multipleValues}
                   values={selectData}
                   onChange={handleSelectData}
-                  size="medium"
+                  size={
+                    selectValues.size.pop() === "small" ? "small" : "medium"
+                  }
                   required={selectValues.required}
+                  textFieldWidth={selectValues.textFieldWidth}
                 />
               </>
             ) : element.element === "Button" ? (
@@ -485,22 +528,6 @@ const SingleElement: React.FC<{
               </>
             ) : (
               <></>
-            )}
-            {textFieldStatus ? (
-              <MuiTextField
-                label={textFieldValues.label}
-                required={textFieldValues.required}
-                placeholder={textFieldValues.placeholder}
-                value={textFieldValue}
-                onChange={handleTextFieldValue}
-                minLength={parseInt(textFieldValues.minLength)}
-                maxLength={parseInt(textFieldValues.maxLength)}
-                // type="password"
-              ></MuiTextField>
-            ) : (
-              <>
-                <h1>Hello</h1>
-              </>
             )}
           </>
         </form>

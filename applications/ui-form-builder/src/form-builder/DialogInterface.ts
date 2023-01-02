@@ -2,8 +2,8 @@ export interface TextFieldDiaglog {
     label : string;
     placeholder: string;
     required: boolean;
-    minLength: string;
-    maxLength: string;
+    minLength: number;
+    maxLength: number;
   }
 
   export interface TextAreaDiaglog {

@@ -10,8 +10,8 @@ export interface Element {
     placeholder?: string;
     required?: boolean;
 
-    minLength?: string;
-    maxLength?: string;
+    minLength?: number;
+    maxLength?: number;
 
     minRows?: string;
     width?: string;
@@ -61,8 +61,8 @@ export interface Element {
       label : '',
       placeholder: '',
       required: false,
-      minLength: '',
-      maxLength: ''
+      minLength: 0,
+      maxLength: 0
       },
     {
       id: 3,
@@ -70,8 +70,8 @@ export interface Element {
       label : '',
       placeholder: '',
       required: false,
-      minLength: '',
-      maxLength: ''
+      minLength: 0,
+      maxLength: 0
     },
     {
       id: 4,
@@ -95,7 +95,7 @@ export interface Element {
     },
     {
       id: 6,
-      element: "CheckBox",
+      element: "Checkbox",
       label : '',
       checked: false,
       default: false,
@@ -119,8 +119,8 @@ export interface Element {
       label : '',
       placeholder: '',
       required: false,
-      minLength: '',
-      maxLength: ''
+      minLength: 0,
+      maxLength: 0
     },
     {
       id: 9,

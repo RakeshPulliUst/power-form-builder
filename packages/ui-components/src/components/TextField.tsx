@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TextField } from "@mui/material";
+import { TextField as DefaultTextField } from "@mui/material";
 
 type Props = {
   label: string;
@@ -17,20 +17,36 @@ type Props = {
   error?: boolean;
 };
 
-const MuiTextField = (props: Props) => {
+const TextField = ({
+  label,
+  name,
+  required,
+  type,
+  value,
+  onChange,
+  arg,
+  placeholder,
+  minLength,
+  maxLength,
+  ref,
+  helperText,
+  error,
+  ...rest
+}: Props) => {
   return (
-    <TextField
-      name={props.name}
-      label={props.label}
-      placeholder={props.placeholder}
-      required={props.required}
+    <DefaultTextField
+      name={name}
+      label={label}
+      placeholder={placeholder}
+      required={required}
       variant="outlined"
-      type={props.type}
-      value={props.value}
-      onChange={props.onChange}
-      inputProps={{ maxLength: props.maxLength, minLength: props.minLength }}
-      helperText={props.helperText}
-      error={props.error}
+      type={type}
+      value={value}
+      onChange={onChange}
+      inputProps={{ maxLength: maxLength, minLength: minLength }}
+      helperText={helperText}
+      error={error}
+      {...rest}
     />
 
     /* <TextField
@@ -49,4 +65,4 @@ const MuiTextField = (props: Props) => {
   );
 };
 
-export default MuiTextField;
+export default TextField;

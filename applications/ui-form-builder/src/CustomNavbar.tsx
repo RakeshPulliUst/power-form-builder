@@ -10,7 +10,7 @@ import {
 } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import FormNameInput from "./FormNameInput";
-
+import { Header, UITranslation } from "@power-form-builder/ui-translation";
 const CustomNavbar = () => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [open, setOpen] = useState(false);
@@ -21,22 +21,27 @@ const CustomNavbar = () => {
         light
         expand="md"
         fixed="true"
-        className="px-5 sticky-top navbar-dark bg-dark"
+        className=" sticky-top navbar-dark bg-dark"
       >
-        <NavbarBrand href="/">PowerFormBuilder</NavbarBrand>
+        <NavbarBrand href="/">
+          <UITranslation name="form_site" />
+        </NavbarBrand>
         <NavbarToggler
           onClick={() => {
             setIsOpen(!isOpen);
           }}
         />
         <Collapse isOpen={isOpen} navbar>
-          <Nav className="ml-auto" navbar>
+          <Nav className="container-fluid" navbar>
             <NavItem
               style={{ color: "white", cursor: "pointer" }}
               onClick={() => setOpen(!open)}
             >
-              Build Form
+              <UITranslation name="build_form" />
             </NavItem>
+          </Nav>
+          <Nav className="justify-content-end" style={{ marginRight: "0%" }}>
+            <Header />
           </Nav>
         </Collapse>
       </Navbar>

@@ -10,7 +10,7 @@ import { TabContext, TabList, TabPanel } from "@material-ui/lab";
 import {
   MuiButton,
   MuiCheckBox,
-  MuiTextField,
+  TextField,
 } from "@power-form-builder/ui-components";
 import { CheckBoxDiaglog } from "../DialogInterface";
 
@@ -59,12 +59,22 @@ const CheckBoxData: React.FC<{
   };
   return (
     <Dialog
+      fullWidth={true}
+      maxWidth={"sm"}
+      PaperProps={{
+        style: {
+          minHeight: "60%",
+          maxHeight: "60%",
+          minWidth: "45%",
+          maxWidth: "45%",
+        },
+      }}
       open={open}
       onClose={handleClose}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">{"Component Details"}</DialogTitle>
+      <DialogTitle id="alert-dialog-title">{"Checkbox Details"}</DialogTitle>
       <DialogContent>
         <TabContext value={value}>
           <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -75,7 +85,7 @@ const CheckBoxData: React.FC<{
           </Box>
           <TabPanel value="1">
             <DialogContentText id="alert-dialog-description">
-              <MuiTextField
+              <TextField
                 label="Label"
                 required={true}
                 value={checkboxLabel}
@@ -100,7 +110,8 @@ const CheckBoxData: React.FC<{
               onChange={handleCheckboxChange}
             />
             <br />
-            <MuiTextField
+            <br />
+            <TextField
               label="Error Label"
               required={true}
               placeholder="Enter Error Label"
@@ -112,13 +123,13 @@ const CheckBoxData: React.FC<{
       </DialogContent>
       <DialogActions>
         <MuiButton
-          label="Disagree"
+          label="Cancel"
           color="success"
           onClick={handleClose}
           size="medium"
         />
         <MuiButton
-          label="Agree"
+          label="Save"
           color="success"
           onClick={handleData}
           size="medium"

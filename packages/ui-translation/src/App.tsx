@@ -1,13 +1,16 @@
-import React from 'react';
-import './App.css';
-import { Header } from './components/Header';
+import "./App.css";
+import { Header } from "./components/Header";
+
+import React, { useEffect } from "react";
 
 function App() {
   return (
-    <div className="App">
-      <Header/>
-      Hello UI-Translation
-    </div>
+    <>
+      <div className="App">
+        <Header />
+        Hello UI-Translation
+      </div>
+    </>
   );
 }
 

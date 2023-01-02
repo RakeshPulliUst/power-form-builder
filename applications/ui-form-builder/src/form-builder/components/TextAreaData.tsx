@@ -10,7 +10,7 @@ import { TabContext, TabList, TabPanel } from "@material-ui/lab";
 import {
   MuiButton,
   MuiCheckBox,
-  MuiTextField,
+  TextField,
 } from "@power-form-builder/ui-components";
 import { TextAreaDiaglog } from "../DialogInterface";
 
@@ -67,12 +67,21 @@ const TextAreaData: React.FC<{
   };
   return (
     <Dialog
+      maxWidth={"sm"}
+      PaperProps={{
+        style: {
+          minHeight: "60%",
+          maxHeight: "60%",
+          minWidth: "45%",
+          maxWidth: "45%",
+        },
+      }}
       open={open}
       onClose={handleClose}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">{"Component Details"}</DialogTitle>
+      <DialogTitle id="alert-dialog-title">{"TextArea Details"}</DialogTitle>
       <DialogContent>
         <TabContext value={value}>
           <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -83,7 +92,7 @@ const TextAreaData: React.FC<{
           </Box>
           <TabPanel value="1">
             <DialogContentText id="alert-dialog-description">
-              <MuiTextField
+              <TextField
                 label="Label"
                 required={true}
                 value={textValue}
@@ -91,7 +100,7 @@ const TextAreaData: React.FC<{
               />
               <br />
               <br />
-              <MuiTextField
+              <TextField
                 label="Placeholder"
                 required={true}
                 placeholder={textPlaceholder}
@@ -105,11 +114,12 @@ const TextAreaData: React.FC<{
               label="Required"
               checked={required}
               required={true}
-              defaultChecked={false}
               onChange={handleCheckboxChange}
             />
             <br />
-            <MuiTextField
+            <br />
+
+            <TextField
               label="Minimum Rows"
               required={true}
               value={textMinRows}
@@ -118,7 +128,7 @@ const TextAreaData: React.FC<{
             />
             <br />
             <br />
-            <MuiTextField
+            <TextField
               label="Text Area Width"
               required={true}
               value={textWidth}
@@ -130,13 +140,13 @@ const TextAreaData: React.FC<{
       </DialogContent>
       <DialogActions>
         <MuiButton
-          label="Disagree"
+          label="Cancel"
           color="success"
           onClick={handleClose}
           size="medium"
         />
         <MuiButton
-          label="Agree"
+          label="Save"
           color="success"
           onClick={handleData}
           size="medium"

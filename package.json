@@ -14,6 +14,9 @@
   },
   "scripts": {
     "start": "lerna run start",
-    "test": "lerna run test"
+    "test": "lerna run test",
+    "start:ui-form-builder": "lerna run start --scope=@power-form-builder/ui-form-builder",
+    "start:ui-components": "lerna run start --scope=@power-form-builder/ui-components",
+    "start:ui-translation": "lerna run start --scope=@power-form-builder/ui-translation"
   }
 }

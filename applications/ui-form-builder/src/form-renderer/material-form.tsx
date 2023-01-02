@@ -1,6 +1,6 @@
 import React, { FormEvent, useState } from "react";
 import {
-  MuiTextField,
+  TextField,
   MuiTextArea,
   MuiSelect,
   MuiRadioButton,
@@ -14,7 +14,7 @@ import { useLocation } from "react-router-dom";
 
 function MaterialForm() {
   const location = useLocation();
-  const { formData1 } = location.state;
+  const { formData1 } = location.state || {};
   const [formJsonData, setFormJsonData] = useState<FormJson>(formData1);
 
   const [val, setVal] = React.useState({
@@ -25,16 +25,24 @@ function MaterialForm() {
     country: "",
     gender: "",
   });
+
+  //Final Select
+  const [selectData, setSelectData] = useState<string[]>([]);
+
+  const handleSelectData = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const selectvalue = event.target.value;
+    setSelectData(
+      typeof selectvalue === "string" ? selectvalue.split(",") : selectvalue
+    );
+    console.log("Select Value", selectvalue);
+  };
+
   const [checkbox, setCheckbox] = React.useState("");
   const [checked, setChecked] = React.useState(false);
   const [error, setError] = React.useState(false);
   const [helperText, setHelperText] = React.useState("");
   const [show, setShow] = React.useState(false);
   const [emailHelperText, setEmailHelperText] = React.useState("");
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setChecked(event.target.checked);
-  };
 
   const onHandleChange = (
     e:
@@ -69,11 +77,11 @@ function MaterialForm() {
     }
   };
 
-  const likeEvent = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("Checkboxxxxxxx");
-    setCheckbox(e.target.value);
-    setChecked(e.target.checked);
-    console.log(checkbox);
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log("Checkbox");
+    setChecked(event.target.checked);
+    setCheckbox(event.target.value);
+    console.log("Checkbox ValuesL", checkbox, checked);
   };
 
   const submitForm = (e: FormEvent<HTMLFormElement>) => {
@@ -86,7 +94,9 @@ function MaterialForm() {
       val.password !== "" ||
       val.country !== "" ||
       val.address !== "" ||
-      val.gender !== ""
+      val.gender !== "" ||
+      checkbox !== "" ||
+      selectData.length !== 0
     ) {
       console.log("Submit Data");
       setError(false);
@@ -113,7 +123,18 @@ function MaterialForm() {
       {formJsonData.title !== "" ? (
         <form onSubmit={submitForm}>
           <>
-            {console.log("values.....", val, "Error", error)}
+            {console.log(
+              "values.....",
+              val,
+              "Error",
+              error,
+              "Multiple ",
+              selectData,
+              "Checkbox",
+              checkbox,
+              "checked",
+              checked
+            )}
             {show && !error ? (
               <ul style={{ listStyle: "none" }}>
                 <li>Name:{val.firstname}</li>
@@ -123,6 +144,7 @@ function MaterialForm() {
                 <li>Country:{val.country}</li>
                 <li>Gender:{val.gender}</li>
                 <li>CheckBox:{checkbox}</li>
+                <li>Multiple Select: {selectData}</li>
               </ul>
             ) : (
               ""
@@ -144,18 +166,18 @@ function MaterialForm() {
               >
                 <MuiGridItem xs={12} sm={6}>
                   {data.element === "TextField" ? (
-                    <MuiTextField
+                    <TextField
                       label={data.label!}
                       name={data.label?.toLocaleLowerCase()}
                       value={val.firstname}
                       onChange={onHandleChange}
                       placeholder={data.placeholder}
                       required={data.required!}
-                      minLength={parseInt(data.minLength!)}
-                      maxLength={parseInt(data.maxLength!)}
+                      minLength={data.minLength!}
+                      maxLength={data.maxLength!}
                     />
                   ) : data.element === "Email" ? (
-                    <MuiTextField
+                    <TextField
                       label={data.label!}
                       name={data.label?.toLocaleLowerCase()}
                       value={val.email}
@@ -163,13 +185,13 @@ function MaterialForm() {
                       onChange={onHandleChange}
                       placeholder={data.placeholder}
                       required={data.required!}
-                      minLength={parseInt(data.minLength!)}
-                      maxLength={parseInt(data.maxLength!)}
+                      minLength={data.minLength!}
+                      maxLength={data.maxLength!}
                       helperText={emailHelperText}
                       error={error}
                     />
                   ) : data.element === "Password" ? (
-                    <MuiTextField
+                    <TextField
                       label={data.label!}
                       name={data.label?.toLocaleLowerCase()}
                       type="password"
@@ -177,8 +199,8 @@ function MaterialForm() {
                       onChange={onHandleChange}
                       placeholder={data.placeholder}
                       required={data.required!}
-                      minLength={parseInt(data.minLength!)}
-                      maxLength={parseInt(data.maxLength!)}
+                      minLength={data.minLength!}
+                      maxLength={data.maxLength!}
                     />
                   ) : data.element === "TextArea" ? (
                     <MuiTextArea
@@ -191,7 +213,7 @@ function MaterialForm() {
                       minRows={parseInt(data.minRows!)}
                       width={parseInt(data.width!)}
                     ></MuiTextArea>
-                  ) : data.element === "Select" ? (
+                  ) : data.element === "Select" && !data.multipleValues ? (
                     <MuiSelect
                       label={data.label!}
                       placeholder={data.placeholder!}
@@ -200,6 +222,25 @@ function MaterialForm() {
                       name={data.label?.toLocaleLowerCase()}
                       values={val.country}
                       onChange={onHandleChange}
+                      size={
+                        data.size !== undefined
+                          ? data.size.pop() === "small"
+                            ? "small"
+                            : "medium"
+                          : "medium"
+                      }
+                      required={data.required!}
+                      textFieldWidth={data.textFieldWidth}
+                    />
+                  ) : data.element === "Select" && data.multipleValues ? (
+                    <MuiSelect
+                      label={data.label!}
+                      placeholder={data.placeholder!}
+                      menuItems={data.menuItems!}
+                      multiple={data.multipleValues!}
+                      name={data.label?.toLocaleLowerCase()}
+                      values={selectData}
+                      onChange={handleSelectData}
                       size={
                         data.size !== undefined
                           ? data.size.pop() === "small"
@@ -235,10 +276,9 @@ function MaterialForm() {
                       label={data.label!}
                       name={data.label!}
                       required={data.required!}
-                      defaultChecked={data.default!}
                       value={data.label}
                       checked={checked}
-                      onChange={likeEvent}
+                      onChange={handleChange}
                     />
                   ) : data.element === "Button" ? (
                     <MuiButton

@@ -11,14 +11,16 @@ import {
   MuiButton,
   MuiCheckBox,
   MuiSelect,
-  MuiTextField,
+  TextField,
 } from "@power-form-builder/ui-components";
 import { RadioButtonDialog } from "../DialogInterface";
 
 import { v4 as uuidv4 } from "uuid";
-
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import { MdRemoveCircle } from "react-icons/md";
 import { MdAddCircle } from "react-icons/md";
+import { Button } from "reactstrap";
 
 type Props = {
   id: string;
@@ -128,12 +130,22 @@ const RadioButtonData: React.FC<{
 
   return (
     <Dialog
+      fullWidth={true}
+      maxWidth={"sm"}
+      PaperProps={{
+        style: {
+          minHeight: "60%",
+          maxHeight: "60%",
+          minWidth: "45%",
+          maxWidth: "45%",
+        },
+      }}
       open={open}
       onClose={handleClose}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">{"Component Details"}</DialogTitle>
+      <DialogTitle id="alert-dialog-title">{"RadioButton Details"}</DialogTitle>
       <DialogContent>
         <TabContext value={value}>
           <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -145,7 +157,7 @@ const RadioButtonData: React.FC<{
           </Box>
           <TabPanel value="1">
             <DialogContentText id="alert-dialog-description">
-              <MuiTextField
+              <TextField
                 label="Label"
                 required={true}
                 value={radioLabel}
@@ -171,7 +183,8 @@ const RadioButtonData: React.FC<{
               <form onSubmit={handleSubmit}>
                 {radioItems.map((item) => (
                   <div>
-                    <MuiTextField
+                    <br />
+                    <TextField
                       label="RadioButtonDataLabel"
                       name="radioButtonDataLabel"
                       required={true}
@@ -182,7 +195,7 @@ const RadioButtonData: React.FC<{
                       ): void => handleChangeInput(item.id, e)}
                     />
                     &nbsp;
-                    <MuiTextField
+                    <TextField
                       label="RadioButtonValue"
                       required={true}
                       placeholder=""
@@ -197,17 +210,18 @@ const RadioButtonData: React.FC<{
                         className="icon"
                         onClick={() => handleRemoveFields(item.id)}
                       >
-                        <MdRemoveCircle />
+                        <RemoveCircleIcon />
                       </span>
                     ) : (
                       <></>
                     )}
                     <span className="icon" onClick={handleAddFields}>
-                      <MdAddCircle />
+                      <AddCircleIcon />
                     </span>
                   </div>
                 ))}
-                <button>Done</button>
+                <br />
+                <MuiButton label="Done" color="secondary" size="small" />
               </form>
             </DialogContentText>
           </TabPanel>
@@ -216,7 +230,6 @@ const RadioButtonData: React.FC<{
               label="Required"
               checked={required}
               required={true}
-              defaultChecked={false}
               onChange={handleCheckboxChange}
             />
           </TabPanel>
@@ -224,13 +237,13 @@ const RadioButtonData: React.FC<{
       </DialogContent>
       <DialogActions>
         <MuiButton
-          label="Disagree"
+          label="Cancel"
           color="success"
           onClick={handleClose}
           size="medium"
         />
         <MuiButton
-          label="Agree"
+          label="Save"
           color="success"
           onClick={handleData}
           size="medium"

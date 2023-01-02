@@ -10,10 +10,27 @@
   display: flex;
   flex-direction: column;
   width: 80%;
-  padding: 20px;
+  padding: 15px;
   background-color: rgb(251, 255, 255);
   text-align: center;
   box-shadow: 0 0 10px black;
+  min-height: 480px;
+  border-style: dashed;
+  border-width: 2px;
+  border-color: rgb(101, 98, 98);
+  
+}
+
+.elements_fixed {
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  padding: 15px;
+  background-color: rgb(251, 255, 255);
+  text-align: center;
+  box-shadow: 0 0 10px black;
+  min-height: 480px;
 }
 
 .dragactive {
@@ -37,10 +54,21 @@
 .elements__single {
   display: flex;
   border-radius: 5px;
-  padding: 20px;
-  margin-top: 15px;
+  padding: 1px;
+  margin-top: 5px;
   background-color: rgb(58, 212, 230);;
   transition: 0.2s;
+  max-width: fit-content;
+}
+
+.elements__single_fixed {
+  display: flex;
+  border-radius: 5px;
+  padding: 1px;
+  margin-top: 5px;
+  background-color: rgb(58, 212, 230);;
+  transition: 0.2s;
+  
 }
 
 .drag {

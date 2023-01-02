@@ -1,10 +1,13 @@
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import FormBuilder from "./form-builder/components/FormBuilder";
+import FormBuilder from "./form-builder/FormBuilder";
 import MaterialForm from "./form-renderer/material-form";
 import Home from "./Home";
 import CustomNavbar from "./CustomNavbar";
-
+import { Header } from "@power-form-builder/ui-translation";
+import { UITranslation } from "@power-form-builder/ui-translation";
+import { LanguageDropDown } from "@power-form-builder/ui-translation";
+import { useState } from "react";
 const App = () => {
   return (
     <BrowserRouter>
@@ -15,6 +18,10 @@ const App = () => {
         <Route path="/formrender" element={<MaterialForm />}></Route>
       </Routes>
     </BrowserRouter>
+    // <>
+    //   <Header />
+    //   <UITranslation name="header" />
+    // </>
   );
 };
 

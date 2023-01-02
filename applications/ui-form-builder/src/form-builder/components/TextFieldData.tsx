@@ -10,7 +10,7 @@ import { TabContext, TabList, TabPanel } from "@material-ui/lab";
 import {
   MuiButton,
   MuiCheckBox,
-  MuiTextField,
+  TextField,
 } from "@power-form-builder/ui-components";
 import { TextFieldDiaglog } from "../DialogInterface";
 
@@ -19,8 +19,16 @@ const TextFieldData: React.FC<{
   handleClose: () => void;
   textFieldValues: TextFieldDiaglog;
   handleOpen: () => void;
+  element: string;
   textFieldStatus: boolean;
-}> = ({ open, handleClose, textFieldValues, handleOpen, textFieldStatus }) => {
+}> = ({
+  open,
+  handleClose,
+  textFieldValues,
+  handleOpen,
+  element,
+  textFieldStatus,
+}) => {
   const [value, setValue] = React.useState("1");
   const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
     setValue(newValue);
@@ -29,8 +37,8 @@ const TextFieldData: React.FC<{
   //TextField
   const [textValue, setTextValue] = useState("");
   const [textPlaceholder, setTextPlaceholder] = useState("");
-  const [textMinLength, setTextMinLength] = useState("");
-  const [textMaxLength, setTextMaxLength] = useState("");
+  const [textMinLength, setTextMinLength] = useState(0);
+  const [textMaxLength, setTextMaxLength] = useState(0);
 
   const handleTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTextValue(event.target.value);
@@ -44,11 +52,11 @@ const TextFieldData: React.FC<{
   };
 
   const handleTextMinLength = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTextMinLength(event.target.value);
+    setTextMinLength(parseInt(event.target.value));
   };
 
   const handleTextMaxLength = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTextMaxLength(event.target.value);
+    setTextMaxLength(parseInt(event.target.value));
   };
 
   //Checkbox
@@ -66,16 +74,32 @@ const TextFieldData: React.FC<{
     textFieldValues.required = required;
     console.log(textFieldValues);
     textFieldStatus = true;
+    console.log(textFieldStatus);
     handleOpen();
   };
   return (
     <Dialog
+      maxWidth={"sm"}
+      PaperProps={{
+        style: {
+          minHeight: "60%",
+          maxHeight: "60%",
+          minWidth: "45%",
+          maxWidth: "45%",
+        },
+      }}
       open={open}
       onClose={handleClose}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">{"Component Details"}</DialogTitle>
+      <DialogTitle id="alert-dialog-title">
+        {element === "TextField"
+          ? "TextField Details"
+          : element === "Password"
+          ? "Password Detais"
+          : "Email Details"}
+      </DialogTitle>
       <DialogContent>
         <TabContext value={value}>
           <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -86,7 +110,7 @@ const TextFieldData: React.FC<{
           </Box>
           <TabPanel value="1">
             <DialogContentText id="alert-dialog-description">
-              <MuiTextField
+              <TextField
                 label="Label"
                 required={true}
                 value={textValue}
@@ -94,7 +118,7 @@ const TextFieldData: React.FC<{
               />
               <br />
               <br />
-              <MuiTextField
+              <TextField
                 label="Placeholder"
                 required={true}
                 placeholder={textPlaceholder}
@@ -108,25 +132,24 @@ const TextFieldData: React.FC<{
               label="Required"
               checked={required}
               required={true}
-              defaultChecked={false}
               onChange={handleCheckboxChange}
             />
             <br />
-
-            <MuiTextField
+            <br />
+            <TextField
               label="Minimum Length"
               required={true}
-              value={textMinLength}
+              value={textMinLength.toString()}
               placeholder="Enter Minimum Length"
               onChange={handleTextMinLength}
             />
             <br />
             <br />
-            <MuiTextField
+            <TextField
               label="Maximum Length"
               required={true}
               placeholder="Enter Maximum Length"
-              value={textMaxLength}
+              value={textMaxLength.toString()}
               onChange={handleTextMaxLength}
             />
           </TabPanel>
@@ -134,13 +157,13 @@ const TextFieldData: React.FC<{
       </DialogContent>
       <DialogActions>
         <MuiButton
-          label="Disagree"
+          label="Cancel"
           color="success"
           onClick={handleClose}
           size="medium"
         />
         <MuiButton
-          label="Agree"
+          label="Save"
           color="success"
           onClick={handleData}
           size="medium"

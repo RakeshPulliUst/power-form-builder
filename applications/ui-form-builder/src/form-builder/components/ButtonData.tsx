@@ -10,7 +10,7 @@ import { TabContext, TabList, TabPanel } from "@material-ui/lab";
 import {
   MuiButton,
   MuiSelect,
-  MuiTextField,
+  TextField,
 } from "@power-form-builder/ui-components";
 import { ButtonDialog } from "../DialogInterface";
 
@@ -74,12 +74,22 @@ const ButtonData: React.FC<{
   };
   return (
     <Dialog
+      fullWidth={true}
+      maxWidth={"sm"}
+      PaperProps={{
+        style: {
+          minHeight: "60%",
+          maxHeight: "60%",
+          minWidth: "45%",
+          maxWidth: "45%",
+        },
+      }}
       open={open}
       onClose={handleClose}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">{"Component Details"}</DialogTitle>
+      <DialogTitle id="alert-dialog-title">{"Button Details"}</DialogTitle>
       <DialogContent>
         <TabContext value={value}>
           <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -87,9 +97,9 @@ const ButtonData: React.FC<{
               <Tab label="Display" value="1" />
             </TabList>
           </Box>
-          <TabPanel value="1">
+          <TabPanel value="1" style={{ textAlign: "center" }}>
             <DialogContentText id="alert-dialog-description">
-              <MuiTextField
+              <TextField
                 label="Label"
                 required={true}
                 value={buttonLabel}
@@ -129,13 +139,13 @@ const ButtonData: React.FC<{
       </DialogContent>
       <DialogActions>
         <MuiButton
-          label="Disagree"
+          label="Cancel"
           color="success"
           onClick={handleClose}
           size="medium"
         />
         <MuiButton
-          label="Agree"
+          label="Save"
           color="success"
           onClick={handleData}
           size="medium"

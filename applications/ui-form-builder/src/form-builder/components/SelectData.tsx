@@ -11,7 +11,7 @@ import {
   MuiButton,
   MuiCheckBox,
   MuiSelect,
-  MuiTextField,
+  TextField,
 } from "@power-form-builder/ui-components";
 import { SelectDiaglog } from "../DialogInterface";
 import { v4 as uuidv4 } from "uuid";
@@ -74,7 +74,6 @@ const SelectData: React.FC<{
   const SelectSizeDataValues = [
     { selectDataLabel: "small", selectDataValue: "small" },
     { selectDataLabel: "medium", selectDataValue: "medium" },
-    { selectDataLabel: "large", selectDataValue: "large" },
   ];
   const [selectSize, setSelectSize] = useState<string[]>([]);
 
@@ -140,12 +139,21 @@ const SelectData: React.FC<{
 
   return (
     <Dialog
+      maxWidth={"sm"}
+      PaperProps={{
+        style: {
+          minHeight: "60%",
+          maxHeight: "60%",
+          minWidth: "45%",
+          maxWidth: "45%",
+        },
+      }}
       open={open}
       onClose={handleClose}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">{"Component Details"}</DialogTitle>
+      <DialogTitle id="alert-dialog-title">{"Select Details"}</DialogTitle>
       <DialogContent>
         <TabContext value={value}>
           <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -157,7 +165,7 @@ const SelectData: React.FC<{
           </Box>
           <TabPanel value="1">
             <DialogContentText id="alert-dialog-description">
-              <MuiTextField
+              <TextField
                 label="Label"
                 required={true}
                 value={selectLabel}
@@ -165,7 +173,7 @@ const SelectData: React.FC<{
               />
               <br />
               <br />
-              <MuiTextField
+              <TextField
                 label="Placeholder"
                 required={true}
                 placeholder={textPlaceholder}
@@ -174,7 +182,7 @@ const SelectData: React.FC<{
               />
               <br />
               <br />
-              <MuiTextField
+              <TextField
                 label="Width"
                 required={true}
                 placeholder="Enter Width"
@@ -192,7 +200,7 @@ const SelectData: React.FC<{
                 textFieldWidth={225}
                 onChange={handleSelectSize}
                 size="medium"
-                defaultValue={"medium"}
+                defaultValue="medium"
                 required={false}
               />
             </DialogContentText>
@@ -203,14 +211,14 @@ const SelectData: React.FC<{
                 label="Multiple Values"
                 checked={multipleValues}
                 required={true}
-                defaultChecked={false}
                 onChange={handleMultipleValues}
               />
               <br />
               <form onSubmit={handleSubmit}>
                 {menuItemsData.map((item) => (
                   <div>
-                    <MuiTextField
+                    <br />
+                    <TextField
                       label="SelectValueLabel"
                       name="selectDataLabel"
                       required={true}
@@ -221,7 +229,7 @@ const SelectData: React.FC<{
                       ): void => handleChangeInput(item.id, e)}
                     />
                     &nbsp;
-                    <MuiTextField
+                    <TextField
                       label="SelectValue"
                       name="selectDataValue"
                       required={true}
@@ -247,7 +255,7 @@ const SelectData: React.FC<{
                   </div>
                 ))}
                 <br />
-                <button>Done</button>
+                <MuiButton label="Done" color="secondary" size="small" />
               </form>
             </DialogContentText>
           </TabPanel>
@@ -256,7 +264,6 @@ const SelectData: React.FC<{
               label="Required"
               checked={required}
               required={true}
-              defaultChecked={false}
               onChange={handleCheckboxChange}
             />
           </TabPanel>
@@ -264,13 +271,13 @@ const SelectData: React.FC<{
       </DialogContent>
       <DialogActions>
         <MuiButton
-          label="Disagree"
+          label="Cancel"
           color="success"
           onClick={handleClose}
           size="medium"
         />
         <MuiButton
-          label="Agree"
+          label="Save"
           color="success"
           onClick={handleData}
           size="medium"

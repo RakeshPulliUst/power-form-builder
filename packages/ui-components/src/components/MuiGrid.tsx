@@ -14,7 +14,7 @@ const MuiGrid = (props: Props) => {
     <Grid
       container
       spacing={props.spacing ? props.spacing : 10}
-      columns={props.columns ? props.columns : 16}
+      columns={props.columns ? props.columns : 16} 
       alignItems={props.alignItems}
       justifyContent={props.justifyContent}
     >

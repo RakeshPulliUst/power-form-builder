@@ -24,7 +24,7 @@ const ElementList: React.FC<props> = ({
           <Droppable droppableId="ElementsList" isDropDisabled={true}>
             {(provided, snapshot) => (
               <div
-                className={`elements ${
+                className={`elements_fixed ${
                   snapshot.isDraggingOver ? "dragactive" : ""
                 }`}
                 ref={provided.innerRef}

@@ -34,7 +34,7 @@ const MuiSelect = (props: Props) => {
       placeholder={props.placeholder}
       defaultValue={props.defaultValue}
       name={props.name}
-      style={{ width: props.textFieldWidth }}
+      style={{ width: props.textFieldWidth, margin: 1 }}
     >
       {props.menuItems.map((item, index) => (
         <MenuItem value={item.selectDataValue}>{item.selectDataLabel}</MenuItem>

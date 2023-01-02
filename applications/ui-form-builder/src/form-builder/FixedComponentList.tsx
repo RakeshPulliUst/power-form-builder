@@ -15,7 +15,9 @@ const FixedComponentList: React.FC<{
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           ref={provided.innerRef}
-          className={`elements__single ${snapshot.isDragging ? "drag" : ""}`}
+          className={`elements__single_fixed ${
+            snapshot.isDragging ? "drag" : ""
+          }`}
         >
           <span className="elements__single--text">{element.element}</span>
         </div>

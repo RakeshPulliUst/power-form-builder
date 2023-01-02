@@ -18,10 +18,7 @@ type Props = {
     radioButtonDataValue: string;
   }[];
   name?: string;
-  onChange: (
-    event: React.ChangeEvent<HTMLInputElement>,
-    value: string
-  ) => void;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>, value: string) => void;
   value: string;
 };
 

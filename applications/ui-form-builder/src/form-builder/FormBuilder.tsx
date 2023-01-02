@@ -1,15 +1,15 @@
 import { useState } from "react";
-import ElementList from "../ElementList";
+import ElementList from "./ElementList";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
-import { Element, FormJson } from "../ElementInterface";
+import { Element, FormJson } from "./ElementInterface";
 import { MuiButton, MuiStack } from "@power-form-builder/ui-components";
-import { components, sample } from "../ElementInterface";
+import { components, sample } from "./ElementInterface";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const FormBuilder = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { formName } = location.state;
+  const { formName } = location.state || {};
 
   const [formData, setFormData] = useState<FormJson>(sample);
   const [formJsonData, setFormJsonData] = useState("");

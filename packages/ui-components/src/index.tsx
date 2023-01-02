@@ -2,7 +2,7 @@ import Button from "./components/Button1";
 import MuiButton from "./components/MuiButton";
 import MuiCard from "./components/MuiCard";
 import MuiStack from "./components/MuiStack";
-import MuiTextField from "./components/MuiTextField";
+import TextField from "./components/TextField";
 import MuiRadioButton from "./components/MuiRadioButton";
 import MuiTextArea from "./components/MuiTextArea";
 import MuiCheckBox from "./components/MuiCheckBox";
@@ -15,7 +15,7 @@ export {
   MuiButton,
   MuiCard,
   MuiStack,
-  MuiTextField,
+  TextField,
   MuiRadioButton,
   MuiTextArea,
   MuiCheckBox,
