@@ -1,4 +1,4 @@
-import { Box, Button } from "@mui/material";
+import { Box, Button as DefaultButton } from "@mui/material";
 
 type Props = {
   label: string;
@@ -14,18 +14,20 @@ type Props = {
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
 };
 
-const MuiButton = (props: Props) => {
+const Button = ({ label, color, size, onClick, ...rest }: Props) => {
   return (
-    <Button
+    <DefaultButton
       variant="contained"
-      onClick={props.onClick}
-      color={props.color}
-      size={props.size}
+      onClick={onClick}
+      color={color}
+      size={size}
       type="submit"
+      aria-label={label}
+      {...rest}
     >
-      {props.label}
-    </Button>
+      {label}
+    </DefaultButton>
   );
 };
 
-export default MuiButton;
+export default Button;

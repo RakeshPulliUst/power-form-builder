@@ -8,9 +8,9 @@ import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import { TabContext, TabList, TabPanel } from "@material-ui/lab";
 import {
-  MuiButton,
-  MuiCheckBox,
-  MuiSelect,
+  Button,
+  Checkbox,
+  Select,
   TextField,
 } from "@power-form-builder/ui-components";
 import { RadioButtonDialog } from "../DialogInterface";
@@ -18,9 +18,6 @@ import { RadioButtonDialog } from "../DialogInterface";
 import { v4 as uuidv4 } from "uuid";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
-import { MdRemoveCircle } from "react-icons/md";
-import { MdAddCircle } from "react-icons/md";
-import { Button } from "reactstrap";
 
 type Props = {
   id: string;
@@ -165,7 +162,7 @@ const RadioButtonData: React.FC<{
               />
               <br />
               <br />
-              <MuiSelect
+              <Select
                 label="Options Label Position"
                 placeholder=""
                 menuItems={RadioOptionPositionValues}
@@ -221,12 +218,12 @@ const RadioButtonData: React.FC<{
                   </div>
                 ))}
                 <br />
-                <MuiButton label="Done" color="secondary" size="small" />
+                <Button label="Done" color="secondary" size="small" />
               </form>
             </DialogContentText>
           </TabPanel>
           <TabPanel value="3">
-            <MuiCheckBox
+            <Checkbox
               label="Required"
               checked={required}
               required={true}
@@ -236,13 +233,13 @@ const RadioButtonData: React.FC<{
         </TabContext>
       </DialogContent>
       <DialogActions>
-        <MuiButton
+        <Button
           label="Cancel"
           color="success"
           onClick={handleClose}
           size="medium"
         />
-        <MuiButton
+        <Button
           label="Save"
           color="success"
           onClick={handleData}

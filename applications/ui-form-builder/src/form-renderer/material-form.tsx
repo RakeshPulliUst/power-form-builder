@@ -1,14 +1,14 @@
 import React, { FormEvent, useState } from "react";
 import {
   TextField,
-  MuiTextArea,
-  MuiSelect,
-  MuiRadioButton,
-  MuiCheckBox,
-  MuiButton,
+  TextareaAutosize,
+  Select,
+  RadioGroup,
+  Checkbox,
+  Button,
 } from "@power-form-builder/ui-components";
-import MuiGrid from "@material-ui/core/Grid";
-import { MuiGridItem } from "@power-form-builder/ui-components";
+import Grid from "@material-ui/core/Grid";
+import { GridItem } from "@power-form-builder/ui-components";
 import { FormJson } from "../form-builder/ElementInterface";
 import { useLocation } from "react-router-dom";
 
@@ -151,20 +151,20 @@ function MaterialForm() {
             )}
           </>
           {
-            <MuiGridItem xs={12} sm={12}>
+            <GridItem xs={12} sm={12}>
               <h2>{formJsonData.title}</h2>
-            </MuiGridItem>
+            </GridItem>
           }
           {formJsonData.components.map((data) => {
             console.log("data", data);
             return (
-              <MuiGrid
+              <Grid
                 container
                 spacing={2}
                 alignItems="center"
                 justifyContent="center"
               >
-                <MuiGridItem xs={12} sm={6}>
+                <GridItem xs={12} sm={6}>
                   {data.element === "TextField" ? (
                     <TextField
                       label={data.label!}
@@ -203,7 +203,7 @@ function MaterialForm() {
                       maxLength={data.maxLength!}
                     />
                   ) : data.element === "TextArea" ? (
-                    <MuiTextArea
+                    <TextareaAutosize
                       label={data.label!}
                       required={data.required!}
                       placeholder={data.placeholder!}
@@ -212,9 +212,9 @@ function MaterialForm() {
                       onChange={onHandleChange}
                       minRows={parseInt(data.minRows!)}
                       width={parseInt(data.width!)}
-                    ></MuiTextArea>
+                    ></TextareaAutosize>
                   ) : data.element === "Select" && !data.multipleValues ? (
-                    <MuiSelect
+                    <Select
                       label={data.label!}
                       placeholder={data.placeholder!}
                       menuItems={data.menuItems!}
@@ -233,7 +233,7 @@ function MaterialForm() {
                       textFieldWidth={data.textFieldWidth}
                     />
                   ) : data.element === "Select" && data.multipleValues ? (
-                    <MuiSelect
+                    <Select
                       label={data.label!}
                       placeholder={data.placeholder!}
                       menuItems={data.menuItems!}
@@ -252,7 +252,7 @@ function MaterialForm() {
                       textFieldWidth={data.textFieldWidth}
                     />
                   ) : data.element === "RadioButton" ? (
-                    <MuiRadioButton
+                    <RadioGroup
                       label={data.label!}
                       options={
                         data.options !== undefined
@@ -272,7 +272,7 @@ function MaterialForm() {
                       onChange={onHandleChange}
                     />
                   ) : data.element === "CheckBox" ? (
-                    <MuiCheckBox
+                    <Checkbox
                       label={data.label!}
                       name={data.label!}
                       required={data.required!}
@@ -281,7 +281,7 @@ function MaterialForm() {
                       onChange={handleChange}
                     />
                   ) : data.element === "Button" ? (
-                    <MuiButton
+                    <Button
                       label={data.label!}
                       color={
                         data.theme !== undefined
@@ -313,8 +313,8 @@ function MaterialForm() {
                   ) : (
                     ""
                   )}
-                </MuiGridItem>
-              </MuiGrid>
+                </GridItem>
+              </Grid>
             );
           })}
         </form>

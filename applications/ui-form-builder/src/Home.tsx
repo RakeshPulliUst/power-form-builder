@@ -1,4 +1,4 @@
-import { MuiButton } from "@power-form-builder/ui-components";
+import { Button } from "@power-form-builder/ui-components";
 import React, { useState } from "react";
 import "./Home.css";
 import { UITranslation } from "@power-form-builder/ui-translation";
@@ -21,7 +21,7 @@ function Home({}: Props) {
           <UITranslation name="welcome_to_our_formsite" />
         </h1>
         <div className="home-btns">
-          <MuiButton
+          <Button
             label="Build Form"
             color="secondary"
             size="large"

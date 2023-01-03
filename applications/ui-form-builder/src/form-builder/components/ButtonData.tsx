@@ -7,11 +7,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import { TabContext, TabList, TabPanel } from "@material-ui/lab";
-import {
-  MuiButton,
-  MuiSelect,
-  TextField,
-} from "@power-form-builder/ui-components";
+import { Button, Select, TextField } from "@power-form-builder/ui-components";
 import { ButtonDialog } from "../DialogInterface";
 
 const ButtonData: React.FC<{
@@ -107,7 +103,7 @@ const ButtonData: React.FC<{
               />
               <br />
               <br />
-              <MuiSelect
+              <Select
                 label="Theme"
                 placeholder="Type To Search"
                 menuItems={ButtonThemeValues}
@@ -121,7 +117,7 @@ const ButtonData: React.FC<{
               />
               <br />
               <br />
-              <MuiSelect
+              <Select
                 label="Size"
                 placeholder="Type To Search"
                 menuItems={ButtonSizeDataValues}
@@ -138,13 +134,13 @@ const ButtonData: React.FC<{
         </TabContext>
       </DialogContent>
       <DialogActions>
-        <MuiButton
+        <Button
           label="Cancel"
           color="success"
           onClick={handleClose}
           size="medium"
         />
-        <MuiButton
+        <Button
           label="Save"
           color="success"
           onClick={handleData}

@@ -18,29 +18,43 @@ type Props = {
   name?: string;
 };
 
-const MuiSelect = (props: Props) => {
+const Select = ({
+  label,
+  multiple,
+  size,
+  required,
+  menuItems,
+  placeholder,
+  onChange,
+  values,
+  defaultValue,
+  textFieldWidth,
+  name,
+  ...rest
+}: Props) => {
   return (
     <TextField
-      label={props.label}
+      label={label}
       select
       SelectProps={{
-        multiple: props.multiple,
+        multiple: multiple,
       }}
-      size={props.size}
+      size={size}
       color="secondary"
-      value={props.values}
-      onChange={props.onChange}
-      required={props.required}
-      placeholder={props.placeholder}
-      defaultValue={props.defaultValue}
-      name={props.name}
-      style={{ width: props.textFieldWidth, margin: 1 }}
+      value={values}
+      onChange={onChange}
+      required={required}
+      placeholder={placeholder}
+      defaultValue={defaultValue}
+      name={name}
+      style={{ width: textFieldWidth, margin: 1 }}
+      {...rest}
     >
-      {props.menuItems.map((item, index) => (
+      {menuItems.map((item, index) => (
         <MenuItem value={item.selectDataValue}>{item.selectDataLabel}</MenuItem>
       ))}
     </TextField>
   );
 };
 
-export default MuiSelect;
+export default Select;

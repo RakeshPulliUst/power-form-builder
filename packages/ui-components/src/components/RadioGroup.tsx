@@ -3,7 +3,7 @@ import {
   FormControl,
   FormLabel,
   FormControlLabel,
-  RadioGroup,
+  RadioGroup as DefaultRadioGroup,
   Radio,
 } from "@mui/material";
 
@@ -22,7 +22,16 @@ type Props = {
   value: string;
 };
 
-function MuiRadioButton(props: Props) {
+function RadioGroup({
+  label,
+  required,
+  options,
+  radioItems,
+  name,
+  onChange,
+  value,
+  ...rest
+}: Props) {
   // const [value, setValue] = useState("");
   // console.log(value);
 
@@ -31,25 +40,20 @@ function MuiRadioButton(props: Props) {
   // };
 
   return (
-    <FormControl required={props.required}>
-      <FormLabel id="radio-button">{props.label}</FormLabel>
-      <RadioGroup
-        row
-        name={props.name}
-        value={props.value}
-        onChange={props.onChange}
-      >
-        {props.radioItems.map((item, index) => (
+    <FormControl required={required}>
+      <FormLabel id="radio-button">{label}</FormLabel>
+      <DefaultRadioGroup row name={name} value={value} onChange={onChange} {...rest}>
+        {radioItems.map((item, index) => (
           <FormControlLabel
-            labelPlacement={props.options}
+            labelPlacement={options}
             value={item.radioButtonDataValue}
-            control={<Radio name={props.name} size="small" color="secondary" />}
+            control={<Radio name={name} size="small" color="secondary" />}
             label={item.radioButtonDataLabel}
           />
         ))}
-      </RadioGroup>
+      </DefaultRadioGroup>
     </FormControl>
   );
 }
 
-export default MuiRadioButton;
+export default RadioGroup;

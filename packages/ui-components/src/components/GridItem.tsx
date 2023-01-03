@@ -8,12 +8,12 @@ type Props = {
   children: React.ReactNode;
 };
 
-const MuiGridItem = (props: Props) => {
+const GridItem = ({ xs, md, sm, children, ...rest }: Props) => {
   return (
-    <Grid item xs={props.xs} md={props.md} sm={props.sm}>
-      {props.children}
+    <Grid item xs={xs} md={md} sm={sm} {...rest}>
+      {children}
     </Grid>
   );
 };
 
-export default MuiGridItem;
+export default GridItem;

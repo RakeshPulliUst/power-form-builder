@@ -8,7 +8,7 @@ import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import { TabContext, TabList, TabPanel } from "@material-ui/lab";
 import { useNavigate } from "react-router-dom";
-import { MuiButton, TextField } from "@power-form-builder/ui-components";
+import { Button, TextField } from "@power-form-builder/ui-components";
 
 type Props = {
   open: boolean;
@@ -69,7 +69,7 @@ function FormNameInput({ open }: Props) {
           </TabContext>
         </DialogContent>
         <DialogActions>
-          <MuiButton
+          <Button
             label="Save"
             color="success"
             onClick={handleSubmit}

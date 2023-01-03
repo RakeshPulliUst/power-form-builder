@@ -6,12 +6,13 @@ import { Draggable } from "react-beautiful-dnd";
 import { FaEdit } from "react-icons/fa";
 
 import "./styles.css";
+
 import {
-  MuiButton,
-  MuiCheckBox,
-  MuiRadioButton,
-  MuiSelect,
-  MuiTextArea,
+  Button,
+  Checkbox,
+  RadioGroup,
+  Select,
+  TextareaAutosize,
   TextField,
 } from "@power-form-builder/ui-components";
 import TextFieldData from "./components/TextFieldData";
@@ -41,12 +42,13 @@ type RadioProps = {
 }[];
 
 const SingleElement: React.FC<{
+  show: boolean;
   index: number;
   element: Element;
   elements: Array<Element>;
   setElements: React.Dispatch<React.SetStateAction<Array<Element>>>;
   editable: boolean;
-}> = ({ index, element, elements, setElements, editable }) => {
+}> = ({ show, index, element, elements, setElements, editable }) => {
   const textFieldValues: TextFieldDiaglog = {
     label: "TextField",
     required: false,
@@ -131,7 +133,7 @@ const SingleElement: React.FC<{
   };
 
   //TextField
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(show);
 
   const handleClickOpen = () => {
     console.log("Opened");
@@ -208,6 +210,7 @@ const SingleElement: React.FC<{
 
   const handleClose = () => {
     console.log(element.element);
+    handleDelete(element.id);
     setOpen(!open);
     if (element.element === "Button") {
       console.log(buttonValues);
@@ -300,6 +303,7 @@ const SingleElement: React.FC<{
   };
 
   const [textFieldStatus, setTextFieldStatus] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
   return (
     <Draggable draggableId={element.id.toString()} index={index}>
       {(provided, snapshot) => (
@@ -308,6 +312,9 @@ const SingleElement: React.FC<{
           {...provided.dragHandleProps}
           ref={provided.innerRef}
           className={`elements__single ${snapshot.isDragging ? "drag" : ""}`}
+          onMouseLeave={() => setShowDropdown(false)}
+          onMouseOver={() => setShowDropdown(true)}
+          // style={{ width: "166px" }}
         >
           <>
             {element.element === "TextField" ? (
@@ -340,7 +347,7 @@ const SingleElement: React.FC<{
                   handleOpen={handleOpen}
                 ></TextAreaData>
 
-                <MuiTextArea
+                <TextareaAutosize
                   label={textAreaValues.label}
                   required={textAreaValues.required}
                   placeholder={textAreaValues.placeholder}
@@ -348,7 +355,7 @@ const SingleElement: React.FC<{
                   onChange={handleTextAreaValue}
                   minRows={parseInt(textAreaValues.minRows)}
                   width={parseInt(textAreaValues.width)}
-                ></MuiTextArea>
+                ></TextareaAutosize>
               </>
             ) : element.element === "Password" ? (
               <>
@@ -403,7 +410,7 @@ const SingleElement: React.FC<{
                   handleOpen={handleOpen}
                 ></CheckBoxData>
 
-                <MuiCheckBox
+                <Checkbox
                   label={checkBoxValues.label}
                   required={checkBoxValues.required}
                   checked={checkBoxValues.default}
@@ -419,7 +426,7 @@ const SingleElement: React.FC<{
                   handleOpen={handleOpen}
                 ></SelectData>
 
-                <MuiSelect
+                <Select
                   label={selectValues.label}
                   placeholder={selectValues.placeholder}
                   menuItems={menuItemsData}
@@ -442,7 +449,7 @@ const SingleElement: React.FC<{
                   handleOpen={handleOpen}
                 ></ButtonData>
 
-                <MuiButton
+                <Button
                   label={buttonValues.label}
                   color={
                     buttonValues.size.pop() === "primary"
@@ -478,7 +485,7 @@ const SingleElement: React.FC<{
                   handleOpen={handleOpen}
                 />
 
-                <MuiRadioButton
+                <RadioGroup
                   label={radiobuttonValues.label}
                   options={
                     radiobuttonValues.options.pop() === "top"
@@ -504,27 +511,21 @@ const SingleElement: React.FC<{
                 <h1>Not Valid Component</h1>
               </>
             )}
-
-            {editable ? (
+            {showDropdown ? (
               <>
-                <div>
-                  <span
-                    className="icon"
-                    onClick={() => {
-                      setEdit(!edit);
-                      handleClickOpen();
-                    }}
-                  >
-                    {edit ? <AiFillEdit /> : <FaEdit />}
-                  </span>
+                <span
+                  className="icon"
+                  onClick={() => {
+                    setEdit(!edit);
+                    handleClickOpen();
+                  }}
+                >
+                  {edit ? <AiFillEdit /> : <FaEdit />}
+                </span>
 
-                  <span
-                    className="icon"
-                    onClick={() => handleDelete(element.id)}
-                  >
-                    <AiFillDelete />
-                  </span>
-                </div>
+                <span className="icon" onClick={() => handleDelete(element.id)}>
+                  <AiFillDelete />
+                </span>
               </>
             ) : (
               <></>

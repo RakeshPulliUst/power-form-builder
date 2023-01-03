@@ -7,11 +7,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import { TabContext, TabList, TabPanel } from "@material-ui/lab";
-import {
-  MuiButton,
-  MuiCheckBox,
-  TextField,
-} from "@power-form-builder/ui-components";
+import { Button, Checkbox, TextField } from "@power-form-builder/ui-components";
 import { TextFieldDiaglog } from "../DialogInterface";
 
 const TextFieldData: React.FC<{
@@ -128,7 +124,7 @@ const TextFieldData: React.FC<{
             </DialogContentText>
           </TabPanel>
           <TabPanel value="2">
-            <MuiCheckBox
+            <Checkbox
               label="Required"
               checked={required}
               required={true}
@@ -156,13 +152,13 @@ const TextFieldData: React.FC<{
         </TabContext>
       </DialogContent>
       <DialogActions>
-        <MuiButton
+        <Button
           label="Cancel"
           color="success"
           onClick={handleClose}
           size="medium"
         />
-        <MuiButton
+        <Button
           label="Save"
           color="success"
           onClick={handleData}

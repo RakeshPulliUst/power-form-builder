@@ -8,15 +8,15 @@ import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import { TabContext, TabList, TabPanel } from "@material-ui/lab";
 import {
-  MuiButton,
-  MuiCheckBox,
-  MuiSelect,
+  Button,
+  Checkbox,
+  Select,
   TextField,
 } from "@power-form-builder/ui-components";
 import { SelectDiaglog } from "../DialogInterface";
 import { v4 as uuidv4 } from "uuid";
-import { MdRemoveCircle } from "react-icons/md";
-import { MdAddCircle } from "react-icons/md";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 
 type Props = {
   id: string;
@@ -191,7 +191,7 @@ const SelectData: React.FC<{
               />
               <br />
               <br />
-              <MuiSelect
+              <Select
                 label="Size"
                 placeholder="Type To Search"
                 menuItems={SelectSizeDataValues}
@@ -207,7 +207,7 @@ const SelectData: React.FC<{
           </TabPanel>
           <TabPanel value="2">
             <DialogContentText id="alert-dialog-description">
-              <MuiCheckBox
+              <Checkbox
                 label="Multiple Values"
                 checked={multipleValues}
                 required={true}
@@ -244,23 +244,23 @@ const SelectData: React.FC<{
                         className="icon"
                         onClick={() => handleRemoveFields(item.id)}
                       >
-                        <MdRemoveCircle />
+                        <RemoveCircleIcon />
                       </span>
                     ) : (
                       <></>
                     )}
                     <span className="icon" onClick={handleAddFields}>
-                      <MdAddCircle />
+                      <AddCircleIcon />
                     </span>
                   </div>
                 ))}
                 <br />
-                <MuiButton label="Done" color="secondary" size="small" />
+                <Button label="Done" color="secondary" size="small" />
               </form>
             </DialogContentText>
           </TabPanel>
           <TabPanel value="3">
-            <MuiCheckBox
+            <Checkbox
               label="Required"
               checked={required}
               required={true}
@@ -270,13 +270,13 @@ const SelectData: React.FC<{
         </TabContext>
       </DialogContent>
       <DialogActions>
-        <MuiButton
+        <Button
           label="Cancel"
           color="success"
           onClick={handleClose}
           size="medium"
         />
-        <MuiButton
+        <Button
           label="Save"
           color="success"
           onClick={handleData}
