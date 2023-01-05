@@ -12,9 +12,10 @@ export interface Element {
 
     minLength?: number;
     maxLength?: number;
+    rows?: number
 
-    minRows?: string;
-    width?: string;
+    minRows?: number;
+    width?: number;
 
     checked?: boolean;
     default?: boolean;
@@ -28,10 +29,10 @@ export interface Element {
     }[]; 
     textFieldWidth?: number
 
-    theme?: string[],
-    size?: string[], 
+    theme?: string,
+    size?: string, 
     
-    options?: string[],
+    options?: string,
     radioItems?: {
       radioButtonDataLabel: string
       radioButtonDataValue: string
@@ -52,8 +53,8 @@ export interface Element {
       id: 1,
       element: "Button",
       label: '', 
-      theme: [], 
-      size: []
+      theme: 'success', 
+      size: 'medium'
     },
     {
       id: 2,
@@ -79,8 +80,9 @@ export interface Element {
       label : '',
       placeholder: '',
       required: false,
-      minRows: '',
-      width: ''
+      minLength: 0,
+      maxLength: 0,
+      rows: 0
     },
     {
       id: 5,
@@ -89,7 +91,7 @@ export interface Element {
       placeholder: '',
       multipleValues: false,
       required: false,
-      size: [],
+      size: '',
       textFieldWidth: 150
       // menuItems: {}
     },
@@ -106,7 +108,7 @@ export interface Element {
       id: 7,
       element: "RadioButton",
       label: '',
-      options: [],
+      options: '',
         // radioItems: {
         //   radioButtonDataLabel: '',
         //   radioButtonDataValue: ''

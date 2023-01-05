@@ -4,9 +4,9 @@ import React from "react";
 type Props = {
   label: string;
   placeholder: string;
-  width: string | number;
+  width: number;
   required: boolean;
-  minRows: string | number;
+  minRows: number;
   value: string;
   onChange: React.ChangeEventHandler<HTMLTextAreaElement>;
   name?: string;

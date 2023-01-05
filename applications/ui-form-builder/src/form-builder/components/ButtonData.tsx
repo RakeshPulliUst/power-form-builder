@@ -47,24 +47,33 @@ const ButtonData: React.FC<{
     console.log(buttonLabel);
   };
 
-  const handleButtonTheme = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleButtonTheme = (event: any) => {
+    // const {
+    //   target: { value },
+    // } = event;
+    // setButtonTheme(typeof value === "string" ? value.split(",") : value);
+
     const selectvalue = event.target.value;
+    console.log(selectvalue);
     setButtonTheme(
       typeof selectvalue === "string" ? selectvalue.split(",") : selectvalue
     );
+    console.log(buttonTheme);
   };
 
-  const handleButtonSize = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleButtonSize = (event: any) => {
     const selectvalue = event.target.value;
+    console.log(selectvalue);
     setButtonSize(
       typeof selectvalue === "string" ? selectvalue.split(",") : selectvalue
     );
+    console.log(buttonSize);
   };
 
   const handleData = () => {
     buttonValues.label = buttonLabel;
-    buttonValues.theme = buttonTheme;
-    buttonValues.size = buttonSize;
+    buttonValues.theme = buttonTheme.toString();
+    buttonValues.size = buttonSize.toString();
     console.log(buttonValues);
     handleOpen();
   };
@@ -108,25 +117,22 @@ const ButtonData: React.FC<{
                 placeholder="Type To Search"
                 menuItems={ButtonThemeValues}
                 multiple={false}
-                values={buttonTheme}
+                value={buttonTheme}
                 onChange={handleButtonTheme}
-                textFieldWidth={225}
+                width={225}
                 size="medium"
                 required={false}
-                defaultValue={"primary"}
               />
-              <br />
               <br />
               <Select
                 label="Size"
                 placeholder="Type To Search"
                 menuItems={ButtonSizeDataValues}
                 multiple={false}
-                values={buttonSize}
-                textFieldWidth={225}
+                value={buttonSize}
                 onChange={handleButtonSize}
+                width={225}
                 size="medium"
-                defaultValue={"medium"}
                 required={false}
               />
             </DialogContentText>

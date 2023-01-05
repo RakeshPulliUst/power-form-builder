@@ -35,6 +35,7 @@ const TextFieldData: React.FC<{
   const [textPlaceholder, setTextPlaceholder] = useState("");
   const [textMinLength, setTextMinLength] = useState(0);
   const [textMaxLength, setTextMaxLength] = useState(0);
+  const [rows, setrows] = useState(0);
 
   const handleTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTextValue(event.target.value);
@@ -55,6 +56,10 @@ const TextFieldData: React.FC<{
     setTextMaxLength(parseInt(event.target.value));
   };
 
+  const handlerows = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setrows(parseInt(event.target.value));
+  };
+
   //Checkbox
   const [required, setRequired] = useState(false);
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -68,6 +73,7 @@ const TextFieldData: React.FC<{
     textFieldValues.maxLength = textMaxLength;
     textFieldValues.minLength = textMinLength;
     textFieldValues.required = required;
+    textFieldValues.rows = rows;
     console.log(textFieldValues);
     textFieldStatus = true;
     console.log(textFieldStatus);
@@ -94,6 +100,8 @@ const TextFieldData: React.FC<{
           ? "TextField Details"
           : element === "Password"
           ? "Password Detais"
+          : element === "TextArea"
+          ? "TextArea Details"
           : "Email Details"}
       </DialogTitle>
       <DialogContent>
@@ -148,6 +156,21 @@ const TextFieldData: React.FC<{
               value={textMaxLength.toString()}
               onChange={handleTextMaxLength}
             />
+            <br />
+            {element === "TextArea" ? (
+              <>
+                <br />
+                <TextField
+                  label="Rows"
+                  required={true}
+                  placeholder="Enter Rows"
+                  value={rows.toString()}
+                  onChange={handlerows}
+                />
+              </>
+            ) : (
+              <>sdsd</>
+            )}
           </TabPanel>
         </TabContext>
       </DialogContent>

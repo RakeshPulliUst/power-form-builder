@@ -4,14 +4,15 @@ export interface TextFieldDiaglog {
     required: boolean;
     minLength: number;
     maxLength: number;
+    rows?: number;
   }
 
   export interface TextAreaDiaglog {
     label : string;
     placeholder: string;
     required: boolean;
-    minRows: string;
-    width: string;
+    minRows: number;
+    width: number;
   }
 
   
@@ -28,8 +29,8 @@ export interface TextFieldDiaglog {
     placeholder: string;
     multipleValues: boolean
     required: boolean;
-    size: string[],
-    textFieldWidth: number,
+    size: string,
+    width: number,
     menuItems: {
       id: string
       selectDataLabel: string
@@ -39,13 +40,13 @@ export interface TextFieldDiaglog {
 
   export interface ButtonDialog {
     label: string,
-    theme: string[],
-    size: string[],
+    theme: string,
+    size: string,
   };
 
   export interface RadioButtonDialog  {
     label: string,
-    options: string[],
+    options: string,
     radioItems: {
       radioButtonDataLabel: string
       radioButtonDataValue: string

@@ -24,7 +24,7 @@ type Props = {
   selectDataValue: string;
 }[];
 
-const SelectData: React.FC<{
+const SelectData1: React.FC<{
   open: boolean;
   handleClose: () => void;
   handleOpen: () => void;
@@ -77,7 +77,7 @@ const SelectData: React.FC<{
   ];
   const [selectSize, setSelectSize] = useState<string[]>([]);
 
-  const handleSelectSize = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSelectSize = (event: any) => {
     const selectvalue = event.target.value;
     setSelectSize(
       typeof selectvalue === "string" ? selectvalue.split(",") : selectvalue
@@ -89,8 +89,8 @@ const SelectData: React.FC<{
     selectValues.placeholder = textPlaceholder;
     selectValues.multipleValues = multipleValues;
     selectValues.required = required;
-    selectValues.size = selectSize;
-    selectValues.textFieldWidth = parseInt(selectWidth);
+    selectValues.size = selectSize.toString();
+    selectValues.width = parseInt(selectWidth);
     selectValues.menuItems = menuItemsData;
     console.log(selectValues);
     handleOpen();
@@ -196,11 +196,10 @@ const SelectData: React.FC<{
                 placeholder="Type To Search"
                 menuItems={SelectSizeDataValues}
                 multiple={false}
-                values={selectSize}
-                textFieldWidth={225}
-                onChange={handleSelectSize}
+                value={selectSize}
+                width={225}
                 size="medium"
-                defaultValue="medium"
+                onChange={handleSelectSize}
                 required={false}
               />
             </DialogContentText>
@@ -287,4 +286,4 @@ const SelectData: React.FC<{
   );
 };
 
-export default SelectData;
+export default SelectData1;

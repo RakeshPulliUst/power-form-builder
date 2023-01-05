@@ -1,7 +1,7 @@
 import React from "react";
 import { Element } from "./ElementInterface";
 import SingleElement from "./SingleElement";
-import { Droppable } from "react-beautiful-dnd";
+import { Draggable, Droppable } from "react-beautiful-dnd";
 import { Grid, GridItem } from "@power-form-builder/ui-components";
 import FixedComponentList from "./FixedComponentList";
 
@@ -59,20 +59,6 @@ const ElementList: React.FC<props> = ({
                 <span className="elements__heading">Form Elements</span>
                 {CompletedElements?.map((element, index) => (
                   <>
-                    {element.element === "Column" ? (
-                      <>
-                        <Grid>
-                          <GridItem xs={5} md={6}>
-                            <h1>Hello</h1>
-                          </GridItem>
-                          <GridItem xs={5} md={6}>
-                            <h1>Hii</h1>
-                          </GridItem>
-                        </Grid>
-                      </>
-                    ) : (
-                      <> </>
-                    )}
                     <SingleElement
                       show={show}
                       index={index}

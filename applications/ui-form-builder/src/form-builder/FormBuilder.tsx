@@ -41,7 +41,7 @@ const FormBuilder = () => {
       setFormJsonData(formJsonData);
       console.log(formJsonData);
       console.log(formData);
-      navigate("/formrender", { state: { formData1: formData } });
+      navigate("/formrender", { state: { formData: formData } });
     } else {
       alert("Please Add Elements");
     }

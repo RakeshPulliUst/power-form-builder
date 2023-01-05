@@ -14,22 +14,21 @@ import { useLocation } from "react-router-dom";
 
 function MaterialForm() {
   const location = useLocation();
-  const { formData1 } = location.state || {};
-  const [formJsonData, setFormJsonData] = useState<FormJson>(formData1);
+  const { formData } = location.state || {};
+  const [formJsonData, setFormJsonData] = useState<FormJson>(formData);
 
   const [val, setVal] = React.useState({
     firstname: "",
     email: "",
     password: "",
     address: "",
-    country: "",
     gender: "",
   });
 
   //Final Select
   const [selectData, setSelectData] = useState<string[]>([]);
 
-  const handleSelectData = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSelectData = (event: any) => {
     const selectvalue = event.target.value;
     setSelectData(
       typeof selectvalue === "string" ? selectvalue.split(",") : selectvalue
@@ -48,6 +47,7 @@ function MaterialForm() {
     e:
       | React.ChangeEvent<HTMLInputElement>
       | React.ChangeEvent<HTMLTextAreaElement>
+      | any
   ) => {
     setVal({
       ...val,
@@ -60,7 +60,6 @@ function MaterialForm() {
       val.email !== "" &&
       val.password !== "" &&
       val.address !== "" &&
-      val.country !== "" &&
       val.gender !== ""
     ) {
       console.log("No Error");
@@ -92,7 +91,6 @@ function MaterialForm() {
       val.firstname !== "" ||
       (val.email !== "" && regex1.test(val.email)) ||
       val.password !== "" ||
-      val.country !== "" ||
       val.address !== "" ||
       val.gender !== "" ||
       checkbox !== "" ||
@@ -114,9 +112,11 @@ function MaterialForm() {
       email: "",
       password: "",
       address: "",
-      country: "",
       gender: "",
     });
+    setSelectData([""]);
+    setCheckbox("");
+    setChecked(false);
   };
   return (
     <>
@@ -141,10 +141,9 @@ function MaterialForm() {
                 <li>Email:{val.email}</li>
                 <li>Password:{val.password}</li>
                 <li>Address:{val.address}</li>
-                <li>Country:{val.country}</li>
                 <li>Gender:{val.gender}</li>
                 <li>CheckBox:{checkbox}</li>
-                <li>Multiple Select: {selectData}</li>
+                <li>Select: {selectData.toString()}</li>
               </ul>
             ) : (
               ""
@@ -156,6 +155,8 @@ function MaterialForm() {
             </GridItem>
           }
           {formJsonData.components.map((data) => {
+            console.log(formData);
+            console.log(formJsonData);
             console.log("data", data);
             return (
               <Grid
@@ -203,16 +204,18 @@ function MaterialForm() {
                       maxLength={data.maxLength!}
                     />
                   ) : data.element === "TextArea" ? (
-                    <TextareaAutosize
+                    <TextField
                       label={data.label!}
                       required={data.required!}
                       placeholder={data.placeholder!}
                       name={data.label?.toLocaleLowerCase()}
                       value={val.address}
                       onChange={onHandleChange}
-                      minRows={parseInt(data.minRows!)}
-                      width={parseInt(data.width!)}
-                    ></TextareaAutosize>
+                      minLength={data.minLength!}
+                      maxLength={data.maxLength!}
+                      rows={data.rows}
+                      multiline={true}
+                    ></TextField>
                   ) : data.element === "Select" && !data.multipleValues ? (
                     <Select
                       label={data.label!}
@@ -220,17 +223,17 @@ function MaterialForm() {
                       menuItems={data.menuItems!}
                       multiple={data.multipleValues!}
                       name={data.label?.toLocaleLowerCase()}
-                      values={val.country}
-                      onChange={onHandleChange}
+                      value={selectData}
+                      onChange={handleSelectData}
                       size={
                         data.size !== undefined
-                          ? data.size.pop() === "small"
+                          ? data.size === "small"
                             ? "small"
                             : "medium"
                           : "medium"
                       }
                       required={data.required!}
-                      textFieldWidth={data.textFieldWidth}
+                      width={data.width}
                     />
                   ) : data.element === "Select" && data.multipleValues ? (
                     <Select
@@ -239,28 +242,28 @@ function MaterialForm() {
                       menuItems={data.menuItems!}
                       multiple={data.multipleValues!}
                       name={data.label?.toLocaleLowerCase()}
-                      values={selectData}
+                      value={selectData}
                       onChange={handleSelectData}
                       size={
                         data.size !== undefined
-                          ? data.size.pop() === "small"
+                          ? data.size === "small"
                             ? "small"
                             : "medium"
                           : "medium"
                       }
                       required={data.required!}
-                      textFieldWidth={data.textFieldWidth}
+                      width={data.width}
                     />
                   ) : data.element === "RadioButton" ? (
                     <RadioGroup
                       label={data.label!}
                       options={
                         data.options !== undefined
-                          ? data.options.pop() === "top"
+                          ? data.options === "top"
                             ? "top"
-                            : data.options.pop() === "bottom"
+                            : data.options === "bottom"
                             ? "bottom"
-                            : data.options.pop() === "start"
+                            : data.options === "start"
                             ? "start"
                             : "end"
                           : "end"
@@ -285,26 +288,26 @@ function MaterialForm() {
                       label={data.label!}
                       color={
                         data.theme !== undefined
-                          ? data.theme.pop() === "primary"
+                          ? data.theme === "primary"
                             ? "primary"
-                            : data.theme.pop() === "secondary"
+                            : data.theme === "secondary"
                             ? "secondary"
-                            : data.theme.pop() === "info"
+                            : data.theme === "info"
                             ? "info"
-                            : data.theme.pop() === "success"
+                            : data.theme === "success"
                             ? "success"
-                            : data.theme.pop() === "warning"
+                            : data.theme === "warning"
                             ? "warning"
-                            : data.theme.pop() === "error"
+                            : data.theme === "error"
                             ? "error"
                             : "inherit"
-                          : "primary"
+                          : "warning"
                       }
                       size={
                         data.size !== undefined
-                          ? data.size.pop() === "small"
+                          ? data.size === "small"
                             ? "small"
-                            : data.size.pop() === "medium"
+                            : data.size === "medium"
                             ? "medium"
                             : "large"
                           : "medium"

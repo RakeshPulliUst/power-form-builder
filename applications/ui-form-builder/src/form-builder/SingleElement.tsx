@@ -12,6 +12,7 @@ import {
   Checkbox,
   RadioGroup,
   Select,
+  TextFieldSelect,
   TextareaAutosize,
   TextField,
 } from "@power-form-builder/ui-components";
@@ -26,7 +27,7 @@ import {
 } from "./DialogInterface";
 import TextAreaData from "./components/TextAreaData";
 import CheckBoxData from "./components/CheckBoxData";
-import SelectData from "./components/SelectData";
+import SelectData from "./components/TextFieldSelectData";
 import ButtonData from "./components/ButtonData";
 import RadioButtonData from "./components/RadioButtonData";
 
@@ -73,12 +74,13 @@ const SingleElement: React.FC<{
     maxLength: 0,
   };
 
-  const textAreaValues: TextAreaDiaglog = {
+  const textAreaValues: TextFieldDiaglog = {
     label: "TextArea",
     required: false,
     placeholder: "Enter TextArea",
-    minRows: "",
-    width: "",
+    minLength: 0,
+    maxLength: 0,
+    rows: 0,
   };
 
   const checkBoxValues: CheckBoxDiaglog = {
@@ -91,8 +93,8 @@ const SingleElement: React.FC<{
 
   const buttonValues: ButtonDialog = {
     label: "Button",
-    theme: ["secondary"],
-    size: ["large"],
+    theme: "secondary",
+    size: "large",
   };
 
   const menuItemsData: Props = [
@@ -104,8 +106,8 @@ const SingleElement: React.FC<{
     placeholder: "Select the option",
     multipleValues: false,
     required: false,
-    size: ["medium"],
-    textFieldWidth: 220,
+    size: "medium",
+    width: 220,
     menuItems: menuItemsData,
   };
 
@@ -116,7 +118,7 @@ const SingleElement: React.FC<{
 
   const radiobuttonValues: RadioButtonDialog = {
     label: "RadioButton",
-    options: [],
+    options: "",
     radioItems: radioItemsData,
     required: false,
   };
@@ -147,8 +149,8 @@ const SingleElement: React.FC<{
       console.log(buttonValues);
       console.log("JSON", JSON.stringify(buttonValues));
       element.label = buttonValues.label;
-      element.theme = buttonValues.theme;
-      element.size = buttonValues.size;
+      element.theme = buttonValues.theme.toString();
+      element.size = buttonValues.size.toString();
     } else if (element.element === "TextField") {
       console.log(textFieldValues.label);
       console.log("JSON", JSON.stringify(textFieldValues));
@@ -178,8 +180,9 @@ const SingleElement: React.FC<{
       console.log("JSON", JSON.stringify(textAreaValues));
       element.label = textAreaValues.label;
       element.placeholder = textAreaValues.placeholder;
-      element.minRows = textAreaValues.minRows;
-      element.width = textAreaValues.width;
+      element.rows = textAreaValues.rows;
+      element.maxLength = textAreaValues.maxLength;
+      element.minLength = textAreaValues.minLength;
       element.required = textAreaValues.required;
     } else if (element.element === "Select") {
       console.log(selectValues);
@@ -189,8 +192,8 @@ const SingleElement: React.FC<{
       element.multipleValues = selectValues.multipleValues;
       element.menuItems = selectValues.menuItems;
       element.required = selectValues.required;
-      element.size = selectValues.size;
-      element.textFieldWidth = selectValues.textFieldWidth;
+      element.size = selectValues.size.toString();
+      element.width = selectValues.width;
     } else if (element.element === "CheckBox") {
       console.log(checkBoxValues);
       console.log("JSON", JSON.stringify(checkBoxValues));
@@ -283,7 +286,7 @@ const SingleElement: React.FC<{
   //Final Select
   const [selectData, setSelectData] = useState<string[]>([]);
 
-  const handleSelectData = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSelectData = (event: any) => {
     const selectvalue = event.target.value;
     setSelectData(
       typeof selectvalue === "string" ? selectvalue.split(",") : selectvalue
@@ -340,22 +343,26 @@ const SingleElement: React.FC<{
               </>
             ) : element.element === "TextArea" ? (
               <>
-                <TextAreaData
+                <TextFieldData
                   open={open}
                   handleClose={handleClose}
-                  textAreaValues={textAreaValues}
+                  textFieldValues={textAreaValues}
                   handleOpen={handleOpen}
-                ></TextAreaData>
+                  element={element.element}
+                  textFieldStatus={textFieldStatus}
+                ></TextFieldData>
 
-                <TextareaAutosize
+                <TextField
                   label={textAreaValues.label}
                   required={textAreaValues.required}
                   placeholder={textAreaValues.placeholder}
                   value={textAreaValue}
                   onChange={handleTextAreaValue}
-                  minRows={parseInt(textAreaValues.minRows)}
-                  width={parseInt(textAreaValues.width)}
-                ></TextareaAutosize>
+                  rows={textAreaValues.rows}
+                  minLength={textAreaValues.minLength}
+                  maxLength={textAreaValues.maxLength}
+                  multiline={true}
+                ></TextField>
               </>
             ) : element.element === "Password" ? (
               <>
@@ -431,13 +438,11 @@ const SingleElement: React.FC<{
                   placeholder={selectValues.placeholder}
                   menuItems={menuItemsData}
                   multiple={selectValues.multipleValues}
-                  values={selectData}
+                  value={selectData}
                   onChange={handleSelectData}
-                  size={
-                    selectValues.size.pop() === "small" ? "small" : "medium"
-                  }
+                  size={selectValues.size === "small" ? "small" : "medium"}
                   required={selectValues.required}
-                  textFieldWidth={selectValues.textFieldWidth}
+                  width={selectValues.width}
                 />
               </>
             ) : element.element === "Button" ? (
@@ -452,24 +457,24 @@ const SingleElement: React.FC<{
                 <Button
                   label={buttonValues.label}
                   color={
-                    buttonValues.size.pop() === "primary"
+                    buttonValues.size === "primary"
                       ? "primary"
-                      : buttonValues.size.pop() === "secondary"
+                      : buttonValues.size === "secondary"
                       ? "secondary"
-                      : buttonValues.size.pop() === "info"
+                      : buttonValues.size === "info"
                       ? "info"
-                      : buttonValues.size.pop() === "success"
+                      : buttonValues.size === "success"
                       ? "success"
-                      : buttonValues.size.pop() === "warning"
+                      : buttonValues.size === "warning"
                       ? "warning"
-                      : buttonValues.size.pop() === "error"
+                      : buttonValues.size === "error"
                       ? "error"
                       : "inherit"
                   }
                   size={
-                    buttonValues.size.pop() === "small"
+                    buttonValues.size === "small"
                       ? "small"
-                      : buttonValues.size.pop() === "medium"
+                      : buttonValues.size === "medium"
                       ? "medium"
                       : "large"
                   }
@@ -488,11 +493,11 @@ const SingleElement: React.FC<{
                 <RadioGroup
                   label={radiobuttonValues.label}
                   options={
-                    radiobuttonValues.options.pop() === "top"
+                    radiobuttonValues.options === "top"
                       ? "top"
-                      : radiobuttonValues.options.pop() === "bottom"
+                      : radiobuttonValues.options === "bottom"
                       ? "bottom"
-                      : radiobuttonValues.options.pop() === "start"
+                      : radiobuttonValues.options === "start"
                       ? "start"
                       : "end"
                   }

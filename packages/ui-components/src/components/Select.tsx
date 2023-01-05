@@ -1,59 +1,83 @@
-import { TextField, MenuItem } from "@mui/material";
-import { useState } from "react";
+import * as React from "react";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import { Select as DefaultSelect, SelectChangeEvent } from "@mui/material";
 
 type Props = {
   label: string;
   multiple: boolean;
-  size: "small" | "medium";
-  required: boolean;
   menuItems: {
     selectDataLabel: string;
     selectDataValue: string;
   }[];
   placeholder: string;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  values: string[] | string;
-  defaultValue?: string | number | boolean;
+  value: string[];
   textFieldWidth?: number;
   name?: string;
+  required: boolean;
+  size: "small" | "medium";
+  width?: number;
+  onChange?: (
+    event: SelectChangeEvent<string[]>,
+    child: React.ReactNode
+  ) => void;
 };
 
 const Select = ({
   label,
-  multiple,
-  size,
-  required,
+  value,
   menuItems,
+  multiple,
   placeholder,
-  onChange,
-  values,
-  defaultValue,
-  textFieldWidth,
+  required,
+  size,
+  width,
   name,
+  onChange,
   ...rest
 }: Props) => {
+  // const [selectItems, setSelectItems] = React.useState<string[]>(value);
+  // const handleChange = (event: SelectChangeEvent<typeof selectItems>) => {
+  //   const {
+  //     target: { value },
+  //   } = event;
+  //   setSelectItems(typeof value === "string" ? value.split(",") : value);
+  // };
+
   return (
-    <TextField
-      label={label}
-      select
-      SelectProps={{
-        multiple: multiple,
-      }}
-      size={size}
-      color="secondary"
-      value={values}
-      onChange={onChange}
-      required={required}
-      placeholder={placeholder}
-      defaultValue={defaultValue}
-      name={name}
-      style={{ width: textFieldWidth, margin: 1 }}
-      {...rest}
-    >
-      {menuItems.map((item, index) => (
-        <MenuItem value={item.selectDataValue}>{item.selectDataLabel}</MenuItem>
-      ))}
-    </TextField>
+    <div>
+      <FormControl sx={{ m: 1, width: width }}>
+        <InputLabel id="demo-multiple-name-label">{label}</InputLabel>
+        <DefaultSelect
+          labelId="demo-multiple-name-label"
+          id="demo-multiple-name"
+          multiple={multiple}
+          value={value}
+          onChange={onChange}
+          input={<OutlinedInput label={label} />}
+          MenuProps={{
+            style: {
+              width: width,
+            },
+          }}
+          placeholder={placeholder}
+          name={name}
+          required={required}
+          size={size}
+        >
+          <MenuItem disabled value="">
+            <em>{placeholder}</em>
+          </MenuItem>
+          {menuItems.map((name, index) => (
+            <MenuItem key={name.selectDataLabel} value={name.selectDataValue}>
+              {name.selectDataValue}
+            </MenuItem>
+          ))}
+        </DefaultSelect>
+      </FormControl>
+    </div>
   );
 };
 

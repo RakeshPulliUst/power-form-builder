@@ -24,8 +24,8 @@ const TextAreaData: React.FC<{
   //TextField
   const [textValue, setTextValue] = useState("");
   const [textPlaceholder, setTextPlaceholder] = useState("");
-  const [textMinRows, setTextMinRows] = useState("");
-  const [textWidth, setTextWidth] = useState("");
+  const [textMinRows, setTextMinRows] = useState(0);
+  const [textWidth, setTextWidth] = useState(0);
 
   const handleTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTextValue(event.target.value);
@@ -39,11 +39,11 @@ const TextAreaData: React.FC<{
   };
 
   const handleTextMinRows = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTextMinRows(event.target.value);
+    setTextMinRows(parseInt(event.target.value));
   };
 
   const handleTextWidth = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTextWidth(event.target.value);
+    setTextWidth(parseInt(event.target.value));
   };
 
   //Checkbox
@@ -118,7 +118,7 @@ const TextAreaData: React.FC<{
             <TextField
               label="Minimum Rows"
               required={true}
-              value={textMinRows}
+              value={textMinRows.toString()}
               placeholder="Enter Minimum Rows"
               onChange={handleTextMinRows}
             />
@@ -127,7 +127,7 @@ const TextAreaData: React.FC<{
             <TextField
               label="Text Area Width"
               required={true}
-              value={textWidth}
+              value={textWidth.toString()}
               placeholder="Enter TextArea Width"
               onChange={handleTextWidth}
             />

@@ -9,6 +9,8 @@ import Select from "./components/Select";
 import Grid from "./components/Grid";
 import GridItem from "./components/GridItem";
 import Alert from "./components/Alert";
+import TextFieldSelect from "./components/TextFieldSelect";
+import SelectChangeEvent from "@mui/material/Select";
 export {
   Button,
   Card,
@@ -21,4 +23,6 @@ export {
   Grid,
   GridItem,
   Alert,
+  TextFieldSelect,
+  SelectChangeEvent,
 };

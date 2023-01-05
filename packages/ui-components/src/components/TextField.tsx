@@ -15,6 +15,8 @@ type Props = {
   ref?: (instance: HTMLDivElement | null) => void;
   helperText?: string;
   error?: boolean;
+  multiline?: boolean;
+  rows?: number;
 };
 
 const TextField = ({
@@ -31,6 +33,8 @@ const TextField = ({
   ref,
   helperText,
   error,
+  multiline,
+  rows,
   ...rest
 }: Props) => {
   return (
@@ -46,6 +50,8 @@ const TextField = ({
       inputProps={{ maxLength: maxLength, minLength: minLength }}
       helperText={helperText}
       error={error}
+      multiline={multiline}
+      rows={rows}
       {...rest}
     />
 
