@@ -1,3 +1,4 @@
+import { Element } from "./ElementInterface";
 export interface TextFieldDiaglog {
     label : string;
     placeholder: string;
@@ -53,3 +54,26 @@ export interface TextFieldDiaglog {
     }[]; 
     required: boolean,
   };
+
+  export interface ColumnDialog {
+    label: string,
+    columnItems: {
+      id: string
+      columnDataSize: string[],
+      columnDataWidth: number
+    }[],
+  }
+
+export interface TabsDialog {
+  label: string,
+  tabItems: {
+    id: string
+    tabsDataLabel: string
+    tabsDataValue: string
+  }[],
+  tabcomponents: {
+    label: string,
+    key: string,
+    inner_components: Element[]
+  }[]
+}

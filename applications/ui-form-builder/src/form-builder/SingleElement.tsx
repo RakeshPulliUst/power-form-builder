@@ -15,6 +15,9 @@ import {
   TextFieldSelect,
   TextareaAutosize,
   TextField,
+  Tabs,
+  Grid,
+  GridItem,
 } from "@power-form-builder/ui-components";
 import TextFieldData from "./components/TextFieldData";
 import {
@@ -22,6 +25,7 @@ import {
   CheckBoxDiaglog,
   RadioButtonDialog,
   SelectDiaglog,
+  TabsDialog,
   TextAreaDiaglog,
   TextFieldDiaglog,
 } from "./DialogInterface";
@@ -30,12 +34,35 @@ import CheckBoxData from "./components/CheckBoxData";
 import SelectData from "./components/TextFieldSelectData";
 import ButtonData from "./components/ButtonData";
 import RadioButtonData from "./components/RadioButtonData";
+import TabsData from "./components/TabsData";
+import ColumnData from "./components/ColumData";
 
 type Props = {
   id: string;
   selectDataLabel: string;
   selectDataValue: string;
 }[];
+
+type TabProps = {
+  id: string;
+  tabsDataLabel: string;
+  tabsDataValue: string;
+}[];
+
+type TabComponentProps = {
+  label: string;
+  key: string;
+  inner_components: Element[];
+}[];
+
+type ColumnProps = {
+  label: string;
+  columnItems: {
+    id: string;
+    columnDataSize: string[];
+    columnDataWidth: number;
+  }[];
+};
 
 type RadioProps = {
   radioButtonDataLabel: string;
@@ -48,8 +75,7 @@ const SingleElement: React.FC<{
   element: Element;
   elements: Array<Element>;
   setElements: React.Dispatch<React.SetStateAction<Array<Element>>>;
-  editable: boolean;
-}> = ({ show, index, element, elements, setElements, editable }) => {
+}> = ({ show, index, element, elements, setElements }) => {
   const textFieldValues: TextFieldDiaglog = {
     label: "TextField",
     required: false,
@@ -101,6 +127,24 @@ const SingleElement: React.FC<{
     { id: "Select1", selectDataLabel: "Select1", selectDataValue: "Select1" },
   ];
 
+  const tabsItemsData: TabProps = [
+    { id: "Tab1", tabsDataLabel: "Tab1", tabsDataValue: "Tab1" },
+  ];
+
+  const tabComponents: TabComponentProps = [
+    {
+      label: "TabItem1",
+      key: "tabItem1",
+      inner_components: [
+        {
+          id: 1011,
+          element: "Tabs",
+          label: "Ths",
+        },
+      ],
+    },
+  ];
+
   const selectValues: SelectDiaglog = {
     label: "Select",
     placeholder: "Select the option",
@@ -109,6 +153,12 @@ const SingleElement: React.FC<{
     size: "medium",
     width: 220,
     menuItems: menuItemsData,
+  };
+
+  const tabValues: TabsDialog = {
+    label: "",
+    tabItems: tabsItemsData,
+    tabcomponents: tabComponents,
   };
 
   const radioItemsData: RadioProps = [
@@ -121,6 +171,17 @@ const SingleElement: React.FC<{
     options: "",
     radioItems: radioItemsData,
     required: false,
+  };
+
+  const columnValues: ColumnProps = {
+    label: "Column",
+    columnItems: [
+      {
+        id: "column1",
+        columnDataSize: ["md"],
+        columnDataWidth: 220,
+      },
+    ],
   };
 
   const [edit, setEdit] = useState<boolean>(false);
@@ -208,6 +269,17 @@ const SingleElement: React.FC<{
       element.options = radiobuttonValues.options;
       element.radioItems = radiobuttonValues.radioItems;
       element.required = radiobuttonValues.required;
+    } else if (element.element === "Tabs") {
+      console.log(tabValues);
+      console.log("JSON", JSON.stringify(tabValues));
+      element.label = tabValues.label;
+      element.tabItems = tabValues.tabItems;
+      element.tabcomponents = tabValues.tabcomponents;
+    } else if (element.element === "Column") {
+      console.log(columnValues);
+      console.log("JSON", JSON.stringify(columnValues));
+      element.label = columnValues.label;
+      element.columnItems = columnValues.columnItems;
     }
   };
 
@@ -239,6 +311,12 @@ const SingleElement: React.FC<{
     } else if (element.element === "RadioButton") {
       console.log(radiobuttonValues);
       console.log("JSON", JSON.stringify(radiobuttonValues));
+    } else if (element.element === "Column") {
+      console.log(columnValues);
+      console.log("JSON", JSON.stringify(columnValues));
+    } else if (element.element === "Tabs") {
+      console.log(tabValues);
+      console.log("JSON", JSON.stringify(tabValues));
     }
     setEdit(!edit);
   };
@@ -509,7 +587,32 @@ const SingleElement: React.FC<{
               </>
             ) : element.element === "Column" ? (
               <>
-                <h1>Working on Column</h1>
+                <ColumnData
+                  open={open}
+                  handleClose={handleClose}
+                  columnValues={columnValues}
+                  handleOpen={handleOpen}
+                />
+                <Grid>
+                  <GridItem md={6}>
+                    <>Column1</>
+                  </GridItem>
+                  <GridItem md={6}>
+                    <>Column2</>
+                  </GridItem>
+                </Grid>
+              </>
+            ) : element.element === "Tabs" ? (
+              <>
+                <TabsData
+                  open={open}
+                  handleClose={handleClose}
+                  tabValues={tabValues}
+                  handleOpen={handleOpen}
+                ></TabsData>
+                <Tabs tabItems={tabValues.tabItems}>
+                  <>label</>
+                </Tabs>
               </>
             ) : (
               <>

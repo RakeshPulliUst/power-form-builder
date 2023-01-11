@@ -13,6 +13,14 @@ import { useLocation, useNavigate } from "react-router-dom";
 import TextFieldData from "./components/TextFieldData";
 import { TextFieldDiaglog } from "./DialogInterface";
 
+const reorder = (list: any, startIndex: number, endIndex: number) => {
+  const result = Array.from(list);
+  const [removed] = result.splice(startIndex, 1);
+  result.splice(endIndex, 0, removed);
+
+  return result;
+};
+
 const FormBuilder = () => {
   const [show, setShow] = useState(false);
 
@@ -61,6 +69,9 @@ const FormBuilder = () => {
       setShow(false);
       return;
     }
+
+    const sourceIndex = result.source.index;
+    const destIndex = result.destination?.index;
 
     let add;
     let active = elements;

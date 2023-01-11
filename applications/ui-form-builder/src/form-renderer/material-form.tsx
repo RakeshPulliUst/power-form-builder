@@ -6,9 +6,9 @@ import {
   RadioGroup,
   Checkbox,
   Button,
+  Tabs,
 } from "@power-form-builder/ui-components";
-import Grid from "@material-ui/core/Grid";
-import { GridItem } from "@power-form-builder/ui-components";
+import { Grid, GridItem } from "@power-form-builder/ui-components";
 import { FormJson } from "../form-builder/ElementInterface";
 import { useLocation } from "react-router-dom";
 
@@ -159,12 +159,7 @@ function MaterialForm() {
             console.log(formJsonData);
             console.log("data", data);
             return (
-              <Grid
-                container
-                spacing={2}
-                alignItems="center"
-                justifyContent="center"
-              >
+              <Grid spacing={2} alignItems="center" justifyContent="center">
                 <GridItem xs={12} sm={6}>
                   {data.element === "TextField" ? (
                     <TextField
@@ -313,6 +308,23 @@ function MaterialForm() {
                           : "medium"
                       }
                     />
+                  ) : data.element === "Tabs" ? (
+                    <>
+                      <Tabs tabItems={data.tabItems!}>
+                        <h1>Hello</h1>
+                      </Tabs>
+                    </>
+                  ) : data.element === "Column" ? (
+                    <>
+                      <Grid columns={2} spacing={2}>
+                        <GridItem md={6}>
+                          <>Column1</>
+                        </GridItem>
+                        <GridItem md={6}>
+                          <>Column2</>
+                        </GridItem>
+                      </Grid>
+                    </>
                   ) : (
                     ""
                   )}

@@ -47,37 +47,35 @@ const Select = ({
   // };
 
   return (
-    <div>
-      <FormControl sx={{ m: 1, width: width }}>
-        <InputLabel id="demo-multiple-name-label">{label}</InputLabel>
-        <DefaultSelect
-          labelId="demo-multiple-name-label"
-          id="demo-multiple-name"
-          multiple={multiple}
-          value={value}
-          onChange={onChange}
-          input={<OutlinedInput label={label} />}
-          MenuProps={{
-            style: {
-              width: width,
-            },
-          }}
-          placeholder={placeholder}
-          name={name}
-          required={required}
-          size={size}
-        >
-          <MenuItem disabled value="">
-            <em>{placeholder}</em>
+    <FormControl sx={{ m: 1, width: width }}>
+      <InputLabel id="demo-multiple-name-label">{label}</InputLabel>
+      <DefaultSelect
+        labelId="demo-multiple-name-label"
+        id="demo-multiple-name"
+        multiple={multiple}
+        value={value}
+        onChange={onChange}
+        input={<OutlinedInput label={label} />}
+        MenuProps={{
+          style: {
+            width: width,
+          },
+        }}
+        placeholder={placeholder}
+        name={name}
+        required={required}
+        size={size}
+      >
+        <MenuItem disabled value="">
+          <em>{placeholder}</em>
+        </MenuItem>
+        {menuItems.map((name, index) => (
+          <MenuItem key={name.selectDataLabel} value={name.selectDataValue}>
+            {name.selectDataValue}
           </MenuItem>
-          {menuItems.map((name, index) => (
-            <MenuItem key={name.selectDataLabel} value={name.selectDataValue}>
-              {name.selectDataValue}
-            </MenuItem>
-          ))}
-        </DefaultSelect>
-      </FormControl>
-    </div>
+        ))}
+      </DefaultSelect>
+    </FormControl>
   );
 };
 

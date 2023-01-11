@@ -66,7 +66,6 @@ const ElementList: React.FC<props> = ({
                       element={element}
                       key={element.id}
                       setElements={setCompletedElements}
-                      editable={true}
                     />
                   </>
                 ))}

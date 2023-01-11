@@ -24,7 +24,7 @@ type Props = {
   selectDataValue: string;
 }[];
 
-const SelectData1: React.FC<{
+const SelectData: React.FC<{
   open: boolean;
   handleClose: () => void;
   handleOpen: () => void;
@@ -286,4 +286,4 @@ const SelectData1: React.FC<{
   );
 };
 
-export default SelectData1;
+export default SelectData;

@@ -11,6 +11,8 @@ import GridItem from "./components/GridItem";
 import Alert from "./components/Alert";
 import TextFieldSelect from "./components/TextFieldSelect";
 import SelectChangeEvent from "@mui/material/Select";
+import Tabs from "./components/Tabs";
+import Dialog from "./components/Dialog";
 export {
   Button,
   Card,
@@ -25,4 +27,6 @@ export {
   Alert,
   TextFieldSelect,
   SelectChangeEvent,
+  Tabs,
+  Dialog,
 };

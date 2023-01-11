@@ -3,6 +3,7 @@ export interface FormJson{
   components: Element[]
 }
 
+
 export interface Element {
     id: number;
     element: string;
@@ -37,6 +38,24 @@ export interface Element {
       radioButtonDataLabel: string
       radioButtonDataValue: string
     }[]; 
+
+    tabItems?: {
+      id: string
+      tabsDataLabel: string
+      tabsDataValue: string
+    }[]; 
+
+    tabcomponents?: {
+        label: string;
+        key: string;
+        inner_components: Element[]
+      }[];
+
+    columnItems?: {
+        id: string
+        columnDataSize: string[],
+        columnDataWidth: number
+      }[],  
   }
 
   export interface addJsxElement{
@@ -127,5 +146,14 @@ export interface Element {
     {
       id: 9,
       element: "Column",
-    }
-  ];
+      
+    },
+    {
+      id: 10,
+      element: "Tabs",
+      label: "TabsLabel"
+    },
+    
+  ]
+
+

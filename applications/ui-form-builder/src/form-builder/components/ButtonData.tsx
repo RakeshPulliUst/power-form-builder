@@ -1,13 +1,11 @@
 import React, { useState } from "react";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import Box from "@mui/material/Box";
-import Tab from "@mui/material/Tab";
-import { TabContext, TabList, TabPanel } from "@material-ui/lab";
-import { Button, Select, TextField } from "@power-form-builder/ui-components";
+import {
+  Button,
+  Dialog,
+  Select,
+  Tabs,
+  TextField,
+} from "@power-form-builder/ui-components";
 import { ButtonDialog } from "../DialogInterface";
 
 const ButtonData: React.FC<{
@@ -79,80 +77,53 @@ const ButtonData: React.FC<{
   };
   return (
     <Dialog
-      fullWidth={true}
-      maxWidth={"sm"}
-      PaperProps={{
-        style: {
-          minHeight: "60%",
-          maxHeight: "60%",
-          minWidth: "45%",
-          maxWidth: "45%",
-        },
-      }}
       open={open}
-      onClose={handleClose}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
+      handleClose={handleClose}
+      handleData={handleData}
+      value={value}
+      handleChange={handleChange}
+      handleButtonClose={handleClose}
+      tabItems={[
+        { id: "Tab1", tabsDataLabel: "Display", tabsDataValue: "Display" },
+      ]}
     >
-      <DialogTitle id="alert-dialog-title">{"Button Details"}</DialogTitle>
-      <DialogContent>
-        <TabContext value={value}>
-          <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-            <TabList onChange={handleChange} aria-label="lab API tabs example">
-              <Tab label="Display" value="1" />
-            </TabList>
-          </Box>
-          <TabPanel value="1" style={{ textAlign: "center" }}>
-            <DialogContentText id="alert-dialog-description">
-              <TextField
-                label="Label"
-                required={true}
-                value={buttonLabel}
-                onChange={handleButtonLabel}
-              />
-              <br />
-              <br />
-              <Select
-                label="Theme"
-                placeholder="Type To Search"
-                menuItems={ButtonThemeValues}
-                multiple={false}
-                value={buttonTheme}
-                onChange={handleButtonTheme}
-                width={225}
-                size="medium"
-                required={false}
-              />
-              <br />
-              <Select
-                label="Size"
-                placeholder="Type To Search"
-                menuItems={ButtonSizeDataValues}
-                multiple={false}
-                value={buttonSize}
-                onChange={handleButtonSize}
-                width={225}
-                size="medium"
-                required={false}
-              />
-            </DialogContentText>
-          </TabPanel>
-        </TabContext>
-      </DialogContent>
-      <DialogActions>
-        <Button
-          label="Cancel"
-          color="success"
-          onClick={handleClose}
-          size="medium"
+      <Tabs
+        tabItems={[
+          { id: "Tab1", tabsDataLabel: "Display", tabsDataValue: "Display" },
+        ]}
+      >
+        <TextField
+          label="Label"
+          required={true}
+          value={buttonLabel}
+          onChange={handleButtonLabel}
         />
-        <Button
-          label="Save"
-          color="success"
-          onClick={handleData}
+        <br />
+        <br />
+        <Select
+          label="Theme"
+          placeholder="Type To Search"
+          menuItems={ButtonThemeValues}
+          multiple={false}
+          value={buttonTheme}
+          onChange={handleButtonTheme}
+          width={225}
           size="medium"
+          required={false}
         />
-      </DialogActions>
+        <br />
+        <Select
+          label="Size"
+          placeholder="Type To Search"
+          menuItems={ButtonSizeDataValues}
+          multiple={false}
+          value={buttonSize}
+          onChange={handleButtonSize}
+          width={225}
+          size="medium"
+          required={false}
+        />
+      </Tabs>
     </Dialog>
   );
 };

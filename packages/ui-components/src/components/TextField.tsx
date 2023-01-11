@@ -52,6 +52,7 @@ const TextField = ({
       error={error}
       multiline={multiline}
       rows={rows}
+      style={{ marginLeft: "10px", marginTop: "8px" }}
       {...rest}
     />
 

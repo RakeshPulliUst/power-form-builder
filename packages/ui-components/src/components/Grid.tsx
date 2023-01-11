@@ -18,16 +18,18 @@ const Grid = ({
   ...rest
 }: Props) => {
   return (
-    <DefaultGrid
-      container
-      spacing={spacing ? spacing : 10}
-      columns={columns ? columns : 16}
-      alignItems={alignItems}
-      justifyContent={justifyContent}
-      {...rest}
-    >
-      {children}
-    </DefaultGrid>
+    <Box sx={{ flexGrow: 1 }}>
+      <DefaultGrid
+        container
+        spacing={spacing ? spacing : 10}
+        columns={columns ? columns : 16}
+        alignItems={alignItems}
+        justifyContent={justifyContent}
+        {...rest}
+      >
+        {children}
+      </DefaultGrid>
+    </Box>
   );
 };
 
