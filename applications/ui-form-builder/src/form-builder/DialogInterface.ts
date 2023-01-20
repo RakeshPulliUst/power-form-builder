@@ -59,9 +59,19 @@ export interface TextFieldDiaglog {
     label: string,
     columnItems: {
       id: string
+      label: string,
       columnDataSize: string[],
-      columnDataWidth: number
+      columnDataWidth: number,
+      columnComponents: Element[]
     }[],
+  }
+
+  export interface ColumnItemsDialog {
+      id: string
+      label: string,
+      columnDataSize: string[],
+      columnDataWidth: number,
+      columnComponents: Element[]
   }
 
 export interface TabsDialog {
@@ -70,10 +80,6 @@ export interface TabsDialog {
     id: string
     tabsDataLabel: string
     tabsDataValue: string
+    tabComponents: Element[]
   }[],
-  tabcomponents: {
-    label: string,
-    key: string,
-    inner_components: Element[]
-  }[]
 }

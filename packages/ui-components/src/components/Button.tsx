@@ -24,6 +24,7 @@ const Button = ({ label, color, size, onClick, ...rest }: Props) => {
       type="submit"
       aria-label={label}
       {...rest}
+      style={{ marginBottom: "5px" }}
     >
       {label}
     </DefaultButton>

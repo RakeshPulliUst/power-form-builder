@@ -12,11 +12,13 @@ import { TabsDialog } from "../DialogInterface";
 import { v4 as uuidv4 } from "uuid";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
+import { Element } from "../ElementInterface";
 
 type Props = {
   id: string;
   tabsDataLabel: string;
   tabsDataValue: string;
+  tabComponents: Element[];
 }[];
 
 const TabsData: React.FC<{
@@ -33,12 +35,22 @@ const TabsData: React.FC<{
   //Tabs
   const [tabsLabel, setTabsLabel] = useState("");
   const [tabItemsData, setTabItemsData] = useState<Props>([
-    { id: uuidv4(), tabsDataLabel: "", tabsDataValue: "" },
+    {
+      id: uuidv4(),
+      tabsDataLabel: "",
+      tabsDataValue: "",
+      tabComponents: [
+        {
+          id: 101,
+          element: "Tabs",
+          label: "Ths",
+        },
+      ],
+    },
   ]);
 
   const handleTabsLabel = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTabsLabel(event.target.value);
-    console.log(tabsLabel);
   };
 
   const handleData = () => {
@@ -75,7 +87,18 @@ const TabsData: React.FC<{
   const handleAddFields = () => {
     setTabItemsData([
       ...tabItemsData,
-      { id: uuidv4(), tabsDataLabel: "", tabsDataValue: "" },
+      {
+        id: uuidv4(),
+        tabsDataLabel: "",
+        tabsDataValue: "",
+        tabComponents: [
+          {
+            id: 0,
+            element: "",
+            label: "",
+          },
+        ],
+      },
     ]);
     console.log(tabItemsData);
   };

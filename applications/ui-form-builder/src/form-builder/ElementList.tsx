@@ -11,6 +11,12 @@ interface props {
   setElements: React.Dispatch<React.SetStateAction<Array<Element>>>;
   setCompletedElements: React.Dispatch<React.SetStateAction<Array<Element>>>;
   CompletedElements: Array<Element>;
+  tabElements: Array<Element>;
+  setTabElements: React.Dispatch<React.SetStateAction<Array<Element>>>;
+  columnElements: Array<Element>;
+  setColumnElements: React.Dispatch<React.SetStateAction<Array<Element>>>;
+  column1Elements: Array<Element>;
+  setColumn1Elements: React.Dispatch<React.SetStateAction<Array<Element>>>;
 }
 
 const ElementList: React.FC<props> = ({
@@ -18,10 +24,16 @@ const ElementList: React.FC<props> = ({
   elements,
   CompletedElements,
   setCompletedElements,
+  tabElements,
+  setTabElements,
+  columnElements,
+  setColumnElements,
+  column1Elements,
+  setColumn1Elements,
 }) => {
   return (
     <>
-      <Grid>
+      <Grid spacing={0}>
         <GridItem xs={4} md={4}>
           <Droppable droppableId="ElementsList" isDropDisabled={true}>
             {(provided, snapshot) => (
@@ -66,6 +78,12 @@ const ElementList: React.FC<props> = ({
                       element={element}
                       key={element.id}
                       setElements={setCompletedElements}
+                      tabElements={tabElements}
+                      setTabElements={setTabElements}
+                      columnElements={columnElements}
+                      setColumnElements={setColumnElements}
+                      column1Elements={column1Elements}
+                      setColumn1Elements={setColumn1Elements}
                     />
                   </>
                 ))}

@@ -1,4 +1,4 @@
-import { Box, Grid as DefaultGrid } from "@mui/material";
+import { Box, Grid as DefaultGrid, SxProps, Theme } from "@mui/material";
 import React from "react";
 
 type Props = {
@@ -7,6 +7,7 @@ type Props = {
   columns?: number;
   alignItems?: string;
   justifyContent?: string;
+  sx?: SxProps<Theme> | undefined;
 };
 
 const Grid = ({
@@ -15,6 +16,7 @@ const Grid = ({
   columns,
   alignItems,
   justifyContent,
+  sx,
   ...rest
 }: Props) => {
   return (
@@ -25,6 +27,7 @@ const Grid = ({
         columns={columns ? columns : 16}
         alignItems={alignItems}
         justifyContent={justifyContent}
+        sx={sx}
         {...rest}
       >
         {children}

@@ -12,11 +12,14 @@ import { ColumnDialog } from "../DialogInterface";
 import { v4 as uuidv4 } from "uuid";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
+import { Element } from "../ElementInterface";
 
 type Props = {
   id: string;
+  label: string;
   columnDataSize: string[];
   columnDataWidth: number;
+  columnComponents: Element[];
 }[];
 
 const ColumnData: React.FC<{
@@ -33,7 +36,19 @@ const ColumnData: React.FC<{
   //Column
   const [columnLabel, setColumnLabel] = useState("");
   const [columnItemsData, setColumnItemsData] = useState<Props>([
-    { id: uuidv4(), columnDataSize: [], columnDataWidth: 0 },
+    {
+      id: uuidv4(),
+      label: "",
+      columnDataSize: [],
+      columnDataWidth: 0,
+      columnComponents: [
+        {
+          id: 102,
+          element: "Column",
+          label: "Ths",
+        },
+      ],
+    },
   ]);
 
   const handleColumnLabel = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -43,6 +58,7 @@ const ColumnData: React.FC<{
 
   const handleData = () => {
     columnValues.label = columnLabel;
+
     columnValues.columnItems = columnItemsData;
     console.log(columnValues);
     handleOpen();
@@ -75,7 +91,19 @@ const ColumnData: React.FC<{
   const handleAddFields = () => {
     setColumnItemsData([
       ...columnItemsData,
-      { id: uuidv4(), columnDataSize: [], columnDataWidth: 0 },
+      {
+        id: uuidv4(),
+        label: "",
+        columnDataSize: [],
+        columnDataWidth: 0,
+        columnComponents: [
+          {
+            id: 0,
+            element: "",
+            label: "",
+          },
+        ],
+      },
     ]);
     console.log(columnItemsData);
   };
@@ -157,7 +185,7 @@ const ColumnData: React.FC<{
                       onChange={(
                         e: React.ChangeEvent<HTMLInputElement> | any
                       ): void => handleChangeInput(item.id, e)}
-                      width={125}
+                      width={135}
                       size="medium"
                       required={false}
                     />
@@ -188,6 +216,7 @@ const ColumnData: React.FC<{
                   </div>
                 ))}
                 <br />
+
                 <Button label="Done" color="secondary" size="small" />
               </form>
             </DialogContentText>

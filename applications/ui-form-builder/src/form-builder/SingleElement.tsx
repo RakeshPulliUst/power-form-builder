@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useRef } from "react";
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 import { Element } from "./ElementInterface";
-import { Draggable } from "react-beautiful-dnd";
+import { Draggable, Droppable } from "react-beautiful-dnd";
 import { FaEdit } from "react-icons/fa";
 
 import "./styles.css";
@@ -23,6 +23,8 @@ import TextFieldData from "./components/TextFieldData";
 import {
   ButtonDialog,
   CheckBoxDiaglog,
+  ColumnDialog,
+  ColumnItemsDialog,
   RadioButtonDialog,
   SelectDiaglog,
   TabsDialog,
@@ -36,6 +38,7 @@ import ButtonData from "./components/ButtonData";
 import RadioButtonData from "./components/RadioButtonData";
 import TabsData from "./components/TabsData";
 import ColumnData from "./components/ColumData";
+import { isTemplateExpression } from "typescript";
 
 type Props = {
   id: string;
@@ -47,22 +50,16 @@ type TabProps = {
   id: string;
   tabsDataLabel: string;
   tabsDataValue: string;
+  tabComponents: Element[];
 }[];
 
-type TabComponentProps = {
+type ColumnItemsProps = {
+  id: string;
   label: string;
-  key: string;
-  inner_components: Element[];
+  columnDataSize: string[];
+  columnDataWidth: number;
+  columnComponents: Element[];
 }[];
-
-type ColumnProps = {
-  label: string;
-  columnItems: {
-    id: string;
-    columnDataSize: string[];
-    columnDataWidth: number;
-  }[];
-};
 
 type RadioProps = {
   radioButtonDataLabel: string;
@@ -75,7 +72,25 @@ const SingleElement: React.FC<{
   element: Element;
   elements: Array<Element>;
   setElements: React.Dispatch<React.SetStateAction<Array<Element>>>;
-}> = ({ show, index, element, elements, setElements }) => {
+  tabElements: Array<Element>;
+  setTabElements: React.Dispatch<React.SetStateAction<Array<Element>>>;
+  columnElements: Array<Element>;
+  setColumnElements: React.Dispatch<React.SetStateAction<Array<Element>>>;
+  column1Elements: Array<Element>;
+  setColumn1Elements: React.Dispatch<React.SetStateAction<Array<Element>>>;
+}> = ({
+  show,
+  index,
+  element,
+  elements,
+  setElements,
+  tabElements,
+  setTabElements,
+  columnElements,
+  setColumnElements,
+  column1Elements,
+  setColumn1Elements,
+}) => {
   const textFieldValues: TextFieldDiaglog = {
     label: "TextField",
     required: false,
@@ -128,17 +143,59 @@ const SingleElement: React.FC<{
   ];
 
   const tabsItemsData: TabProps = [
-    { id: "Tab1", tabsDataLabel: "Tab1", tabsDataValue: "Tab1" },
-  ];
-
-  const tabComponents: TabComponentProps = [
     {
-      label: "TabItem1",
-      key: "tabItem1",
-      inner_components: [
+      id: "Tab1",
+      tabsDataLabel: "Tab1",
+      tabsDataValue: "Tab1",
+      tabComponents: [
         {
           id: 1011,
           element: "Tabs",
+          label: "Ths",
+        },
+      ],
+    },
+  ];
+
+  const columnItemsData: ColumnItemsProps = [
+    {
+      id: "1989",
+      label: "Column1",
+      columnDataSize: ["md"],
+      columnDataWidth: 220,
+      columnComponents: [
+        {
+          id: 1012,
+          element: "Column",
+          label: "Ths",
+        },
+      ],
+    },
+  ];
+
+  const finalColumnItemsData: ColumnItemsProps = [
+    {
+      id: "1989",
+      label: "Column1",
+      columnDataSize: ["md"],
+      columnDataWidth: 220,
+      columnComponents: [
+        {
+          id: 1012,
+          element: "Column",
+          label: "Ths",
+        },
+      ],
+    },
+    {
+      id: "1990",
+      label: "Column2",
+      columnDataSize: ["md"],
+      columnDataWidth: 220,
+      columnComponents: [
+        {
+          id: 1012,
+          element: "Column",
           label: "Ths",
         },
       ],
@@ -158,7 +215,6 @@ const SingleElement: React.FC<{
   const tabValues: TabsDialog = {
     label: "",
     tabItems: tabsItemsData,
-    tabcomponents: tabComponents,
   };
 
   const radioItemsData: RadioProps = [
@@ -173,16 +229,42 @@ const SingleElement: React.FC<{
     required: false,
   };
 
-  const columnValues: ColumnProps = {
+  const columnValues: ColumnDialog = {
     label: "Column",
-    columnItems: [
-      {
-        id: "column1",
-        columnDataSize: ["md"],
-        columnDataWidth: 220,
-      },
-    ],
+    columnItems: columnItemsData,
   };
+
+  const column1Values: ColumnItemsProps = [
+    {
+      id: "1989",
+      label: "Column1",
+      columnDataSize: ["md"],
+      columnDataWidth: 220,
+      columnComponents: [
+        {
+          id: 1011,
+          element: "Column",
+          label: "Ths",
+        },
+      ],
+    },
+  ];
+
+  // const column2Values: ColumnItemsDialog = [
+  //   {
+  //     id: "1990",
+  //     label: "Column1",
+  //     columnDataSize: ["md"],
+  //     columnDataWidth: 220,
+  //     columnComponents: [
+  //       {
+  //         id: 1012,
+  //         element: "Column",
+  //         label: "Ths",
+  //       },
+  //     ],
+  //   },
+  // ];
 
   const [edit, setEdit] = useState<boolean>(false);
 
@@ -196,7 +278,7 @@ const SingleElement: React.FC<{
   };
 
   //TextField
-  const [open, setOpen] = React.useState(show);
+  const [open, setOpen] = React.useState(element.show);
 
   const handleClickOpen = () => {
     console.log("Opened");
@@ -205,6 +287,8 @@ const SingleElement: React.FC<{
   };
 
   const handleOpen = () => {
+    console.log(element);
+    let col = false;
     setOpen(!open);
     if (element.element === "Button") {
       console.log(buttonValues);
@@ -273,19 +357,55 @@ const SingleElement: React.FC<{
       console.log(tabValues);
       console.log("JSON", JSON.stringify(tabValues));
       element.label = tabValues.label;
+      tabValues.tabItems.map((item, index) => (
+        <>if(index === 0){(item.tabComponents = tabElements)}</>
+      ));
+      console.log(tabValues);
       element.tabItems = tabValues.tabItems;
-      element.tabcomponents = tabValues.tabcomponents;
     } else if (element.element === "Column") {
-      console.log(columnValues);
-      console.log("JSON", JSON.stringify(columnValues));
+      // columnValues.columnItems.map((item, index) => (
+      //   <>item.columnComponents = columnElements</>
+      // ));
       element.label = columnValues.label;
       element.columnItems = columnValues.columnItems;
+      col = true;
+    }
+    element.show = false;
+    if (col) {
+      console.log(element.columnItems);
+      console.log("ColumnValues", columnValues);
+      console.log("Column1Elements", columnElements);
+      console.log("Column2Elements", column1Elements);
+      console.log("JSON", JSON.stringify(columnValues));
+
+      // element.columnItems?.map((item, index) => (
+      //   <>
+      //     if(item.label === "Column1")
+      //     {(item.columnComponents = columnElements)}
+      //     else{(item.columnComponents = column1Elements)}
+      //   </>
+      // ));
+
+      finalColumnItemsData.map((item, index) =>
+        item.label === "Column1"
+          ? (item.columnComponents = columnElements)
+          : (item.columnComponents = column1Elements)
+      );
+
+      element.columnItems = finalColumnItemsData;
+
+      console.log("Final", finalColumnItemsData);
+      console.log("Element Column", element.columnItems);
     }
   };
 
   const handleClose = () => {
     console.log(element.element);
-    handleDelete(element.id);
+    console.log(element);
+    if (element.show) {
+      console.log(element.show);
+      handleDelete(element.id);
+    }
     setOpen(!open);
     if (element.element === "Button") {
       console.log(buttonValues);
@@ -401,7 +521,7 @@ const SingleElement: React.FC<{
             {element.element === "TextField" ? (
               <>
                 <TextFieldData
-                  open={open}
+                  open={open!}
                   handleClose={handleClose}
                   textFieldValues={textFieldValues}
                   handleOpen={handleOpen}
@@ -422,7 +542,7 @@ const SingleElement: React.FC<{
             ) : element.element === "TextArea" ? (
               <>
                 <TextFieldData
-                  open={open}
+                  open={open!}
                   handleClose={handleClose}
                   textFieldValues={textAreaValues}
                   handleOpen={handleOpen}
@@ -445,7 +565,7 @@ const SingleElement: React.FC<{
             ) : element.element === "Password" ? (
               <>
                 <TextFieldData
-                  open={open}
+                  open={open!}
                   element={element.element}
                   handleClose={handleClose}
                   textFieldValues={passwordValues}
@@ -467,7 +587,7 @@ const SingleElement: React.FC<{
             ) : element.element === "Email" ? (
               <>
                 <TextFieldData
-                  open={open}
+                  open={open!}
                   element={element.element}
                   handleClose={handleClose}
                   textFieldValues={emailValues}
@@ -489,7 +609,7 @@ const SingleElement: React.FC<{
             ) : element.element === "Checkbox" ? (
               <>
                 <CheckBoxData
-                  open={open}
+                  open={open!}
                   handleClose={handleClose}
                   checkBoxValues={checkBoxValues}
                   handleOpen={handleOpen}
@@ -505,7 +625,7 @@ const SingleElement: React.FC<{
             ) : element.element === "Select" ? (
               <>
                 <SelectData
-                  open={open}
+                  open={open!}
                   handleClose={handleClose}
                   selectValues={selectValues}
                   handleOpen={handleOpen}
@@ -526,7 +646,7 @@ const SingleElement: React.FC<{
             ) : element.element === "Button" ? (
               <>
                 <ButtonData
-                  open={open}
+                  open={open!}
                   handleClose={handleClose}
                   buttonValues={buttonValues}
                   handleOpen={handleOpen}
@@ -562,7 +682,7 @@ const SingleElement: React.FC<{
             ) : element.element === "RadioButton" ? (
               <>
                 <RadioButtonData
-                  open={open}
+                  open={open!}
                   handleClose={handleClose}
                   radiobuttonValues={radiobuttonValues}
                   handleOpen={handleOpen}
@@ -588,30 +708,126 @@ const SingleElement: React.FC<{
             ) : element.element === "Column" ? (
               <>
                 <ColumnData
-                  open={open}
+                  open={open!}
                   handleClose={handleClose}
                   columnValues={columnValues}
                   handleOpen={handleOpen}
                 />
-                <Grid>
+                <Grid spacing={10}>
                   <GridItem md={6}>
-                    <>Column1</>
+                    <>
+                      <div className="elements__single_column">
+                        <Droppable droppableId="columnDroppableId">
+                          {(provided, snapshot) => (
+                            <div
+                              ref={provided.innerRef}
+                              {...provided.droppableProps}
+                              className={`elements  ${
+                                snapshot.isDraggingOver
+                                  ? "dragcomplete"
+                                  : "remove"
+                              }`}
+                            >
+                              {columnElements?.map((element, index) => (
+                                <>
+                                  <SingleElement
+                                    show={show}
+                                    index={index}
+                                    elements={columnElements}
+                                    element={element}
+                                    key={element.id}
+                                    setElements={setColumnElements}
+                                    tabElements={tabElements}
+                                    setTabElements={setTabElements}
+                                    columnElements={columnElements}
+                                    setColumnElements={setColumnElements}
+                                    column1Elements={column1Elements}
+                                    setColumn1Elements={setColumn1Elements}
+                                  />
+                                </>
+                              ))}
+                              {provided.placeholder}
+                            </div>
+                          )}
+                        </Droppable>
+                      </div>
+                    </>
                   </GridItem>
                   <GridItem md={6}>
-                    <>Column2</>
+                    <Droppable droppableId="column1DroppableId">
+                      {(provided, snapshot) => (
+                        <div
+                          ref={provided.innerRef}
+                          {...provided.droppableProps}
+                          className={`elements  ${
+                            snapshot.isDraggingOver ? "dragcomplete" : "remove"
+                          }`}
+                        >
+                          {column1Elements?.map((element, index) => (
+                            <>
+                              <SingleElement
+                                show={show}
+                                index={index}
+                                elements={column1Elements}
+                                element={element}
+                                key={element.id}
+                                setElements={setColumn1Elements}
+                                tabElements={tabElements}
+                                setTabElements={setColumn1Elements}
+                                columnElements={columnElements}
+                                setColumnElements={setColumnElements}
+                                column1Elements={column1Elements}
+                                setColumn1Elements={setColumn1Elements}
+                              />
+                            </>
+                          ))}
+                          {provided.placeholder}
+                        </div>
+                      )}
+                    </Droppable>
                   </GridItem>
                 </Grid>
               </>
             ) : element.element === "Tabs" ? (
               <>
                 <TabsData
-                  open={open}
+                  open={open!}
                   handleClose={handleClose}
                   tabValues={tabValues}
                   handleOpen={handleOpen}
                 ></TabsData>
                 <Tabs tabItems={tabValues.tabItems}>
-                  <>label</>
+                  <Droppable droppableId="tabsDroppableId">
+                    {(provided, snapshot) => (
+                      <div
+                        ref={provided.innerRef}
+                        {...provided.droppableProps}
+                        className={`elements  ${
+                          snapshot.isDraggingOver ? "dragcomplete" : "remove"
+                        }`}
+                      >
+                        {tabElements?.map((element, index) => (
+                          <>
+                            <SingleElement
+                              show={show}
+                              index={index}
+                              elements={tabElements}
+                              element={element}
+                              key={element.id}
+                              setElements={setTabElements}
+                              tabElements={tabElements}
+                              setTabElements={setTabElements}
+                              columnElements={columnElements}
+                              setColumnElements={setColumnElements}
+                              column1Elements={column1Elements}
+                              setColumn1Elements={setColumn1Elements}
+                            />
+                          </>
+                        ))}
+                        {provided.placeholder}
+                      </div>
+                    )}
+                  </Droppable>
                 </Tabs>
               </>
             ) : (

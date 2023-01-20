@@ -43,19 +43,18 @@ export interface Element {
       id: string
       tabsDataLabel: string
       tabsDataValue: string
+      tabComponents?:  Element[]
     }[]; 
 
-    tabcomponents?: {
-        label: string;
-        key: string;
-        inner_components: Element[]
-      }[];
-
     columnItems?: {
-        id: string
+        id: string,
+        label: string,
         columnDataSize: string[],
-        columnDataWidth: number
+        columnDataWidth: number,
+        columnComponents?:  Element[]
       }[],  
+
+    show?: boolean
   }
 
   export interface addJsxElement{
@@ -146,12 +145,13 @@ export interface Element {
     {
       id: 9,
       element: "Column",
+      label: ""
       
     },
     {
       id: 10,
       element: "Tabs",
-      label: "TabsLabel"
+      label: ""
     },
     
   ]

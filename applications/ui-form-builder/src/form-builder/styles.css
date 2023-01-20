@@ -1,20 +1,20 @@
 .container {
   width: 100%;
   display: flex;
-  
   justify-content: space-between;
   align-items: flex-start;
 }
 .elements {
+  
   border-radius: 5px;
   display: flex;
   flex-direction: column;
-  width: 80%;
-  padding: 5px;
+  width: 95%;
+  padding: 0px;
   background-color: rgb(251, 255, 255);
   text-align: center;
   box-shadow: 0 0 10px black;
-  min-height: 480px;
+  min-height: 500px;
   border-style: dashed;
   border-width: 2px;
   border-color: rgb(101, 98, 98);
@@ -22,15 +22,17 @@
 }
 
 .elements_fixed {
+
   border-radius: 5px;
-  display: flex;
+  display:flex;
   flex-direction: column;
-  width: 80%;
-  padding: 15px;
+  width: 100%;
+  padding: 12px;
   background-color: rgb(251, 255, 255);
   text-align: center;
   box-shadow: 0 0 10px black;
   min-height: 480px;
+  
 }
 
 .dragactive {
@@ -46,19 +48,21 @@
 }
 
 .elements__heading {
-  font-size: 30px;
+  font-size: 25px;
   /* text-align: center; */
   color: rgb(58, 212, 230);
 }
 
+
+
 .elements__single {
   display: flex;
   border-radius: 5px;
-  padding: 1px;
-  margin-top: 5px;
   background-color: rgb(58, 212, 230);;
   transition: 0.2s;
-  max-width: fit-content;
+  margin: 5px;
+  padding: 0px;
+  
 }
 .aa {
   display: block;
@@ -78,8 +82,8 @@
 
 .elements__single_fixed {
   display: flex;
-  border-radius: 5px;
-  padding: 1px;
+  border-radius: 4px;
+  padding: 0px;
   margin-top: 5px;
   background-color: rgb(58, 212, 230);;
   transition: 0.2s;
