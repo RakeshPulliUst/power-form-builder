@@ -1,0 +1,123 @@
+import * as React from "react";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import { Table as DefaultTable } from "@mui/material";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import Button from "./Button";
+
+type Props = {
+  rows: {
+    id: number;
+    form_title: string;
+    date_created: Date;
+    date_modified: Date;
+    status: string;
+    action: React.ReactNode;
+  }[];
+  onPreviewClick?: React.MouseEventHandler<HTMLButtonElement>;
+  onEditClick?: React.MouseEventHandler<HTMLButtonElement>;
+  onDeleteClick?: React.MouseEventHandler<HTMLButtonElement>;
+};
+
+const Table = ({
+  rows,
+  onPreviewClick,
+  onEditClick,
+  onDeleteClick,
+
+  //   onChange,
+  ...rest
+}: Props) => {
+  // const [selectItems, setTableItems] = React.useState<string[]>(value);
+  // const handleChange = (event: TableChangeEvent<typeof selectItems>) => {
+  //   const {
+  //     target: { value },
+  //   } = event;
+  //   setTableItems(typeof value === "string" ? value.split(",") : value);
+  // };
+
+  return (
+    <FormControl sx={{ m: 1 }}>
+      {/* <TableContainer component={Paper}>
+        <DefaultTable sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              {data.map((name, index) => (
+                <TableCell align="right">{name.tableHeading}</TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {data.map((row, index) => (
+              <TableRow
+                key={row.tableHeading}
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              >
+                <TableCell align="right">{row.tableValue}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </DefaultTable>
+      </TableContainer> */}
+      <TableContainer component={Paper}>
+        <DefaultTable sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>ID</TableCell>
+              <TableCell>Form Name</TableCell>
+              <TableCell>Date Created</TableCell>
+              <TableCell>Date Modified</TableCell>
+              <TableCell>Status</TableCell>
+              <TableCell>Action</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.map((row) => (
+              <TableRow
+                key={row.id}
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              >
+                <TableCell>{row.id}</TableCell>
+                <TableCell>{row.form_title}</TableCell>
+                <TableCell>{row.date_created.toString()}</TableCell>
+                <TableCell>{row.date_modified.toString()}</TableCell>
+                <TableCell>{row.status}</TableCell>
+                <TableCell>
+                  <Button
+                    label="Preview"
+                    color="warning"
+                    size="large"
+                    onClick={onPreviewClick}
+                  />
+                  &nbsp;
+                  <Button
+                    label="Edit"
+                    color="primary"
+                    size="large"
+                    onClick={onEditClick}
+                  />
+                  &nbsp;
+                  <Button
+                    label="Delete"
+                    color="error"
+                    size="large"
+                    onClick={onDeleteClick}
+                  />
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </DefaultTable>
+      </TableContainer>
+    </FormControl>
+  );
+};
+
+export default Table;

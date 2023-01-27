@@ -1,8 +1,16 @@
 export interface FormJson{
-  title: string,
+  form_title: string,
   components: Element[]
 }
 
+export interface FinalSaveFormJson{
+  id: number,
+  form_title: string,
+  components: Element[],
+  date_created: Date,
+  date_modified: Date,
+  status: String
+}
 
 export interface Element {
     id: number;
@@ -35,6 +43,7 @@ export interface Element {
     
     options?: string,
     radioItems?: {
+      id: string
       radioButtonDataLabel: string
       radioButtonDataValue: string
     }[]; 
@@ -43,15 +52,15 @@ export interface Element {
       id: string
       tabsDataLabel: string
       tabsDataValue: string
-      tabComponents?:  Element[]
+      tabComponents:  Element[]
     }[]; 
 
     columnItems?: {
         id: string,
         label: string,
-        columnDataSize: string[],
+        columnDataSize: string,
         columnDataWidth: number,
-        columnComponents?:  Element[]
+        columnComponents:  Element[]
       }[],  
 
     show?: boolean
@@ -62,9 +71,28 @@ export interface Element {
   }
 
   export const sample: FormJson = {
-    title: "Form",
+    form_title: "Form",
     components: [],
   };
+
+  export const finalSample: FinalSaveFormJson = {
+    id: 1,
+    form_title: "Form",
+    components: [],
+    date_created: new Date(),
+    date_modified: new Date(),
+    status: ""
+  };
+
+  export const finalTableFormSample: FinalSaveFormJson[] = [{
+    id: 1,
+    form_title: "Form",
+    components: [],
+    date_created: new Date(),
+    date_modified: new Date(),
+    status: ""
+  }];
+
 
   export const components: Element[] = [
     {

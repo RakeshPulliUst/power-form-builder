@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -26,7 +26,8 @@ const TabsData: React.FC<{
   handleClose: () => void;
   handleOpen: () => void;
   tabValues: TabsDialog;
-}> = ({ open, handleClose, tabValues, handleOpen }) => {
+  element: Element;
+}> = ({ open, handleClose, tabValues, handleOpen, element }) => {
   const [value, setValue] = React.useState("1");
   const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
     setValue(newValue);
@@ -59,6 +60,11 @@ const TabsData: React.FC<{
     console.log(tabValues);
     handleOpen();
   };
+
+  useEffect(() => {
+    setTabsLabel(element.label!);
+    setTabItemsData(element.tabItems!);
+  });
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

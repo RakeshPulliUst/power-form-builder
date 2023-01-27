@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -17,6 +17,7 @@ import { SelectDiaglog } from "../DialogInterface";
 import { v4 as uuidv4 } from "uuid";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
+import { Element } from "../ElementInterface";
 
 type Props = {
   id: string;
@@ -29,7 +30,8 @@ const SelectData: React.FC<{
   handleClose: () => void;
   handleOpen: () => void;
   selectValues: SelectDiaglog;
-}> = ({ open, handleClose, selectValues, handleOpen }) => {
+  element: Element;
+}> = ({ open, handleClose, selectValues, handleOpen, element }) => {
   const [value, setValue] = React.useState("1");
   const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
     setValue(newValue);
@@ -95,6 +97,16 @@ const SelectData: React.FC<{
     console.log(selectValues);
     handleOpen();
   };
+
+  useEffect(() => {
+    setSelectLabel(element.label!);
+    setTextPlaceholder(element.placeholder!);
+    setMultipleValues(element.multipleValues!);
+    setRequired(element.required!);
+    setSelectSize([element.size!]);
+    setSelectWidth(element.width?.toString()!);
+    setMenuItemsData(element.menuItems!);
+  });
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

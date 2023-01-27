@@ -1,0 +1,67 @@
+import { Button, Table } from "@power-form-builder/ui-components";
+import React, { useEffect, useState } from "react";
+import "./Home.css";
+import { UITranslation } from "@power-form-builder/ui-translation";
+import FormNameInput from "./FormNameInput";
+import ReactDOMServer from "react-dom/server";
+import axios from "axios";
+import { toast } from "react-toastify";
+
+function Home() {
+  const [open, setOpen] = useState(false);
+  const [formData, setFormData] = useState([]);
+
+  const handleBuildForm = (e: React.MouseEvent<HTMLButtonElement>) => {
+    setOpen(!open);
+  };
+
+  useEffect(() => {
+    getAllData();
+  }, []);
+  //Creating function to post data on server
+  const getAllData = () => {
+    axios.get(`http://localhost:4000/api/form/showAll`).then(
+      (response) => {
+        setFormData(response.data);
+      },
+      (error) => {
+        console.log(error);
+        console.log("error");
+        toast.error("Something went wrong");
+      }
+    );
+  };
+
+  return (
+    <>
+      <Table
+        rows={formData}
+        onPreviewClick={() => {
+          console.log("Preview");
+        }}
+        onEditClick={() => {
+          console.log("Edit");
+        }}
+        onDeleteClick={() => {
+          console.log("Delete");
+        }}
+      ></Table>
+      <div className="home-container">
+        <h1>
+          <UITranslation name="welcome_to_our_formsite" />
+        </h1>
+        <div className="home-btns">
+          <Button
+            label="Build Form"
+            color="secondary"
+            size="large"
+            onClick={handleBuildForm}
+          />
+        </div>
+        {open ? <FormNameInput open={open} /> : <></>}
+      </div>
+    </>
+  );
+}
+
+export default Home;

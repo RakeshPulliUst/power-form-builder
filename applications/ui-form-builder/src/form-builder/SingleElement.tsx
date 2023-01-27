@@ -22,7 +22,7 @@ import {
 import TextFieldData from "./components/TextFieldData";
 import {
   ButtonDialog,
-  CheckBoxDiaglog,
+  CheckboxDiaglog,
   ColumnDialog,
   ColumnItemsDialog,
   RadioButtonDialog,
@@ -32,13 +32,12 @@ import {
   TextFieldDiaglog,
 } from "./DialogInterface";
 import TextAreaData from "./components/TextAreaData";
-import CheckBoxData from "./components/CheckBoxData";
-import SelectData from "./components/TextFieldSelectData";
+import CheckboxData from "./components/CheckboxData";
+import SelectData from "./components/SelectData";
 import ButtonData from "./components/ButtonData";
 import RadioButtonData from "./components/RadioButtonData";
 import TabsData from "./components/TabsData";
 import ColumnData from "./components/ColumData";
-import { isTemplateExpression } from "typescript";
 
 type Props = {
   id: string;
@@ -56,12 +55,13 @@ type TabProps = {
 type ColumnItemsProps = {
   id: string;
   label: string;
-  columnDataSize: string[];
+  columnDataSize: string;
   columnDataWidth: number;
   columnComponents: Element[];
 }[];
 
 type RadioProps = {
+  id: string;
   radioButtonDataLabel: string;
   radioButtonDataValue: string;
 }[];
@@ -124,7 +124,7 @@ const SingleElement: React.FC<{
     rows: 0,
   };
 
-  const checkBoxValues: CheckBoxDiaglog = {
+  const checkBoxValues: CheckboxDiaglog = {
     label: "Checkbox",
     required: false,
     default: false,
@@ -161,7 +161,7 @@ const SingleElement: React.FC<{
     {
       id: "1989",
       label: "Column1",
-      columnDataSize: ["md"],
+      columnDataSize: "md",
       columnDataWidth: 220,
       columnComponents: [
         {
@@ -177,7 +177,7 @@ const SingleElement: React.FC<{
     {
       id: "1989",
       label: "Column1",
-      columnDataSize: ["md"],
+      columnDataSize: "md",
       columnDataWidth: 220,
       columnComponents: [
         {
@@ -190,7 +190,7 @@ const SingleElement: React.FC<{
     {
       id: "1990",
       label: "Column2",
-      columnDataSize: ["md"],
+      columnDataSize: "md",
       columnDataWidth: 220,
       columnComponents: [
         {
@@ -218,8 +218,16 @@ const SingleElement: React.FC<{
   };
 
   const radioItemsData: RadioProps = [
-    { radioButtonDataLabel: "Male", radioButtonDataValue: "Male" },
-    { radioButtonDataLabel: "Female", radioButtonDataValue: "Female" },
+    {
+      id: "radio1",
+      radioButtonDataLabel: "Male",
+      radioButtonDataValue: "Male",
+    },
+    {
+      id: "radio2",
+      radioButtonDataLabel: "Female",
+      radioButtonDataValue: "Female",
+    },
   ];
 
   const radiobuttonValues: RadioButtonDialog = {
@@ -238,7 +246,7 @@ const SingleElement: React.FC<{
     {
       id: "1989",
       label: "Column1",
-      columnDataSize: ["md"],
+      columnDataSize: "md",
       columnDataWidth: 220,
       columnComponents: [
         {
@@ -290,6 +298,7 @@ const SingleElement: React.FC<{
     console.log(element);
     let col = false;
     setOpen(!open);
+
     if (element.element === "Button") {
       console.log(buttonValues);
       console.log("JSON", JSON.stringify(buttonValues));
@@ -339,7 +348,7 @@ const SingleElement: React.FC<{
       element.required = selectValues.required;
       element.size = selectValues.size.toString();
       element.width = selectValues.width;
-    } else if (element.element === "CheckBox") {
+    } else if (element.element === "Checkbox") {
       console.log(checkBoxValues);
       console.log("JSON", JSON.stringify(checkBoxValues));
       element.label = checkBoxValues.label;
@@ -425,7 +434,7 @@ const SingleElement: React.FC<{
     } else if (element.element === "Select") {
       console.log(selectValues);
       console.log("JSON", JSON.stringify(selectValues));
-    } else if (element.element === "CheckBox") {
+    } else if (element.element === "Checkbox") {
       console.log(checkBoxValues);
       console.log("JSON", JSON.stringify(checkBoxValues));
     } else if (element.element === "RadioButton") {
@@ -505,6 +514,7 @@ const SingleElement: React.FC<{
 
   const [textFieldStatus, setTextFieldStatus] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
+
   return (
     <Draggable draggableId={element.id.toString()} index={index}>
       {(provided, snapshot) => (
@@ -525,7 +535,7 @@ const SingleElement: React.FC<{
                   handleClose={handleClose}
                   textFieldValues={textFieldValues}
                   handleOpen={handleOpen}
-                  element={element.element}
+                  element={element}
                   textFieldStatus={textFieldStatus}
                 />
                 <TextField
@@ -546,7 +556,7 @@ const SingleElement: React.FC<{
                   handleClose={handleClose}
                   textFieldValues={textAreaValues}
                   handleOpen={handleOpen}
-                  element={element.element}
+                  element={element}
                   textFieldStatus={textFieldStatus}
                 ></TextFieldData>
 
@@ -566,7 +576,7 @@ const SingleElement: React.FC<{
               <>
                 <TextFieldData
                   open={open!}
-                  element={element.element}
+                  element={element}
                   handleClose={handleClose}
                   textFieldValues={passwordValues}
                   handleOpen={handleOpen}
@@ -588,7 +598,7 @@ const SingleElement: React.FC<{
               <>
                 <TextFieldData
                   open={open!}
-                  element={element.element}
+                  element={element}
                   handleClose={handleClose}
                   textFieldValues={emailValues}
                   handleOpen={handleOpen}
@@ -608,12 +618,13 @@ const SingleElement: React.FC<{
               </>
             ) : element.element === "Checkbox" ? (
               <>
-                <CheckBoxData
+                <CheckboxData
                   open={open!}
                   handleClose={handleClose}
                   checkBoxValues={checkBoxValues}
                   handleOpen={handleOpen}
-                ></CheckBoxData>
+                  element={element}
+                ></CheckboxData>
 
                 <Checkbox
                   label={checkBoxValues.label}
@@ -629,6 +640,7 @@ const SingleElement: React.FC<{
                   handleClose={handleClose}
                   selectValues={selectValues}
                   handleOpen={handleOpen}
+                  element={element}
                 ></SelectData>
 
                 <Select
@@ -650,6 +662,7 @@ const SingleElement: React.FC<{
                   handleClose={handleClose}
                   buttonValues={buttonValues}
                   handleOpen={handleOpen}
+                  element={element}
                 ></ButtonData>
 
                 <Button
@@ -686,6 +699,7 @@ const SingleElement: React.FC<{
                   handleClose={handleClose}
                   radiobuttonValues={radiobuttonValues}
                   handleOpen={handleOpen}
+                  element={element}
                 />
 
                 <RadioGroup
@@ -712,6 +726,7 @@ const SingleElement: React.FC<{
                   handleClose={handleClose}
                   columnValues={columnValues}
                   handleOpen={handleOpen}
+                  element={element}
                 />
                 <Grid spacing={10}>
                   <GridItem md={6}>
@@ -795,6 +810,7 @@ const SingleElement: React.FC<{
                   handleClose={handleClose}
                   tabValues={tabValues}
                   handleOpen={handleOpen}
+                  element={element}
                 ></TabsData>
                 <Tabs tabItems={tabValues.tabItems}>
                   <Droppable droppableId="tabsDroppableId">

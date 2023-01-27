@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Dialog,
@@ -7,13 +7,14 @@ import {
   TextField,
 } from "@power-form-builder/ui-components";
 import { ButtonDialog } from "../DialogInterface";
-
+import { Element } from "../ElementInterface";
 const ButtonData: React.FC<{
   open: boolean;
   handleClose: () => void;
   buttonValues: ButtonDialog;
   handleOpen: () => void;
-}> = ({ open, handleClose, buttonValues, handleOpen }) => {
+  element: Element;
+}> = ({ open, handleClose, buttonValues, handleOpen, element }) => {
   const [value, setValue] = React.useState("1");
   const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
     setValue(newValue);
@@ -69,12 +70,21 @@ const ButtonData: React.FC<{
   };
 
   const handleData = () => {
+    console.log(element);
     buttonValues.label = buttonLabel;
     buttonValues.theme = buttonTheme.toString();
     buttonValues.size = buttonSize.toString();
+
     console.log(buttonValues);
     handleOpen();
   };
+
+  useEffect(() => {
+    setButtonLabel(element.label!);
+    setButtonTheme([element.theme!]);
+    setButtonSize([element.size!]);
+  }, []);
+
   return (
     <Dialog
       open={open}

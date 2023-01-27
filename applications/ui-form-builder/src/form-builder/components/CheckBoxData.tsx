@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -8,26 +8,28 @@ import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import { TabContext, TabList, TabPanel } from "@material-ui/lab";
 import { Button, Checkbox, TextField } from "@power-form-builder/ui-components";
-import { CheckBoxDiaglog } from "../DialogInterface";
+import { CheckboxDiaglog } from "../DialogInterface";
+import { Element } from "../ElementInterface";
 
-const CheckBoxData: React.FC<{
+const CheckboxData: React.FC<{
   open: boolean;
   handleClose: () => void;
   handleOpen: () => void;
-  checkBoxValues: CheckBoxDiaglog;
-}> = ({ open, handleClose, checkBoxValues, handleOpen }) => {
+  checkBoxValues: CheckboxDiaglog;
+  element: Element;
+}> = ({ open, handleClose, checkBoxValues, handleOpen, element }) => {
   const [value, setValue] = React.useState("1");
   const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
     setValue(newValue);
   };
 
-  //CheckBox
-  const [checkboxLabel, setTextValue] = useState("");
+  //Checkbox
+  const [checkboxLabel, setCheckboxLabel] = useState("");
   const [defaultValue, setDefaultValue] = useState(false);
   const [errorLabel, setErrorLabel] = useState("");
 
   const handleTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTextValue(event.target.value);
+    setCheckboxLabel(event.target.value);
     console.log(checkboxLabel);
   };
 
@@ -46,6 +48,7 @@ const CheckBoxData: React.FC<{
   };
 
   const handleData = () => {
+    console.log(checkboxLabel);
     checkBoxValues.label = checkboxLabel;
     checkBoxValues.default = defaultValue;
     checkBoxValues.error = errorLabel;
@@ -53,6 +56,16 @@ const CheckBoxData: React.FC<{
     console.log(checkBoxValues);
     handleOpen();
   };
+
+  useEffect(() => {
+    console.log("Checkobx", element);
+    setCheckboxLabel(element.label!);
+    setDefaultValue(element.default!);
+    setRequired(element.required!);
+    setErrorLabel(element.error!);
+    console.log("Checkobx", checkboxLabel, defaultValue, errorLabel);
+  }, []);
+
   return (
     <Dialog
       fullWidth={true}
@@ -135,4 +148,4 @@ const CheckBoxData: React.FC<{
   );
 };
 
-export default CheckBoxData;
+export default CheckboxData;

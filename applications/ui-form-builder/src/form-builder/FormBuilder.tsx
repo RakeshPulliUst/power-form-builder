@@ -1,34 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ElementList from "./ElementList";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
-import { Element, FormJson } from "./ElementInterface";
 import {
-  Alert,
-  Button,
-  Stack,
-  TextField,
-} from "@power-form-builder/ui-components";
+  Element,
+  FinalSaveFormJson,
+  FormJson,
+  finalSample,
+} from "./ElementInterface";
+import { Button } from "@power-form-builder/ui-components";
 import { components, sample } from "./ElementInterface";
 import { useLocation, useNavigate } from "react-router-dom";
-import TextFieldData from "./components/TextFieldData";
-import { TextFieldDiaglog } from "./DialogInterface";
-
-const reorder = (list: any, startIndex: number, endIndex: number) => {
-  const result = Array.from(list);
-  const [removed] = result.splice(startIndex, 1);
-  result.splice(endIndex, 0, removed);
-
-  return result;
-};
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const FormBuilder = () => {
   const [show, setShow] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
-  const { formName } = location.state || {};
+  const { formName, formInitialComponents } = location.state || {};
 
   const [formData, setFormData] = useState<FormJson>(sample);
+  const [finalSaveFormData, setFinalSaveFormData] =
+    useState<FinalSaveFormJson>(finalSample);
   const [formJsonData, setFormJsonData] = useState("");
   const [elements, setElements] = useState<Array<Element>>(components);
   const [CompletedElements, setCompletedElements] = useState<Array<Element>>(
@@ -42,11 +36,26 @@ const FormBuilder = () => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
+  //Creating function to post data on server
+  const postDatatoServer = (data: any) => {
+    axios.post(`http://localhost:4000/api/form`, data).then(
+      (response) => {
+        toast.success("Plan Added Successfully");
+        console.log("Done");
+      },
+      (error) => {
+        console.log(error);
+        console.log("error");
+        toast.error("Something went wrong");
+      }
+    );
+  };
+
   const handleClick = () => {
     if (CompletedElements.length !== 0) {
       console.log({ CompletedElements });
       console.log({ tabElements });
-      formData.title = formName;
+      formData.form_title = formName;
       formData.components = CompletedElements;
       console.log(formData);
       setFormData(formData);
@@ -56,6 +65,15 @@ const FormBuilder = () => {
       setFormJsonData(formJsonData);
       console.log(formJsonData);
       console.log(formData);
+      let id = 1;
+      finalSaveFormData.id = id;
+      id++;
+      finalSaveFormData.form_title = formData.form_title;
+      finalSaveFormData.components = formData.components;
+      finalSaveFormData.date_created = new Date();
+      finalSaveFormData.date_modified = new Date();
+      finalSaveFormData.status = "In-Progress";
+      postDatatoServer(finalSaveFormData);
       navigate("/formrender", { state: { formData: formData } });
     } else {
       alert("Please Add Elements");
@@ -213,6 +231,20 @@ const FormBuilder = () => {
     setColumn1Elements(column1Complete);
   };
 
+  useEffect(() => {
+    setCompletedElements(formInitialComponents);
+    formInitialComponents.map((item: any, index: number) =>
+      item.element === "Tabs"
+        ? item.tabItems.map((data: any) => setTabElements(data.tabComponents))
+        : item.columnItems.map((data: any) =>
+            data.label === "Column1"
+              ? setColumnElements(data.columnComponents)
+              : setColumn1Elements(data.columnComponents)
+          )
+    );
+
+    console.log(formInitialComponents);
+  }, []);
   return (
     <>
       <DragDropContext onDragEnd={onDragEnd}>

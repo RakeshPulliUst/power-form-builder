@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -9,13 +9,14 @@ import Tab from "@mui/material/Tab";
 import { TabContext, TabList, TabPanel } from "@material-ui/lab";
 import { Button, Checkbox, TextField } from "@power-form-builder/ui-components";
 import { TextFieldDiaglog } from "../DialogInterface";
+import { Element } from "../ElementInterface";
 
 const TextFieldData: React.FC<{
   open: boolean;
   handleClose: () => void;
   textFieldValues: TextFieldDiaglog;
   handleOpen: () => void;
-  element: string;
+  element: Element;
   textFieldStatus: boolean;
 }> = ({
   open,
@@ -35,7 +36,7 @@ const TextFieldData: React.FC<{
   const [textPlaceholder, setTextPlaceholder] = useState("");
   const [textMinLength, setTextMinLength] = useState(0);
   const [textMaxLength, setTextMaxLength] = useState(0);
-  const [rows, setrows] = useState(0);
+  const [rows, setRows] = useState(0);
 
   const handleTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTextValue(event.target.value);
@@ -57,7 +58,7 @@ const TextFieldData: React.FC<{
   };
 
   const handlerows = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setrows(parseInt(event.target.value));
+    setRows(parseInt(event.target.value));
   };
 
   //Checkbox
@@ -79,6 +80,16 @@ const TextFieldData: React.FC<{
     console.log(textFieldStatus);
     handleOpen();
   };
+
+  useEffect(() => {
+    setTextValue(element.label!);
+    setTextPlaceholder(element.placeholder!);
+    setTextMaxLength(element.maxLength!);
+    setTextMinLength(element.minLength!);
+    setRequired(element.required!);
+    setRows(element.rows!);
+  });
+
   return (
     <Dialog
       maxWidth={"sm"}
@@ -96,11 +107,11 @@ const TextFieldData: React.FC<{
       aria-describedby="alert-dialog-description"
     >
       <DialogTitle id="alert-dialog-title">
-        {element === "TextField"
+        {element.element === "TextField"
           ? "TextField Details"
-          : element === "Password"
+          : element.element === "Password"
           ? "Password Detais"
-          : element === "TextArea"
+          : element.element === "TextArea"
           ? "TextArea Details"
           : "Email Details"}
       </DialogTitle>
@@ -157,7 +168,7 @@ const TextFieldData: React.FC<{
               onChange={handleTextMaxLength}
             />
             <br />
-            {element === "TextArea" ? (
+            {element.element === "TextArea" ? (
               <>
                 <br />
                 <TextField

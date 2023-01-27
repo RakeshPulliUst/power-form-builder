@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -14,7 +14,7 @@ import {
   TextField,
 } from "@power-form-builder/ui-components";
 import { RadioButtonDialog } from "../DialogInterface";
-
+import { Element } from "../ElementInterface";
 import { v4 as uuidv4 } from "uuid";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
@@ -30,7 +30,8 @@ const RadioButtonData: React.FC<{
   handleClose: () => void;
   handleOpen: () => void;
   radiobuttonValues: RadioButtonDialog;
-}> = ({ open, handleClose, radiobuttonValues, handleOpen }) => {
+  element: Element;
+}> = ({ open, handleClose, radiobuttonValues, handleOpen, element }) => {
   const [value, setValue] = React.useState("1");
   const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
     setValue(newValue);
@@ -81,6 +82,13 @@ const RadioButtonData: React.FC<{
     radiobuttonValues.radioItems = radioItems;
     handleOpen();
   };
+
+  useEffect(() => {
+    setRadioLabel(element.label!);
+    setRadioOptionLabelPosition([element.options!]);
+    setRequired(element.required!);
+    setRadioItems(element.radioItems!);
+  });
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -22,12 +22,21 @@ type Props = {
   columnComponents: Element[];
 }[];
 
+type FinalColumnItemProps = {
+  id: string;
+  label: string;
+  columnDataSize: string;
+  columnDataWidth: number;
+  columnComponents: Element[];
+}[];
+
 const ColumnData: React.FC<{
   open: boolean;
   handleClose: () => void;
   handleOpen: () => void;
   columnValues: ColumnDialog;
-}> = ({ open, handleClose, columnValues, handleOpen }) => {
+  element: Element;
+}> = ({ open, handleClose, columnValues, handleOpen, element }) => {
   const [value, setValue] = React.useState("1");
   const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
     setValue(newValue);
@@ -51,6 +60,23 @@ const ColumnData: React.FC<{
     },
   ]);
 
+  const [finalColumnItemsData, setFinalColumnItemsData] =
+    useState<FinalColumnItemProps>([
+      {
+        id: uuidv4(),
+        label: "",
+        columnDataSize: "",
+        columnDataWidth: 0,
+        columnComponents: [
+          {
+            id: 102,
+            element: "Column",
+            label: "Ths",
+          },
+        ],
+      },
+    ]);
+
   const handleColumnLabel = (event: React.ChangeEvent<HTMLInputElement>) => {
     setColumnLabel(event.target.value);
     console.log(columnLabel);
@@ -58,11 +84,24 @@ const ColumnData: React.FC<{
 
   const handleData = () => {
     columnValues.label = columnLabel;
+    let colDataSize: string;
+    columnItemsData.map((item) => {
+      colDataSize = item.columnDataSize.toString();
+    });
+    finalColumnItemsData.map((item) => {
+      item.columnDataSize = colDataSize;
+    });
 
-    columnValues.columnItems = columnItemsData;
+    columnValues.columnItems = finalColumnItemsData;
     console.log(columnValues);
     handleOpen();
   };
+
+  useEffect(() => {
+    setColumnLabel(element.label!);
+    setColumnSize([element.size!]);
+    setFinalColumnItemsData(element.columnItems!);
+  });
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

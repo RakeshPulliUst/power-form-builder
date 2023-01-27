@@ -120,7 +120,7 @@ function MaterialForm() {
   };
   return (
     <>
-      {formJsonData.title !== "" ? (
+      {formJsonData.form_title !== "" ? (
         <form onSubmit={submitForm}>
           <>
             {console.log(
@@ -142,7 +142,7 @@ function MaterialForm() {
                 <li>Password:{val.password}</li>
                 <li>Address:{val.address}</li>
                 <li>Gender:{val.gender}</li>
-                <li>CheckBox:{checkbox}</li>
+                <li>Checkbox:{checkbox}</li>
                 <li>Select: {selectData.toString()}</li>
               </ul>
             ) : (
@@ -151,7 +151,7 @@ function MaterialForm() {
           </>
           {
             <GridItem xs={12} sm={12}>
-              <h2>{formJsonData.title}</h2>
+              <h2>{formJsonData.form_title}</h2>
             </GridItem>
           }
           {formJsonData.components.map((data) => {
@@ -270,7 +270,7 @@ function MaterialForm() {
                         required={data.required!}
                         onChange={onHandleChange}
                       />
-                    ) : data.element === "CheckBox" ? (
+                    ) : data.element === "Checkbox" ? (
                       <Checkbox
                         label={data.label!}
                         name={data.label!}
@@ -316,16 +316,150 @@ function MaterialForm() {
                             item.tabComponents!.map((item1, index) => (
                               <>
                                 {item1.element === "TextField" ? (
-                                  <TextField
-                                    label={item1.label!}
-                                    name={item1.label?.toLocaleLowerCase()}
-                                    value={val.firstname}
-                                    onChange={onHandleChange}
-                                    placeholder={item1.placeholder}
-                                    required={item1.required!}
-                                    minLength={item1.minLength!}
-                                    maxLength={item1.maxLength!}
-                                  />
+                                  <GridItem>
+                                    <TextField
+                                      label={item1.label!}
+                                      name={item1.label?.toLocaleLowerCase()}
+                                      value={val.firstname}
+                                      onChange={onHandleChange}
+                                      placeholder={item1.placeholder}
+                                      required={item1.required!}
+                                      minLength={item1.minLength!}
+                                      maxLength={item1.maxLength!}
+                                    />
+                                  </GridItem>
+                                ) : item1.element === "Password" ? (
+                                  <GridItem>
+                                    <TextField
+                                      label={item1.label!}
+                                      name={item1.label?.toLocaleLowerCase()}
+                                      type="password"
+                                      value={val.password}
+                                      onChange={onHandleChange}
+                                      placeholder={item1.placeholder}
+                                      required={item1.required!}
+                                      minLength={item1.minLength!}
+                                      maxLength={item1.maxLength!}
+                                    />
+                                  </GridItem>
+                                ) : item1.element === "TextArea" ? (
+                                  <GridItem>
+                                    <TextField
+                                      label={item1.label!}
+                                      required={item1.required!}
+                                      placeholder={item1.placeholder!}
+                                      name={item1.label?.toLocaleLowerCase()}
+                                      value={val.address}
+                                      onChange={onHandleChange}
+                                      minLength={item1.minLength!}
+                                      maxLength={item1.maxLength!}
+                                      rows={item1.rows}
+                                      multiline={true}
+                                    ></TextField>
+                                  </GridItem>
+                                ) : item1.element === "Email" ? (
+                                  <GridItem>
+                                    <TextField
+                                      label={item1.label!}
+                                      name={item1.label?.toLocaleLowerCase()}
+                                      value={val.email}
+                                      type="email"
+                                      onChange={onHandleChange}
+                                      placeholder={item1.placeholder}
+                                      required={item1.required!}
+                                      minLength={item1.minLength!}
+                                      maxLength={item1.maxLength!}
+                                      helperText={emailHelperText}
+                                      error={error}
+                                    />
+                                  </GridItem>
+                                ) : item1.element === "Select" &&
+                                  !item1.multipleValues ? (
+                                  <GridItem>
+                                    <Select
+                                      label={item1.label!}
+                                      placeholder={item1.placeholder!}
+                                      menuItems={item1.menuItems!}
+                                      multiple={item1.multipleValues!}
+                                      name={item1.label?.toLocaleLowerCase()}
+                                      value={selectData}
+                                      onChange={handleSelectData}
+                                      size={
+                                        item1.size !== undefined
+                                          ? item1.size === "small"
+                                            ? "small"
+                                            : "medium"
+                                          : "medium"
+                                      }
+                                      required={item1.required!}
+                                      width={item1.width}
+                                    />
+                                  </GridItem>
+                                ) : item1.element === "RadioButton" ? (
+                                  <GridItem>
+                                    <RadioGroup
+                                      label={item1.label!}
+                                      options={
+                                        item1.options !== undefined
+                                          ? item1.options === "top"
+                                            ? "top"
+                                            : item1.options === "bottom"
+                                            ? "bottom"
+                                            : item1.options === "start"
+                                            ? "start"
+                                            : "end"
+                                          : "end"
+                                      }
+                                      value={val.gender}
+                                      name={item1.label?.toLocaleLowerCase()}
+                                      radioItems={item1.radioItems!}
+                                      required={item1.required!}
+                                      onChange={onHandleChange}
+                                    />
+                                  </GridItem>
+                                ) : item1.element === "Checkbox" ? (
+                                  <GridItem>
+                                    <Checkbox
+                                      label={item1.label!}
+                                      name={item1.label!}
+                                      required={item1.required!}
+                                      value={item1.label}
+                                      checked={checked}
+                                      onChange={handleChange}
+                                    />
+                                  </GridItem>
+                                ) : item1.element === "Button" ? (
+                                  <GridItem>
+                                    <Button
+                                      label={item1.label!}
+                                      color={
+                                        item1.theme !== undefined
+                                          ? item1.theme === "primary"
+                                            ? "primary"
+                                            : item1.theme === "secondary"
+                                            ? "secondary"
+                                            : item1.theme === "info"
+                                            ? "info"
+                                            : item1.theme === "success"
+                                            ? "success"
+                                            : item1.theme === "warning"
+                                            ? "warning"
+                                            : item1.theme === "error"
+                                            ? "error"
+                                            : "inherit"
+                                          : "warning"
+                                      }
+                                      size={
+                                        item1.size !== undefined
+                                          ? item1.size === "small"
+                                            ? "small"
+                                            : item1.size === "medium"
+                                            ? "medium"
+                                            : "large"
+                                          : "medium"
+                                      }
+                                    />
+                                  </GridItem>
                                 ) : (
                                   <>Noo</>
                                 )}
@@ -451,7 +585,7 @@ function MaterialForm() {
                                           onChange={onHandleChange}
                                         />
                                       </GridItem>
-                                    ) : item1.element === "CheckBox" ? (
+                                    ) : item1.element === "Checkbox" ? (
                                       <GridItem>
                                         <Checkbox
                                           label={item1.label!}
@@ -608,7 +742,7 @@ function MaterialForm() {
                                           onChange={onHandleChange}
                                         />
                                       </GridItem>
-                                    ) : item1.element === "CheckBox" ? (
+                                    ) : item1.element === "Checkbox" ? (
                                       <GridItem>
                                         <Checkbox
                                           label={item1.label!}

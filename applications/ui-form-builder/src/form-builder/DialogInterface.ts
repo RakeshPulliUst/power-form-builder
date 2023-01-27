@@ -17,7 +17,7 @@ export interface TextFieldDiaglog {
   }
 
   
-  export interface CheckBoxDiaglog {
+  export interface CheckboxDiaglog {
     label : string;
     checked: boolean;
     default: boolean;
@@ -49,6 +49,7 @@ export interface TextFieldDiaglog {
     label: string,
     options: string,
     radioItems: {
+      id: string
       radioButtonDataLabel: string
       radioButtonDataValue: string
     }[]; 
@@ -60,7 +61,7 @@ export interface TextFieldDiaglog {
     columnItems: {
       id: string
       label: string,
-      columnDataSize: string[],
+      columnDataSize: string,
       columnDataWidth: number,
       columnComponents: Element[]
     }[],

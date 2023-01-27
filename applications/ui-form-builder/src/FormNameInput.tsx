@@ -34,7 +34,9 @@ function FormNameInput({ open }: Props) {
     if (formName) {
       console.log("For", formName);
       setOpen1(!open1);
-      navigate("/formbuilder", { state: { formName: formName } });
+      navigate("/formbuilder", {
+        state: { formName: formName, formInitialComponents: [] },
+      });
     } else {
       console.log("For1", formName);
       setHelperText("Enter Form Details");

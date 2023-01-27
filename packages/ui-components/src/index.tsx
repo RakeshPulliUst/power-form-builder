@@ -13,6 +13,11 @@ import TextFieldSelect from "./components/TextFieldSelect";
 import SelectChangeEvent from "@mui/material/Select";
 import Tabs from "./components/Tabs";
 import Dialog from "./components/Dialog";
+import Table from "./components/Table";
+import TableHead from "./components/TableHead";
+import TableBody from "./components/TableBody";
+import TableRow from "./components/TableRow";
+import TableCell from "./components/TableCell";
 export {
   Button,
   Card,
@@ -29,4 +34,9 @@ export {
   SelectChangeEvent,
   Tabs,
   Dialog,
+  Table,
+  TableHead,
+  TableBody,
+  TableRow,
+  TableCell,
 };
