@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import Box from "@mui/material/Box";
-import Tab from "@mui/material/Tab";
-import { TabContext, TabList, TabPanel } from "@material-ui/lab";
-import { Button, TextField } from "@power-form-builder/ui-components";
+
+import {
+  Button,
+  TextField,
+  Box,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  TabContext,
+  TabPanel,
+  TabList,
+} from "@power-form-builder/ui-components";
 import { TabsDialog } from "../DialogInterface";
 import { v4 as uuidv4 } from "uuid";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
@@ -19,6 +23,11 @@ type Props = {
   tabsDataLabel: string;
   tabsDataValue: string;
   tabComponents: Element[];
+}[];
+
+type TabItemsProps = {
+  label: React.ReactNode;
+  value: string;
 }[];
 
 const TabsData: React.FC<{
@@ -64,7 +73,7 @@ const TabsData: React.FC<{
   useEffect(() => {
     setTabsLabel(element.label!);
     setTabItemsData(element.tabItems!);
-  });
+  }, []);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -118,87 +127,71 @@ const TabsData: React.FC<{
     setTabItemsData(values);
   };
 
+  const tabItems: TabItemsProps = [
+    { label: "Display", value: "1" },
+    { label: "Data", value: "2" },
+  ];
+
   return (
-    <Dialog
-      maxWidth={"sm"}
-      PaperProps={{
-        style: {
-          minHeight: "60%",
-          maxHeight: "60%",
-          minWidth: "45%",
-          maxWidth: "45%",
-        },
-      }}
-      open={open}
-      onClose={handleClose}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
-    >
-      <DialogTitle id="alert-dialog-title">{"Tabs Details"}</DialogTitle>
+    <Dialog open={open} onClose={handleClose}>
+      <DialogTitle title="Tabs Details" />
       <DialogContent>
         <TabContext value={value}>
-          <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-            <TabList onChange={handleChange} aria-label="lab API tabs example">
-              <Tab label="Display" value="1" />
-              <Tab label="Data" value="2" />
-            </TabList>
+          <Box>
+            <TabList onChange={handleChange} tabItems={tabItems}></TabList>
           </Box>
           <TabPanel value="1">
-            <DialogContentText id="alert-dialog-description">
-              <TextField
-                label="Label"
-                required={true}
-                value={tabsLabel}
-                onChange={handleTabsLabel}
-              />
-            </DialogContentText>
+            <TextField
+              label="Label"
+              required={true}
+              value={tabsLabel}
+              onChange={handleTabsLabel}
+            />
           </TabPanel>
           <TabPanel value="2">
-            <DialogContentText id="alert-dialog-description">
-              <form onSubmit={handleSubmit}>
-                {tabItemsData.map((item) => (
-                  <div>
-                    <br />
-                    <TextField
-                      label="TabsValueLabel"
-                      name="tabsDataLabel"
-                      required={true}
-                      placeholder=""
-                      value={item.tabsDataLabel}
-                      onChange={(
-                        e: React.ChangeEvent<HTMLInputElement>
-                      ): void => handleChangeInput(item.id, e)}
-                    />
-                    &nbsp;
-                    <TextField
-                      label="TabsValue"
-                      name="tabsDataValue"
-                      required={true}
-                      placeholder=""
-                      value={item.tabsDataValue}
-                      onChange={(
-                        e: React.ChangeEvent<HTMLInputElement>
-                      ): void => handleChangeInput(item.id, e)}
-                    />
-                    {tabItemsData.length !== 1 ? (
-                      <span
-                        className="icon"
-                        onClick={() => handleRemoveFields(item.id)}
-                      >
-                        <RemoveCircleIcon />
-                      </span>
-                    ) : (
-                      <></>
-                    )}
-                    <span className="icon" onClick={handleAddFields}>
-                      <AddCircleIcon />
+            <form onSubmit={handleSubmit}>
+              {tabItemsData.map((item) => (
+                <div>
+                  <br />
+                  <TextField
+                    label="TabsValueLabel"
+                    name="tabsDataLabel"
+                    required={true}
+                    placeholder=""
+                    value={item.tabsDataLabel}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
+                      handleChangeInput(item.id, e)
+                    }
+                  />
+                  &nbsp;
+                  <TextField
+                    label="TabsValue"
+                    name="tabsDataValue"
+                    required={true}
+                    placeholder=""
+                    value={item.tabsDataValue}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
+                      handleChangeInput(item.id, e)
+                    }
+                  />
+                  {tabItemsData.length !== 1 ? (
+                    <span
+                      className="icon"
+                      onClick={() => handleRemoveFields(item.id)}
+                    >
+                      <RemoveCircleIcon />
                     </span>
-                  </div>
-                ))}
-                <br />
-                <Button label="Done" color="secondary" size="small" />
-              </form>
-            </DialogContentText>
+                  ) : (
+                    <></>
+                  )}
+                  <span className="icon" onClick={handleAddFields}>
+                    <AddCircleIcon />
+                  </span>
+                </div>
+              ))}
+              <br />
+              <Button label="Done" color="secondary" size="small" />
+            </form>
           </TabPanel>
         </TabContext>
       </DialogContent>

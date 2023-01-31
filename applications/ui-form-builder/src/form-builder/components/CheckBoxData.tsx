@@ -1,15 +1,26 @@
 import React, { useEffect, useState } from "react";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import Box from "@mui/material/Box";
-import Tab from "@mui/material/Tab";
-import { TabContext, TabList, TabPanel } from "@material-ui/lab";
-import { Button, Checkbox, TextField } from "@power-form-builder/ui-components";
+
+import {
+  Button,
+  Checkbox,
+  TextField,
+  Box,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Tab,
+  TabContext,
+  TabPanel,
+  TabList,
+} from "@power-form-builder/ui-components";
 import { CheckboxDiaglog } from "../DialogInterface";
 import { Element } from "../ElementInterface";
+
+type TabItemsProps = {
+  label: React.ReactNode;
+  value: string;
+}[];
 
 const CheckboxData: React.FC<{
   open: boolean;
@@ -20,7 +31,9 @@ const CheckboxData: React.FC<{
 }> = ({ open, handleClose, checkBoxValues, handleOpen, element }) => {
   const [value, setValue] = React.useState("1");
   const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
+    console.log(newValue);
     setValue(newValue);
+    console.log(value);
   };
 
   //Checkbox
@@ -66,49 +79,34 @@ const CheckboxData: React.FC<{
     console.log("Checkobx", checkboxLabel, defaultValue, errorLabel);
   }, []);
 
+  const tabItems: TabItemsProps = [
+    { label: "Display", value: "1" },
+    { label: "Validation", value: "2" },
+  ];
+
   return (
-    <Dialog
-      fullWidth={true}
-      maxWidth={"sm"}
-      PaperProps={{
-        style: {
-          minHeight: "60%",
-          maxHeight: "60%",
-          minWidth: "45%",
-          maxWidth: "45%",
-        },
-      }}
-      open={open}
-      onClose={handleClose}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
-    >
-      <DialogTitle id="alert-dialog-title">{"Checkbox Details"}</DialogTitle>
+    <Dialog open={open} onClose={handleClose}>
+      <DialogTitle title="Checkbox Details" />
       <DialogContent>
         <TabContext value={value}>
-          <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-            <TabList onChange={handleChange} aria-label="lab API tabs example">
-              <Tab label="Display" value="1" />
-              <Tab label="Validation" value="2" />
-            </TabList>
+          <Box>
+            <TabList onChange={handleChange} tabItems={tabItems}></TabList>
           </Box>
           <TabPanel value="1">
-            <DialogContentText id="alert-dialog-description">
-              <TextField
-                label="Label"
-                required={true}
-                value={checkboxLabel}
-                onChange={handleTextChange}
-              />
-              <br />
-              <br />
-              <Checkbox
-                label="Default Value"
-                required={true}
-                checked={defaultValue}
-                onChange={handleDefaultValue}
-              />
-            </DialogContentText>
+            <TextField
+              label="Label"
+              required={true}
+              value={checkboxLabel}
+              onChange={handleTextChange}
+            />
+            <br />
+            <br />
+            <Checkbox
+              label="Default Value"
+              required={true}
+              checked={defaultValue}
+              onChange={handleDefaultValue}
+            />
           </TabPanel>
           <TabPanel value="2">
             <Checkbox

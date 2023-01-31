@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import Box from "@mui/material/Box";
-import Tab from "@mui/material/Tab";
-import { TabContext, TabList, TabPanel } from "@material-ui/lab";
 import {
   Button,
   Checkbox,
   Select,
   TextField,
+  Box,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  TabContext,
+  TabPanel,
+  TabList,
 } from "@power-form-builder/ui-components";
 import { SelectDiaglog } from "../DialogInterface";
 import { v4 as uuidv4 } from "uuid";
@@ -25,6 +25,11 @@ type Props = {
   selectDataValue: string;
 }[];
 
+type TabItemsProps = {
+  label: React.ReactNode;
+  value: string;
+}[];
+
 const SelectData: React.FC<{
   open: boolean;
   handleClose: () => void;
@@ -34,6 +39,8 @@ const SelectData: React.FC<{
 }> = ({ open, handleClose, selectValues, handleOpen, element }) => {
   const [value, setValue] = React.useState("1");
   const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
+    console.log(value);
+    console.log(newValue);
     setValue(newValue);
   };
 
@@ -106,7 +113,7 @@ const SelectData: React.FC<{
     setSelectSize([element.size!]);
     setSelectWidth(element.width?.toString()!);
     setMenuItemsData(element.menuItems!);
-  });
+  }, []);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -149,126 +156,110 @@ const SelectData: React.FC<{
     setMenuItemsData(values);
   };
 
+  const tabItems: TabItemsProps = [
+    { label: "Display", value: "1" },
+    { label: "Data", value: "2" },
+    { label: "Validation", value: "3" },
+  ];
+
   return (
-    <Dialog
-      maxWidth={"sm"}
-      PaperProps={{
-        style: {
-          minHeight: "60%",
-          maxHeight: "60%",
-          minWidth: "45%",
-          maxWidth: "45%",
-        },
-      }}
-      open={open}
-      onClose={handleClose}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
-    >
-      <DialogTitle id="alert-dialog-title">{"Select Details"}</DialogTitle>
+    <Dialog open={open} onClose={handleClose}>
+      <DialogTitle title="Select Details" />
       <DialogContent>
         <TabContext value={value}>
-          <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-            <TabList onChange={handleChange} aria-label="lab API tabs example">
-              <Tab label="Display" value="1" />
-              <Tab label="Data" value="2" />
-              <Tab label="Validation" value="3" />
-            </TabList>
+          <Box>
+            <TabList onChange={handleChange} tabItems={tabItems}></TabList>
           </Box>
           <TabPanel value="1">
-            <DialogContentText id="alert-dialog-description">
-              <TextField
-                label="Label"
-                required={true}
-                value={selectLabel}
-                onChange={handleSelectLabel}
-              />
-              <br />
-              <br />
-              <TextField
-                label="Placeholder"
-                required={true}
-                placeholder={textPlaceholder}
-                value={textPlaceholder}
-                onChange={handleTextPlaceholder}
-              />
-              <br />
-              <br />
-              <TextField
-                label="Width"
-                required={true}
-                placeholder="Enter Width"
-                value={selectWidth}
-                onChange={handleSelectWidth}
-              />
-              <br />
-              <br />
-              <Select
-                label="Size"
-                placeholder="Type To Search"
-                menuItems={SelectSizeDataValues}
-                multiple={false}
-                value={selectSize}
-                width={225}
-                size="medium"
-                onChange={handleSelectSize}
-                required={false}
-              />
-            </DialogContentText>
+            <TextField
+              label="Label"
+              required={true}
+              value={selectLabel}
+              onChange={handleSelectLabel}
+            />
+            <br />
+            <br />
+            <TextField
+              label="Placeholder"
+              required={true}
+              placeholder={textPlaceholder}
+              value={textPlaceholder}
+              onChange={handleTextPlaceholder}
+            />
+            <br />
+            <br />
+            <TextField
+              label="Width"
+              required={true}
+              placeholder="Enter Width"
+              value={selectWidth}
+              onChange={handleSelectWidth}
+            />
+            <br />
+            <br />
+            <Select
+              label="Size"
+              placeholder="Type To Search"
+              menuItems={SelectSizeDataValues}
+              multiple={false}
+              value={selectSize}
+              width={225}
+              size="medium"
+              onChange={handleSelectSize}
+              required={false}
+            />
           </TabPanel>
           <TabPanel value="2">
-            <DialogContentText id="alert-dialog-description">
-              <Checkbox
-                label="Multiple Values"
-                checked={multipleValues}
-                required={true}
-                onChange={handleMultipleValues}
-              />
-              <br />
-              <form onSubmit={handleSubmit}>
-                {menuItemsData.map((item) => (
-                  <div>
-                    <br />
-                    <TextField
-                      label="SelectValueLabel"
-                      name="selectDataLabel"
-                      required={true}
-                      placeholder=""
-                      value={item.selectDataLabel}
-                      onChange={(
-                        e: React.ChangeEvent<HTMLInputElement>
-                      ): void => handleChangeInput(item.id, e)}
-                    />
-                    &nbsp;
-                    <TextField
-                      label="SelectValue"
-                      name="selectDataValue"
-                      required={true}
-                      placeholder=""
-                      value={item.selectDataValue}
-                      onChange={(
-                        e: React.ChangeEvent<HTMLInputElement>
-                      ): void => handleChangeInput(item.id, e)}
-                    />
-                    {menuItemsData.length !== 1 ? (
-                      <span
-                        className="icon"
-                        onClick={() => handleRemoveFields(item.id)}
-                      >
-                        <RemoveCircleIcon />
-                      </span>
-                    ) : (
-                      <></>
-                    )}
-                    <span className="icon" onClick={handleAddFields}>
-                      <AddCircleIcon />
+            <Checkbox
+              label="Multiple Values"
+              checked={multipleValues}
+              required={true}
+              onChange={handleMultipleValues}
+            />
+            <br />
+            <form onSubmit={handleSubmit}>
+              {menuItemsData.map((item) => (
+                <div>
+                  <br />
+                  <TextField
+                    label="SelectValueLabel"
+                    name="selectDataLabel"
+                    required={true}
+                    placeholder=""
+                    value={item.selectDataLabel}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
+                      handleChangeInput(item.id, e)
+                    }
+                  />
+                  &nbsp;
+                  <TextField
+                    label="SelectValue"
+                    name="selectDataValue"
+                    required={true}
+                    placeholder=""
+                    value={item.selectDataValue}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
+                      handleChangeInput(item.id, e)
+                    }
+                  />
+                  {menuItemsData.length !== 1 ? (
+                    <span
+                      className="icon"
+                      onClick={() => handleRemoveFields(item.id)}
+                    >
+                      <RemoveCircleIcon />
                     </span>
-                  </div>
-                ))}
-                <br />
-                <Button label="Done" color="secondary" size="small" />
-              </form>
-            </DialogContentText>
+                  ) : (
+                    <></>
+                  )}
+                  <span className="icon" onClick={handleAddFields}>
+                    <AddCircleIcon />
+                  </span>
+                </div>
+              ))}
+              <br />
+              <Button label="Done" color="secondary" size="small" />
+            </form>
           </TabPanel>
           <TabPanel value="3">
             <Checkbox

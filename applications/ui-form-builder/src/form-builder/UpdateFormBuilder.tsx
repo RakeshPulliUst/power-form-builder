@@ -18,7 +18,7 @@ const FormBuilder = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const { formName, formInitialComponents } = location.state || {};
+  const { formId, formName, formInitialComponents } = location.state || {};
 
   const [formData, setFormData] = useState<FormJson>(sample);
   const [finalSaveFormData, setFinalSaveFormData] =
@@ -36,12 +36,12 @@ const FormBuilder = () => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
-  //Creating function to post data on server
-  const postDatatoServer = (data: any) => {
-    axios.post(`http://localhost:4000/api/form`, data).then(
+  //Edit function to edit data on server
+  const editForm = (formId: number, data: any) => {
+    axios.put(`http://localhost:4000/api/form/update/${formId}`, data).then(
       (response) => {
-        toast.success("Plan Added Successfully");
-        console.log("Done");
+        console.log("Inside Update");
+        toast.success("Updated");
         console.log(response);
       },
       (error) => {
@@ -66,15 +66,13 @@ const FormBuilder = () => {
       setFormJsonData(formJsonData);
       console.log(formJsonData);
       console.log(formData);
-      let id = 1;
-      finalSaveFormData.id = id;
-      id++;
+      finalSaveFormData.id = formId;
       finalSaveFormData.form_title = formData.form_title;
       finalSaveFormData.components = formData.components;
-      finalSaveFormData.date_created = new Date();
       finalSaveFormData.date_modified = new Date();
       finalSaveFormData.status = "In-Progress";
-      postDatatoServer(finalSaveFormData);
+      console.log(finalSaveFormData);
+      editForm(formId, finalSaveFormData);
       navigate("/formrender", { state: { formData: formData } });
     } else {
       alert("Please Add Elements");
@@ -253,7 +251,7 @@ const FormBuilder = () => {
           <span className="heading">Form Builder</span>
           <span className="upperButton">
             <Button
-              label="Save Form"
+              label="Update Form"
               color="success"
               size="medium"
               onClick={handleClick}
@@ -274,7 +272,7 @@ const FormBuilder = () => {
           />
 
           <Button
-            label="Save Form"
+            label="Update Form"
             color="success"
             size="medium"
             onClick={handleClick}

@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import Box from "@mui/material/Box";
-import Tab from "@mui/material/Tab";
-import { TabContext, TabList, TabPanel } from "@material-ui/lab";
-import { Button, Select, TextField } from "@power-form-builder/ui-components";
+import {
+  Button,
+  Select,
+  TextField,
+  Box,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  TabContext,
+  TabPanel,
+  TabList,
+} from "@power-form-builder/ui-components";
 import { ColumnDialog } from "../DialogInterface";
 import { v4 as uuidv4 } from "uuid";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
@@ -20,6 +24,11 @@ type Props = {
   columnDataSize: string[];
   columnDataWidth: number;
   columnComponents: Element[];
+}[];
+
+type TabItemsProps = {
+  label: React.ReactNode;
+  value: string;
 }[];
 
 type FinalColumnItemProps = {
@@ -101,7 +110,7 @@ const ColumnData: React.FC<{
     setColumnLabel(element.label!);
     setColumnSize([element.size!]);
     setFinalColumnItemsData(element.columnItems!);
-  });
+  }, []);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -175,90 +184,71 @@ const ColumnData: React.FC<{
     console.log(columnSize);
   };
 
+  const tabItems: TabItemsProps = [{ label: "Display", value: "1" }];
+
   return (
-    <Dialog
-      maxWidth={"sm"}
-      PaperProps={{
-        style: {
-          minHeight: "60%",
-          maxHeight: "60%",
-          minWidth: "45%",
-          maxWidth: "45%",
-        },
-      }}
-      open={open}
-      onClose={handleClose}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
-    >
-      <DialogTitle id="alert-dialog-title">{"Column Details"}</DialogTitle>
+    <Dialog open={open} onClose={handleClose}>
+      <DialogTitle title="Column Details" />
       <DialogContent>
         <TabContext value={value}>
-          <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-            <TabList
-              onChange={handleChange}
-              aria-label="lab API column example"
-            >
-              <Tab label="Display" value="1" />
-            </TabList>
+          <Box>
+            <TabList onChange={handleChange} tabItems={tabItems}></TabList>
           </Box>
           <TabPanel value="1">
-            <DialogContentText id="alert-dialog-description">
-              <TextField
-                label="Label"
-                required={true}
-                value={columnLabel}
-                onChange={handleColumnLabel}
-              />
-              <form onSubmit={handleSubmit}>
-                {columnItemsData.map((item) => (
-                  <div>
-                    <br />
-                    <Select
-                      label="Column Size"
-                      name="columnDataSize"
-                      placeholder="Type To Search"
-                      menuItems={ColumnSizeDataValues}
-                      multiple={false}
-                      value={item.columnDataSize}
-                      onChange={(
-                        e: React.ChangeEvent<HTMLInputElement> | any
-                      ): void => handleChangeInput(item.id, e)}
-                      width={135}
-                      size="medium"
-                      required={false}
-                    />
-                    &nbsp;
-                    <TextField
-                      label="ColumnValue"
-                      name="columnDataWidth"
-                      required={true}
-                      placeholder=""
-                      value={item.columnDataWidth.toString()}
-                      onChange={(
-                        e: React.ChangeEvent<HTMLInputElement>
-                      ): void => handleChangeInput(item.id, e)}
-                    />
-                    {columnItemsData.length !== 1 ? (
-                      <span
-                        className="icon"
-                        onClick={() => handleRemoveFields(item.id)}
-                      >
-                        <RemoveCircleIcon />
-                      </span>
-                    ) : (
-                      <></>
-                    )}
-                    <span className="icon" onClick={handleAddFields}>
-                      <AddCircleIcon />
+            <TextField
+              label="Label"
+              required={true}
+              value={columnLabel}
+              onChange={handleColumnLabel}
+            />
+            <form onSubmit={handleSubmit}>
+              {columnItemsData.map((item) => (
+                <div>
+                  <br />
+                  <Select
+                    label="Column Size"
+                    name="columnDataSize"
+                    placeholder="Type To Search"
+                    menuItems={ColumnSizeDataValues}
+                    multiple={false}
+                    value={item.columnDataSize}
+                    onChange={(
+                      e: React.ChangeEvent<HTMLInputElement> | any
+                    ): void => handleChangeInput(item.id, e)}
+                    width={135}
+                    size="medium"
+                    required={false}
+                  />
+                  &nbsp;
+                  <TextField
+                    label="ColumnValue"
+                    name="columnDataWidth"
+                    required={true}
+                    placeholder=""
+                    value={item.columnDataWidth.toString()}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
+                      handleChangeInput(item.id, e)
+                    }
+                  />
+                  {columnItemsData.length !== 1 ? (
+                    <span
+                      className="icon"
+                      onClick={() => handleRemoveFields(item.id)}
+                    >
+                      <RemoveCircleIcon />
                     </span>
-                  </div>
-                ))}
-                <br />
+                  ) : (
+                    <></>
+                  )}
+                  <span className="icon" onClick={handleAddFields}>
+                    <AddCircleIcon />
+                  </span>
+                </div>
+              ))}
+              <br />
 
-                <Button label="Done" color="secondary" size="small" />
-              </form>
-            </DialogContentText>
+              <Button label="Done" color="secondary" size="small" />
+            </form>
           </TabPanel>
         </TabContext>
       </DialogContent>

@@ -56,9 +56,25 @@ function Home() {
 
   //Creating function to post data on server
   const getDataById = (formId: number) => {
-    axios.get(`http://localhost:4000/api/form/showAll/${formId}`).then(
+    axios.get(`http://localhost:4000/api/form/show/${formId}`).then(
       (response) => {
         setFormData(response.data);
+      },
+      (error) => {
+        console.log(error);
+        console.log("error");
+        toast.error("Something went wrong");
+      }
+    );
+  };
+
+  //Edit function to edit data on server
+  const editForm = (formId: number, data: any) => {
+    axios.put(`http://localhost:4000/api/form/update/${formId}`, data).then(
+      (response) => {
+        console.log("Inside Update");
+        toast.success("Updated");
+        console.log(response.data);
       },
       (error) => {
         console.log(error);
@@ -103,8 +119,12 @@ function Home() {
     components: Element[]
   ) => {
     console.log("Edit", id);
-    navigate("/formbuilder", {
-      state: { formName: form_title, formInitialComponents: components },
+    navigate("/updateformbuilder", {
+      state: {
+        formId: id,
+        formName: form_title,
+        formInitialComponents: components,
+      },
     });
   };
 

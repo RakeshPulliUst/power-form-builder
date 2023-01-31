@@ -1,14 +1,24 @@
 import React, { useState } from "react";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import Box from "@mui/material/Box";
-import Tab from "@mui/material/Tab";
-import { TabContext, TabList, TabPanel } from "@material-ui/lab";
-import { Button, Checkbox, TextField } from "@power-form-builder/ui-components";
+
+import {
+  Button,
+  Checkbox,
+  TextField,
+  Box,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  TabContext,
+  TabPanel,
+  TabList,
+} from "@power-form-builder/ui-components";
 import { TextAreaDiaglog } from "../DialogInterface";
+
+type TabItemsProps = {
+  label: React.ReactNode;
+  value: string;
+}[];
 
 const TextAreaData: React.FC<{
   open: boolean;
@@ -62,49 +72,35 @@ const TextAreaData: React.FC<{
     handleOpen();
   };
 
+  const tabItems: TabItemsProps = [
+    { label: "Display", value: "1" },
+    { label: "Validation", value: "2" },
+  ];
+
   return (
-    <Dialog
-      maxWidth={"sm"}
-      PaperProps={{
-        style: {
-          minHeight: "60%",
-          maxHeight: "60%",
-          minWidth: "45%",
-          maxWidth: "45%",
-        },
-      }}
-      open={open}
-      onClose={handleClose}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
-    >
-      <DialogTitle id="alert-dialog-title">{"TextArea Details"}</DialogTitle>
+    <Dialog open={open} onClose={handleClose}>
+      <DialogTitle title="TextArea Details" />
       <DialogContent>
         <TabContext value={value}>
-          <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-            <TabList onChange={handleChange} aria-label="lab API tabs example">
-              <Tab label="Display" value="1" />
-              <Tab label="Validation" value="2" />
-            </TabList>
+          <Box>
+            <TabList onChange={handleChange} tabItems={tabItems}></TabList>
           </Box>
           <TabPanel value="1">
-            <DialogContentText id="alert-dialog-description">
-              <TextField
-                label="Label"
-                required={true}
-                value={textValue}
-                onChange={handleTextChange}
-              />
-              <br />
-              <br />
-              <TextField
-                label="Placeholder"
-                required={true}
-                placeholder={textPlaceholder}
-                value={textPlaceholder}
-                onChange={handleTextPlaceholder}
-              />
-            </DialogContentText>
+            <TextField
+              label="Label"
+              required={true}
+              value={textValue}
+              onChange={handleTextChange}
+            />
+            <br />
+            <br />
+            <TextField
+              label="Placeholder"
+              required={true}
+              placeholder={textPlaceholder}
+              value={textPlaceholder}
+              onChange={handleTextPlaceholder}
+            />
           </TabPanel>
           <TabPanel value="2">
             <Checkbox

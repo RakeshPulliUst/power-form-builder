@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import Box from "@mui/material/Box";
-import Tab from "@mui/material/Tab";
-import { TabContext, TabList, TabPanel } from "@material-ui/lab";
 import {
   Button,
   Checkbox,
   Select,
+  Box,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  TabContext,
+  TabPanel,
+  TabList,
   TextField,
 } from "@power-form-builder/ui-components";
 import { RadioButtonDialog } from "../DialogInterface";
@@ -23,6 +23,11 @@ type Props = {
   id: string;
   radioButtonDataLabel: string;
   radioButtonDataValue: string;
+}[];
+
+type TabItemsProps = {
+  label: React.ReactNode;
+  value: string;
 }[];
 
 const RadioButtonData: React.FC<{
@@ -88,7 +93,7 @@ const RadioButtonData: React.FC<{
     setRadioOptionLabelPosition([element.options!]);
     setRequired(element.required!);
     setRadioItems(element.radioItems!);
-  });
+  }, []);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -131,102 +136,85 @@ const RadioButtonData: React.FC<{
     setRadioItems(values);
   };
 
+  const tabItems: TabItemsProps = [
+    { label: "Display", value: "1" },
+    { label: "Data", value: "2" },
+    { label: "Validation", value: "3" },
+  ];
+
   return (
-    <Dialog
-      fullWidth={true}
-      maxWidth={"sm"}
-      PaperProps={{
-        style: {
-          minHeight: "60%",
-          maxHeight: "60%",
-          minWidth: "45%",
-          maxWidth: "45%",
-        },
-      }}
-      open={open}
-      onClose={handleClose}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
-    >
-      <DialogTitle id="alert-dialog-title">{"RadioButton Details"}</DialogTitle>
+    <Dialog open={open} onClose={handleClose}>
+      <DialogTitle title="RadioButton Details" />
       <DialogContent>
         <TabContext value={value}>
-          <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-            <TabList onChange={handleChange} aria-label="lab API tabs example">
-              <Tab label="Display" value="1" />
-              <Tab label="Data" value="2" />
-              <Tab label="Validation" value="3" />
-            </TabList>
+          <Box>
+            <TabList onChange={handleChange} tabItems={tabItems}></TabList>
           </Box>
           <TabPanel value="1">
-            <DialogContentText id="alert-dialog-description">
-              <TextField
-                label="Label"
-                required={true}
-                value={radioLabel}
-                onChange={handleRadioLabelChange}
-              />
-              <br />
-              <br />
-              <Select
-                label="Options Label Position"
-                placeholder=""
-                menuItems={RadioOptionPositionValues}
-                value={radioOptionLabelPosition}
-                size="medium"
-                required={false}
-                multiple={false}
-                onChange={handleRadioOptionLabelPosition}
-                width={225}
-              />
-            </DialogContentText>
+            <TextField
+              label="Label"
+              required={true}
+              value={radioLabel}
+              onChange={handleRadioLabelChange}
+            />
+            <br />
+            <br />
+            <Select
+              label="Options Label Position"
+              placeholder=""
+              menuItems={RadioOptionPositionValues}
+              value={radioOptionLabelPosition}
+              size="medium"
+              required={false}
+              multiple={false}
+              onChange={handleRadioOptionLabelPosition}
+              width={225}
+            />
           </TabPanel>
           <TabPanel value="2">
-            <DialogContentText id="alert-dialog-description">
-              <form onSubmit={handleSubmit}>
-                {radioItems.map((item) => (
-                  <div>
-                    <br />
-                    <TextField
-                      label="RadioButtonDataLabel"
-                      name="radioButtonDataLabel"
-                      required={true}
-                      placeholder=""
-                      value={item.radioButtonDataLabel}
-                      onChange={(
-                        e: React.ChangeEvent<HTMLInputElement>
-                      ): void => handleChangeInput(item.id, e)}
-                    />
-                    &nbsp;
-                    <TextField
-                      label="RadioButtonValue"
-                      required={true}
-                      placeholder=""
-                      name="radioButtonDataValue"
-                      value={item.radioButtonDataValue}
-                      onChange={(
-                        e: React.ChangeEvent<HTMLInputElement>
-                      ): void => handleChangeInput(item.id, e)}
-                    />
-                    {radioItems.length !== 1 ? (
-                      <span
-                        className="icon"
-                        onClick={() => handleRemoveFields(item.id)}
-                      >
-                        <RemoveCircleIcon />
-                      </span>
-                    ) : (
-                      <></>
-                    )}
-                    <span className="icon" onClick={handleAddFields}>
-                      <AddCircleIcon />
+            <form onSubmit={handleSubmit}>
+              {radioItems.map((item) => (
+                <div>
+                  <br />
+                  <TextField
+                    label="RadioButtonDataLabel"
+                    name="radioButtonDataLabel"
+                    required={true}
+                    placeholder=""
+                    value={item.radioButtonDataLabel}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
+                      handleChangeInput(item.id, e)
+                    }
+                  />
+                  &nbsp;
+                  <TextField
+                    label="RadioButtonValue"
+                    required={true}
+                    placeholder=""
+                    name="radioButtonDataValue"
+                    value={item.radioButtonDataValue}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
+                      handleChangeInput(item.id, e)
+                    }
+                  />
+                  {radioItems.length !== 1 ? (
+                    <span
+                      className="icon"
+                      onClick={() => handleRemoveFields(item.id)}
+                    >
+                      <RemoveCircleIcon />
                     </span>
-                  </div>
-                ))}
-                <br />
-                <Button label="Done" color="secondary" size="small" />
-              </form>
-            </DialogContentText>
+                  ) : (
+                    <></>
+                  )}
+                  <span className="icon" onClick={handleAddFields}>
+                    <AddCircleIcon />
+                  </span>
+                </div>
+              ))}
+              <br />
+              <Button label="Done" color="secondary" size="small" />
+            </form>
           </TabPanel>
           <TabPanel value="3">
             <Checkbox

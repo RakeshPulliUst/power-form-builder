@@ -12,12 +12,20 @@ import Alert from "./components/Alert";
 import TextFieldSelect from "./components/TextFieldSelect";
 import SelectChangeEvent from "@mui/material/Select";
 import Tabs from "./components/Tabs";
-import Dialog from "./components/Dialog";
+import Dialog from "./components/Dialog/Dialog";
+import DialogTitle from "./components/Dialog/DialogTitle";
+import DialogContent from "./components/Dialog/DialogContent";
+import DialogActions from "./components/Dialog/DialogActions";
 import Table from "./components/Table";
 import TableHead from "./components/TableHead";
 import TableBody from "./components/TableBody";
 import TableRow from "./components/TableRow";
 import TableCell from "./components/TableCell";
+import Tab from "./components/Tab/Tab";
+import TabContext from "./components/Tab/TabContext";
+import TabList from "./components/Tab/TabList";
+import TabPanel from "./components/Tab/TabPanel";
+import Box from "./components/Box";
 export {
   Button,
   Card,
@@ -26,6 +34,10 @@ export {
   RadioGroup,
   TextareaAutosize,
   Checkbox,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
   Select,
   Grid,
   GridItem,
@@ -33,10 +45,14 @@ export {
   TextFieldSelect,
   SelectChangeEvent,
   Tabs,
-  Dialog,
   Table,
   TableHead,
   TableBody,
   TableRow,
   TableCell,
+  Tab,
+  TabContext,
+  TabList,
+  TabPanel,
+  Box,
 };

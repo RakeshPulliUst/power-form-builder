@@ -138,8 +138,12 @@ export interface Element {
       multipleValues: false,
       required: false,
       size: '',
-      textFieldWidth: 150
-      // menuItems: {}
+      textFieldWidth: 150,
+      menuItems: [{
+        id: "",
+        selectDataLabel: "",
+        selectDataValue: ""
+      }]
     },
     {
       id: 6,
@@ -155,10 +159,11 @@ export interface Element {
       element: "RadioButton",
       label: '',
       options: '',
-        // radioItems: {
-        //   radioButtonDataLabel: '',
-        //   radioButtonDataValue: ''
-        // }[],
+      radioItems: [{
+        id: "",
+        radioButtonDataLabel: '',
+        radioButtonDataValue: ''
+      }],
       required: false
     },
     {
@@ -173,13 +178,32 @@ export interface Element {
     {
       id: 9,
       element: "Column",
-      label: ""
-      
+      label: "",
+      columnItems: [{
+        id: "",
+        label: "",
+        columnDataSize: "",
+        columnDataWidth: 0,
+        columnComponents:  [{
+          id: 1009,
+          element: "Button",
+
+        }]
+      }],  
     },
     {
       id: 10,
       element: "Tabs",
-      label: ""
+      label: "",
+      tabItems: [{
+        id: "",
+        tabsDataLabel: "",
+        tabsDataValue: "",
+        tabComponents:  [{
+          id: 1008,
+          element: "Button",
+        }]
+      }],
     },
     
   ]

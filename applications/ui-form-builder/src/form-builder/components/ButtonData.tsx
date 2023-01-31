@@ -1,13 +1,25 @@
 import React, { useEffect, useState } from "react";
 import {
   Button,
+  Box,
   Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   Select,
-  Tabs,
+  TabContext,
+  TabPanel,
+  TabList,
   TextField,
 } from "@power-form-builder/ui-components";
 import { ButtonDialog } from "../DialogInterface";
 import { Element } from "../ElementInterface";
+
+type TabItemsProps = {
+  label: React.ReactNode;
+  value: string;
+}[];
+
 const ButtonData: React.FC<{
   open: boolean;
   handleClose: () => void;
@@ -85,55 +97,66 @@ const ButtonData: React.FC<{
     setButtonSize([element.size!]);
   }, []);
 
+  const tabItems: TabItemsProps = [{ label: "Display", value: "1" }];
+
   return (
-    <Dialog
-      open={open}
-      handleClose={handleClose}
-      handleData={handleData}
-      value={value}
-      handleChange={handleChange}
-      handleButtonClose={handleClose}
-      tabItems={[
-        { id: "Tab1", tabsDataLabel: "Display", tabsDataValue: "Display" },
-      ]}
-    >
-      <Tabs
-        tabItems={[
-          { id: "Tab1", tabsDataLabel: "Display", tabsDataValue: "Display" },
-        ]}
-      >
-        <TextField
-          label="Label"
-          required={true}
-          value={buttonLabel}
-          onChange={handleButtonLabel}
-        />
-        <br />
-        <br />
-        <Select
-          label="Theme"
-          placeholder="Type To Search"
-          menuItems={ButtonThemeValues}
-          multiple={false}
-          value={buttonTheme}
-          onChange={handleButtonTheme}
-          width={225}
+    <Dialog open={open} onClose={handleClose}>
+      <DialogTitle title="Button Details" />
+      <DialogContent>
+        <TabContext value={value}>
+          <Box>
+            <TabList onChange={handleChange} tabItems={tabItems}></TabList>
+          </Box>
+          <TabPanel value="1">
+            <TextField
+              label="Label"
+              required={true}
+              value={buttonLabel}
+              onChange={handleButtonLabel}
+            />
+            <br />
+            <br />
+            <Select
+              label="Theme"
+              placeholder="Type To Search"
+              menuItems={ButtonThemeValues}
+              multiple={false}
+              value={buttonTheme}
+              onChange={handleButtonTheme}
+              width={225}
+              size="medium"
+              required={false}
+            />
+            <br />
+            <br />
+            <Select
+              label="Size"
+              placeholder="Type To Search"
+              menuItems={ButtonSizeDataValues}
+              multiple={false}
+              value={buttonSize}
+              onChange={handleButtonSize}
+              width={225}
+              size="medium"
+              required={false}
+            />
+          </TabPanel>
+        </TabContext>
+      </DialogContent>
+      <DialogActions>
+        <Button
+          label="Cancel"
+          color="success"
+          onClick={handleClose}
           size="medium"
-          required={false}
         />
-        <br />
-        <Select
-          label="Size"
-          placeholder="Type To Search"
-          menuItems={ButtonSizeDataValues}
-          multiple={false}
-          value={buttonSize}
-          onChange={handleButtonSize}
-          width={225}
+        <Button
+          label="Save"
+          color="success"
+          onClick={handleData}
           size="medium"
-          required={false}
         />
-      </Tabs>
+      </DialogActions>
     </Dialog>
   );
 };
