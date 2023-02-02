@@ -5,12 +5,15 @@ import {
   TableHead,
   TableRow,
   TableBody,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
 } from "@power-form-builder/ui-components";
 import React, { useEffect, useState } from "react";
 import "./Home.css";
 import { UITranslation } from "@power-form-builder/ui-translation";
 import FormNameInput from "./FormNameInput";
-import ReactDOMServer from "react-dom/server";
 import axios from "axios";
 import { toast } from "react-toastify";
 import {
@@ -19,12 +22,6 @@ import {
   finalTableFormSample,
   sample,
 } from "./form-builder/ElementInterface";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-} from "@material-ui/core";
 import { useNavigate } from "react-router-dom";
 import { Element } from "./form-builder/ElementInterface";
 
@@ -34,6 +31,7 @@ function Home() {
     useState<FinalSaveFormJson[]>(finalTableFormSample);
 
   const handleBuildForm = (e: React.MouseEvent<HTMLButtonElement>) => {
+    console.log(!open);
     setOpen(!open);
   };
 
@@ -116,7 +114,9 @@ function Home() {
   const onEditClick = (
     id: number,
     form_title: string,
-    components: Element[]
+    components: Element[],
+    date_created: string,
+    status: string
   ) => {
     console.log("Edit", id);
     navigate("/updateformbuilder", {
@@ -124,6 +124,8 @@ function Home() {
         formId: id,
         formName: form_title,
         formInitialComponents: components,
+        formCreatedDate: date_created,
+        formStatus: status,
       },
     });
   };
@@ -160,8 +162,8 @@ function Home() {
             <TableRow>
               <TableCell>{row.id}</TableCell>
               <TableCell>{row.form_title}</TableCell>
-              <TableCell>{row.date_created.toString()}</TableCell>
-              <TableCell>{row.date_modified.toString()}</TableCell>
+              <TableCell>{row.date_created}</TableCell>
+              <TableCell>{row.date_modified}</TableCell>
               <TableCell>{row.status}</TableCell>
               <TableCell>
                 <Button
@@ -178,7 +180,13 @@ function Home() {
                   color="primary"
                   size="large"
                   onClick={() =>
-                    onEditClick(row.id, row.form_title, row.components)
+                    onEditClick(
+                      row.id,
+                      row.form_title,
+                      row.components,
+                      row.date_created,
+                      row.status
+                    )
                   }
                 />
                 &nbsp;
@@ -208,23 +216,19 @@ function Home() {
         {open ? <FormNameInput open={open} /> : <></>}
       </div>
       <Dialog
-        maxWidth={"sm"}
-        PaperProps={{
-          style: {
-            minHeight: "30%",
-            maxHeight: "60%",
-            minWidth: "35%",
-            maxWidth: "35%",
-          },
-        }}
         open={dialogOpen}
         onClose={() => {
           setDialogOpen(!dialogOpen);
         }}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
+        style={{
+          minHeight: "30%",
+          maxHeight: "40%",
+          minWidth: "30%",
+          maxWidth: "30%",
+        }}
       >
-        <DialogTitle id="alert-dialog-title">{"Confirm To Submit"}</DialogTitle>
+        +
+        <DialogTitle title="Confirm To Submit" />
         <DialogContent>
           <p>Are you sure to delete the form. </p>
         </DialogContent>

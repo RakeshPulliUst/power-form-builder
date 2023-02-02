@@ -7,15 +7,16 @@ type Props = {
   onClose:
     | ((event: {}, reason: "backdropClick" | "escapeKeyDown") => void)
     | undefined;
+  style?: React.CSSProperties;
 };
 
-const Dialog = ({ open, onClose, children, ...rest }: Props) => {
+const Dialog = ({ open, style, onClose, children, ...rest }: Props) => {
   return (
     <DefaultDialog
       fullWidth={true}
       maxWidth={"sm"}
       PaperProps={{
-        style: {
+        style: style || {
           minHeight: "60%",
           maxHeight: "60%",
           minWidth: "45%",

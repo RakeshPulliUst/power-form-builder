@@ -3,13 +3,14 @@ export interface FormJson{
   components: Element[]
 }
 
+
 export interface FinalSaveFormJson{
   id: number,
   form_title: string,
   components: Element[],
-  date_created: Date,
-  date_modified: Date,
-  status: String
+  date_created: string,
+  date_modified: string,
+  status: string
 }
 
 export interface Element {
@@ -79,8 +80,8 @@ export interface Element {
     id: 1,
     form_title: "Form",
     components: [],
-    date_created: new Date(),
-    date_modified: new Date(),
+    date_created: new Date().toLocaleString() + "",
+    date_modified: new Date().toLocaleString() + "",
     status: ""
   };
 
@@ -88,8 +89,8 @@ export interface Element {
     id: 1,
     form_title: "Form",
     components: [],
-    date_created: new Date(),
-    date_modified: new Date(),
+    date_created: new Date().toLocaleString() + "",
+    date_modified: new Date().toLocaleString() + "",
     status: ""
   }];
 

@@ -18,7 +18,13 @@ const FormBuilder = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const { formId, formName, formInitialComponents } = location.state || {};
+  const {
+    formId,
+    formName,
+    formInitialComponents,
+    formCreatedDate,
+    formStatus,
+  } = location.state || {};
 
   const [formData, setFormData] = useState<FormJson>(sample);
   const [finalSaveFormData, setFinalSaveFormData] =
@@ -66,11 +72,14 @@ const FormBuilder = () => {
       setFormJsonData(formJsonData);
       console.log(formJsonData);
       console.log(formData);
+      console.log(finalSaveFormData);
       finalSaveFormData.id = formId;
       finalSaveFormData.form_title = formData.form_title;
       finalSaveFormData.components = formData.components;
-      finalSaveFormData.date_modified = new Date();
-      finalSaveFormData.status = "In-Progress";
+      finalSaveFormData.date_created = formCreatedDate;
+      finalSaveFormData.date_modified = new Date().toLocaleString() + "";
+      console.log(new Date().toLocaleString() + "");
+      finalSaveFormData.status = formStatus;
       console.log(finalSaveFormData);
       editForm(formId, finalSaveFormData);
       navigate("/formrender", { state: { formData: formData } });

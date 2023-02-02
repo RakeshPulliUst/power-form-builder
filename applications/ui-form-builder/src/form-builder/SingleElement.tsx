@@ -155,6 +155,18 @@ const SingleElement: React.FC<{
         },
       ],
     },
+    {
+      id: "Tab2",
+      tabsDataLabel: "Tab2",
+      tabsDataValue: "Tab2",
+      tabComponents: [
+        {
+          id: 1014,
+          element: "Tabs",
+          label: "Ths",
+        },
+      ],
+    },
   ];
 
   const columnItemsData: ColumnItemsProps = [

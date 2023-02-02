@@ -71,8 +71,8 @@ const FormBuilder = () => {
       id++;
       finalSaveFormData.form_title = formData.form_title;
       finalSaveFormData.components = formData.components;
-      finalSaveFormData.date_created = new Date();
-      finalSaveFormData.date_modified = new Date();
+      finalSaveFormData.date_created = new Date().toLocaleString() + "";
+      finalSaveFormData.date_modified = new Date().toLocaleString() + "";
       finalSaveFormData.status = "In-Progress";
       postDatatoServer(finalSaveFormData);
       navigate("/formrender", { state: { formData: formData } });
