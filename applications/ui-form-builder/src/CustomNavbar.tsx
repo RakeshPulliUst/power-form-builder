@@ -15,6 +15,16 @@ const CustomNavbar = () => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [open, setOpen] = useState(false);
 
+  const handleOpen = () => {
+    console.log(!open);
+    setOpen(!open);
+  };
+
+  const handleClose = () => {
+    console.log(!open);
+    setOpen(!open);
+  };
+
   return (
     <>
       <Navbar
@@ -35,7 +45,10 @@ const CustomNavbar = () => {
           <Nav className="container-fluid" navbar>
             <NavItem
               style={{ color: "white", cursor: "pointer" }}
-              onClick={() => setOpen(!open)}
+              onClick={() => {
+                console.log(!open);
+                setOpen(!open);
+              }}
             >
               <UITranslation name="build_form" />
             </NavItem>
@@ -45,7 +58,15 @@ const CustomNavbar = () => {
           </Nav>
         </Collapse>
       </Navbar>
-      {open ? <FormNameInput open={open} /> : <></>}
+      {open ? (
+        <FormNameInput
+          open={open}
+          handleOpen={handleOpen}
+          handleClose={handleClose}
+        />
+      ) : (
+        <></>
+      )}
     </>
   );
 };

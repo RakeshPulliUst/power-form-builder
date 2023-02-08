@@ -29,6 +29,8 @@ const FormBuilder = () => {
     []
   );
   const [tabElements, setTabElements] = useState<Array<Element>>([]);
+  const [numTabElements, setNumTabElements] = useState([tabElements]);
+  const [tabElements1, setTabElements1] = useState<Array<Element>>([]);
   const [columnElements, setColumnElements] = useState<Array<Element>>([]);
   const [column1Elements, setColumn1Elements] = useState<Array<Element>>([]);
 
@@ -52,10 +54,22 @@ const FormBuilder = () => {
     );
   };
 
+  let generatedNumbers: number[] = [];
+
+  function generatedUniqueInt(max: number) {
+    let uniqueInt = Math.floor(Math.random() * max);
+    while (generatedNumbers.includes(uniqueInt)) {
+      uniqueInt = Math.floor(Math.random() * max);
+    }
+    generatedNumbers.push(uniqueInt);
+    return uniqueInt;
+  }
+
   const handleClick = () => {
     if (CompletedElements.length !== 0) {
       console.log({ CompletedElements });
       console.log({ tabElements });
+      console.log({ tabElements1 });
       formData.form_title = formName;
       formData.components = CompletedElements;
       console.log(formData);
@@ -66,9 +80,8 @@ const FormBuilder = () => {
       setFormJsonData(formJsonData);
       console.log(formJsonData);
       console.log(formData);
-      let id = 1;
-      finalSaveFormData.id = id;
-      id++;
+      finalSaveFormData.id = generatedUniqueInt(1000);
+      console.log(finalSaveFormData.id, "Idddd");
       finalSaveFormData.form_title = formData.form_title;
       finalSaveFormData.components = formData.components;
       finalSaveFormData.date_created = new Date().toLocaleString() + "";
@@ -76,6 +89,7 @@ const FormBuilder = () => {
       finalSaveFormData.status = "In-Progress";
       postDatatoServer(finalSaveFormData);
       navigate("/formrender", { state: { formData: formData } });
+      console.log("Final..numTab", numTabElements);
     } else {
       alert("Please Add Elements");
     }
@@ -100,6 +114,8 @@ const FormBuilder = () => {
     let active = elements;
     let complete = CompletedElements;
     let tabComplete = tabElements;
+    let tabComplete1 = tabElements1;
+    let finalTabComplete = numTabElements;
     let columnComplete = columnElements;
     let column1Complete = column1Elements;
     if (
@@ -117,19 +133,61 @@ const FormBuilder = () => {
       console.log("Add", add);
       console.log("Destination[Complete]:", complete);
     } else if (
-      source.droppableId === "tabsDroppableId" &&
-      destination.droppableId === "tabsDroppableId"
+      (source.droppableId === "tabsDroppableId" &&
+        destination.droppableId === "tabsDroppableId") ||
+      (source.droppableId === "tabsDroppableId2" &&
+        destination.droppableId === "tabsDroppableId2")
     ) {
-      console.log("Tabsssssss");
-      //setShow(false);
-      add = tabComplete[source.index];
-      tabComplete.splice(source.index, 1);
-      console.log("Source[omplete]:", tabComplete);
-      let newAdd: Element = Object.assign({}, add);
-      newAdd.id = randomNumberInRange(9, 100);
-      tabComplete.splice(destination.index, 0, newAdd);
-      console.log("Add", add);
-      console.log("Destination[Complete]:", tabComplete);
+      if (
+        source.droppableId === "tabsDroppableId" &&
+        destination.droppableId === "tabsDroppableId"
+      ) {
+        console.log("Tabsssssss");
+        //setShow(false);
+        add = tabComplete[source.index];
+        console.log(add);
+        tabComplete.splice(source.index, 1);
+        console.log(tabComplete);
+        console.log("Source[omplete]:", tabComplete);
+        let newAdd: Element = Object.assign({}, add);
+        console.log(newAdd);
+        newAdd.id = randomNumberInRange(9, 100);
+        console.log(newAdd.id);
+        tabComplete.splice(destination.index, 0, newAdd);
+        console.log(tabComplete);
+        console.log("Add", add);
+        console.log("Destination[Complete]:", tabComplete);
+      } else if (
+        source.droppableId === "tabsDroppableId2" &&
+        destination.droppableId === "tabsDroppableId2"
+      ) {
+        // console.log("Tabsssssss");
+        // //setShow(false);
+        // add = tabComplete[source.index];
+        // tabComplete.splice(source.index, 2);
+        // console.log("Source[omplete]:", tabComplete);
+        // let newAdd: Element = Object.assign({}, add);
+        // newAdd.id = randomNumberInRange(9, 100);
+        // tabComplete.splice(destination.index, 1, newAdd);
+        // console.log("Add", add);
+        // console.log("Destination[Complete]:", tabComplete);
+        console.log("Tabsssssss");
+        //setShow(false);
+        add = tabComplete1[source.index];
+        console.log(add);
+        tabComplete1.splice(source.index, 1);
+        console.log(tabComplete1);
+        console.log("Source[omplete]:", tabComplete1);
+        let newAdd: Element = Object.assign({}, add);
+        console.log(newAdd);
+        newAdd.id = randomNumberInRange(9, 100);
+        console.log(newAdd.id);
+        tabComplete1.splice(destination.index, 0, newAdd);
+        console.log(tabComplete1);
+        console.log("Add", add);
+        console.log("Destination[Complete]:", tabComplete1);
+      }
+      console.log(tabComplete1);
     } else if (
       source.droppableId === "columnDroppableId" &&
       destination.droppableId === "columnDroppableId"
@@ -176,10 +234,14 @@ const FormBuilder = () => {
         add = column1Complete[source.index];
         column1Complete.splice(source.index, 1);
         console.log("Source[Complete]:", column1Complete);
-      } else if (source.droppableId === "column1DroppableId") {
+      } else if (source.droppableId === "tabsDroppableId") {
         add = tabComplete[source.index];
         tabComplete.splice(source.index, 1);
         console.log("Source[Complete]:", tabComplete);
+      } else if (source.droppableId === "tabsDroppableId2") {
+        add = tabComplete1[source.index];
+        tabComplete1.splice(source.index, 1);
+        console.log("Source[Complete]:", tabComplete1);
       } else {
         add = complete[source.index];
         complete.splice(source.index, 1);
@@ -213,7 +275,16 @@ const FormBuilder = () => {
         newAdd.show = true;
         tabComplete.splice(destination.index, 0, newAdd);
         console.log("Add", add);
-        console.log("Destination[Complete]:", complete);
+        console.log("Destination[Complete]:", tabComplete);
+      } else if (destination.droppableId === "tabsDroppableId2") {
+        let newAdd: Element = Object.assign({}, add);
+        newAdd.id = randomNumberInRange(9, 100);
+        //setShow(true);
+
+        newAdd.show = true;
+        tabComplete1.splice(destination.index, 1, newAdd);
+        console.log("Add", add);
+        console.log("Destination[Complete]:", tabComplete1);
       } else {
         let newAdd: Element = Object.assign({}, add);
         newAdd.id = randomNumberInRange(9, 100);
@@ -226,17 +297,24 @@ const FormBuilder = () => {
     }
 
     setTabElements(tabComplete);
+    setTabElements1(tabComplete1);
     setCompletedElements(complete);
     setElements(active);
     setColumnElements(columnComplete);
     setColumn1Elements(column1Complete);
+    setNumTabElements([tabElements, tabElements1]);
+    console.log("Final...", numTabElements);
   };
 
   useEffect(() => {
     setCompletedElements(formInitialComponents);
     formInitialComponents.map((item: any, index: number) =>
       item.element === "Tabs"
-        ? item.tabItems.map((data: any) => setTabElements(data.tabComponents))
+        ? item.tabItems.map((data: any) =>
+            data.dropId === "tabsDroppableId"
+              ? setTabElements(data.tabComponents)
+              : setTabElements1(data.tabComponents)
+          )
         : item.columnItems.map((data: any) =>
             data.label === "Column1"
               ? setColumnElements(data.columnComponents)
@@ -266,6 +344,7 @@ const FormBuilder = () => {
             CompletedElements={CompletedElements}
             setCompletedElements={setCompletedElements}
             tabElements={tabElements}
+            tabElements1={tabElements1}
             setTabElements={setTabElements}
             columnElements={columnElements}
             setColumnElements={setColumnElements}

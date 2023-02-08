@@ -20,6 +20,7 @@ import { Element } from "../ElementInterface";
 
 type Props = {
   id: string;
+  dropId: string;
   tabsDataLabel: string;
   tabsDataValue: string;
   tabComponents: Element[];
@@ -47,6 +48,7 @@ const TabsData: React.FC<{
   const [tabItemsData, setTabItemsData] = useState<Props>([
     {
       id: uuidv4(),
+      dropId: "tabsDroppableId",
       tabsDataLabel: "",
       tabsDataValue: "",
       tabComponents: [
@@ -63,8 +65,11 @@ const TabsData: React.FC<{
     setTabsLabel(event.target.value);
   };
 
+  const [rr, setRR] = useState(["tabsDroppableId", "tabsDroppableId2"]);
+
   const handleData = () => {
     tabValues.label = tabsLabel;
+    tabItemsData.map((item, index) => (item.dropId = rr[index]));
     tabValues.tabItems = tabItemsData;
     console.log(tabValues);
     handleOpen();
@@ -75,15 +80,11 @@ const TabsData: React.FC<{
     setTabItemsData(element.tabItems!);
   }, []);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log("InputFields", tabItemsData);
-  };
-
   const handleChangeInput = (
     id: string,
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
+    let k = 0;
     const newInputFields = tabItemsData.map((i) => {
       if (id === i.id) {
         console.log("aaa", event.target.name, "bb", event.target.value);
@@ -93,9 +94,10 @@ const TabsData: React.FC<{
             : (i["tabsDataValue"] = event.target.value);
         }
       }
+
       return i;
     });
-
+    console.log(newInputFields);
     setTabItemsData(newInputFields);
   };
 
@@ -104,6 +106,7 @@ const TabsData: React.FC<{
       ...tabItemsData,
       {
         id: uuidv4(),
+        dropId: "tabsDroppableId",
         tabsDataLabel: "",
         tabsDataValue: "",
         tabComponents: [
@@ -149,49 +152,46 @@ const TabsData: React.FC<{
             />
           </TabPanel>
           <TabPanel value="2">
-            <form onSubmit={handleSubmit}>
-              {tabItemsData.map((item) => (
-                <div>
-                  <br />
-                  <TextField
-                    label="TabsValueLabel"
-                    name="tabsDataLabel"
-                    required={true}
-                    placeholder=""
-                    value={item.tabsDataLabel}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
-                      handleChangeInput(item.id, e)
-                    }
-                  />
-                  &nbsp;
-                  <TextField
-                    label="TabsValue"
-                    name="tabsDataValue"
-                    required={true}
-                    placeholder=""
-                    value={item.tabsDataValue}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
-                      handleChangeInput(item.id, e)
-                    }
-                  />
-                  {tabItemsData.length !== 1 ? (
-                    <span
-                      className="icon"
-                      onClick={() => handleRemoveFields(item.id)}
-                    >
-                      <RemoveCircleIcon />
-                    </span>
-                  ) : (
-                    <></>
-                  )}
-                  <span className="icon" onClick={handleAddFields}>
-                    <AddCircleIcon />
+            {tabItemsData.map((item) => (
+              <div>
+                <br />
+                <TextField
+                  label="TabsValueLabel"
+                  name="tabsDataLabel"
+                  required={true}
+                  placeholder=""
+                  value={item.tabsDataLabel}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
+                    handleChangeInput(item.id, e)
+                  }
+                />
+                &nbsp;
+                <TextField
+                  label="TabsValue"
+                  name="tabsDataValue"
+                  required={true}
+                  placeholder=""
+                  value={item.tabsDataValue}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
+                    handleChangeInput(item.id, e)
+                  }
+                />
+                {tabItemsData.length !== 1 ? (
+                  <span
+                    className="icon"
+                    onClick={() => handleRemoveFields(item.id)}
+                  >
+                    <RemoveCircleIcon />
                   </span>
-                </div>
-              ))}
-              <br />
-              <Button label="Done" color="secondary" size="small" />
-            </form>
+                ) : (
+                  <></>
+                )}
+                <span className="icon" onClick={handleAddFields}>
+                  <AddCircleIcon />
+                </span>
+              </div>
+            ))}
+            <br />
           </TabPanel>
         </TabContext>
       </DialogContent>

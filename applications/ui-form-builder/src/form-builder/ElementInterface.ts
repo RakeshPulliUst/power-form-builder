@@ -51,6 +51,7 @@ export interface Element {
 
     tabItems?: {
       id: string
+      dropId: string
       tabsDataLabel: string
       tabsDataValue: string
       tabComponents:  Element[]
@@ -198,6 +199,7 @@ export interface Element {
       label: "",
       tabItems: [{
         id: "",
+        dropId:"",
         tabsDataLabel: "",
         tabsDataValue: "",
         tabComponents:  [{

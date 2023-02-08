@@ -4,6 +4,12 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 
+type TabPanelProps = {
+  children?: React.ReactNode;
+  index: number;
+  value: number;
+};
+
 type TabsProps = {
   tabItems: {
     id: string;
@@ -12,6 +18,26 @@ type TabsProps = {
   }[];
   children?: React.ReactNode;
 };
+
+function TabPanel(props: TabPanelProps) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
 
 const Tabs = ({ tabItems, children, ...rest }: TabsProps) => {
   const [value, setValue] = React.useState(0);
@@ -35,12 +61,14 @@ const Tabs = ({ tabItems, children, ...rest }: TabsProps) => {
           onChange={handleChange}
           aria-label="basic tabs example"
         >
-          {tabItems.map((name, index) => (
-            <Tab label={name.tabsDataLabel} {...a11yProps(0)}></Tab>
-          ))}
+          {children}
         </DefaultTabs>
-        {children}
       </Box>
+      {tabItems.map((name, index) => (
+        <TabPanel value={value} index={index}>
+          {children}
+        </TabPanel>
+      ))}
     </Box>
   );
 };

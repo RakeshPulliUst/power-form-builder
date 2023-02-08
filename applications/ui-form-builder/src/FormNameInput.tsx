@@ -13,9 +13,11 @@ import axios from "axios";
 
 type Props = {
   open: boolean;
+  handleOpen: () => void;
+  handleClose: () => void;
 };
 
-function FormNameInput({ open }: Props) {
+function FormNameInput({ open, handleOpen, handleClose }: Props) {
   const [value, setValue] = useState("1");
   const [open1, setOpen1] = useState(open);
   const [formName, setFormName] = useState("");
@@ -27,8 +29,11 @@ function FormNameInput({ open }: Props) {
     console.log(formName);
   };
 
-  const handleClose = () => {
-    setOpen1(false);
+  const handleClose1 = () => {
+    console.log(!open1);
+    setOpen1(!open1);
+    open = !open1;
+    handleClose();
   };
 
   const getFormName = (formName: string) => {
@@ -53,7 +58,9 @@ function FormNameInput({ open }: Props) {
     if (formName) {
       console.log("For", formName);
       setOpen1(!open1);
+      open = !open1;
       getFormName(formName);
+      handleOpen();
     } else {
       console.log("For1", formName);
       setHelperText("Enter Form Details");
@@ -63,7 +70,7 @@ function FormNameInput({ open }: Props) {
   return (
     <div>
       <Dialog
-        open={open}
+        open={open1}
         onClose={handleClose}
         style={{
           minHeight: "30%",
@@ -91,7 +98,7 @@ function FormNameInput({ open }: Props) {
           <Button
             label="Cancel"
             color="success"
-            onClick={handleClose}
+            onClick={handleClose1 }
             size="medium"
           />
           <Button

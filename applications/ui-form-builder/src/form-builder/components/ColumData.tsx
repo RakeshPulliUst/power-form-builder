@@ -112,11 +112,6 @@ const ColumnData: React.FC<{
     setFinalColumnItemsData(element.columnItems!);
   }, []);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log("InputFields", columnItemsData);
-  };
-
   const handleChangeInput = (
     id: string,
     event: React.ChangeEvent<HTMLInputElement>
@@ -201,54 +196,51 @@ const ColumnData: React.FC<{
               value={columnLabel}
               onChange={handleColumnLabel}
             />
-            <form onSubmit={handleSubmit}>
-              {columnItemsData.map((item) => (
-                <div>
-                  <br />
-                  <Select
-                    label="Column Size"
-                    name="columnDataSize"
-                    placeholder="Type To Search"
-                    menuItems={ColumnSizeDataValues}
-                    multiple={false}
-                    value={item.columnDataSize}
-                    onChange={(
-                      e: React.ChangeEvent<HTMLInputElement> | any
-                    ): void => handleChangeInput(item.id, e)}
-                    width={135}
-                    size="medium"
-                    required={false}
-                  />
-                  &nbsp;
-                  <TextField
-                    label="ColumnValue"
-                    name="columnDataWidth"
-                    required={true}
-                    placeholder=""
-                    value={item.columnDataWidth.toString()}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
-                      handleChangeInput(item.id, e)
-                    }
-                  />
-                  {columnItemsData.length !== 1 ? (
-                    <span
-                      className="icon"
-                      onClick={() => handleRemoveFields(item.id)}
-                    >
-                      <RemoveCircleIcon />
-                    </span>
-                  ) : (
-                    <></>
-                  )}
-                  <span className="icon" onClick={handleAddFields}>
-                    <AddCircleIcon />
-                  </span>
-                </div>
-              ))}
-              <br />
 
-              <Button label="Done" color="secondary" size="small" />
-            </form>
+            {columnItemsData.map((item) => (
+              <div>
+                <br />
+                <Select
+                  label="Column Size"
+                  name="columnDataSize"
+                  placeholder="Type To Search"
+                  menuItems={ColumnSizeDataValues}
+                  multiple={false}
+                  value={item.columnDataSize}
+                  onChange={(
+                    e: React.ChangeEvent<HTMLInputElement> | any
+                  ): void => handleChangeInput(item.id, e)}
+                  width={135}
+                  size="medium"
+                  required={false}
+                />
+                &nbsp;
+                <TextField
+                  label="ColumnValue"
+                  name="columnDataWidth"
+                  required={true}
+                  placeholder=""
+                  value={item.columnDataWidth.toString()}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
+                    handleChangeInput(item.id, e)
+                  }
+                />
+                {columnItemsData.length !== 1 ? (
+                  <span
+                    className="icon"
+                    onClick={() => handleRemoveFields(item.id)}
+                  >
+                    <RemoveCircleIcon />
+                  </span>
+                ) : (
+                  <></>
+                )}
+                <span className="icon" onClick={handleAddFields}>
+                  <AddCircleIcon />
+                </span>
+              </div>
+            ))}
+            <br />
           </TabPanel>
         </TabContext>
       </DialogContent>

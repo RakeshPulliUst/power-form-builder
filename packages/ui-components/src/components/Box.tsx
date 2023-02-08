@@ -6,7 +6,11 @@ type Props = {
 };
 
 const Box = ({ children, ...rest }: Props) => {
-  return <DefaultBox sx={{ borderBottom: 1, borderColor: "divider"}}>{children}</DefaultBox>;
+  return (
+    <DefaultBox sx={{ borderBottom: 1, borderColor: "divider", p: 3 }}>
+      {children}
+    </DefaultBox>
+  );
 };
 
 export default Box;

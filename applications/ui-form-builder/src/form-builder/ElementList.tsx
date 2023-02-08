@@ -12,6 +12,7 @@ interface props {
   setCompletedElements: React.Dispatch<React.SetStateAction<Array<Element>>>;
   CompletedElements: Array<Element>;
   tabElements: Array<Element>;
+  tabElements1: Array<Element>;
   setTabElements: React.Dispatch<React.SetStateAction<Array<Element>>>;
   columnElements: Array<Element>;
   setColumnElements: React.Dispatch<React.SetStateAction<Array<Element>>>;
@@ -25,6 +26,7 @@ const ElementList: React.FC<props> = ({
   CompletedElements,
   setCompletedElements,
   tabElements,
+  tabElements1,
   setTabElements,
   columnElements,
   setColumnElements,
@@ -79,6 +81,7 @@ const ElementList: React.FC<props> = ({
                       key={element.id}
                       setElements={setCompletedElements}
                       tabElements={tabElements}
+                      tabElements1={tabElements1}
                       setTabElements={setTabElements}
                       columnElements={columnElements}
                       setColumnElements={setColumnElements}

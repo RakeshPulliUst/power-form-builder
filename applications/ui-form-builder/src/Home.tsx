@@ -144,6 +144,16 @@ function Home() {
     setDialogOpen(!dialogOpen);
   };
 
+  const handleOpen = () => {
+    console.log(!open);
+    setOpen(!open);
+  };
+
+  const handleClose = () => {
+    console.log(!open);
+    setOpen(!open);
+  };
+
   return (
     <>
       <Table minWidth={1500}>
@@ -213,7 +223,15 @@ function Home() {
             onClick={handleBuildForm}
           />
         </div>
-        {open ? <FormNameInput open={open} /> : <></>}
+        {open ? (
+          <FormNameInput
+            open={open}
+            handleOpen={handleOpen}
+            handleClose={handleClose}
+          />
+        ) : (
+          <></>
+        )}
       </div>
       <Dialog
         open={dialogOpen}

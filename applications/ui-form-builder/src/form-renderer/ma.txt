@@ -143,8 +143,8 @@ function MaterialForm() {
     setValue(newValue);
   };
 
-  const [newTabItems, setN] = React.useState<TabItemsProps>([
-    { label: "", value: "" },
+  const [newTabItems, setNewTabItems] = useState<TabItemsProps>([
+    { label: "Tab1", value: "1" },
   ]);
 
   return (
@@ -340,13 +340,10 @@ function MaterialForm() {
                       />
                     ) : data.element === "Tabs" ? (
                       <>
-                        {data.tabItems!.map((item, index) =>
-                          newTabItems.push({
-                            label: item.tabsDataLabel,
-                            value: item.tabsDataValue,
-                          })
+                        {data.tabItems!.map(
+                          (item, index) =>
+                            (tabItems[index].label = item.tabsDataLabel)
                         )}
-
                         <TabContext value={value}>
                           <Box>
                             <TabList

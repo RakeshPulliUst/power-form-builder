@@ -1,11 +1,11 @@
-.container {
+/* .container {
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-}
+} */
+
 .elements {
-  
   border-radius: 5px;
   display: flex;
   flex-direction: column;
@@ -18,11 +18,9 @@
   border-style: dashed;
   border-width: 2px;
   border-color: rgb(101, 98, 98);
-  
 }
 
 .elements_fixed {
-
   border-radius: 5px;
   display:flex;
   flex-direction: column;
@@ -31,9 +29,78 @@
   background-color: rgb(251, 255, 255);
   text-align: center;
   box-shadow: 0 0 10px black;
-  min-height: 480px;
+  min-height: 480px;  
+}
+
+.elements__single_fixed {
+  display: flex;
+  border-radius: 4px;
+  padding: 0px;
+  margin-top: 5px;
+  background-color: rgb(58, 212, 230);;
+  transition: 0.2s;
+}
+
+.elements__single {
+  display: flex;
+  border-radius: 5px;
+  background-color: rgb(58, 212, 230);;
+  transition: 0.2s;
+  margin: 5px;
+  padding: 4px;
   
 }
+
+.elements__column {
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: rgb(251, 255, 255);
+  text-align: center;
+  box-shadow: 0 0 10px black;
+  min-height: 300px;
+  border-style: dashed;
+  border-width: 2px;
+  border-color: rgb(101, 98, 98);
+}
+
+.elements__single_column
+{
+  display: flex;
+  border-radius: 5px;
+  background-color: rgb(58, 212, 230);;
+  transition: 0.2s;
+  margin: 10px;
+  padding: 4px;
+}
+
+.elements__tab {
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  padding: 0px;
+  background-color: rgb(251, 255, 255);
+  text-align: center;
+  box-shadow: 0 0 10px black;
+  min-height: 300px;
+  border-style: dashed;
+  border-width: 2px;
+  border-color: rgb(101, 98, 98);
+}
+
+.elements__single_tab
+{
+  display: flex;
+  border-radius: 5px;
+  background-color: rgb(58, 212, 230);;
+  transition: 0.2s;
+  margin: 4px;
+  padding: 4px;
+}
+
+
 
 .dragactive {
   background-color: rgb(255, 255, 255);
@@ -53,41 +120,19 @@
   color: rgb(58, 212, 230);
 }
 
-
-
-.elements__single {
-  display: flex;
-  border-radius: 5px;
-  background-color: rgb(58, 212, 230);;
-  transition: 0.2s;
-  margin: 5px;
-  padding: 0px;
-  
-}
-.aa {
-  display: block;
-
-}
-.hide {
+/* .hide {
   display:none
 
-}
+} 
 
 .elements__single:hover + .hide{
   opacity: 0.3;
   display: flex;
   color: red;
   
-}
+} */
 
-.elements__single_fixed {
-  display: flex;
-  border-radius: 4px;
-  padding: 0px;
-  margin-top: 5px;
-  background-color: rgb(58, 212, 230);;
-  transition: 0.2s;
-}
+
 
 .drag {
   box-shadow: 0 0 20px black;

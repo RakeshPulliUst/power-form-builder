@@ -3,6 +3,13 @@ import { Tabs as DefaultTabs } from "@mui/material";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import { TabPanel } from "@mui/lab";
+
+// type TabPanelProps = {
+//   children?: React.ReactNode;
+//   index: number;
+//   value: number;
+// };
 
 type TabsProps = {
   tabItems: {
@@ -13,6 +20,26 @@ type TabsProps = {
   children?: React.ReactNode;
 };
 
+// function TabPanel(props: TabPanelProps) {
+//   const { children, value, index, ...other } = props;
+
+//   return (
+//     <div
+//       role="tabpanel"
+//       hidden={value !== index}
+//       id={`simple-tabpanel-${index}`}
+//       aria-labelledby={`simple-tab-${index}`}
+//       {...other}
+//     >
+//       {value === index && (
+//         <Box sx={{ p: 3 }}>
+//           <Typography>{children}</Typography>
+//         </Box>
+//       )}
+//     </div>
+//   );
+// }
+
 const Tabs = ({ tabItems, children, ...rest }: TabsProps) => {
   const [value, setValue] = React.useState(0);
 
@@ -20,12 +47,12 @@ const Tabs = ({ tabItems, children, ...rest }: TabsProps) => {
     setValue(newValue);
   };
 
-  function a11yProps(index: number) {
-    return {
-      id: `simple-tab-${index}`,
-      "aria-controls": `simple-tabpanel-${index}`,
-    };
-  }
+  // function a11yProps(index: number) {
+  //   return {
+  //     id: `simple-tab-${index}`,
+  //     "aria-controls": `simple-tabpanel-${index}`,
+  //   };
+  // }
 
   return (
     <Box sx={{ width: "100%" }}>
@@ -36,11 +63,13 @@ const Tabs = ({ tabItems, children, ...rest }: TabsProps) => {
           aria-label="basic tabs example"
         >
           {tabItems.map((name, index) => (
-            <Tab label={name.tabsDataLabel} {...a11yProps(0)}></Tab>
+            <Tab label={name.tabsDataLabel}></Tab>
           ))}
         </DefaultTabs>
-        {children}
       </Box>
+      {tabItems.map((name) => (
+        <TabPanel value={value.toString()}>{children}</TabPanel>
+      ))}
     </Box>
   );
 };

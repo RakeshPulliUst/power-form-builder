@@ -115,11 +115,6 @@ const SelectData: React.FC<{
     setMenuItemsData(element.menuItems!);
   }, []);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log("InputFields", menuItemsData);
-  };
-
   const handleChangeInput = (
     id: string,
     event: React.ChangeEvent<HTMLInputElement>
@@ -217,49 +212,47 @@ const SelectData: React.FC<{
               onChange={handleMultipleValues}
             />
             <br />
-            <form onSubmit={handleSubmit}>
-              {menuItemsData.map((item) => (
-                <div>
-                  <br />
-                  <TextField
-                    label="SelectValueLabel"
-                    name="selectDataLabel"
-                    required={true}
-                    placeholder=""
-                    value={item.selectDataLabel}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
-                      handleChangeInput(item.id, e)
-                    }
-                  />
-                  &nbsp;
-                  <TextField
-                    label="SelectValue"
-                    name="selectDataValue"
-                    required={true}
-                    placeholder=""
-                    value={item.selectDataValue}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
-                      handleChangeInput(item.id, e)
-                    }
-                  />
-                  {menuItemsData.length !== 1 ? (
-                    <span
-                      className="icon"
-                      onClick={() => handleRemoveFields(item.id)}
-                    >
-                      <RemoveCircleIcon />
-                    </span>
-                  ) : (
-                    <></>
-                  )}
-                  <span className="icon" onClick={handleAddFields}>
-                    <AddCircleIcon />
+
+            {menuItemsData.map((item) => (
+              <div>
+                <br />
+                <TextField
+                  label="SelectValueLabel"
+                  name="selectDataLabel"
+                  required={true}
+                  placeholder=""
+                  value={item.selectDataLabel}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
+                    handleChangeInput(item.id, e)
+                  }
+                />
+                &nbsp;
+                <TextField
+                  label="SelectValue"
+                  name="selectDataValue"
+                  required={true}
+                  placeholder=""
+                  value={item.selectDataValue}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
+                    handleChangeInput(item.id, e)
+                  }
+                />
+                {menuItemsData.length !== 1 ? (
+                  <span
+                    className="icon"
+                    onClick={() => handleRemoveFields(item.id)}
+                  >
+                    <RemoveCircleIcon />
                   </span>
-                </div>
-              ))}
-              <br />
-              <Button label="Done" color="secondary" size="small" />
-            </form>
+                ) : (
+                  <></>
+                )}
+                <span className="icon" onClick={handleAddFields}>
+                  <AddCircleIcon />
+                </span>
+              </div>
+            ))}
+            <br />
           </TabPanel>
           <TabPanel value="3">
             <Checkbox

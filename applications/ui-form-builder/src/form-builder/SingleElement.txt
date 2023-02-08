@@ -72,7 +72,7 @@ type RadioProps = {
 }[];
 
 type TabItemsProps = {
-  label: string;
+  label: React.ReactNode;
   value: string;
 }[];
 
@@ -176,45 +176,6 @@ const SingleElement: React.FC<{
       tabComponents: [
         {
           id: 1014,
-          element: "Tabs",
-          label: "Ths",
-        },
-      ],
-    },
-    {
-      id: "Tab3",
-      dropId: "tabsDroppableId3",
-      tabsDataLabel: "Tab3",
-      tabsDataValue: "Tab3",
-      tabComponents: [
-        {
-          id: 1015,
-          element: "Tabs",
-          label: "Ths",
-        },
-      ],
-    },
-    {
-      id: "Tab4",
-      dropId: "tabsDroppableId4",
-      tabsDataLabel: "Tab4",
-      tabsDataValue: "Tab4",
-      tabComponents: [
-        {
-          id: 1016,
-          element: "Tabs",
-          label: "Ths",
-        },
-      ],
-    },
-    {
-      id: "Tab5",
-      dropId: "tabsDroppableId5",
-      tabsDataLabel: "Tab5",
-      tabsDataValue: "Tab5",
-      tabComponents: [
-        {
-          id: 1017,
           element: "Tabs",
           label: "Ths",
         },
@@ -588,13 +549,10 @@ const SingleElement: React.FC<{
     setValue(newValue);
   };
 
-  const [tabItems, setTabItems] = useState<TabItemsProps>([
+  const tabItems: TabItemsProps = [
     { label: "Tab1", value: "1" },
     { label: "Tab2", value: "2" },
-    { label: "Tab3", value: "3" },
-    { label: "Tab4", value: "4" },
-    { label: "Tab5", value: "5" },
-  ]);
+  ];
 
   return (
     <Draggable draggableId={element.id.toString()} index={index}>
@@ -899,8 +857,7 @@ const SingleElement: React.FC<{
                   handleOpen={handleOpen}
                   element={element}
                 ></TabsData>
-
-                <div className="elements__single_tab">
+                {tabsItemsData.map((item, index) => (
                   <TabContext value={value}>
                     <Box>
                       <TabList
@@ -908,79 +865,73 @@ const SingleElement: React.FC<{
                         tabItems={tabItems}
                       ></TabList>
                     </Box>
-                    <Box>
-                      {tabsItemsData.map((item, index) => (
-                        <TabPanel value={tabItems.at(index)?.value!}>
-                          <Droppable droppableId={item.dropId}>
-                            {(provided, snapshot) => (
-                              <div
-                                ref={provided.innerRef}
-                                {...provided.droppableProps}
-                                className={`elements__tab  ${
-                                  snapshot.isDraggingOver
-                                    ? "dragcomplete"
-                                    : "remove"
-                                }`}
-                              >
-                                {item.dropId === "tabsDroppableId" ? (
-                                  <>
-                                    {tabElements?.map((element, index) => (
-                                      <>
-                                        <SingleElement
-                                          show={show}
-                                          index={index}
-                                          elements={tabElements}
-                                          element={element}
-                                          key={element.id}
-                                          setElements={setTabElements}
-                                          tabElements={tabElements}
-                                          tabElements1={tabElements1}
-                                          setTabElements={setTabElements}
-                                          columnElements={columnElements}
-                                          setColumnElements={setColumnElements}
-                                          column1Elements={column1Elements}
-                                          setColumn1Elements={
-                                            setColumn1Elements
-                                          }
-                                        />
-                                      </>
-                                    ))}
-                                  </>
-                                ) : (
-                                  <>
-                                    {tabElements1?.map((element, index) => (
-                                      <>
-                                        <SingleElement
-                                          show={show}
-                                          index={index}
-                                          elements={tabElements}
-                                          element={element}
-                                          key={element.id}
-                                          setElements={setTabElements}
-                                          tabElements={tabElements}
-                                          tabElements1={tabElements1}
-                                          setTabElements={setTabElements}
-                                          columnElements={columnElements}
-                                          setColumnElements={setColumnElements}
-                                          column1Elements={column1Elements}
-                                          setColumn1Elements={
-                                            setColumn1Elements
-                                          }
-                                        />
-                                      </>
-                                    ))}
-                                  </>
-                                )}
+                    <TabPanel value={tabItems.at(index)?.value!}>
+                      <div className="elements__single_tab">
+                        <Droppable droppableId={item.dropId}>
+                          {(provided, snapshot) => (
+                            <div
+                              ref={provided.innerRef}
+                              {...provided.droppableProps}
+                              className={`elements__tab  ${
+                                snapshot.isDraggingOver
+                                  ? "dragcomplete"
+                                  : "remove"
+                              }`}
+                            >
+                              {item.dropId === "tabsDroppableId" ? (
+                                <>
+                                  {tabElements?.map((element, index) => (
+                                    <>
+                                      <SingleElement
+                                        show={show}
+                                        index={index}
+                                        elements={tabElements}
+                                        element={element}
+                                        key={element.id}
+                                        setElements={setTabElements}
+                                        tabElements={tabElements}
+                                        tabElements1={tabElements1}
+                                        setTabElements={setTabElements}
+                                        columnElements={columnElements}
+                                        setColumnElements={setColumnElements}
+                                        column1Elements={column1Elements}
+                                        setColumn1Elements={setColumn1Elements}
+                                      />
+                                    </>
+                                  ))}
+                                </>
+                              ) : (
+                                <>
+                                  {tabElements1?.map((element, index) => (
+                                    <>
+                                      <SingleElement
+                                        show={show}
+                                        index={index}
+                                        elements={tabElements}
+                                        element={element}
+                                        key={element.id}
+                                        setElements={setTabElements}
+                                        tabElements={tabElements}
+                                        tabElements1={tabElements1}
+                                        setTabElements={setTabElements}
+                                        columnElements={columnElements}
+                                        setColumnElements={setColumnElements}
+                                        column1Elements={column1Elements}
+                                        setColumn1Elements={setColumn1Elements}
+                                      />
+                                    </>
+                                  ))}
+                                </>
+                              )}
 
-                                {provided.placeholder}
-                              </div>
-                            )}
-                          </Droppable>
-                        </TabPanel>
-                      ))}
-                    </Box>
+                              {provided.placeholder}
+                            </div>
+                          )}
+                        </Droppable>
+                      </div>
+                    </TabPanel>
                   </TabContext>
-                </div>
+                ))}
               </>
             ) : (
               // <>

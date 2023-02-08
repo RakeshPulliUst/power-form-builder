@@ -79,6 +79,7 @@ export interface TabsDialog {
   label: string,
   tabItems: {
     id: string
+    dropId: string
     tabsDataLabel: string
     tabsDataValue: string
     tabComponents: Element[]

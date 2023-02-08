@@ -95,11 +95,6 @@ const RadioButtonData: React.FC<{
     setRadioItems(element.radioItems!);
   }, []);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log("InputFields", radioItems);
-  };
-
   const handleChangeInput = (
     id: string,
     event: React.ChangeEvent<HTMLInputElement>
@@ -172,49 +167,46 @@ const RadioButtonData: React.FC<{
             />
           </TabPanel>
           <TabPanel value="2">
-            <form onSubmit={handleSubmit}>
-              {radioItems.map((item) => (
-                <div>
-                  <br />
-                  <TextField
-                    label="RadioButtonDataLabel"
-                    name="radioButtonDataLabel"
-                    required={true}
-                    placeholder=""
-                    value={item.radioButtonDataLabel}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
-                      handleChangeInput(item.id, e)
-                    }
-                  />
-                  &nbsp;
-                  <TextField
-                    label="RadioButtonValue"
-                    required={true}
-                    placeholder=""
-                    name="radioButtonDataValue"
-                    value={item.radioButtonDataValue}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
-                      handleChangeInput(item.id, e)
-                    }
-                  />
-                  {radioItems.length !== 1 ? (
-                    <span
-                      className="icon"
-                      onClick={() => handleRemoveFields(item.id)}
-                    >
-                      <RemoveCircleIcon />
-                    </span>
-                  ) : (
-                    <></>
-                  )}
-                  <span className="icon" onClick={handleAddFields}>
-                    <AddCircleIcon />
+            {radioItems.map((item) => (
+              <div>
+                <br />
+                <TextField
+                  label="RadioButtonDataLabel"
+                  name="radioButtonDataLabel"
+                  required={true}
+                  placeholder=""
+                  value={item.radioButtonDataLabel}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
+                    handleChangeInput(item.id, e)
+                  }
+                />
+                &nbsp;
+                <TextField
+                  label="RadioButtonValue"
+                  required={true}
+                  placeholder=""
+                  name="radioButtonDataValue"
+                  value={item.radioButtonDataValue}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
+                    handleChangeInput(item.id, e)
+                  }
+                />
+                {radioItems.length !== 1 ? (
+                  <span
+                    className="icon"
+                    onClick={() => handleRemoveFields(item.id)}
+                  >
+                    <RemoveCircleIcon />
                   </span>
-                </div>
-              ))}
-              <br />
-              <Button label="Done" color="secondary" size="small" />
-            </form>
+                ) : (
+                  <></>
+                )}
+                <span className="icon" onClick={handleAddFields}>
+                  <AddCircleIcon />
+                </span>
+              </div>
+            ))}
+            <br />
           </TabPanel>
           <TabPanel value="3">
             <Checkbox
