@@ -26,6 +26,7 @@ import TabContext from "./components/Tab/TabContext";
 import TabList from "./components/Tab/TabList";
 import TabPanel from "./components/Tab/TabPanel";
 import Box from "./components/Box";
+import TabList1 from "./components/Tab/TabList1";
 export {
   Button,
   Card,
@@ -55,4 +56,5 @@ export {
   TabList,
   TabPanel,
   Box,
+  TabList1,
 };

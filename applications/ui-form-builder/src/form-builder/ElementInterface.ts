@@ -54,7 +54,7 @@ export interface Element {
       dropId: string
       tabsDataLabel: string
       tabsDataValue: string
-      tabComponents:  Element[]
+      tabComponents?:  Element[]
     }[]; 
 
     columnItems?: {

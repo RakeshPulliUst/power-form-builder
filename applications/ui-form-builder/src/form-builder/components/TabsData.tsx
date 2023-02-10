@@ -23,7 +23,7 @@ type Props = {
   dropId: string;
   tabsDataLabel: string;
   tabsDataValue: string;
-  tabComponents: Element[];
+  tabComponents?: Element[];
 }[];
 
 type TabItemsProps = {

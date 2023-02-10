@@ -11,6 +11,7 @@ import {
   TabList,
   Box,
   TabPanel,
+  TabList1,
 } from "@power-form-builder/ui-components";
 import { Grid, GridItem } from "@power-form-builder/ui-components";
 import { FormJson } from "../form-builder/ElementInterface";
@@ -340,24 +341,17 @@ function MaterialForm() {
                       />
                     ) : data.element === "Tabs" ? (
                       <>
-                        {data.tabItems!.map((item, index) =>
-                          newTabItems.push({
-                            label: item.tabsDataLabel,
-                            value: item.tabsDataValue,
-                          })
-                        )}
-
                         <TabContext value={value}>
                           <Box>
-                            <TabList
+                            <TabList1
                               onChange={handleTabChange}
-                              tabItems={newTabItems}
-                            ></TabList>
+                              tabItems={data.tabItems}
+                            ></TabList1>
                           </Box>
-                          {data.tabItems!.map((item, index) =>
-                            item.tabComponents!.map((item1, index1) => (
-                              <>
-                                <TabPanel value={tabItems.at(index)?.value!}>
+                          {data.tabItems!.map((item, index) => (
+                            <TabPanel value={tabItems.at(index)?.value!}>
+                              {item.tabComponents!.map((item1, index1) => (
+                                <>
                                   {item1.element === "TextField" ? (
                                     <GridItem>
                                       <TextField
@@ -506,10 +500,10 @@ function MaterialForm() {
                                   ) : (
                                     <>Noo</>
                                   )}
-                                </TabPanel>
-                              </>
-                            ))
-                          )}
+                                </>
+                              ))}
+                            </TabPanel>
+                          ))}
                         </TabContext>
                       </>
                     ) : (

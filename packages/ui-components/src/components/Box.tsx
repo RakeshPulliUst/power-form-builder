@@ -7,7 +7,7 @@ type Props = {
 
 const Box = ({ children, ...rest }: Props) => {
   return (
-    <DefaultBox sx={{ borderBottom: 1, borderColor: "divider", p: 3 }}>
+    <DefaultBox sx={{ borderBottom: 1, borderColor: "divider", p: 1 }}>
       {children}
     </DefaultBox>
   );

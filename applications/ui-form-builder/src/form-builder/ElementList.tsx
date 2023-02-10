@@ -12,8 +12,17 @@ interface props {
   setCompletedElements: React.Dispatch<React.SetStateAction<Array<Element>>>;
   CompletedElements: Array<Element>;
   tabElements: Array<Element>;
-  tabElements1: Array<Element>;
   setTabElements: React.Dispatch<React.SetStateAction<Array<Element>>>;
+  tabElements2: Array<Element>;
+  setTabElements2: React.Dispatch<React.SetStateAction<Array<Element>>>;
+  tabElements3: Array<Element>;
+  setTabElements3: React.Dispatch<React.SetStateAction<Array<Element>>>;
+  tabElements4: Array<Element>;
+  setTabElements4: React.Dispatch<React.SetStateAction<Array<Element>>>;
+  tabElements5: Array<Element>;
+  setTabElements5: React.Dispatch<React.SetStateAction<Array<Element>>>;
+  numTabElements: Element[][];
+  setNumTabElements: React.Dispatch<React.SetStateAction<Array<Element[]>>>;
   columnElements: Array<Element>;
   setColumnElements: React.Dispatch<React.SetStateAction<Array<Element>>>;
   column1Elements: Array<Element>;
@@ -26,8 +35,17 @@ const ElementList: React.FC<props> = ({
   CompletedElements,
   setCompletedElements,
   tabElements,
-  tabElements1,
   setTabElements,
+  tabElements2,
+  setTabElements2,
+  tabElements3,
+  setTabElements3,
+  tabElements4,
+  setTabElements4,
+  tabElements5,
+  setTabElements5,
+  numTabElements,
+  setNumTabElements,
   columnElements,
   setColumnElements,
   column1Elements,
@@ -81,8 +99,17 @@ const ElementList: React.FC<props> = ({
                       key={element.id}
                       setElements={setCompletedElements}
                       tabElements={tabElements}
-                      tabElements1={tabElements1}
                       setTabElements={setTabElements}
+                      tabElements2={tabElements2}
+                      setTabElements2={setTabElements2}
+                      tabElements3={tabElements3}
+                      setTabElements3={setTabElements3}
+                      tabElements4={tabElements4}
+                      setTabElements4={setTabElements4}
+                      tabElements5={tabElements5}
+                      setTabElements5={setTabElements5}
+                      numTabElements={numTabElements}
+                      setNumTabElements={setNumTabElements}
                       columnElements={columnElements}
                       setColumnElements={setColumnElements}
                       column1Elements={column1Elements}

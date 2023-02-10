@@ -3,16 +3,20 @@ import { TabList as DefaultTabList } from "@mui/lab";
 import Tab from "@mui/material/Tab";
 type Props = {
   onChange: (event: React.ChangeEvent<{}>, value: any) => void;
-  tabItems: {
-    label: React.ReactNode;
-    value: string;
-  }[];
+  tabItems?:
+    | {
+        id: string;
+        dropId: string;
+        tabsDataLabel: string;
+        tabsDataValue: string;
+      }[]
+    | undefined;
 };
 
-const TabList = ({ onChange, tabItems, ...rest }: Props) => {
+const TabList1 = ({ onChange, tabItems, ...rest }: Props) => {
   return (
     <DefaultTabList onChange={onChange}>
-      {tabItems.map((item, index) => (
+      {tabItems?.map((item, index) => (
         // item.label === "Tab1" ||
         // item.label === "Tab2" ||
         // item.label === "Tab3" ||
@@ -28,10 +32,10 @@ const TabList = ({ onChange, tabItems, ...rest }: Props) => {
         //   </>
         // ) : (
 
-        <Tab label={item.label} value={item.value} />
+        <Tab label={item.tabsDataLabel} value={item.tabsDataValue} />
       ))}
     </DefaultTabList>
   );
 };
 
-export default TabList;
+export default TabList1;
