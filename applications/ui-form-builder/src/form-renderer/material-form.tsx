@@ -27,16 +27,38 @@ function MaterialForm() {
   const { formData } = location.state || {};
   const [formJsonData, setFormJsonData] = useState<FormJson>(formData);
 
-  const [val, setVal] = React.useState({
-    firstname: "",
-    email: "",
-    password: "",
-    address: "",
-    gender: "",
-  });
+  const [formDataValue, setFormDataValue] = useState({});
 
   //Final Select
-  const [selectData, setSelectData] = useState<string[]>([]);
+  const [selectData, setSelectData] = useState({});
+
+  const [error, setError] = React.useState(false);
+  const [helperText, setHelperText] = React.useState("");
+  const [show, setShow] = React.useState(false);
+  const [emailHelperText, setEmailHelperText] = React.useState("");
+
+  const handleFormDataValueChange = (
+    event: React.ChangeEvent<HTMLInputElement> | any
+  ) => {
+    setFormDataValue({
+      ...formDataValue,
+      [event.target.name]: event.target.value,
+    });
+
+    if (formDataValue) {
+      console.log("No Error");
+      setError(false);
+      setHelperText("");
+    } else if (event.target.name === "email") {
+      var regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+      if (regex.test(event.target.value)) {
+        setEmailHelperText("");
+      } else {
+        setEmailHelperText("Not Valid Email");
+        setError(true);
+      }
+    }
+  };
 
   const handleSelectData = (event: any) => {
     const selectvalue = event.target.value;
@@ -46,66 +68,21 @@ function MaterialForm() {
     console.log("Select Value", selectvalue);
   };
 
-  const [checkbox, setCheckbox] = React.useState("");
-  const [checked, setChecked] = React.useState(false);
-  const [error, setError] = React.useState(false);
-  const [helperText, setHelperText] = React.useState("");
-  const [show, setShow] = React.useState(false);
-  const [emailHelperText, setEmailHelperText] = React.useState("");
-
-  const onHandleChange = (
-    e:
-      | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLTextAreaElement>
-      | any
-  ) => {
-    setVal({
-      ...val,
-      [e.target.name]: e.target.value,
-    });
-    console.log("e.target.value", e.target.value);
-
-    if (
-      val.firstname !== "" &&
-      val.email !== "" &&
-      val.password !== "" &&
-      val.address !== "" &&
-      val.gender !== ""
-    ) {
-      console.log("No Error");
-      setError(false);
-      setHelperText("");
-    } else if (e.target.name === "email") {
-      var regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-      if (regex.test(e.target.value)) {
-        setEmailHelperText("");
-      } else {
-        setEmailHelperText("Not Valid Email");
-        setError(true);
-      }
-    }
-  };
-
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     console.log("Checkbox");
-    setChecked(event.target.checked);
-    setCheckbox(event.target.value);
-    console.log("Checkbox ValuesL", checkbox, checked);
+    // setChecked({ ...checked, [event.target.name]: event.target.checked });
+    setFormDataValue({
+      ...formDataValue,
+      [event.target.name]: event.target.checked,
+    });
+    console.log("Checkbox ValuesL", formDataValue);
   };
 
   const submitForm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("select", val, "checkbox", checkbox);
-    var regex1 = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    if (
-      val.firstname !== "" ||
-      (val.email !== "" && regex1.test(val.email)) ||
-      val.password !== "" ||
-      val.address !== "" ||
-      val.gender !== "" ||
-      checkbox !== "" ||
-      selectData.length !== 0
-    ) {
+    console.log("select", formDataValue);
+
+    if (formDataValue) {
       console.log("Submit Data");
       setError(false);
       setHelperText("");
@@ -116,21 +93,8 @@ function MaterialForm() {
       setHelperText("required");
     }
   };
-  const resetBtn = () => {
-    setVal({
-      firstname: "",
-      email: "",
-      password: "",
-      address: "",
-      gender: "",
-    });
-    setSelectData([""]);
-    setCheckbox("");
-    setChecked(false);
-  };
 
   //Tab
-
   const tabItems: TabItemsProps = [
     { label: "Tab1", value: "1" },
     { label: "Tab2", value: "2" },
@@ -144,40 +108,13 @@ function MaterialForm() {
     setValue(newValue);
   };
 
-  const [newTabItems, setN] = React.useState<TabItemsProps>([
-    { label: "", value: "" },
-  ]);
-
   return (
     <>
       {formJsonData.form_title !== "" ? (
         <form onSubmit={submitForm}>
           <>
-            {console.log(
-              "values.....",
-              val,
-              "Error",
-              error,
-              "Multiple ",
-              selectData,
-              "Checkbox",
-              checkbox,
-              "checked",
-              checked
-            )}
-            {show && !error ? (
-              <ul style={{ listStyle: "none" }}>
-                <li>Name:{val.firstname}</li>
-                <li>Email:{val.email}</li>
-                <li>Password:{val.password}</li>
-                <li>Address:{val.address}</li>
-                <li>Gender:{val.gender}</li>
-                <li>Checkbox:{checkbox}</li>
-                <li>Select: {selectData.toString()}</li>
-              </ul>
-            ) : (
-              ""
-            )}
+            {console.log("Values....", formDataValue, selectData)}
+            {show && !error ? { formDataValue } : ""}
           </>
           {
             <GridItem xs={12} sm={12}>
@@ -196,8 +133,7 @@ function MaterialForm() {
                       <TextField
                         label={data.label!}
                         name={data.label?.toLocaleLowerCase()}
-                        value={val.firstname}
-                        onChange={onHandleChange}
+                        onChange={handleFormDataValueChange}
                         placeholder={data.placeholder}
                         required={data.required!}
                         minLength={data.minLength!}
@@ -207,9 +143,8 @@ function MaterialForm() {
                       <TextField
                         label={data.label!}
                         name={data.label?.toLocaleLowerCase()}
-                        value={val.email}
                         type="email"
-                        onChange={onHandleChange}
+                        onChange={handleFormDataValueChange}
                         placeholder={data.placeholder}
                         required={data.required!}
                         minLength={data.minLength!}
@@ -222,8 +157,7 @@ function MaterialForm() {
                         label={data.label!}
                         name={data.label?.toLocaleLowerCase()}
                         type="password"
-                        value={val.password}
-                        onChange={onHandleChange}
+                        onChange={handleFormDataValueChange}
                         placeholder={data.placeholder}
                         required={data.required!}
                         minLength={data.minLength!}
@@ -235,8 +169,7 @@ function MaterialForm() {
                         required={data.required!}
                         placeholder={data.placeholder!}
                         name={data.label?.toLocaleLowerCase()}
-                        value={val.address}
-                        onChange={onHandleChange}
+                        onChange={handleFormDataValueChange}
                         minLength={data.minLength!}
                         maxLength={data.maxLength!}
                         rows={data.rows}
@@ -249,8 +182,7 @@ function MaterialForm() {
                         menuItems={data.menuItems!}
                         multiple={data.multipleValues!}
                         name={data.label?.toLocaleLowerCase()}
-                        value={selectData}
-                        onChange={handleSelectData}
+                        onChange={handleFormDataValueChange}
                         size={
                           data.size !== undefined
                             ? data.size === "small"
@@ -268,7 +200,6 @@ function MaterialForm() {
                         menuItems={data.menuItems!}
                         multiple={data.multipleValues!}
                         name={data.label?.toLocaleLowerCase()}
-                        value={selectData}
                         onChange={handleSelectData}
                         size={
                           data.size !== undefined
@@ -294,19 +225,17 @@ function MaterialForm() {
                               : "end"
                             : "end"
                         }
-                        value={val.gender}
                         name={data.label?.toLocaleLowerCase()}
                         radioItems={data.radioItems!}
                         required={data.required!}
-                        onChange={onHandleChange}
+                        onChange={handleFormDataValueChange}
                       />
                     ) : data.element === "Checkbox" ? (
                       <Checkbox
                         label={data.label!}
                         name={data.label!}
                         required={data.required!}
-                        value={data.label}
-                        checked={checked}
+                        defaultChecked={data.default}
                         onChange={handleChange}
                       />
                     ) : data.element === "Button" ? (
@@ -357,8 +286,7 @@ function MaterialForm() {
                                       <TextField
                                         label={item1.label!}
                                         name={item1.label?.toLocaleLowerCase()}
-                                        value={val.firstname}
-                                        onChange={onHandleChange}
+                                        onChange={handleFormDataValueChange}
                                         placeholder={item1.placeholder}
                                         required={item1.required!}
                                         minLength={item1.minLength!}
@@ -371,8 +299,7 @@ function MaterialForm() {
                                         label={item1.label!}
                                         name={item1.label?.toLocaleLowerCase()}
                                         type="password"
-                                        value={val.password}
-                                        onChange={onHandleChange}
+                                        onChange={handleFormDataValueChange}
                                         placeholder={item1.placeholder}
                                         required={item1.required!}
                                         minLength={item1.minLength!}
@@ -386,8 +313,7 @@ function MaterialForm() {
                                         required={item1.required!}
                                         placeholder={item1.placeholder!}
                                         name={item1.label?.toLocaleLowerCase()}
-                                        value={val.address}
-                                        onChange={onHandleChange}
+                                        onChange={handleFormDataValueChange}
                                         minLength={item1.minLength!}
                                         maxLength={item1.maxLength!}
                                         rows={item1.rows}
@@ -399,9 +325,8 @@ function MaterialForm() {
                                       <TextField
                                         label={item1.label!}
                                         name={item1.label?.toLocaleLowerCase()}
-                                        value={val.email}
                                         type="email"
-                                        onChange={onHandleChange}
+                                        onChange={handleFormDataValueChange}
                                         placeholder={item1.placeholder}
                                         required={item1.required!}
                                         minLength={item1.minLength!}
@@ -419,7 +344,6 @@ function MaterialForm() {
                                         menuItems={item1.menuItems!}
                                         multiple={item1.multipleValues!}
                                         name={item1.label?.toLocaleLowerCase()}
-                                        value={selectData}
                                         onChange={handleSelectData}
                                         size={
                                           item1.size !== undefined
@@ -447,11 +371,10 @@ function MaterialForm() {
                                               : "end"
                                             : "end"
                                         }
-                                        value={val.gender}
                                         name={item1.label?.toLocaleLowerCase()}
                                         radioItems={item1.radioItems!}
                                         required={item1.required!}
-                                        onChange={onHandleChange}
+                                        onChange={handleFormDataValueChange}
                                       />
                                     </GridItem>
                                   ) : item1.element === "Checkbox" ? (
@@ -460,8 +383,7 @@ function MaterialForm() {
                                         label={item1.label!}
                                         name={item1.label!}
                                         required={item1.required!}
-                                        value={item1.label}
-                                        checked={checked}
+                                        defaultChecked={item1.default}
                                         onChange={handleChange}
                                       />
                                     </GridItem>
@@ -526,8 +448,7 @@ function MaterialForm() {
                                         <TextField
                                           label={item1.label!}
                                           name={item1.label?.toLocaleLowerCase()}
-                                          value={val.firstname}
-                                          onChange={onHandleChange}
+                                          onChange={handleFormDataValueChange}
                                           placeholder={item1.placeholder}
                                           required={item1.required!}
                                           minLength={item1.minLength!}
@@ -540,8 +461,7 @@ function MaterialForm() {
                                           label={item1.label!}
                                           name={item1.label?.toLocaleLowerCase()}
                                           type="password"
-                                          value={val.password}
-                                          onChange={onHandleChange}
+                                          onChange={handleFormDataValueChange}
                                           placeholder={item1.placeholder}
                                           required={item1.required!}
                                           minLength={item1.minLength!}
@@ -555,8 +475,7 @@ function MaterialForm() {
                                           required={item1.required!}
                                           placeholder={item1.placeholder!}
                                           name={item1.label?.toLocaleLowerCase()}
-                                          value={val.address}
-                                          onChange={onHandleChange}
+                                          onChange={handleFormDataValueChange}
                                           minLength={item1.minLength!}
                                           maxLength={item1.maxLength!}
                                           rows={item1.rows}
@@ -568,9 +487,8 @@ function MaterialForm() {
                                         <TextField
                                           label={item1.label!}
                                           name={item1.label?.toLocaleLowerCase()}
-                                          value={val.email}
                                           type="email"
-                                          onChange={onHandleChange}
+                                          onChange={handleFormDataValueChange}
                                           placeholder={item1.placeholder}
                                           required={item1.required!}
                                           minLength={item1.minLength!}
@@ -588,7 +506,6 @@ function MaterialForm() {
                                           menuItems={item1.menuItems!}
                                           multiple={item1.multipleValues!}
                                           name={item1.label?.toLocaleLowerCase()}
-                                          value={selectData}
                                           onChange={handleSelectData}
                                           size={
                                             item1.size !== undefined
@@ -616,11 +533,10 @@ function MaterialForm() {
                                                 : "end"
                                               : "end"
                                           }
-                                          value={val.gender}
                                           name={item1.label?.toLocaleLowerCase()}
                                           radioItems={item1.radioItems!}
                                           required={item1.required!}
-                                          onChange={onHandleChange}
+                                          onChange={handleFormDataValueChange}
                                         />
                                       </GridItem>
                                     ) : item1.element === "Checkbox" ? (
@@ -629,8 +545,7 @@ function MaterialForm() {
                                           label={item1.label!}
                                           name={item1.label!}
                                           required={item1.required!}
-                                          value={item1.label}
-                                          checked={checked}
+                                          defaultChecked={item1.checked}
                                           onChange={handleChange}
                                         />
                                       </GridItem>
@@ -683,8 +598,7 @@ function MaterialForm() {
                                         <TextField
                                           label={item1.label!}
                                           name={item1.label?.toLocaleLowerCase()}
-                                          value={val.firstname}
-                                          onChange={onHandleChange}
+                                          onChange={handleFormDataValueChange}
                                           placeholder={item1.placeholder}
                                           required={item1.required!}
                                           minLength={item1.minLength!}
@@ -697,8 +611,7 @@ function MaterialForm() {
                                           label={item1.label!}
                                           name={item1.label?.toLocaleLowerCase()}
                                           type="password"
-                                          value={val.password}
-                                          onChange={onHandleChange}
+                                          onChange={handleFormDataValueChange}
                                           placeholder={item1.placeholder}
                                           required={item1.required!}
                                           minLength={item1.minLength!}
@@ -712,8 +625,7 @@ function MaterialForm() {
                                           required={item1.required!}
                                           placeholder={item1.placeholder!}
                                           name={item1.label?.toLocaleLowerCase()}
-                                          value={val.address}
-                                          onChange={onHandleChange}
+                                          onChange={handleFormDataValueChange}
                                           minLength={item1.minLength!}
                                           maxLength={item1.maxLength!}
                                           rows={item1.rows}
@@ -725,9 +637,8 @@ function MaterialForm() {
                                         <TextField
                                           label={item1.label!}
                                           name={item1.label?.toLocaleLowerCase()}
-                                          value={val.email}
                                           type="email"
-                                          onChange={onHandleChange}
+                                          onChange={handleFormDataValueChange}
                                           placeholder={item1.placeholder}
                                           required={item1.required!}
                                           minLength={item1.minLength!}
@@ -745,7 +656,6 @@ function MaterialForm() {
                                           menuItems={item1.menuItems!}
                                           multiple={item1.multipleValues!}
                                           name={item1.label?.toLocaleLowerCase()}
-                                          value={selectData}
                                           onChange={handleSelectData}
                                           size={
                                             item1.size !== undefined
@@ -773,11 +683,10 @@ function MaterialForm() {
                                                 : "end"
                                               : "end"
                                           }
-                                          value={val.gender}
                                           name={item1.label?.toLocaleLowerCase()}
                                           radioItems={item1.radioItems!}
                                           required={item1.required!}
-                                          onChange={onHandleChange}
+                                          onChange={handleFormDataValueChange}
                                         />
                                       </GridItem>
                                     ) : item1.element === "Checkbox" ? (
@@ -786,8 +695,7 @@ function MaterialForm() {
                                           label={item1.label!}
                                           name={item1.label!}
                                           required={item1.required!}
-                                          value={item1.label}
-                                          checked={checked}
+                                          defaultChecked={item1.checked}
                                           onChange={handleChange}
                                         />
                                       </GridItem>

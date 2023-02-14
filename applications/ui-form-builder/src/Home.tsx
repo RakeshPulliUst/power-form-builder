@@ -245,7 +245,6 @@ function Home() {
           maxWidth: "30%",
         }}
       >
-        +
         <DialogTitle title="Confirm To Submit" />
         <DialogContent>
           <p>Are you sure to delete the form. </p>

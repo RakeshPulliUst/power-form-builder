@@ -13,7 +13,7 @@ type Props = {
     selectDataValue: string;
   }[];
   placeholder: string;
-  value: string[];
+  value?: string[];
   textFieldWidth?: number;
   name?: string;
   required: boolean;

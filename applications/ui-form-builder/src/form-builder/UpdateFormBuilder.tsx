@@ -464,7 +464,7 @@ const UpdateFormBuilder = () => {
 
   useEffect(() => {
     setCompletedElements(formInitialComponents);
-    formInitialComponents.map((item: any, index: number) =>
+    formInitialComponents?.map((item: any, index: number) =>
       item.element === "Tabs"
         ? item.tabItems.map((data: any) =>
             data.dropId === "tabsDroppableId"

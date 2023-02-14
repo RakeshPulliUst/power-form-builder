@@ -6,7 +6,7 @@ type Props = {
   name?: string;
   required: boolean;
   type?: React.HTMLInputTypeAttribute;
-  value: string;
+  value?: string;
   onChange: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
   arg?: string | number;
   placeholder?: string;

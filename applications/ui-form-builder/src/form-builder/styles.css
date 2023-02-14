@@ -79,7 +79,7 @@
   border-radius: 5px;
   display: flex;
   flex-direction: column;
-  width: 90%;
+  width: 80%;
   padding: 0px;
   background-color: rgb(251, 255, 255);
   text-align: center;
@@ -92,12 +92,12 @@
 
 .elements__single_tab
 {
-  display: flex;
   border-radius: 5px;
   background-color: rgb(58, 212, 230);;
   transition: 0.2s;
   margin: 4px;
   padding: 4px;
+  width: 80%;
 }
 
 

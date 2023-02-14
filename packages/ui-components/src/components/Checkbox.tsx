@@ -8,7 +8,7 @@ type Props = {
     event: React.ChangeEvent<HTMLInputElement>,
     checked: boolean
   ) => void;
-  checked: boolean;
+  checked?: boolean;
   defaultChecked?: boolean;
   name?: string;
   value?: string;

@@ -19,7 +19,7 @@ type Props = {
   }[];
   name?: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>, value: string) => void;
-  value: string;
+  value?: string;
 };
 
 function RadioGroup({
@@ -42,7 +42,13 @@ function RadioGroup({
   return (
     <FormControl required={required}>
       <FormLabel id="radio-button">{label}</FormLabel>
-      <DefaultRadioGroup row name={name} value={value} onChange={onChange} {...rest}>
+      <DefaultRadioGroup
+        row
+        name={name}
+        value={value}
+        onChange={onChange}
+        {...rest}
+      >
         {radioItems.map((item, index) => (
           <FormControlLabel
             labelPlacement={options}
