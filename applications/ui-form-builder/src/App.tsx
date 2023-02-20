@@ -8,11 +8,16 @@ import { UITranslation } from "@power-form-builder/ui-translation";
 import { LanguageDropDown } from "@power-form-builder/ui-translation";
 import { useState } from "react";
 import UpdateFormBuilder from "./form-builder/UpdateFormBuilder";
+import SignIn from "./SignIn";
+import SignUp from "./SingUp";
+
 const App = () => {
   return (
     <BrowserRouter>
       <CustomNavbar />
       <Routes>
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/signin" element={<SignIn />} />
         <Route path="/" element={<Home />} />
         <Route path="/formbuilder" element={<FormBuilder />}></Route>
         <Route path="/formrender" element={<MaterialForm />}></Route>

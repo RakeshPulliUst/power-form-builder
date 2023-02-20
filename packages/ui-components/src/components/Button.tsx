@@ -12,9 +12,10 @@ type Props = {
     | "warning";
   size: "small" | "medium" | "large" | undefined;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  fullWidth?: boolean;
 };
 
-const Button = ({ label, color, size, onClick, ...rest }: Props) => {
+const Button = ({ label, color, size, onClick, fullWidth, ...rest }: Props) => {
   return (
     <DefaultButton
       variant="contained"
@@ -23,8 +24,9 @@ const Button = ({ label, color, size, onClick, ...rest }: Props) => {
       size={size}
       type="submit"
       aria-label={label}
+      sx={{ mt: 3, mb: 2 }}
+      fullWidth={fullWidth}
       {...rest}
-      style={{ marginBottom: "5px" }}
     >
       {label}
     </DefaultButton>

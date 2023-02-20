@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TextField as DefaultTextField } from "@mui/material";
+import { TextField as DefaultTextField, SxProps, Theme } from "@mui/material";
 
 type Props = {
   label: string;
@@ -17,6 +17,8 @@ type Props = {
   error?: boolean;
   multiline?: boolean;
   rows?: number;
+  fullWidth?: boolean;
+  sx?: SxProps<Theme> | undefined;
 };
 
 const TextField = ({
@@ -35,6 +37,8 @@ const TextField = ({
   error,
   multiline,
   rows,
+  fullWidth,
+  sx,
   ...rest
 }: Props) => {
   return (
@@ -52,7 +56,9 @@ const TextField = ({
       error={error}
       multiline={multiline}
       rows={rows}
-      style={{ marginLeft: "10px", marginTop: "8px" }}
+      // sx={{ marginLeft: "10px", marginTop: "8px" }}
+      sx={sx}
+      fullWidth={true}
       {...rest}
     />
 

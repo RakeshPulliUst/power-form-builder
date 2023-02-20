@@ -114,7 +114,7 @@ function MaterialForm() {
         <form onSubmit={submitForm}>
           <>
             {console.log("Values....", formDataValue, selectData)}
-            {show && !error ? { formDataValue } : ""}
+            {/* {show && !error ? { formDataValue } : ""} */}
           </>
           {
             <GridItem xs={12} sm={12}>
@@ -128,7 +128,7 @@ function MaterialForm() {
             return (
               <>
                 <Grid spacing={2} alignItems="center" justifyContent="center">
-                  <GridItem xs={12} sm={6}>
+                  <GridItem sm={6}>
                     {data.element === "TextField" ? (
                       <TextField
                         label={data.label!}
@@ -439,7 +439,7 @@ function MaterialForm() {
                       {data.columnItems?.map((item, index) => (
                         <>
                           {item.label === "Column1" ? (
-                            <GridItem md={6}>
+                            <GridItem md={4}>
                               <Grid>
                                 {item.columnComponents?.map((item1, index) => (
                                   <>
@@ -589,7 +589,7 @@ function MaterialForm() {
                               </Grid>
                             </GridItem>
                           ) : (
-                            <GridItem md={6}>
+                            <GridItem md={4}>
                               <Grid>
                                 {item.columnComponents?.map((item1, index) => (
                                   <>

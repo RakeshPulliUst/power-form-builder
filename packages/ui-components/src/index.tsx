@@ -27,6 +27,11 @@ import TabList from "./components/Tab/TabList";
 import TabPanel from "./components/Tab/TabPanel";
 import Box from "./components/Box";
 import TabList1 from "./components/Tab/TabList1";
+import Container from "./components/Container";
+import Typography from "./components/Typography";
+import Link from "./components/Link";
+import MuiLockOutlinedIcon from "./components/MuiLockOutlinedIcon";
+
 export {
   Button,
   Card,
@@ -35,6 +40,7 @@ export {
   RadioGroup,
   TextareaAutosize,
   Checkbox,
+  Container,
   Dialog,
   DialogTitle,
   DialogContent,
@@ -57,4 +63,7 @@ export {
   TabPanel,
   Box,
   TabList1,
+  Typography,
+  Link,
+  MuiLockOutlinedIcon,
 };
