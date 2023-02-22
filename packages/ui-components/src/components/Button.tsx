@@ -1,7 +1,7 @@
 import { Box, Button as DefaultButton } from "@mui/material";
 
 type Props = {
-  label: string;
+  label: React.ReactNode;
   color:
     | "inherit"
     | "primary"
@@ -13,9 +13,18 @@ type Props = {
   size: "small" | "medium" | "large" | undefined;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   fullWidth?: boolean;
+  disabled?: boolean;
 };
 
-const Button = ({ label, color, size, onClick, fullWidth, ...rest }: Props) => {
+const Button = ({
+  label,
+  color,
+  size,
+  onClick,
+  fullWidth,
+  disabled,
+  ...rest
+}: Props) => {
   return (
     <DefaultButton
       variant="contained"
@@ -23,9 +32,9 @@ const Button = ({ label, color, size, onClick, fullWidth, ...rest }: Props) => {
       color={color}
       size={size}
       type="submit"
-      aria-label={label}
       sx={{ mt: 3, mb: 2 }}
       fullWidth={fullWidth}
+      disabled={disabled}
       {...rest}
     >
       {label}

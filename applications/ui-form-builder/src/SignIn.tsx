@@ -12,16 +12,21 @@ import {
   Link,
   MuiLockOutlinedIcon,
 } from "@power-form-builder/ui-components";
-
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { login } from "./signinSlice";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { logout, signin } from "./signinSlice";
+import { RootState } from "./store";
 
 export default function SignIn() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { user, isAuthenticated, loading, error } = useSelector(
+    (state: RootState) => state.userLogin
+  );
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -30,13 +35,14 @@ export default function SignIn() {
       email: data.get("email"),
       password: data.get("password"),
     });
-    dispatch(login({ username, password }));
+    dispatch(signin({ email, password }));
+    console.log(user?.email);
   };
 
   const handleUsernameChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setUsername(event.target.value);
+    setEmail(event.target.value);
   };
 
   const handlePasswordChange = (
@@ -45,6 +51,13 @@ export default function SignIn() {
     setPassword(event.target.value);
   };
 
+  useEffect(() => {
+    console.log("Auth", { user, isAuthenticated, loading, error });
+  }, [user, isAuthenticated, loading, error]);
+
+  if (isAuthenticated) {
+    navigate("/home");
+  }
   return (
     <Container component="main" maxWidth="xs">
       <Box
@@ -66,7 +79,7 @@ export default function SignIn() {
             label="Email Address"
             fullWidth={true}
             required
-            value={username}
+            value={email}
             onChange={handleUsernameChange}
             type="email"
             name="email"

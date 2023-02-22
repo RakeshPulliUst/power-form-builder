@@ -1,23 +1,66 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import axios from "axios";
+import { User } from "./types";
+import { api } from "./api";
+import { AppThunk } from "./store";
 
-const signinSlice = createSlice({
-  name: "auth",
-  initialState: {
-    isAuthenticated: false,
-    username: "",
-  },
+interface UserState {
+  user: User | null;
+  isAuthenticated: boolean;
+  loading: boolean;
+  error: string | null;
+}
 
+const initialState: UserState = {
+  user: null,
+  isAuthenticated: false,
+  loading: false,
+  error: null,
+};
+
+export const signinSlice = createSlice({
+  name: "userLogin",
+  initialState,
   reducers: {
-    login: (state, action) => {
-      const { username, password } = action.payload;
-
-      const isAuthenticated =
-        username === "admin@gmail.com" && password === "password";
-      state.isAuthenticated = isAuthenticated;
-      state.username = isAuthenticated ? username : "";
+    signinStart: (state) => {
+      state.loading = true;
+      state.error = null;
+    },
+    signinSuccess: (state, action: PayloadAction<User>) => {
+      state.loading = false;
+      state.isAuthenticated = true;
+      state.user = action.payload;
+    },
+    signinFailure: (state, action: PayloadAction<string>) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+    logout: (state) => {
+      state.isAuthenticated = false;
+      state.user = null;
     },
   },
 });
 
-export const { login } = signinSlice.actions;
+export const { signinStart, signinSuccess, signinFailure, logout } =
+  signinSlice.actions;
+
+export const signin =
+  (userData: { email: string; password: string }): AppThunk =>
+  async (dispatch: any) => {
+    dispatch(signinStart());
+    try {
+      const response = await api.signin(userData);
+      console.log(response);
+      dispatch(signinSuccess(response));
+    } catch (error: any) {
+      console.log(error.message);
+      dispatch(signinFailure(error.message));
+    }
+  };
+
+export const signout = async (dispatch: any) => {
+  dispatch(logout());
+};
+
 export default signinSlice.reducer;

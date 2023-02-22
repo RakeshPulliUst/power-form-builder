@@ -9,11 +9,18 @@ type Props = {
   children: React.ReactNode;
   component?: any;
   variant?: any;
+  color?: any;
 };
 
-const Typography = ({ children, component, variant, ...rest }: Props) => {
+const Typography = ({
+  children,
+  component,
+  variant,
+  color,
+  ...rest
+}: Props) => {
   return (
-    <DefaultTypography component={component} variant={variant}>
+    <DefaultTypography component={component} variant={variant} color={color}>
       {children}
     </DefaultTypography>
   );

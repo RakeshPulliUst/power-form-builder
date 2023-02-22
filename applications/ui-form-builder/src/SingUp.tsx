@@ -1,5 +1,7 @@
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
+import { connect, ConnectedProps } from "react-redux";
+import { RootState } from "./types";
 import {
   Button,
   TextField,
@@ -11,16 +13,18 @@ import {
   Link,
   MuiLockOutlinedIcon,
 } from "@power-form-builder/ui-components";
-
-import { signup } from "./signupSlice";
+import CircularProgress from "@mui/material/CircularProgress";
+import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { signup } from "./signupSlice";
 
-export default function SignUp() {
+interface SignupPageProps extends PropsFromRedux {}
+
+const SignupPage: React.FC<SignupPageProps> = ({ loading, error, signup }) => {
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -40,7 +44,7 @@ export default function SignUp() {
   const handleUsernameChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setUsername(event.target.value);
+    setEmail(event.target.value);
   };
 
   const handlePasswordChange = (
@@ -58,8 +62,8 @@ export default function SignUp() {
       email: data.get("email"),
       password: data.get("password"),
     });
-    dispatch(signup({ firstname, lastname, username, password }));
-    navigate("/signin");
+    navigate("/");
+    dispatch(signup({ firstname, lastname, email, password }));
   };
 
   return (
@@ -119,11 +123,26 @@ export default function SignUp() {
               />
             </GridItem>
           </Grid>
-          <Button label="Sign Up" size="medium" color="primary" fullWidth />
+
+          {loading ? (
+            <CircularProgress />
+          ) : (
+            <Button
+              label="Sign up"
+              size="medium"
+              color="primary"
+              fullWidth
+            ></Button>
+          )}
+          {error && (
+            <Typography color="error" variant="body2">
+              {error}
+            </Typography>
+          )}
 
           <Grid>
             <GridItem>
-              <Link href="/signin" variant="body2">
+              <Link href="/" variant="body2">
                 Already have an account? Sign in
               </Link>
             </GridItem>
@@ -132,4 +151,19 @@ export default function SignUp() {
       </Box>
     </Container>
   );
-}
+};
+const mapStateToProps = (state: RootState) => ({
+  user: state.user ? state.user : null,
+  loading: state.loading,
+  error: state.error,
+});
+
+const mapDispatchToProps = {
+  signup,
+};
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(SignupPage);

@@ -24,11 +24,16 @@ import {
 } from "./form-builder/ElementInterface";
 import { useNavigate } from "react-router-dom";
 import { Element } from "./form-builder/ElementInterface";
-
+import { RootState } from "./store";
+import { useDispatch, useSelector } from "react-redux";
 function Home() {
   const [open, setOpen] = useState(false);
   const [formData, setFormData] =
     useState<FinalSaveFormJson[]>(finalTableFormSample);
+
+  const { user, loading, error } = useSelector(
+    (state: RootState) => state.userLogin
+  );
 
   const handleBuildForm = (e: React.MouseEvent<HTMLButtonElement>) => {
     console.log(!open);
@@ -37,42 +42,18 @@ function Home() {
 
   useEffect(() => {
     getAllData();
-  }, []);
+    console.log("Auth", { user, loading, error });
+    if (user?.email) {
+      console.log("Successful");
+    } else {
+      console.log("Not");
+    }
+  }, [user, loading, error]);
   //Creating function to post data on server
   const getAllData = () => {
     axios.get(`http://localhost:4000/api/form/showAll`).then(
       (response) => {
         setFormData(response.data);
-      },
-      (error) => {
-        console.log(error);
-        console.log("error");
-        toast.error("Something went wrong");
-      }
-    );
-  };
-
-  //Creating function to post data on server
-  const getDataById = (formId: number) => {
-    axios.get(`http://localhost:4000/api/form/show/${formId}`).then(
-      (response) => {
-        setFormData(response.data);
-      },
-      (error) => {
-        console.log(error);
-        console.log("error");
-        toast.error("Something went wrong");
-      }
-    );
-  };
-
-  //Edit function to edit data on server
-  const editForm = (formId: number, data: any) => {
-    axios.put(`http://localhost:4000/api/form/update/${formId}`, data).then(
-      (response) => {
-        console.log("Inside Update");
-        toast.success("Updated");
-        console.log(response.data);
       },
       (error) => {
         console.log(error);

@@ -7,13 +7,30 @@ import {
   Collapse,
   Nav,
   NavItem,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
 } from "reactstrap";
+import { NavLink as ReactLink, useNavigate } from "react-router-dom";
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import FormNameInput from "./FormNameInput";
 import { Header, UITranslation } from "@power-form-builder/ui-translation";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "./store";
+import { logout } from "./signinSlice";
+
 const CustomNavbar = () => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [open, setOpen] = useState(false);
+
+  const { user, isAuthenticated, loading, error } = useSelector(
+    (state: RootState) => state.userLogin
+  );
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleOpen = () => {
     console.log(!open);
@@ -25,6 +42,11 @@ const CustomNavbar = () => {
     setOpen(!open);
   };
 
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/");
+  };
+
   return (
     <>
       <Navbar
@@ -33,7 +55,7 @@ const CustomNavbar = () => {
         fixed="true"
         className=" sticky-top navbar-dark bg-dark"
       >
-        <NavbarBrand href="/">
+        <NavbarBrand href="/home">
           <UITranslation name="form_site" />
         </NavbarBrand>
         <NavbarToggler
@@ -53,8 +75,28 @@ const CustomNavbar = () => {
               <UITranslation name="build_form" />
             </NavItem>
           </Nav>
-          <Nav className="justify-content-end" style={{ marginRight: "0%" }}>
-            <Header />
+
+          <Nav>
+            {isAuthenticated ? (
+              <UncontrolledDropdown inNavbar nav>
+                <DropdownToggle caret color="dark">
+                  {/* <DropdownToggle caret nav color="dark"> */}
+                  Hello {user?.firstname}
+                </DropdownToggle>
+                <DropdownMenu right>
+                  <DropdownItem tag={ReactLink} to="/user/my-profile">
+                    My Profile
+                  </DropdownItem>
+                  <DropdownItem onClick={handleLogout}>Logout</DropdownItem>
+                </DropdownMenu>
+              </UncontrolledDropdown>
+            ) : (
+              <></>
+            )}
+
+            <NavItem>
+              <Header />
+            </NavItem>
           </Nav>
         </Collapse>
       </Navbar>
