@@ -2,7 +2,7 @@ import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import {
   Button,
-  TextField,
+  //TextField,
   Checkbox,
   Grid,
   GridItem,
@@ -12,15 +12,25 @@ import {
   Link,
   MuiLockOutlinedIcon,
 } from "@power-form-builder/ui-components";
+import TextField from "@mui/material/TextField";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout, signin } from "./signinSlice";
 import { RootState, store } from "./store";
+import { useForm } from "react-hook-form";
+
+type SignInFormInputs = {
+  email: string;
+  password: string;
+};
 
 const SignIn = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SignInFormInputs>();
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -28,27 +38,20 @@ const SignIn = () => {
     (state: RootState) => state.userLogin
   );
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-    dispatch(signin({ email, password }));
-    console.log(user?.email);
-  };
-
-  const handleUsernameChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setEmail(event.target.value);
-  };
-
-  const handlePasswordChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setPassword(event.target.value);
+  const onSubmit = async (data: SignInFormInputs) => {
+    try {
+      console.log("started");
+      const email = data.email;
+      const password = data.password;
+      console.log({
+        email: email,
+        password: password,
+      });
+      dispatch(signin({ email, password }));
+      console.log(user?.email);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {
@@ -60,6 +63,7 @@ const SignIn = () => {
     localStorage.setItem("reduxState", JSON.stringify(state));
     navigate("/home");
   }
+
   return (
     <Container component="main" maxWidth="xs">
       <Box
@@ -76,26 +80,44 @@ const SignIn = () => {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <TextField
+            fullWidth
             label="Email Address"
-            fullWidth={true}
-            required
-            value={email}
-            onChange={handleUsernameChange}
             type="email"
-            name="email"
+            {...register("email", {
+              required: "Email is required",
+              pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                message: "Invalid email address",
+              },
+            })}
+            error={Boolean(errors.email)}
+            helperText={errors.email?.message}
             sx={{ mt: 2 }}
           />
 
           <TextField
-            required
             fullWidth
-            name="password"
             label="Password"
             type="password"
-            value={password}
-            onChange={handlePasswordChange}
+            {...register("password", {
+              required: "Password is required",
+              minLength: {
+                value: 8,
+                message: "Password must be 8 letters long",
+              },
+              validate: (value) => {
+                return (
+                  [/[a-z]/, /[A-Z]/, /[0-9]/, /[^a-zA-Z0-9]/].every((pattern) =>
+                    pattern.test(value)
+                  ) ||
+                  "Password must include lower & upper letters, number and special characters"
+                );
+              },
+            })}
+            error={Boolean(errors.password)}
+            helperText={errors.password?.message}
             sx={{ mt: 2 }}
           />
 
@@ -118,7 +140,7 @@ const SignIn = () => {
               </Link>
             </GridItem>
           </Grid>
-        </Box>
+        </form>
       </Box>
     </Container>
   );

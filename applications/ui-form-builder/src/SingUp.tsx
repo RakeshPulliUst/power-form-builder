@@ -4,7 +4,7 @@ import { connect, ConnectedProps } from "react-redux";
 import { RootState } from "./types";
 import {
   Button,
-  TextField,
+  //TextField,
   Grid,
   GridItem,
   Box,
@@ -13,57 +13,51 @@ import {
   Link,
   MuiLockOutlinedIcon,
 } from "@power-form-builder/ui-components";
+import TextField from "@mui/material/TextField";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { signup } from "./signupSlice";
+import { useForm } from "react-hook-form";
 
 interface SignUpProps extends PropsFromRedux {}
 
+type SignUpFormInputs = {
+  firstname: string;
+  lastname: string;
+  email: string;
+  password: string;
+};
+
 const SignUp: React.FC<SignUpProps> = ({ loading, error, signup }) => {
-  const [firstname, setFirstname] = useState("");
-  const [lastname, setLastname] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleFirstnameChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setFirstname(event.target.value);
-  };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SignUpFormInputs>();
 
-  const handleLastnameChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setLastname(event.target.value);
-  };
-
-  const handleUsernameChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setEmail(event.target.value);
-  };
-
-  const handlePasswordChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setPassword(event.target.value);
-  };
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      firstname: data.get("firstname"),
-      lastname: data.get("lastname"),
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-    navigate("/");
-    dispatch(signup({ firstname, lastname, email, password }));
+  const onSubmit = (data: SignUpFormInputs) => {
+    try {
+      console.log("started");
+      const firstname = data.firstname;
+      const lastname = data.lastname;
+      const email = data.email;
+      const password = data.password;
+      console.log({
+        firstname: firstname,
+        lastname: lastname,
+        email: email,
+        password: password,
+      });
+      navigate("/");
+      dispatch(signup({ firstname, lastname, email, password }));
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -82,44 +76,90 @@ const SignUp: React.FC<SignUpProps> = ({ loading, error, signup }) => {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
+        <Box component="form" onSubmit={handleSubmit(onSubmit)} sx={{ mt: 3 }}>
           <Grid spacing={2}>
             <GridItem xs={16} sm={8}>
               <TextField
-                name="firstname"
-                required
                 fullWidth
                 label="First Name"
-                onChange={handleFirstnameChange}
+                {...register("firstname", {
+                  required: "First Name is required",
+                  maxLength: {
+                    value: 15,
+                    message: "First Name must be max 15 letters",
+                  },
+                  validate: (value) => {
+                    return (
+                      [/^[a-zA-Z/]*$/].every((pattern) =>
+                        pattern.test(value)
+                      ) || "Only letters are allowed"
+                    );
+                  },
+                })}
+                error={Boolean(errors.firstname)}
+                helperText={errors.firstname?.message}
               />
             </GridItem>
             <GridItem xs={16} sm={8}>
               <TextField
-                required
                 fullWidth
                 label="Last Name"
-                name="lastname"
-                onChange={handleLastnameChange}
+                {...register("lastname", {
+                  required: "Last Name is required",
+                  maxLength: {
+                    value: 15,
+                    message: "Last Name must be max 15 letters",
+                  },
+                  validate: (value) => {
+                    return (
+                      [/^[a-zA-Z/]*$/].every((pattern) =>
+                        pattern.test(value)
+                      ) || "Only letters are allowed"
+                    );
+                  },
+                })}
+                error={Boolean(errors.lastname)}
+                helperText={errors.lastname?.message}
               />
             </GridItem>
             <GridItem xs={16}>
               <TextField
-                required
                 fullWidth
                 label="Email Address"
-                name="email"
                 type="email"
-                onChange={handleUsernameChange}
+                {...register("email", {
+                  required: "Email is required",
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    message: "Invalid email address",
+                  },
+                })}
+                error={Boolean(errors.email)}
+                helperText={errors.email?.message}
               />
             </GridItem>
             <GridItem xs={16}>
               <TextField
-                required
                 fullWidth
-                name="password"
                 label="Password"
                 type="password"
-                onChange={handlePasswordChange}
+                {...register("password", {
+                  required: "Password is required",
+                  minLength: {
+                    value: 8,
+                    message: "Password must be 8 letters long",
+                  },
+                  validate: (value) => {
+                    return (
+                      [/[a-z]/, /[A-Z]/, /[0-9]/, /[^a-zA-Z0-9]/].every(
+                        (pattern) => pattern.test(value)
+                      ) ||
+                      "Password must include lower & upper letters, number and special characters"
+                    );
+                  },
+                })}
+                error={Boolean(errors.password)}
+                helperText={errors.password?.message}
               />
             </GridItem>
           </Grid>

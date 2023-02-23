@@ -8,8 +8,10 @@ import {
   TabPanel,
 } from "@power-form-builder/ui-components";
 import { useNavigate } from "react-router-dom";
-import { Button, TextField } from "@power-form-builder/ui-components";
+import { Button } from "@power-form-builder/ui-components";
 import axios from "axios";
+import TextField from "@mui/material/TextField";
+import { useForm } from "react-hook-form";
 
 type Props = {
   open: boolean;
@@ -17,17 +19,20 @@ type Props = {
   handleClose: () => void;
 };
 
+type FormNameInput = {
+  formName: string;
+};
+
 const FormNameInput = ({ open, handleOpen, handleClose }: Props) => {
   const [value, setValue] = useState("1");
   const [open1, setOpen1] = useState(open);
-  const [formName, setFormName] = useState("");
-  const [helperText, setHelperText] = useState("");
   const navigate = useNavigate();
 
-  const handleFormName = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFormName(event.target.value);
-    console.log(formName);
-  };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormNameInput>();
 
   const handleClose1 = () => {
     console.log(!open1);
@@ -54,16 +59,19 @@ const FormNameInput = ({ open, handleOpen, handleClose }: Props) => {
     );
   };
 
-  const handleSubmit = () => {
-    if (formName) {
-      console.log("For", formName);
+  const onSubmit = (data: FormNameInput) => {
+    try {
+      console.log("started");
+      const formName = data.formName;
+      console.log({
+        formName: formName,
+      });
       setOpen1(!open1);
       open = !open1;
       getFormName(formName);
       handleOpen();
-    } else {
-      console.log("For1", formName);
-      setHelperText("Enter Form Details");
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -87,9 +95,22 @@ const FormNameInput = ({ open, handleOpen, handleClose }: Props) => {
                 label="Form Name"
                 placeholder="Enter Form Name"
                 required={true}
-                value={formName}
-                helperText={helperText}
-                onChange={handleFormName}
+                {...register("formName", {
+                  required: "Form Name is required",
+                  maxLength: {
+                    value: 15,
+                    message: "Form Name must be max 15 letters",
+                  },
+                  validate: (value) => {
+                    return (
+                      [/^[a-zA-Z0-9/]*$/].every((pattern) =>
+                        pattern.test(value)
+                      ) || "Only letters & numbers are allowed"
+                    );
+                  },
+                })}
+                error={Boolean(errors.formName)}
+                helperText={errors.formName?.message}
               />
             </TabPanel>
           </TabContext>
@@ -104,7 +125,7 @@ const FormNameInput = ({ open, handleOpen, handleClose }: Props) => {
           <Button
             label="Save"
             color="success"
-            onClick={handleSubmit}
+            onClick={handleSubmit(onSubmit)}
             size="medium"
           />
         </DialogActions>

@@ -4,10 +4,10 @@ import { TextField as DefaultTextField, SxProps, Theme } from "@mui/material";
 type Props = {
   label: string;
   name?: string;
-  required: boolean;
+  required?: boolean;
   type?: React.HTMLInputTypeAttribute;
   value?: string;
-  onChange: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
+  onChange?: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
   arg?: string | number;
   placeholder?: string;
   minLength?: number;
