@@ -19,9 +19,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { signup } from "./signupSlice";
 
-interface SignupPageProps extends PropsFromRedux {}
+interface SignUpProps extends PropsFromRedux {}
 
-const SignupPage: React.FC<SignupPageProps> = ({ loading, error, signup }) => {
+const SignUp: React.FC<SignUpProps> = ({ loading, error, signup }) => {
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
@@ -166,4 +166,4 @@ const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-export default connector(SignupPage);
+export default connector(SignUp);

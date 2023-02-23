@@ -10,9 +10,11 @@ import {
 import { Button } from "@power-form-builder/ui-components";
 import { components, sample } from "./ElementInterface";
 import { useLocation, useNavigate } from "react-router-dom";
+
 import axios from "axios";
 import { toast } from "react-toastify";
-import { forEachChild } from "typescript";
+import { RootState } from "../store";
+import { useDispatch, useSelector } from "react-redux";
 
 const FormBuilder = () => {
   const [show, setShow] = useState(false);
@@ -20,6 +22,9 @@ const FormBuilder = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { formName, formInitialComponents } = location.state || {};
+
+  const storedValue = localStorage.getItem("loginState");
+  const retrievedObject = JSON.parse(storedValue!);
 
   const [formData, setFormData] = useState<FormJson>(sample);
   const [finalSaveFormData, setFinalSaveFormData] =
@@ -91,12 +96,13 @@ const FormBuilder = () => {
       console.log(finalSaveFormData.id, "Idddd");
       finalSaveFormData.form_title = formData.form_title;
       finalSaveFormData.components = formData.components;
+      finalSaveFormData.owner = retrievedObject.user?.email!;
       finalSaveFormData.date_created = new Date().toLocaleString() + "";
       finalSaveFormData.date_modified = new Date().toLocaleString() + "";
       finalSaveFormData.status = "In-Progress";
       postDatatoServer(finalSaveFormData);
       navigate("/formrender", { state: { formData: formData } });
-      console.log("Final..numTab", numTabElements);
+      console.log("Final..numTab", numTabElements, finalSaveFormData);
     } else {
       alert("Please Add Elements");
     }

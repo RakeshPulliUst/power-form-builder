@@ -30,6 +30,7 @@ export const signinSlice = createSlice({
       state.loading = false;
       state.isAuthenticated = true;
       state.user = action.payload;
+      localStorage.setItem("loginState", JSON.stringify(state));
     },
     signinFailure: (state, action: PayloadAction<string>) => {
       state.loading = false;
@@ -38,6 +39,7 @@ export const signinSlice = createSlice({
     logout: (state) => {
       state.isAuthenticated = false;
       state.user = null;
+      localStorage.setItem("loginState", JSON.stringify(state));
     },
   },
 });

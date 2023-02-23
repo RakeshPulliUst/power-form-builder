@@ -12,7 +12,8 @@ import { components, sample } from "./ElementInterface";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { forEachChild } from "typescript";
+import { RootState } from "../store";
+import { useDispatch, useSelector } from "react-redux";
 
 const UpdateFormBuilder = () => {
   const [show, setShow] = useState(false);
@@ -43,6 +44,9 @@ const UpdateFormBuilder = () => {
   const [numTabElements, setNumTabElements] = useState<Array<Element[]>>([]);
   const [columnElements, setColumnElements] = useState<Array<Element>>([]);
   const [column1Elements, setColumn1Elements] = useState<Array<Element>>([]);
+
+  const storedValue = localStorage.getItem("loginState");
+  const retrievedObject = JSON.parse(storedValue!);
 
   function randomNumberInRange(min: number, max: number) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -87,6 +91,7 @@ const UpdateFormBuilder = () => {
       finalSaveFormData.form_title = formData.form_title;
       finalSaveFormData.components = formData.components;
       finalSaveFormData.date_created = formCreatedDate;
+      finalSaveFormData.owner = retrievedObject.user?.email!;
       finalSaveFormData.date_modified = new Date().toLocaleString() + "";
       console.log(new Date().toLocaleString() + "");
       finalSaveFormData.status = formStatus;

@@ -7,6 +7,7 @@ export interface FormJson{
 export interface FinalSaveFormJson{
   id: number,
   form_title: string,
+  owner: string,
   components: Element[],
   date_created: string,
   date_modified: string,
@@ -80,6 +81,7 @@ export interface Element {
   export const finalSample: FinalSaveFormJson = {
     id: 1,
     form_title: "Form",
+    owner: "",
     components: [],
     date_created: new Date().toLocaleString() + "",
     date_modified: new Date().toLocaleString() + "",
@@ -89,6 +91,7 @@ export interface Element {
   export const finalTableFormSample: FinalSaveFormJson[] = [{
     id: 1,
     form_title: "Form",
+    owner: "rakesh@gmail.com",
     components: [],
     date_created: new Date().toLocaleString() + "",
     date_modified: new Date().toLocaleString() + "",

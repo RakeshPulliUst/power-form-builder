@@ -26,29 +26,47 @@ import { useNavigate } from "react-router-dom";
 import { Element } from "./form-builder/ElementInterface";
 import { RootState } from "./store";
 import { useDispatch, useSelector } from "react-redux";
-function Home() {
+
+const Home = () => {
   const [open, setOpen] = useState(false);
   const [formData, setFormData] =
     useState<FinalSaveFormJson[]>(finalTableFormSample);
 
-  const { user, loading, error } = useSelector(
-    (state: RootState) => state.userLogin
-  );
+  // const { user, isAuthenticated, loading, error } = useSelector(
+  //   (state: RootState) => state.userLogin
+  // );
 
+  const storedValue = localStorage.getItem("loginState");
+  const retrievedObject = JSON.parse(storedValue!);
+  const user = retrievedObject.user;
+  console.log(retrievedObject.user);
+
+  //const savedState = localStorage.getItem("reduxState");
   const handleBuildForm = (e: React.MouseEvent<HTMLButtonElement>) => {
     console.log(!open);
     setOpen(!open);
   };
 
   useEffect(() => {
-    getAllData();
-    console.log("Auth", { user, loading, error });
-    if (user?.email) {
-      console.log("Successful");
-    } else {
-      console.log("Not");
-    }
-  }, [user, loading, error]);
+    getDataByOwner();
+  }, []);
+
+  //Creating function to post data on server
+  const getDataByOwner = () => {
+    axios
+      .get(`http://localhost:4000/api/form/getFormByOwner/${user.email}`)
+      .then(
+        (response) => {
+          setFormData(response.data);
+        },
+        (error) => {
+          console.log(error);
+          console.log("error");
+          toast.error("Something went wrong");
+        }
+      );
+  };
+
   //Creating function to post data on server
   const getAllData = () => {
     axios.get(`http://localhost:4000/api/form/showAll`).then(
@@ -69,7 +87,7 @@ function Home() {
       (response) => {
         console.log("Inside Delete");
         toast.success("Deleted");
-        getAllData();
+        getDataByOwner();
       },
       (error) => {
         console.log(error);
@@ -250,6 +268,6 @@ function Home() {
       ;
     </>
   );
-}
+};
 
 export default Home;

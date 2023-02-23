@@ -17,17 +17,15 @@ import { NavLink as ReactLink, useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import FormNameInput from "./FormNameInput";
 import { Header, UITranslation } from "@power-form-builder/ui-translation";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "./store";
+import { useDispatch } from "react-redux";
 import { logout } from "./signinSlice";
 
 const CustomNavbar = () => {
   const [isOpen, setIsOpen] = React.useState(false);
   const [open, setOpen] = useState(false);
 
-  const { user, isAuthenticated, loading, error } = useSelector(
-    (state: RootState) => state.userLogin
-  );
+  const storedValue = localStorage.getItem("loginState");
+  const retrievedObject = JSON.parse(storedValue!);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -77,11 +75,11 @@ const CustomNavbar = () => {
           </Nav>
 
           <Nav>
-            {isAuthenticated ? (
+            {retrievedObject.isAuthenticated ? (
               <UncontrolledDropdown inNavbar nav>
                 <DropdownToggle caret color="dark">
                   {/* <DropdownToggle caret nav color="dark"> */}
-                  Hello {user?.firstname}
+                  Hello {retrievedObject.user?.firstname}
                 </DropdownToggle>
                 <DropdownMenu right>
                   <DropdownItem tag={ReactLink} to="/user/my-profile">

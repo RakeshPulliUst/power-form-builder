@@ -17,7 +17,7 @@ type Props = {
   handleClose: () => void;
 };
 
-function FormNameInput({ open, handleOpen, handleClose }: Props) {
+const FormNameInput = ({ open, handleOpen, handleClose }: Props) => {
   const [value, setValue] = useState("1");
   const [open1, setOpen1] = useState(open);
   const [formName, setFormName] = useState("");
@@ -98,7 +98,7 @@ function FormNameInput({ open, handleOpen, handleClose }: Props) {
           <Button
             label="Cancel"
             color="success"
-            onClick={handleClose1 }
+            onClick={handleClose1}
             size="medium"
           />
           <Button
@@ -111,6 +111,6 @@ function FormNameInput({ open, handleOpen, handleClose }: Props) {
       </Dialog>
     </div>
   );
-}
+};
 
 export default FormNameInput;

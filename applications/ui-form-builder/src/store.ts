@@ -1,31 +1,24 @@
-// import { configureStore } from '@reduxjs/toolkit'
-// import signupReducer from './signupSlice'
-// import signinReducer from './signinSlice'
-// import userReducer from './userSlice'
-
-// const store = configureStore({
-//   reducer: {
-//     // signup: signupReducer,
-//     // signin: signinReducer,
-//     user: userReducer
-//   }
-// })
-
-// export default store
-
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import signupReducer from "./signupSlice";
 import signinReducer from "./signinSlice";
 
 import thunk from 'redux-thunk';
 
+const persistedState = localStorage.getItem("loginState")
+
 export const store = configureStore({
   reducer: {
     userRegister: signupReducer,
     userLogin: signinReducer
-  }
+  },
+  preloadedState: persistedState ?  JSON.parse(persistedState) : undefined,
 });
 
+store.subscribe(() => {
+    const state = store.getState();
+    localStorage.setItem("loginState", JSON.stringify(state.userLogin));
+  });
+  
 export type RootState = ReturnType<typeof store.getState>;
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,

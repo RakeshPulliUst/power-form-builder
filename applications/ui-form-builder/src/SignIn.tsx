@@ -16,9 +16,9 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout, signin } from "./signinSlice";
-import { RootState } from "./store";
+import { RootState, store } from "./store";
 
-export default function SignIn() {
+const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -56,6 +56,8 @@ export default function SignIn() {
   }, [user, isAuthenticated, loading, error]);
 
   if (isAuthenticated) {
+    const state = store.getState();
+    localStorage.setItem("reduxState", JSON.stringify(state));
     navigate("/home");
   }
   return (
@@ -120,4 +122,6 @@ export default function SignIn() {
       </Box>
     </Container>
   );
-}
+};
+
+export default SignIn;
