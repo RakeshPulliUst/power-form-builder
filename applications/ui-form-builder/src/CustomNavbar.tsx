@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import {
   Navbar,
@@ -12,7 +12,7 @@ import {
   DropdownMenu,
   DropdownItem,
 } from "reactstrap";
-import { NavLink as ReactLink, useNavigate } from "react-router-dom";
+import { NavLink, NavLink as ReactLink, useNavigate } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import FormNameInput from "./FormNameInput";
@@ -29,6 +29,14 @@ const CustomNavbar = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const handleFormSite = () => {
+    if (!retrievedObject.user) {
+      navigate("/");
+    } else {
+      navigate("/home");
+    }
+  };
 
   const handleOpen = () => {
     console.log(!open);
@@ -53,7 +61,7 @@ const CustomNavbar = () => {
         fixed="true"
         className=" sticky-top navbar-dark bg-dark"
       >
-        <NavbarBrand href="/home">
+        <NavbarBrand onClick={handleFormSite} style={{ cursor: "pointer" }}>
           <UITranslation name="form_site" />
         </NavbarBrand>
         <NavbarToggler
@@ -61,21 +69,21 @@ const CustomNavbar = () => {
             setIsOpen(!isOpen);
           }}
         />
-        <Collapse isOpen={isOpen} navbar>
-          <Nav className="container-fluid" navbar>
-            <NavItem
-              style={{ color: "white", cursor: "pointer" }}
-              onClick={() => {
-                console.log(!open);
-                setOpen(!open);
-              }}
-            >
-              <UITranslation name="build_form" />
-            </NavItem>
-          </Nav>
+        {retrievedObject.isAuthenticated ? (
+          <Collapse isOpen={isOpen} navbar>
+            <Nav className="container-fluid" navbar>
+              <NavItem
+                style={{ color: "white", cursor: "pointer" }}
+                onClick={() => {
+                  console.log(!open);
+                  setOpen(!open);
+                }}
+              >
+                <UITranslation name="build_form" />
+              </NavItem>
+            </Nav>
 
-          <Nav>
-            {retrievedObject.isAuthenticated ? (
+            <Nav>
               <UncontrolledDropdown inNavbar nav>
                 <DropdownToggle caret color="dark">
                   {/* <DropdownToggle caret nav color="dark"> */}
@@ -88,15 +96,41 @@ const CustomNavbar = () => {
                   <DropdownItem onClick={handleLogout}>Logout</DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
-            ) : (
-              <></>
-            )}
 
-            <NavItem>
-              <Header />
-            </NavItem>
-          </Nav>
-        </Collapse>
+              <NavItem>
+                <Header />
+              </NavItem>
+            </Nav>
+          </Collapse>
+        ) : (
+          <>
+            <Nav>
+              <NavItem style={{ marginRight: "10px" }}>
+                <NavLink
+                  to="/"
+                  style={({ isActive }) => ({
+                    color: isActive ? "#F5F5F5" : "#808080",
+                    textDecoration: "none",
+                  })}
+                >
+                  Login
+                </NavLink>
+              </NavItem>
+
+              <NavItem>
+                <NavLink
+                  to="/signup"
+                  style={({ isActive }) => ({
+                    color: isActive ? "#F5F5F5" : "#808080",
+                    textDecoration: "none",
+                  })}
+                >
+                  Signup
+                </NavLink>
+              </NavItem>
+            </Nav>
+          </>
+        )}
       </Navbar>
       {open ? (
         <FormNameInput

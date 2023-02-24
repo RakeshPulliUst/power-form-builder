@@ -19,8 +19,8 @@ const Dialog = ({ open, style, onClose, children, ...rest }: Props) => {
         style: style || {
           minHeight: "60%",
           maxHeight: "60%",
-          minWidth: "45%",
-          maxWidth: "45%",
+          minWidth: "42%",
+          maxWidth: "42%",
         },
       }}
       open={open}

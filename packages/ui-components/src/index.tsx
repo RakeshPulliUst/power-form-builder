@@ -31,7 +31,7 @@ import Container from "./components/Container";
 import Typography from "./components/Typography";
 import Link from "./components/Link";
 import MuiLockOutlinedIcon from "./components/MuiLockOutlinedIcon";
-
+import Paper from "./components/Paper";
 export {
   Button,
   Card,
@@ -66,4 +66,5 @@ export {
   Typography,
   Link,
   MuiLockOutlinedIcon,
+  Paper,
 };

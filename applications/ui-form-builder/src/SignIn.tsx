@@ -11,6 +11,7 @@ import {
   Typography,
   Link,
   MuiLockOutlinedIcon,
+  Paper,
 } from "@power-form-builder/ui-components";
 import TextField from "@mui/material/TextField";
 import { useNavigate } from "react-router-dom";
@@ -64,84 +65,93 @@ const SignIn = () => {
     navigate("/home");
   }
 
+  const paperStyle = {
+    padding: 20,
+    height: "70vh",
+    width: 450,
+    margin: "50px auto",
+  };
+
   return (
     <Container component="main" maxWidth="xs">
-      <Box
-        sx={{
-          marginTop: 8,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-          <MuiLockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign in
-        </Typography>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <TextField
-            fullWidth
-            label="Email Address"
-            type="email"
-            {...register("email", {
-              required: "Email is required",
-              pattern: {
-                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                message: "Invalid email address",
-              },
-            })}
-            error={Boolean(errors.email)}
-            helperText={errors.email?.message}
-            sx={{ mt: 2 }}
-          />
+      <Paper elevation={5} style={paperStyle}>
+        <Box
+          sx={{
+            marginTop: 3,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+            <MuiLockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign in
+          </Typography>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <TextField
+              fullWidth
+              label="Email Address"
+              type="email"
+              {...register("email", {
+                required: "Email is required",
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: "Invalid email address",
+                },
+              })}
+              error={Boolean(errors.email)}
+              helperText={errors.email?.message}
+              sx={{ mt: 2 }}
+            />
 
-          <TextField
-            fullWidth
-            label="Password"
-            type="password"
-            {...register("password", {
-              required: "Password is required",
-              minLength: {
-                value: 8,
-                message: "Password must be 8 letters long",
-              },
-              validate: (value) => {
-                return (
-                  [/[a-z]/, /[A-Z]/, /[0-9]/, /[^a-zA-Z0-9]/].every((pattern) =>
-                    pattern.test(value)
-                  ) ||
-                  "Password must include lower & upper letters, number and special characters"
-                );
-              },
-            })}
-            error={Boolean(errors.password)}
-            helperText={errors.password?.message}
-            sx={{ mt: 2 }}
-          />
+            <TextField
+              fullWidth
+              label="Password"
+              type="password"
+              {...register("password", {
+                required: "Password is required",
+                minLength: {
+                  value: 8,
+                  message: "Password must be 8 letters long",
+                },
+                validate: (value) => {
+                  return (
+                    [/[a-z]/, /[A-Z]/, /[0-9]/, /[^a-zA-Z0-9]/].every(
+                      (pattern) => pattern.test(value)
+                    ) ||
+                    "Password must include lower & upper letters, number and special characters"
+                  );
+                },
+              })}
+              error={Boolean(errors.password)}
+              helperText={errors.password?.message}
+              sx={{ mt: 2 }}
+            />
 
-          <Button
-            label="Sign In"
-            color="primary"
-            size="medium"
-            fullWidth={true}
-          />
+            <Button
+              label="Sign In"
+              color="primary"
+              size="medium"
+              fullWidth={true}
+            />
 
-          <Grid>
-            <GridItem xs={7}>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </GridItem>
-            <GridItem xs={9}>
-              <Link href="/signup" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </GridItem>
-          </Grid>
-        </form>
-      </Box>
+            <Grid>
+              <GridItem xs={7}>
+                <Link href="#" variant="body2">
+                  Forgot password?
+                </Link>
+              </GridItem>
+              <GridItem xs={9}>
+                <Link href="/signup" variant="body2">
+                  {"Don't have an account? Sign Up"}
+                </Link>
+              </GridItem>
+            </Grid>
+          </form>
+        </Box>
+      </Paper>
     </Container>
   );
 };

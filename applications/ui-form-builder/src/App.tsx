@@ -27,10 +27,6 @@ const App = () => {
         ></Route>
       </Routes>
     </BrowserRouter>
-    // <>
-    //   <Header />
-    //   <UITranslation name="header" />
-    // </>
   );
 };
 

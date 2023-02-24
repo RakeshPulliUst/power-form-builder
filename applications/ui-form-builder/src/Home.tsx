@@ -39,7 +39,7 @@ const Home = () => {
   const storedValue = localStorage.getItem("loginState");
   const retrievedObject = JSON.parse(storedValue!);
   const user = retrievedObject.user;
-  console.log(retrievedObject.user);
+  console.log(user);
 
   //const savedState = localStorage.getItem("reduxState");
   const handleBuildForm = (e: React.MouseEvent<HTMLButtonElement>) => {

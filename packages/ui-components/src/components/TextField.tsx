@@ -58,7 +58,7 @@ const TextField = ({
       rows={rows}
       // sx={{ marginLeft: "10px", marginTop: "8px" }}
       sx={sx}
-      fullWidth={true}
+      fullWidth={fullWidth}
       {...rest}
     />
 
