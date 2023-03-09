@@ -107,9 +107,12 @@ const UpdateFormBuilder = () => {
   const onDragEnd = (result: DropResult) => {
     const { destination, source } = result;
     console.log(result);
+    //If we try to drop on empty space where destination is not present
     if (!destination) {
       return;
     }
+
+    //If source & destination is same then we do nothing
     if (
       destination.droppableId === source.droppableId &&
       destination.index === source.index
@@ -117,8 +120,7 @@ const UpdateFormBuilder = () => {
       setShow(false);
       return;
     }
-    const sourceIndex = result.source.index;
-    const destIndex = result.destination?.index;
+
     let add: any;
     let active = elements;
     let complete = CompletedElements;
@@ -127,325 +129,132 @@ const UpdateFormBuilder = () => {
     let tabComplete3 = tabElements3;
     let tabComplete4 = tabElements4;
     let tabComplete5 = tabElements5;
-    let finalTabComplete = numTabElements;
+
     let columnComplete = columnElements;
     let column1Complete = column1Elements;
-    if (
-      source.droppableId === "FormElements" &&
-      destination.droppableId === "FormElements"
+    console.log("TTTTTTTTTTTT", source.droppableId);
+    console.log("TTTTTTTTTTTT", destination.droppableId);
+
+    // Take that elemenet from Source Logic
+    if (source.droppableId === "ElementsList") {
+      add = active[source.index];
+      console.log("Add-Source", add);
+      console.log("Source[Active]:", active);
+    } else if (source.droppableId === "columnDroppableId") {
+      add = columnComplete[source.index];
+      columnComplete.splice(source.index, 1);
+      console.log("Source[Complete]:", columnComplete);
+    } else if (source.droppableId === "column1DroppableId") {
+      add = column1Complete[source.index];
+      column1Complete.splice(source.index, 1);
+      console.log("Source[Complete]:", column1Complete);
+    } else if (
+      source.droppableId === "tabsDroppableId" ||
+      source.droppableId === "tabsDroppableId2" ||
+      source.droppableId === "tabsDroppableId3" ||
+      source.droppableId === "tabsDroppableId4" ||
+      source.droppableId === "tabsDroppableId5"
     ) {
-      console.log("Hellllllllll");
-      //setShow(false);
+      console.log("TTTTTTTTTTTT", source.droppableId);
+      if (source.droppableId === "tabsDroppableId") {
+        add = tabComplete[source.index];
+        tabComplete.splice(source.index, 1);
+        console.log("Source[Complete]:", tabComplete);
+      } else if (source.droppableId === "tabsDroppableId2") {
+        add = tabComplete2[source.index];
+        tabComplete2.splice(source.index, 1);
+        console.log("Source[Complete]:", tabComplete2);
+      } else if (source.droppableId === "tabsDroppableId3") {
+        add = tabComplete3[source.index];
+        tabComplete3.splice(source.index, 1);
+        console.log("Source[Complete]:", tabComplete3);
+      } else if (source.droppableId === "tabsDroppableId4") {
+        add = tabComplete4[source.index];
+        tabComplete4.splice(source.index, 1);
+        console.log("Source[Complete]:", tabComplete4);
+      } else if (source.droppableId === "tabsDroppableId5") {
+        add = tabComplete5[source.index];
+        tabComplete5.splice(source.index, 1);
+        console.log("Source[Complete]:", tabComplete5);
+      }
+    } else if (source.droppableId === "FormElements") {
       add = complete[source.index];
       complete.splice(source.index, 1);
       console.log("Source[Complete]:", complete);
+    }
+
+    //To drop at Destination Logic by adding at destination index
+    if (destination.droppableId === "ElementsList") {
+      active.splice(destination.index, 0, add!);
+      console.log("Destination[Active]:", active);
+    } else if (destination.droppableId === "columnDroppableId") {
       let newAdd: Element = Object.assign({}, add);
       newAdd.id = randomNumberInRange(9, 100);
-      complete.splice(destination.index, 0, newAdd);
-      console.log("Add", add);
-      console.log("Destination[Complete]:", complete);
-    } else if (
-      (source.droppableId === "tabsDroppableId" &&
-        destination.droppableId === "tabsDroppableId") ||
-      (source.droppableId === "tabsDroppableId2" &&
-        destination.droppableId === "tabsDroppableId2") ||
-      (source.droppableId === "tabsDroppableId3" &&
-        destination.droppableId === "tabsDroppableId3") ||
-      (source.droppableId === "tabsDroppableId4" &&
-        destination.droppableId === "tabsDroppableId4") ||
-      (source.droppableId === "tabsDroppableId5" &&
-        destination.droppableId === "tabsDroppableId5")
-    ) {
-      console.log("TTTTTTTTTTTT", source.droppableId);
-      if (
-        source.droppableId === "tabsDroppableId" &&
-        destination.droppableId === "tabsDroppableId"
-      ) {
-        console.log("Tabsssssss");
-        //setShow(false);
-        add = tabComplete[source.index];
-        console.log(add);
-        tabComplete.splice(source.index, 1);
-        console.log(tabComplete);
-        console.log("Source[omplete]:", tabComplete);
-        let newAdd: Element = Object.assign({}, add);
-        console.log(newAdd);
-        newAdd.id = randomNumberInRange(9, 100);
-        console.log(newAdd.id);
-        tabComplete.splice(destination.index, 0, newAdd);
-        console.log(tabComplete);
-        console.log("Add", add);
-        console.log("Destination[Complete]:", tabComplete);
-      } else if (
-        source.droppableId === "tabsDroppableId2" &&
-        destination.droppableId === "tabsDroppableId2"
-      ) {
-        console.log("Tabsssssss");
-        //setShow(false);
-        add = tabComplete2[source.index];
-        console.log(add);
-        tabComplete2.splice(source.index, 1);
-        console.log(tabComplete2);
-        console.log("Source[omplete]:", tabComplete2);
-        let newAdd: Element = Object.assign({}, add);
-        console.log(newAdd);
-        newAdd.id = randomNumberInRange(9, 100);
-        console.log(newAdd.id);
-        tabComplete2.splice(destination.index, 0, newAdd);
-        console.log(tabComplete2);
-        console.log("Add", add);
-        console.log("Destination[Complete]:", tabComplete2);
-      } else if (
-        source.droppableId === "tabsDroppableId3" &&
-        destination.droppableId === "tabsDroppableId3"
-      ) {
-        console.log("Tabsssssss");
-        //setShow(false);
-        add = tabComplete3[source.index];
-        console.log(add);
-        tabComplete3.splice(source.index, 1);
-        console.log(tabComplete3);
-        console.log("Source[omplete]:", tabComplete3);
-        let newAdd: Element = Object.assign({}, add);
-        console.log(newAdd);
-        newAdd.id = randomNumberInRange(9, 100);
-        console.log(newAdd.id);
-        tabComplete3.splice(destination.index, 0, newAdd);
-        console.log(tabComplete3);
-        console.log("Add", add);
-        console.log("Destination[Complete]:", tabComplete3);
-      } else if (
-        source.droppableId === "tabsDroppableId4" &&
-        destination.droppableId === "tabsDroppableId4"
-      ) {
-        console.log("Tabsssssss");
-        //setShow(false);
-        add = tabComplete4[source.index];
-        console.log(add);
-        tabComplete4.splice(source.index, 1);
-        console.log(tabComplete4);
-        console.log("Source[omplete]:", tabComplete4);
-        let newAdd: Element = Object.assign({}, add);
-        console.log(newAdd);
-        newAdd.id = randomNumberInRange(9, 100);
-        console.log(newAdd.id);
-        tabComplete4.splice(destination.index, 0, newAdd);
-        console.log(tabComplete4);
-        console.log("Add", add);
-        console.log("Destination[Complete]:", tabComplete4);
-      } else if (
-        source.droppableId === "tabsDroppableId5" &&
-        destination.droppableId === "tabsDroppableId5"
-      ) {
-        console.log("Tabsssssss");
-        //setShow(false);
-        add = tabComplete5[source.index];
-        console.log(add);
-        tabComplete5.splice(source.index, 1);
-        console.log(tabComplete5);
-        console.log("Source[omplete]:", tabComplete5);
-        let newAdd: Element = Object.assign({}, add);
-        console.log(newAdd);
-        newAdd.id = randomNumberInRange(9, 100);
-        console.log(newAdd.id);
-        tabComplete5.splice(destination.index, 0, newAdd);
-        console.log(tabComplete5);
-        console.log("Add", add);
-        console.log("Destination[Complete]:", tabComplete5);
-      }
-    } else if (
-      source.droppableId === "columnDroppableId" &&
-      destination.droppableId === "columnDroppableId"
-    ) {
-      console.log("Columns");
-      //setShow(false);
-      add = columnComplete[source.index];
-      columnComplete.splice(source.index, 1);
-      console.log("Source[omplete]:", columnComplete);
-      let newAdd: Element = Object.assign({}, add);
-      newAdd.id = randomNumberInRange(9, 100);
+      newAdd.show = true;
+      // setShow(true);
       columnComplete.splice(destination.index, 0, newAdd);
       console.log("Add", add);
       console.log("Destination[Complete]:", columnComplete);
+    } else if (destination.droppableId === "column1DroppableId") {
+      let newAdd: Element = Object.assign({}, add);
+      newAdd.id = randomNumberInRange(9, 100);
+      newAdd.show = true;
+      // setShow(true);
+      column1Complete.splice(destination.index, 0, newAdd);
+      console.log("Add", add);
+      console.log("Destination[Complete]:", column1Complete);
     } else if (
-      source.droppableId === "column1DroppableId" &&
-      destination.droppableId === "column1DroppableId"
+      destination.droppableId === "tabsDroppableId" ||
+      destination.droppableId === "tabsDroppableId2" ||
+      destination.droppableId === "tabsDroppableId3" ||
+      destination.droppableId === "tabsDroppableId4" ||
+      destination.droppableId === "tabsDroppableId5"
     ) {
-      console.log("Columns");
-      //setShow(false);
-      add = column1Complete[source.index];
-      if (add.element === "Column") {
-        alert("Cannot add column inside column");
-      } else {
-        column1Complete.splice(source.index, 1);
-        console.log("Source[omplete]:", column1Complete);
-        let newAdd: Element = Object.assign({}, add);
-        newAdd.id = randomNumberInRange(9, 100);
-        column1Complete.splice(destination.index, 0, newAdd);
-        console.log("Add", add);
-        console.log("Destination[Complete]:", column1Complete);
-      }
-    } else {
-      if (source.droppableId === "ElementsList") {
-        // Source Logic
-        add = active[source.index];
-        console.log("Add-Source", add);
-        console.log("Source[Active]:", active);
-      } else if (source.droppableId === "columnDroppableId") {
-        add = columnComplete[source.index];
-        columnComplete.splice(source.index, 1);
-        console.log("Source[Complete]:", columnComplete);
-      } else if (source.droppableId === "column1DroppableId") {
-        add = column1Complete[source.index];
-        column1Complete.splice(source.index, 1);
-        console.log("Source[Complete]:", column1Complete);
-      } else if (
-        (source.droppableId === "tabsDroppableId" &&
-          destination.droppableId === "tabsDroppableId") ||
-        (source.droppableId === "tabsDroppableId2" &&
-          destination.droppableId === "tabsDroppableId2") ||
-        (source.droppableId === "tabsDroppableId3" &&
-          destination.droppableId === "tabsDroppableId3") ||
-        (source.droppableId === "tabsDroppableId4" &&
-          destination.droppableId === "tabsDroppableId4") ||
-        (source.droppableId === "tabsDroppableId5" &&
-          destination.droppableId === "tabsDroppableId5")
-      ) {
-        console.log("TTTTTTTTTTTT", source.droppableId);
-        if (
-          source.droppableId === "tabsDroppableId" &&
-          destination.droppableId === "tabsDroppableId"
-        ) {
-          add = tabComplete[source.index];
-          tabComplete.splice(source.index, 1);
-          console.log("Source[Complete]:", tabComplete);
-        } else if (
-          source.droppableId === "tabsDroppableId2" &&
-          destination.droppableId === "tabsDroppableId2"
-        ) {
-          add = tabComplete2[source.index];
-          tabComplete2.splice(source.index, 1);
-          console.log("Source[Complete]:", tabComplete2);
-        } else if (
-          source.droppableId === "tabsDroppableId3" &&
-          destination.droppableId === "tabsDroppableId3"
-        ) {
-          add = tabComplete3[source.index];
-          tabComplete3.splice(source.index, 1);
-          console.log("Source[Complete]:", tabComplete3);
-        } else if (
-          source.droppableId === "tabsDroppableId4" &&
-          destination.droppableId === "tabsDroppableId4"
-        ) {
-          add = tabComplete4[source.index];
-          tabComplete4.splice(source.index, 1);
-          console.log("Source[Complete]:", tabComplete4);
-        } else if (
-          source.droppableId === "tabsDroppableId5" &&
-          destination.droppableId === "tabsDroppableId5"
-        ) {
-          add = tabComplete5[source.index];
-          tabComplete5.splice(source.index, 1);
-          console.log("Source[Complete]:", tabComplete5);
-        }
-      } else {
-        add = complete[source.index];
-        complete.splice(source.index, 1);
-        console.log("Source[Complete]:", complete);
-      }
-      // Destination Logic
-      if (destination.droppableId === "ElementsList") {
-        active.splice(destination.index, 0, add!);
-        console.log("Destination[Active]:", active);
-      } else if (destination.droppableId === "columnDroppableId") {
+      console.log("TTTTTTTTTTTT", destination.droppableId);
+      if (destination.droppableId === "tabsDroppableId") {
         let newAdd: Element = Object.assign({}, add);
         newAdd.id = randomNumberInRange(9, 100);
         newAdd.show = true;
-        // setShow(true);
-        columnComplete.splice(destination.index, 0, newAdd);
+        tabComplete.splice(destination.index, 0, newAdd);
         console.log("Add", add);
-        console.log("Destination[Complete]:", columnComplete);
-      } else if (destination.droppableId === "column1DroppableId") {
+        console.log("Destination[Complete]:", tabComplete);
+      } else if (destination.droppableId === "tabsDroppableId2") {
         let newAdd: Element = Object.assign({}, add);
         newAdd.id = randomNumberInRange(9, 100);
         newAdd.show = true;
-        // setShow(true);
-        column1Complete.splice(destination.index, 0, newAdd);
+        tabComplete2.splice(destination.index, 0, newAdd);
         console.log("Add", add);
-        console.log("Destination[Complete]:", column1Complete);
-      } else if (
-        (source.droppableId === "tabsDroppableId" &&
-          destination.droppableId === "tabsDroppableId") ||
-        (source.droppableId === "tabsDroppableId2" &&
-          destination.droppableId === "tabsDroppableId2") ||
-        (source.droppableId === "tabsDroppableId3" &&
-          destination.droppableId === "tabsDroppableId3") ||
-        (source.droppableId === "tabsDroppableId4" &&
-          destination.droppableId === "tabsDroppableId4") ||
-        (source.droppableId === "tabsDroppableId5" &&
-          destination.droppableId === "tabsDroppableId5")
-      ) {
-        console.log("TTTTTTTTTTTT", destination.droppableId);
-        if (
-          source.droppableId === "tabsDroppableId" &&
-          destination.droppableId === "tabsDroppableId"
-        ) {
-          let newAdd: Element = Object.assign({}, add);
-          newAdd.id = randomNumberInRange(9, 100);
-          newAdd.show = true;
-          tabComplete.splice(destination.index, 0, newAdd);
-          console.log("Add", add);
-          console.log("Destination[Complete]:", tabComplete);
-        } else if (
-          source.droppableId === "tabsDroppableId2" &&
-          destination.droppableId === "tabsDroppableId2"
-        ) {
-          let newAdd: Element = Object.assign({}, add);
-          newAdd.id = randomNumberInRange(9, 100);
-          newAdd.show = true;
-          tabComplete2.splice(destination.index, 0, newAdd);
-          console.log("Add", add);
-          console.log("Destination[Complete]:", tabComplete2);
-        } else if (
-          source.droppableId === "tabsDroppableId3" &&
-          destination.droppableId === "tabsDroppableId3"
-        ) {
-          let newAdd: Element = Object.assign({}, add);
-          newAdd.id = randomNumberInRange(9, 100);
-          newAdd.show = true;
-          tabComplete3.splice(destination.index, 0, newAdd);
-          console.log("Add", add);
-          console.log("Destination[Complete]:", tabComplete3);
-        } else if (
-          source.droppableId === "tabsDroppableId4" &&
-          destination.droppableId === "tabsDroppableId4"
-        ) {
-          let newAdd: Element = Object.assign({}, add);
-          newAdd.id = randomNumberInRange(9, 100);
-          newAdd.show = true;
-          tabComplete4.splice(destination.index, 0, newAdd);
-          console.log("Add", add);
-          console.log("Destination[Complete]:", tabComplete4);
-        } else if (
-          source.droppableId === "tabsDroppableId5" &&
-          destination.droppableId === "tabsDroppableId5"
-        ) {
-          let newAdd: Element = Object.assign({}, add);
-          newAdd.id = randomNumberInRange(9, 100);
-          newAdd.show = true;
-          tabComplete5.splice(destination.index, 0, newAdd);
-          console.log("Add", add);
-          console.log("Destination[Complete]:", tabComplete5);
-        }
-      } else {
+        console.log("Destination[Complete]:", tabComplete2);
+      } else if (destination.droppableId === "tabsDroppableId3") {
         let newAdd: Element = Object.assign({}, add);
         newAdd.id = randomNumberInRange(9, 100);
         newAdd.show = true;
-        // setShow(true);
-        complete.splice(destination.index, 0, newAdd);
+        tabComplete3.splice(destination.index, 0, newAdd);
         console.log("Add", add);
-        console.log("Destination[Complete]:", complete);
+        console.log("Destination[Complete]:", tabComplete3);
+      } else if (destination.droppableId === "tabsDroppableId4") {
+        let newAdd: Element = Object.assign({}, add);
+        newAdd.id = randomNumberInRange(9, 100);
+        newAdd.show = true;
+        tabComplete4.splice(destination.index, 0, newAdd);
+        console.log("Add", add);
+        console.log("Destination[Complete]:", tabComplete4);
+      } else if (destination.droppableId === "tabsDroppableId5") {
+        let newAdd: Element = Object.assign({}, add);
+        newAdd.id = randomNumberInRange(9, 100);
+        newAdd.show = true;
+        tabComplete5.splice(destination.index, 0, newAdd);
+        console.log("Add", add);
+        console.log("Destination[Complete]:", tabComplete5);
       }
+    } else if (destination.droppableId === "FormElements") {
+      let newAdd: Element = Object.assign({}, add);
+      newAdd.id = randomNumberInRange(9, 100);
+      newAdd.show = true;
+      // setShow(true);
+      complete.splice(destination.index, 0, newAdd);
+      console.log("Add", add);
+      console.log("Destination[Complete]:", complete);
     }
 
     setTabElements(tabComplete);
@@ -464,6 +273,7 @@ const UpdateFormBuilder = () => {
       tabElements4,
       tabElements5,
     ]);
+    console.log("TabElements", tabElements);
     console.log("Final...", numTabElements);
   };
 
@@ -473,14 +283,14 @@ const UpdateFormBuilder = () => {
       item.element === "Tabs"
         ? item.tabItems.map((data: any) =>
             data.dropId === "tabsDroppableId"
-              ? setNumTabElements(data.tabComponents[0])
+              ? setTabElements(data.tabComponents)
               : data.dropId === "tabsDroppableId2"
-              ? setNumTabElements(data.tabComponents[1])
+              ? setTabElements2(data.tabComponents)
               : data.dropId === "tabsDroppableId3"
-              ? setNumTabElements(data.tabComponents[2])
+              ? setTabElements3(data.tabComponents)
               : data.dropId === "tabsDroppableId4"
-              ? setNumTabElements(data.tabComponents[3])
-              : setNumTabElements(data.tabComponents[4])
+              ? setTabElements4(data.tabComponents)
+              : setTabElements5(data.tabComponents)
           )
         : item.columnItems.map((data: any) =>
             data.label === "Column1"
@@ -489,6 +299,13 @@ const UpdateFormBuilder = () => {
           )
     );
 
+    console.log(
+      tabElements,
+      tabElements2,
+      tabElements3,
+      tabElements4,
+      tabElements5
+    );
     console.log(formInitialComponents);
   }, []);
   return (
@@ -498,7 +315,7 @@ const UpdateFormBuilder = () => {
           <span className="heading">Form Builder</span>
           <span className="upperButton">
             <Button
-              label="Save Form"
+              label="Update Form"
               color="success"
               size="medium"
               onClick={handleClick}
@@ -529,7 +346,7 @@ const UpdateFormBuilder = () => {
           />
 
           <Button
-            label="Save Form"
+            label="Update Form"
             color="success"
             size="medium"
             onClick={handleClick}

@@ -57,7 +57,7 @@ const TextField = ({
       multiline={multiline}
       rows={rows}
       // sx={{ marginLeft: "10px", marginTop: "8px" }}
-      sx={sx}
+      sx={sx ? sx : { m: 1 }}
       fullWidth={fullWidth}
       {...rest}
     />

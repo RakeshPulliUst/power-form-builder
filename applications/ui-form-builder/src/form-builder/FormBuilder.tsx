@@ -111,9 +111,12 @@ const FormBuilder = () => {
   const onDragEnd = (result: DropResult) => {
     const { destination, source } = result;
     console.log(result);
+    //If we try to drop on empty space where destination is not present
     if (!destination) {
       return;
     }
+
+    //If source & destination is same then we do nothing
     if (
       destination.droppableId === source.droppableId &&
       destination.index === source.index
@@ -121,8 +124,7 @@ const FormBuilder = () => {
       setShow(false);
       return;
     }
-    const sourceIndex = result.source.index;
-    const destIndex = result.destination?.index;
+
     let add: any;
     let active = elements;
     let complete = CompletedElements;
@@ -137,8 +139,8 @@ const FormBuilder = () => {
     console.log("TTTTTTTTTTTT", source.droppableId);
     console.log("TTTTTTTTTTTT", destination.droppableId);
 
+    // Take that elemenet from Source Logic
     if (source.droppableId === "ElementsList") {
-      // Source Logic
       add = active[source.index];
       console.log("Add-Source", add);
       console.log("Source[Active]:", active);
@@ -184,7 +186,8 @@ const FormBuilder = () => {
       complete.splice(source.index, 1);
       console.log("Source[Complete]:", complete);
     }
-    // Destination Logic
+
+    //To drop at Destination Logic by adding at destination index
     if (destination.droppableId === "ElementsList") {
       active.splice(destination.index, 0, add!);
       console.log("Destination[Active]:", active);
@@ -274,6 +277,7 @@ const FormBuilder = () => {
       tabElements4,
       tabElements5,
     ]);
+    console.log("TabElements", tabElements);
     console.log("Final...", numTabElements);
   };
 

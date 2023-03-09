@@ -349,6 +349,7 @@ const SingleElement: React.FC<{
   });
 
   const handleDelete = (id: number) => {
+    console.log("Iddddddd", id, element.id);
     setElements(elements.filter((element) => element.id !== id));
   };
 
@@ -362,7 +363,7 @@ const SingleElement: React.FC<{
   };
 
   const handleOpen = () => {
-    console.log(element);
+    console.log(element, element.element);
     let col = false;
     setOpen(!open);
 
@@ -389,8 +390,8 @@ const SingleElement: React.FC<{
       element.minLength = passwordValues.minLength;
       element.required = passwordValues.required;
     } else if (element.element === "Email") {
-      console.log(textFieldValues.label);
-      console.log("JSON", JSON.stringify(textFieldValues));
+      console.log(emailValues.label);
+      console.log("JSON", JSON.stringify(emailValues));
       element.label = emailValues.label;
       element.placeholder = emailValues.placeholder;
       element.maxLength = emailValues.maxLength;
@@ -832,34 +833,37 @@ const SingleElement: React.FC<{
                                   : "remove"
                               }`}
                             >
-                              {columnElements?.map((element, index) => (
-                                <>
-                                  <SingleElement
-                                    show={show}
-                                    index={index}
-                                    elements={columnElements}
-                                    element={element}
-                                    key={element.id}
-                                    setElements={setColumnElements}
-                                    tabElements={tabElements}
-                                    setTabElements={setTabElements}
-                                    tabElements2={tabElements2}
-                                    setTabElements2={setTabElements2}
-                                    tabElements3={tabElements3}
-                                    setTabElements3={setTabElements3}
-                                    tabElements4={tabElements4}
-                                    setTabElements4={setTabElements4}
-                                    tabElements5={tabElements5}
-                                    setTabElements5={setTabElements5}
-                                    numTabElements={numTabElements}
-                                    setNumTabElements={setNumTabElements}
-                                    columnElements={columnElements}
-                                    setColumnElements={setColumnElements}
-                                    column1Elements={column1Elements}
-                                    setColumn1Elements={setColumn1Elements}
-                                  />
-                                </>
-                              ))}
+                              <>
+                                {console.log("ColumnElements", columnElements)}
+                                {columnElements?.map((element, index) => (
+                                  <>
+                                    <SingleElement
+                                      show={show}
+                                      index={index}
+                                      elements={columnElements}
+                                      element={element}
+                                      key={element.id}
+                                      setElements={setColumnElements}
+                                      tabElements={tabElements}
+                                      setTabElements={setTabElements}
+                                      tabElements2={tabElements2}
+                                      setTabElements2={setTabElements2}
+                                      tabElements3={tabElements3}
+                                      setTabElements3={setTabElements3}
+                                      tabElements4={tabElements4}
+                                      setTabElements4={setTabElements4}
+                                      tabElements5={tabElements5}
+                                      setTabElements5={setTabElements5}
+                                      numTabElements={numTabElements}
+                                      setNumTabElements={setNumTabElements}
+                                      columnElements={columnElements}
+                                      setColumnElements={setColumnElements}
+                                      column1Elements={column1Elements}
+                                      setColumn1Elements={setColumn1Elements}
+                                    />
+                                  </>
+                                ))}
+                              </>
                               {provided.placeholder}
                             </div>
                           )}
@@ -949,7 +953,11 @@ const SingleElement: React.FC<{
                             >
                               {item.dropId === "tabsDroppableId" ? (
                                 <>
-                                  {console.log(item.dropId)}
+                                  {console.log(
+                                    item.dropId,
+                                    "TabElements",
+                                    tabElements
+                                  )}
                                   {tabElements?.map((element, index) => (
                                     <>
                                       <SingleElement

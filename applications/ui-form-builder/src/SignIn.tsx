@@ -56,6 +56,13 @@ const SignIn = () => {
   };
 
   useEffect(() => {
+    const storedValue = localStorage.getItem("loginState");
+    const retrievedObject = JSON.parse(storedValue!);
+    if (retrievedObject.isAuthenticated) {
+      const state = store.getState();
+      localStorage.setItem("reduxState", JSON.stringify(state));
+      navigate("/home");
+    }
     console.log("Auth", { user, isAuthenticated, loading, error });
   }, [user, isAuthenticated, loading, error]);
 
@@ -64,7 +71,6 @@ const SignIn = () => {
     localStorage.setItem("reduxState", JSON.stringify(state));
     navigate("/home");
   }
-
   const paperStyle = {
     padding: 20,
     height: "70vh",

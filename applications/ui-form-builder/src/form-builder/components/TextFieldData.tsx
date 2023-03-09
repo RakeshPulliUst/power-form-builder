@@ -117,7 +117,9 @@ const TextFieldData: React.FC<{
             ? "Password Details"
             : element.element === "TextArea"
             ? "TextArea Details"
-            : "Email Details"
+            : element.element === "Email"
+            ? "Email Details"
+            : "Invalid"
         }
       />
       <DialogContent>

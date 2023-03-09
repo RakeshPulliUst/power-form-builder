@@ -11,6 +11,7 @@ export const store = configureStore({
     userRegister: signupReducer,
     userLogin: signinReducer
   },
+
   preloadedState: persistedState ?  JSON.parse(persistedState) : undefined,
 });
 

@@ -65,7 +65,13 @@ const TabsData: React.FC<{
     setTabsLabel(event.target.value);
   };
 
-  const [rr, setRR] = useState(["tabsDroppableId", "tabsDroppableId2"]);
+  const [rr, setRR] = useState([
+    "tabsDroppableId",
+    "tabsDroppableId2",
+    "tabsDroppableId3",
+    "tabsDroppableId4",
+    "tabsDroppableId5",
+  ]);
 
   const handleData = () => {
     tabValues.label = tabsLabel;

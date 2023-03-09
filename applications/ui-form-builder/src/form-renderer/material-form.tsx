@@ -32,39 +32,60 @@ function MaterialForm() {
   //Final Select
   const [selectData, setSelectData] = useState({});
 
-  const [error, setError] = React.useState(false);
+  // const [error, setError] = React.useState(false);
+  const [passwordError, setPasswordError] = React.useState(false);
+  const [emailError, setEmailError] = React.useState(false);
   const [helperText, setHelperText] = React.useState("");
   const [show, setShow] = React.useState(false);
   const [emailHelperText, setEmailHelperText] = React.useState("");
+  const [passwordHelperText, setPasswordHelperText] = React.useState("");
 
   const handleFormDataValueChange = (
     event: React.ChangeEvent<HTMLInputElement> | any
   ) => {
-    setFormDataValue({
-      ...formDataValue,
-      [event.target.name]: event.target.value,
-    });
-
-    if (formDataValue) {
-      console.log("No Error");
-      setError(false);
-      setHelperText("");
-    } else if (event.target.name === "email") {
+    if (event.target.name === "email") {
       var regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
       if (regex.test(event.target.value)) {
         setEmailHelperText("");
+        setEmailError(false);
       } else {
         setEmailHelperText("Not Valid Email");
-        setError(true);
+        setEmailError(true);
       }
+      setFormDataValue({
+        ...formDataValue,
+        [event.target.name]: event.target.value,
+      });
+    } else if (event.target.name === "password") {
+      console.log("Password");
+      var regex =
+        /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+      if (regex.test(event.target.value)) {
+        setPasswordHelperText("");
+        setPasswordError(false);
+      } else {
+        setPasswordHelperText(
+          "Password should contain upper, lower case, number, special letter"
+        );
+        setPasswordError(true);
+      }
+      setFormDataValue({
+        ...formDataValue,
+        [event.target.name]: event.target.value,
+      });
+    } else {
+      setFormDataValue({
+        ...formDataValue,
+        [event.target.name]: event.target.value,
+      });
     }
   };
 
   const handleSelectData = (event: any) => {
     const selectvalue = event.target.value;
-    setSelectData(
-      typeof selectvalue === "string" ? selectvalue.split(",") : selectvalue
-    );
+    const finalValue =
+      typeof selectvalue === "string" ? selectvalue.split(",") : selectvalue;
+    setSelectData({ ...selectData, [event.target.name]: finalValue });
     console.log("Select Value", selectvalue);
   };
 
@@ -80,18 +101,22 @@ function MaterialForm() {
 
   const submitForm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("select", formDataValue);
+    console.log("select", formDataValue, selectData);
 
     if (formDataValue) {
       console.log("Submit Data");
-      setError(false);
+      setPasswordError(false);
+      setEmailError(false);
       setHelperText("");
       setShow(true);
     } else {
       console.log("Submit Data");
-      setError(true);
+      setPasswordError(true);
+      setEmailError(true);
       setHelperText("required");
     }
+    alert("Done");
+    window.location.reload();
   };
 
   //Tab
@@ -117,9 +142,11 @@ function MaterialForm() {
             {/* {show && !error ? { formDataValue } : ""} */}
           </>
           {
-            <GridItem xs={12} sm={12}>
-              <h2>{formJsonData.form_title}</h2>
-            </GridItem>
+            <Grid>
+              <GridItem md={8}>
+                <h2>{formJsonData.form_title}</h2>
+              </GridItem>
+            </Grid>
           }
           {formJsonData.components.map((data) => {
             console.log(formData);
@@ -128,7 +155,7 @@ function MaterialForm() {
             return (
               <>
                 <Grid spacing={2} alignItems="center" justifyContent="center">
-                  <GridItem sm={6}>
+                  <GridItem>
                     {data.element === "TextField" ? (
                       <TextField
                         label={data.label!}
@@ -138,6 +165,7 @@ function MaterialForm() {
                         required={data.required!}
                         minLength={data.minLength!}
                         maxLength={data.maxLength!}
+                        sx={{ mt: 2 }}
                       />
                     ) : data.element === "Email" ? (
                       <TextField
@@ -150,7 +178,8 @@ function MaterialForm() {
                         minLength={data.minLength!}
                         maxLength={data.maxLength!}
                         helperText={emailHelperText}
-                        error={error}
+                        error={emailError}
+                        sx={{ mt: 2 }}
                       />
                     ) : data.element === "Password" ? (
                       <TextField
@@ -162,6 +191,9 @@ function MaterialForm() {
                         required={data.required!}
                         minLength={data.minLength!}
                         maxLength={data.maxLength!}
+                        helperText={passwordHelperText}
+                        error={passwordError}
+                        sx={{ mt: 2 }}
                       />
                     ) : data.element === "TextArea" ? (
                       <TextField
@@ -174,6 +206,7 @@ function MaterialForm() {
                         maxLength={data.maxLength!}
                         rows={data.rows}
                         multiline={true}
+                        sx={{ mt: 2 }}
                       ></TextField>
                     ) : data.element === "Select" && !data.multipleValues ? (
                       <Select
@@ -291,6 +324,7 @@ function MaterialForm() {
                                         required={item1.required!}
                                         minLength={item1.minLength!}
                                         maxLength={item1.maxLength!}
+                                        sx={{ mt: 2 }}
                                       />
                                     </GridItem>
                                   ) : item1.element === "Password" ? (
@@ -304,6 +338,9 @@ function MaterialForm() {
                                         required={item1.required!}
                                         minLength={item1.minLength!}
                                         maxLength={item1.maxLength!}
+                                        helperText={passwordHelperText}
+                                        error={passwordError}
+                                        sx={{ mt: 2 }}
                                       />
                                     </GridItem>
                                   ) : item1.element === "TextArea" ? (
@@ -318,6 +355,7 @@ function MaterialForm() {
                                         maxLength={item1.maxLength!}
                                         rows={item1.rows}
                                         multiline={true}
+                                        sx={{ mt: 2 }}
                                       ></TextField>
                                     </GridItem>
                                   ) : item1.element === "Email" ? (
@@ -332,7 +370,8 @@ function MaterialForm() {
                                         minLength={item1.minLength!}
                                         maxLength={item1.maxLength!}
                                         helperText={emailHelperText}
-                                        error={error}
+                                        error={emailError}
+                                        sx={{ mt: 2 }}
                                       />
                                     </GridItem>
                                   ) : item1.element === "Select" &&
@@ -439,7 +478,7 @@ function MaterialForm() {
                       {data.columnItems?.map((item, index) => (
                         <>
                           {item.label === "Column1" ? (
-                            <GridItem md={4}>
+                            <GridItem xs={4}>
                               <Grid>
                                 {item.columnComponents?.map((item1, index) => (
                                   <>
@@ -453,6 +492,7 @@ function MaterialForm() {
                                           required={item1.required!}
                                           minLength={item1.minLength!}
                                           maxLength={item1.maxLength!}
+                                          sx={{ mt: 2 }}
                                         />
                                       </GridItem>
                                     ) : item1.element === "Password" ? (
@@ -466,6 +506,9 @@ function MaterialForm() {
                                           required={item1.required!}
                                           minLength={item1.minLength!}
                                           maxLength={item1.maxLength!}
+                                          helperText={passwordHelperText}
+                                          error={passwordError}
+                                          sx={{ mt: 2 }}
                                         />
                                       </GridItem>
                                     ) : item1.element === "TextArea" ? (
@@ -480,6 +523,7 @@ function MaterialForm() {
                                           maxLength={item1.maxLength!}
                                           rows={item1.rows}
                                           multiline={true}
+                                          sx={{ mt: 2 }}
                                         ></TextField>
                                       </GridItem>
                                     ) : item1.element === "Email" ? (
@@ -494,7 +538,8 @@ function MaterialForm() {
                                           minLength={item1.minLength!}
                                           maxLength={item1.maxLength!}
                                           helperText={emailHelperText}
-                                          error={error}
+                                          error={emailError}
+                                          sx={{ mt: 2 }}
                                         />
                                       </GridItem>
                                     ) : item1.element === "Select" &&
@@ -589,7 +634,7 @@ function MaterialForm() {
                               </Grid>
                             </GridItem>
                           ) : (
-                            <GridItem md={4}>
+                            <GridItem xs={4}>
                               <Grid>
                                 {item.columnComponents?.map((item1, index) => (
                                   <>
@@ -603,6 +648,7 @@ function MaterialForm() {
                                           required={item1.required!}
                                           minLength={item1.minLength!}
                                           maxLength={item1.maxLength!}
+                                          sx={{ mt: 2 }}
                                         />
                                       </GridItem>
                                     ) : item1.element === "Password" ? (
@@ -616,6 +662,9 @@ function MaterialForm() {
                                           required={item1.required!}
                                           minLength={item1.minLength!}
                                           maxLength={item1.maxLength!}
+                                          helperText={passwordHelperText}
+                                          error={passwordError}
+                                          sx={{ mt: 2 }}
                                         />
                                       </GridItem>
                                     ) : item1.element === "TextArea" ? (
@@ -630,6 +679,7 @@ function MaterialForm() {
                                           maxLength={item1.maxLength!}
                                           rows={item1.rows}
                                           multiline={true}
+                                          sx={{ mt: 2 }}
                                         ></TextField>
                                       </GridItem>
                                     ) : item1.element === "Email" ? (
@@ -644,7 +694,8 @@ function MaterialForm() {
                                           minLength={item1.minLength!}
                                           maxLength={item1.maxLength!}
                                           helperText={emailHelperText}
-                                          error={error}
+                                          error={emailError}
+                                          sx={{ mt: 2 }}
                                         />
                                       </GridItem>
                                     ) : item1.element === "Select" &&
