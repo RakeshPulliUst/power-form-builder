@@ -116,7 +116,8 @@ function MaterialForm() {
       setHelperText("required");
     }
     alert("Done");
-    window.location.reload();
+    resetValues();
+    // window.location.reload();
   };
 
   //Tab
@@ -131,6 +132,11 @@ function MaterialForm() {
   const [value, setValue] = React.useState("1");
   const handleTabChange = (event: React.ChangeEvent<{}>, newValue: string) => {
     setValue(newValue);
+  };
+
+  const resetValues = () => {
+    setFormDataValue({});
+    setSelectData({});
   };
 
   return (
@@ -806,6 +812,11 @@ function MaterialForm() {
               </>
             );
           })}
+          <Grid alignItems="center" justifyContent="center">
+            <GridItem>
+              <Button label={"Submit"} color={"success"} size={"medium"} />
+            </GridItem>
+          </Grid>
         </form>
       ) : (
         <></>

@@ -71,6 +71,7 @@ const SignIn = () => {
     localStorage.setItem("reduxState", JSON.stringify(state));
     navigate("/home");
   }
+
   const paperStyle = {
     padding: 20,
     height: "70vh",
@@ -144,12 +145,7 @@ const SignIn = () => {
             />
 
             <Grid>
-              <GridItem xs={7}>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </GridItem>
-              <GridItem xs={9}>
+              <GridItem>
                 <Link href="/signup" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>

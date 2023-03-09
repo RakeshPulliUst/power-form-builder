@@ -12,6 +12,7 @@ import { Button } from "@power-form-builder/ui-components";
 import axios from "axios";
 import TextField from "@mui/material/TextField";
 import { useForm } from "react-hook-form";
+import Divider from "@mui/material/Divider";
 
 type Props = {
   open: boolean;
@@ -81,13 +82,14 @@ const FormNameInput = ({ open, handleOpen, handleClose }: Props) => {
         open={open1}
         onClose={handleClose}
         style={{
-          minHeight: "30%",
-          maxHeight: "40%",
-          minWidth: "30%",
-          maxWidth: "30%",
+          minHeight: "20%",
+          maxHeight: "50%",
+          minWidth: "20%",
+          maxWidth: "25%",
         }}
       >
         <DialogTitle title="Form Details" />
+        <Divider variant="middle" />
         <DialogContent>
           <TabContext value={value}>
             <TabPanel value="1">
@@ -103,7 +105,7 @@ const FormNameInput = ({ open, handleOpen, handleClose }: Props) => {
                   },
                   validate: (value) => {
                     return (
-                      [/^[a-zA-Z0-9/]*$/].every((pattern) =>
+                      [/^[a-zA-Z0-9 /]*$/].every((pattern) =>
                         pattern.test(value)
                       ) || "Only letters & numbers are allowed"
                     );

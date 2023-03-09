@@ -8,11 +8,30 @@ type Props = {
   onSubmit?:
     | React.FormEventHandler<HTMLFormElement | HTMLDivElement>
     | undefined;
+  flexGrow?: number;
+  display?: string;
+  alignItems?: string;
 };
 
-const Box = ({ children, sx, component, onSubmit, ...rest }: Props) => {
+const Box = ({
+  children,
+  sx,
+  component,
+  onSubmit,
+  flexGrow,
+  display,
+  alignItems,
+  ...rest
+}: Props) => {
   return (
-    <DefaultBox sx={sx} component={component} onSubmit={onSubmit}>
+    <DefaultBox
+      sx={sx}
+      component={component}
+      onSubmit={onSubmit}
+      flexGrow={flexGrow}
+      display={display}
+      alignItems={alignItems}
+    >
       {" "}
       {children}
     </DefaultBox>

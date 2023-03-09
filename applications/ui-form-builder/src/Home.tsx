@@ -9,6 +9,7 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  Box,
 } from "@power-form-builder/ui-components";
 import React, { useEffect, useState } from "react";
 import "./Home.css";
@@ -26,6 +27,15 @@ import { useNavigate } from "react-router-dom";
 import { Element } from "./form-builder/ElementInterface";
 import { RootState } from "./store";
 import { useDispatch, useSelector } from "react-redux";
+import Divider from "@material-ui/core/Divider";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
+
+import ContentCopyOutlinedIcon from "@mui/icons-material/ContentCopyOutlined";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
+import PreviewOutlinedIcon from "@mui/icons-material/PreviewOutlined";
+import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 
 const Home = () => {
   const [open, setOpen] = useState(false);
@@ -131,11 +141,13 @@ const Home = () => {
 
   //Delete the form
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [formTitle, setFormTitle] = useState("");
   const [id, setId] = useState(-1);
-  const onDeleteClick = (id: number) => {
-    console.log("Delete", id);
+  const onDeleteClick = (id: number, formName: string) => {
+    console.log("Delete", id, formName);
     setDialogOpen(true);
     setId(id);
+    setFormTitle(formName);
   };
 
   const handleData = (id: number) => {
@@ -160,34 +172,33 @@ const Home = () => {
           <TableRow>
             <TableCell>ID</TableCell>
             <TableCell>Form Name</TableCell>
-            <TableCell>Date Created</TableCell>
-            <TableCell>Date Modified</TableCell>
+            <TableCell>Created Date</TableCell>
+            <TableCell>Modified Date</TableCell>
             <TableCell>Status</TableCell>
             <TableCell>Action</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {formData.map((row) => (
+          {formData.map((row, index) => (
             <TableRow>
-              <TableCell>{row.id}</TableCell>
+              <TableCell>{index + 1}</TableCell>
               <TableCell>{row.form_title}</TableCell>
               <TableCell>{row.date_created}</TableCell>
               <TableCell>{row.date_modified}</TableCell>
               <TableCell>{row.status}</TableCell>
               <TableCell>
-                <Button
-                  label="Preview"
-                  color="warning"
-                  size="large"
+                <PreviewOutlinedIcon
                   onClick={() => {
                     onPreviewClick(row.form_title, row.components);
                   }}
-                />
+                  sx={{ cursor: "pointer", fontSize: "30px" }}
+                >
+                  Preview
+                </PreviewOutlinedIcon>
                 &nbsp;
-                <Button
-                  label="Edit"
+                <EditOutlinedIcon
+                  sx={{ cursor: "pointer", fontSize: "30px" }}
                   color="primary"
-                  size="large"
                   onClick={() =>
                     onEditClick(
                       row.id,
@@ -197,14 +208,29 @@ const Home = () => {
                       row.status
                     )
                   }
-                />
+                >
+                  Edit
+                </EditOutlinedIcon>
                 &nbsp;
-                <Button
-                  label="Delete"
+                <ContentCopyOutlinedIcon
+                  sx={{ cursor: "pointer", fontSize: "30px" }}
+                  onClick={() => {
+                    console.log(JSON.stringify(row.components));
+                    navigator.clipboard.writeText(
+                      JSON.stringify(row.components)
+                    );
+                  }}
+                >
+                  Copy Json
+                </ContentCopyOutlinedIcon>
+                &nbsp;
+                <DeleteForeverOutlinedIcon
+                  sx={{ cursor: "pointer", fontSize: "30px" }}
                   color="error"
-                  size="large"
-                  onClick={() => onDeleteClick(row.id)}
-                />
+                  onClick={() => onDeleteClick(row.id, row.form_title)}
+                >
+                  Delete
+                </DeleteForeverOutlinedIcon>
               </TableCell>
             </TableRow>
           ))}
@@ -244,21 +270,29 @@ const Home = () => {
           maxWidth: "30%",
         }}
       >
-        <DialogTitle title="Confirm To Submit" />
+        <DialogTitle title="Warning">
+          <CloseOutlinedIcon
+            onClick={() => {
+              setDialogOpen(!dialogOpen);
+            }}
+            sx={{ cursor: "pointer" }}
+          ></CloseOutlinedIcon>
+        </DialogTitle>
+        <Divider variant="middle" />
         <DialogContent>
-          <p>Are you sure to delete the form. </p>
+          <p>Are you sure you want to delete the form - {formTitle}?</p>
         </DialogContent>
         <DialogActions>
           <Button
-            label="Cancel"
-            color="success"
+            label="NO"
+            color="error"
             onClick={() => {
               setDialogOpen(!dialogOpen);
             }}
             size="medium"
           />
           <Button
-            label="Save"
+            label="YES"
             color="success"
             onClick={() => handleData(id)}
             size="medium"

@@ -23,7 +23,7 @@ const languages = [
   },
 ];
 
-const GlobeIcon = ({ width = 24, height = 24 }) => (
+const GlobeIcon = ({ width = 20, height = 20 }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={width}
@@ -50,43 +50,41 @@ function LanguageDropDown({}: Props) {
   }, [currentLanguage]);
 
   return (
-    <div className="d-flex justify-content-end align-items-center language-select-root">
-      <Dropdown isOpen={dropdownOpen} toggle={toggle}>
-        <DropdownToggle caret>
-          {" "}
-          <GlobeIcon />
-        </DropdownToggle>
-        <DropdownMenu>
-          <DropdownItem header>
-            {/* <li>
+    <Dropdown isOpen={dropdownOpen} toggle={toggle}>
+      <DropdownToggle caret>
+        {" "}
+        <GlobeIcon />
+      </DropdownToggle>
+      <DropdownMenu>
+        <DropdownItem header>
+          {/* <li>
               <span className="dropdown-item-text">{t("language")}</span>
             </li> */}
-            {languages.map(({ code, name, country_code }) => (
-              <li key={country_code}>
-                <a
-                  href="#"
-                  className={classNames("dropdown-item", {
-                    disabled: currentLanguageCode === code,
-                  })}
-                  onClick={() => {
-                    toggle();
-                    i18next.changeLanguage(code);
+          {languages.map(({ code, name, country_code }) => (
+            <li key={country_code}>
+              <a
+                href="#"
+                className={classNames("dropdown-item", {
+                  disabled: currentLanguageCode === code,
+                })}
+                onClick={() => {
+                  toggle();
+                  i18next.changeLanguage(code);
+                }}
+              >
+                <span
+                  className={`flag-icon flag-icon-${country_code} mx-1`}
+                  style={{
+                    opacity: currentLanguageCode === code ? 0.5 : 1,
                   }}
-                >
-                  <span
-                    className={`flag-icon flag-icon-${country_code} mx-2`}
-                    style={{
-                      opacity: currentLanguageCode === code ? 0.5 : 1,
-                    }}
-                  ></span>
-                  {name}
-                </a>
-              </li>
-            ))}
-          </DropdownItem>
-        </DropdownMenu>
-      </Dropdown>
-    </div>
+                ></span>
+                {name}
+              </a>
+            </li>
+          ))}
+        </DropdownItem>
+      </DropdownMenu>
+    </Dropdown>
   );
 }
 

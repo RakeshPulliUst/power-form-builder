@@ -5,7 +5,11 @@ type Props = {
   children: React.ReactNode;
 };
 const DialogActions = ({ children, ...rest }: Props) => {
-  return <DefaultDialogActions>{children}</DefaultDialogActions>;
+  return (
+    <DefaultDialogActions sx={{ paddingRight: "20px" }}>
+      {children}
+    </DefaultDialogActions>
+  );
 };
 
 export default DialogActions;

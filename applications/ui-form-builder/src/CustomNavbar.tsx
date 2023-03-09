@@ -59,7 +59,7 @@ const CustomNavbar = () => {
         light
         expand="md"
         fixed="true"
-        className=" sticky-top navbar-dark bg-dark"
+        className="sticky-top navbar-dark bg-dark"
       >
         <NavbarBrand onClick={handleFormSite} style={{ cursor: "pointer" }}>
           <UITranslation name="form_site" />
@@ -70,38 +70,40 @@ const CustomNavbar = () => {
           }}
         />
         {retrievedObject.isAuthenticated ? (
-          <Collapse isOpen={isOpen} navbar>
-            <Nav className="container-fluid" navbar>
-              <NavItem
-                style={{ color: "white", cursor: "pointer" }}
-                onClick={() => {
-                  console.log(!open);
-                  setOpen(!open);
-                }}
-              >
-                <UITranslation name="build_form" />
-              </NavItem>
-            </Nav>
+          <div>
+            <Collapse isOpen={isOpen} navbar>
+              <Nav navbar>
+                <NavItem
+                  style={{ color: "white", cursor: "pointer" }}
+                  onClick={() => {
+                    console.log(!open);
+                    setOpen(!open);
+                  }}
+                >
+                  <UITranslation name="build_form" />
+                </NavItem>
+              </Nav>
 
-            <Nav>
-              <UncontrolledDropdown inNavbar nav>
-                <DropdownToggle caret color="dark">
-                  {/* <DropdownToggle caret nav color="dark"> */}
-                  Hello {retrievedObject.user?.firstname}
-                </DropdownToggle>
-                <DropdownMenu right>
-                  <DropdownItem tag={ReactLink} to="/user/my-profile">
-                    My Profile
-                  </DropdownItem>
-                  <DropdownItem onClick={handleLogout}>Logout</DropdownItem>
-                </DropdownMenu>
-              </UncontrolledDropdown>
+              <Nav style={{ paddingLeft: "10px" }}>
+                <NavItem>
+                  <Header />
+                </NavItem>
 
-              <NavItem>
-                <Header />
-              </NavItem>
-            </Nav>
-          </Collapse>
+                <UncontrolledDropdown inNavbar nav>
+                  <DropdownToggle caret color="dark">
+                    {/* <DropdownToggle caret nav color="dark"> */}
+                    Hello {retrievedObject.user?.firstname}
+                  </DropdownToggle>
+                  <DropdownMenu right>
+                    <DropdownItem tag={ReactLink} to="/user/my-profile">
+                      My Profile
+                    </DropdownItem>
+                    <DropdownItem onClick={handleLogout}>Logout</DropdownItem>
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+              </Nav>
+            </Collapse>
+          </div>
         ) : (
           <>
             <Nav>
