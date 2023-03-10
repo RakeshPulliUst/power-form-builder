@@ -3,7 +3,6 @@ import Avatar from "@mui/material/Avatar";
 import {
   Button,
   //TextField,
-  Checkbox,
   Grid,
   GridItem,
   Box,
@@ -15,9 +14,9 @@ import {
 } from "@power-form-builder/ui-components";
 import TextField from "@mui/material/TextField";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { logout, signin } from "./signinSlice";
+import { signin } from "./signinSlice";
 import { RootState, store } from "./store";
 import { useForm } from "react-hook-form";
 
@@ -65,7 +64,7 @@ const SignIn = () => {
       navigate("/home");
     }
     console.log("Auth", { user, isAuthenticated, loading, error });
-  }, [user, isAuthenticated, loading, error]);
+  }, [user, isAuthenticated, loading, error, navigate]);
 
   // if (isAuthenticated) {
   //   const state = store.getState();

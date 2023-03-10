@@ -5,7 +5,11 @@ type Props = {
 };
 
 function TableHead({ children, ...rest }: Props) {
-  return <DefaultTableHead>{children}</DefaultTableHead>;
+  return (
+    <DefaultTableHead sx={{ backgroundColor: "rgb(0,0,0,0.2)" }}>
+      {children}
+    </DefaultTableHead>
+  );
 }
 
 export default TableHead;

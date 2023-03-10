@@ -1,4 +1,4 @@
-import { Grid, Paper, styled } from "@mui/material";
+import { Grid} from "@mui/material";
 import React from "react";
 
 type Props = {

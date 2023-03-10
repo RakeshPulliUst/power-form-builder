@@ -8,7 +8,6 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Tab,
   TabContext,
   TabPanel,
   TabList,
@@ -30,15 +29,7 @@ const TextFieldData: React.FC<{
   textFieldValues: TextFieldDiaglog;
   handleOpen: () => void;
   element: Element;
-  textFieldStatus: boolean;
-}> = ({
-  open,
-  handleClose,
-  textFieldValues,
-  handleOpen,
-  element,
-  textFieldStatus,
-}) => {
+}> = ({ open, handleClose, textFieldValues, handleOpen, element }) => {
   const [value, setValue] = React.useState("1");
   const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
     console.log(newValue);
@@ -91,8 +82,7 @@ const TextFieldData: React.FC<{
     textFieldValues.required = required;
     textFieldValues.rows = rows;
     console.log(textFieldValues);
-    textFieldStatus = true;
-    console.log(textFieldStatus);
+
     handleOpen();
   };
 
@@ -103,7 +93,14 @@ const TextFieldData: React.FC<{
     setTextMinLength(element.minLength!);
     setRequired(element.required!);
     setRows(element.rows!);
-  }, []);
+  }, [
+    element.label,
+    element.placeholder,
+    element.maxLength,
+    element.minLength,
+    element.required,
+    element.rows,
+  ]);
 
   const tabItems: TabItemsProps = [
     { label: "Display", value: "1" },

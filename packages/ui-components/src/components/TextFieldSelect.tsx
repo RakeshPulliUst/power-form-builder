@@ -1,5 +1,4 @@
 import { TextField, MenuItem } from "@mui/material";
-import { useState } from "react";
 
 type Props = {
   label: string;

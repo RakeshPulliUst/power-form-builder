@@ -9,7 +9,6 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Tab,
   TabContext,
   TabPanel,
   TabList,
@@ -80,7 +79,7 @@ const CheckboxData: React.FC<{
     setRequired(element.required!);
     setErrorLabel(element.error!);
     console.log("Checkobx", checkboxLabel, defaultValue, errorLabel);
-  }, []);
+  }, [checkboxLabel, defaultValue, element, errorLabel]);
 
   const tabItems: TabItemsProps = [
     { label: "Display", value: "1" },

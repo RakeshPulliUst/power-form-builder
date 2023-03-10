@@ -1,4 +1,4 @@
-import { Box, Button as DefaultButton, SxProps, Theme } from "@mui/material";
+import { Button as DefaultButton, SxProps, Theme } from "@mui/material";
 
 type Props = {
   label: React.ReactNode;

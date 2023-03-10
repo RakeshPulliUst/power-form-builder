@@ -1,11 +1,3 @@
-// import axios from "axios"
-
-// const instance = axios.create({
-//     baseURL: process.env.REACT_APP_API_URL
-// })
-
-// export const signup = (data: any) => instance.post("/api/signup", data)
-
 import axios from "axios";
 import { SignupData, SigninData, ProfileData } from "./types";
 

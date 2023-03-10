@@ -12,8 +12,6 @@ import { components, sample } from "./ElementInterface";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { RootState } from "../store";
-import { useDispatch, useSelector } from "react-redux";
 
 const UpdateFormBuilder = () => {
   const [show, setShow] = useState(false);
@@ -29,7 +27,7 @@ const UpdateFormBuilder = () => {
   } = location.state || {};
 
   const [formData, setFormData] = useState<FormJson>(sample);
-  const [finalSaveFormData, setFinalSaveFormData] =
+  const [finalSaveFormData] =
     useState<FinalSaveFormJson>(finalSample);
   const [formJsonData, setFormJsonData] = useState("");
   const [elements, setElements] = useState<Array<Element>>(components);
@@ -307,7 +305,7 @@ const UpdateFormBuilder = () => {
       tabElements5
     );
     console.log(formInitialComponents);
-  }, []);
+  }, [formInitialComponents, tabElements, tabElements2, tabElements3, tabElements4, tabElements5]);
   return (
     <>
       <DragDropContext onDragEnd={onDragEnd}>

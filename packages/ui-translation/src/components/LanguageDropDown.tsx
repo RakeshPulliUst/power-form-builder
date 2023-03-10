@@ -9,7 +9,6 @@ import i18next from "i18next";
 import cookies from "js-cookie";
 import classNames from "classnames";
 
-type Props = {};
 const languages = [
   {
     code: "fr",
@@ -36,7 +35,7 @@ const GlobeIcon = ({ width = 20, height = 20 }) => (
   </svg>
 );
 
-function LanguageDropDown({}: Props) {
+function LanguageDropDown() {
   const currentLanguageCode = cookies.get("i18next") || "en";
   const currentLanguage = languages.find((l) => l.code === currentLanguageCode);
 

@@ -1,8 +1,6 @@
 import React from 'react'
 
-type Props = {}
-
-function SelectChangeEvent({}: Props) {
+function SelectChangeEvent() {
   return (
     <div>SelectChangeEvent</div>
   )

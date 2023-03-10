@@ -96,7 +96,7 @@ const RadioButtonData: React.FC<{
     setRadioOptionLabelPosition([element.options!]);
     setRequired(element.required!);
     setRadioItems(element.radioItems!);
-  }, []);
+  }, [element.label, element.options, element.radioItems, element.required]);
 
   const handleChangeInput = (
     id: string,

@@ -38,13 +38,6 @@ const Select = ({
   onChange,
   ...rest
 }: Props) => {
-  // const [selectItems, setSelectItems] = React.useState<string[]>(value);
-  // const handleChange = (event: SelectChangeEvent<typeof selectItems>) => {
-  //   const {
-  //     target: { value },
-  //   } = event;
-  //   setSelectItems(typeof value === "string" ? value.split(",") : value);
-  // };
 
   return (
     <FormControl sx={{ m: 1, width: width }}>

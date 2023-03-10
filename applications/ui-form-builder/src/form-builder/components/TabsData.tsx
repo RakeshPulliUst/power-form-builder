@@ -68,7 +68,7 @@ const TabsData: React.FC<{
     setTabsLabel(event.target.value);
   };
 
-  const [rr, setRR] = useState([
+  const [rr] = useState([
     "tabsDroppableId",
     "tabsDroppableId2",
     "tabsDroppableId3",
@@ -87,13 +87,12 @@ const TabsData: React.FC<{
   useEffect(() => {
     setTabsLabel(element.label!);
     setTabItemsData(element.tabItems!);
-  }, []);
+  }, [element.label, element.tabItems]);
 
   const handleChangeInput = (
     id: string,
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    let k = 0;
     const newInputFields = tabItemsData.map((i) => {
       if (id === i.id) {
         console.log("aaa", event.target.name, "bb", event.target.value);

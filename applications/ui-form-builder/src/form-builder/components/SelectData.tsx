@@ -116,7 +116,7 @@ const SelectData: React.FC<{
     setSelectSize([element.size!]);
     setSelectWidth(element.width?.toString()!);
     setMenuItemsData(element.menuItems!);
-  }, []);
+  }, [element.label, element.menuItems, element.multipleValues, element.placeholder, element.required, element.size, element.width]);
 
   const handleChangeInput = (
     id: string,

@@ -1,7 +1,7 @@
 import React from "react";
 import { Element } from "./ElementInterface";
 import SingleElement from "./SingleElement";
-import { Draggable, Droppable } from "react-beautiful-dnd";
+import {  Droppable } from "react-beautiful-dnd";
 import { Grid, GridItem } from "@power-form-builder/ui-components";
 import FixedComponentList from "./FixedComponentList";
 

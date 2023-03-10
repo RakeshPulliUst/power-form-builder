@@ -98,7 +98,7 @@ const ButtonData: React.FC<{
     setButtonLabel(element.label!);
     setButtonTheme([element.theme!]);
     setButtonSize([element.size!]);
-  }, []);
+  }, [element.label, element.size, element.theme]);
 
   const tabItems: TabItemsProps = [{ label: "Display", value: "1" }];
 

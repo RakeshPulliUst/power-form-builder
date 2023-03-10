@@ -1,14 +1,11 @@
 import React, { FormEvent, useState } from "react";
 import {
   TextField,
-  TextareaAutosize,
   Select,
   RadioGroup,
   Checkbox,
   Button,
-  Tabs,
   TabContext,
-  TabList,
   Box,
   TabPanel,
   TabList1,
@@ -25,7 +22,7 @@ type TabItemsProps = {
 function MaterialForm() {
   const location = useLocation();
   const { formData } = location.state || {};
-  const [formJsonData, setFormJsonData] = useState<FormJson>(formData);
+  const [formJsonData] = useState<FormJson>(formData);
 
   const [formDataValue, setFormDataValue] = useState({});
 
@@ -35,8 +32,6 @@ function MaterialForm() {
   // const [error, setError] = React.useState(false);
   const [passwordError, setPasswordError] = React.useState(false);
   const [emailError, setEmailError] = React.useState(false);
-  const [helperText, setHelperText] = React.useState("");
-  const [show, setShow] = React.useState(false);
   const [emailHelperText, setEmailHelperText] = React.useState("");
   const [passwordHelperText, setPasswordHelperText] = React.useState("");
 
@@ -58,8 +53,7 @@ function MaterialForm() {
       });
     } else if (event.target.name === "password") {
       console.log("Password");
-      var regex =
-        /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+      regex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
       if (regex.test(event.target.value)) {
         setPasswordHelperText("");
         setPasswordError(false);
@@ -107,13 +101,10 @@ function MaterialForm() {
       console.log("Submit Data");
       setPasswordError(false);
       setEmailError(false);
-      setHelperText("");
-      setShow(true);
     } else {
       console.log("Submit Data");
       setPasswordError(true);
       setEmailError(true);
-      setHelperText("required");
     }
     alert("Done");
     resetValues();

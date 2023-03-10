@@ -99,9 +99,11 @@ const ColumnData: React.FC<{
     let colDataSize: string;
     columnItemsData.map((item) => {
       colDataSize = item.columnDataSize.toString();
+      return columnItemsData;
     });
     finalColumnItemsData.map((item) => {
       item.columnDataSize = colDataSize;
+      return item;
     });
 
     columnValues.columnItems = finalColumnItemsData;
@@ -113,7 +115,7 @@ const ColumnData: React.FC<{
     setColumnLabel(element.label!);
     setColumnSize([element.size!]);
     setFinalColumnItemsData(element.columnItems!);
-  }, []);
+  }, [element.columnItems, element.label, element.size]);
 
   const handleChangeInput = (
     id: string,
@@ -172,15 +174,6 @@ const ColumnData: React.FC<{
   ];
 
   const [columnSize, setColumnSize] = useState<string[]>([]);
-
-  const handleColumnSize = (event: any) => {
-    const selectvalue = event.target.value;
-    console.log(selectvalue);
-    setColumnSize(
-      typeof selectvalue === "string" ? selectvalue.split(",") : selectvalue
-    );
-    console.log(columnSize);
-  };
 
   const tabItems: TabItemsProps = [{ label: "Display", value: "1" }];
 

@@ -16,8 +16,7 @@ import {
 } from "@power-form-builder/ui-components";
 import TextField from "@mui/material/TextField";
 import CircularProgress from "@mui/material/CircularProgress";
-import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { signup } from "./signupSlice";
 import { useForm } from "react-hook-form";

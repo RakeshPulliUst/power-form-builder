@@ -9,7 +9,6 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Box,
   Divider,
 } from "@power-form-builder/ui-components";
 import React, { useEffect, useState } from "react";
@@ -71,20 +70,6 @@ const Home = () => {
           toast.error("Something went wrong");
         }
       );
-  };
-
-  //Creating function to post data on server
-  const getAllData = () => {
-    axios.get(`http://localhost:4000/api/form/showAll`).then(
-      (response) => {
-        setFormData(response.data);
-      },
-      (error) => {
-        console.log(error);
-        console.log("error");
-        toast.error("Something went wrong");
-      }
-    );
   };
 
   //Delete function to delete data on server
@@ -188,6 +173,7 @@ const Home = () => {
                     onPreviewClick(row.form_title, row.components);
                   }}
                   sx={{ cursor: "pointer", fontSize: "30px" }}
+                  color="action"
                 >
                   Preview
                 </PreviewOutlinedIcon>
@@ -216,6 +202,7 @@ const Home = () => {
                       JSON.stringify(row.components)
                     );
                   }}
+                  color="action"
                 >
                   Copy Json
                 </ContentCopyOutlinedIcon>

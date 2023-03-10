@@ -2,8 +2,6 @@ import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import signupReducer from "./signupSlice";
 import signinReducer from "./signinSlice";
 
-import thunk from 'redux-thunk';
-
 const persistedState = localStorage.getItem("loginState")
 
 export const store = configureStore({

@@ -12,10 +12,7 @@ import {
   Checkbox,
   RadioGroup,
   Select,
-  TextFieldSelect,
-  TextareaAutosize,
   TextField,
-  Tabs,
   Grid,
   GridItem,
   TabContext,
@@ -28,14 +25,11 @@ import {
   ButtonDialog,
   CheckboxDiaglog,
   ColumnDialog,
-  ColumnItemsDialog,
   RadioButtonDialog,
   SelectDiaglog,
   TabsDialog,
-  TextAreaDiaglog,
   TextFieldDiaglog,
 } from "./DialogInterface";
-import TextAreaData from "./components/TextAreaData";
 import CheckboxData from "./components/CheckboxData";
 import SelectData from "./components/SelectData";
 import ButtonData from "./components/ButtonData";
@@ -325,22 +319,6 @@ const SingleElement: React.FC<{
     columnItems: columnItemsData,
   };
 
-  const column1Values: ColumnItemsProps = [
-    {
-      id: "1989",
-      label: "Column1",
-      columnDataSize: "md",
-      columnDataWidth: 220,
-      columnComponents: [
-        {
-          id: 1011,
-          element: "Column",
-          label: "Ths",
-        },
-      ],
-    },
-  ];
-
   const [edit, setEdit] = useState<boolean>(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -448,9 +426,6 @@ const SingleElement: React.FC<{
       console.log(tabValues);
       element.tabItems = tabValues.tabItems;
     } else if (element.element === "Column") {
-      // columnValues.columnItems.map((item, index) => (
-      //   <>item.columnComponents = columnElements</>
-      // ));
       element.label = columnValues.label;
       element.columnItems = columnValues.columnItems;
       col = true;
@@ -564,6 +539,7 @@ const SingleElement: React.FC<{
   const [checked, setChecked] = useState(false);
   const handleCheck = (event: React.ChangeEvent<HTMLInputElement>) => {
     setChecked(event.target.checked);
+    console.log(checked);
   };
 
   //Final Select
@@ -588,7 +564,6 @@ const SingleElement: React.FC<{
     setRadioValue(event.target.value);
   };
 
-  const [textFieldStatus, setTextFieldStatus] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
 
   //Tabsss
@@ -597,7 +572,7 @@ const SingleElement: React.FC<{
     setValue(newValue);
   };
 
-  const [tabItems, setTabItems] = useState<TabItemsProps>([
+  const [tabItems] = useState<TabItemsProps>([
     { label: "Tab1", value: "1" },
     { label: "Tab2", value: "2" },
     { label: "Tab3", value: "3" },
@@ -626,7 +601,6 @@ const SingleElement: React.FC<{
                   textFieldValues={textFieldValues}
                   handleOpen={handleOpen}
                   element={element}
-                  textFieldStatus={textFieldStatus}
                 />
                 <TextField
                   label={textFieldValues.label}
@@ -647,7 +621,6 @@ const SingleElement: React.FC<{
                   textFieldValues={textAreaValues}
                   handleOpen={handleOpen}
                   element={element}
-                  textFieldStatus={textFieldStatus}
                 ></TextFieldData>
 
                 <TextField
@@ -670,7 +643,6 @@ const SingleElement: React.FC<{
                   handleClose={handleClose}
                   textFieldValues={passwordValues}
                   handleOpen={handleOpen}
-                  textFieldStatus={textFieldStatus}
                 />
 
                 <TextField
@@ -692,7 +664,6 @@ const SingleElement: React.FC<{
                   handleClose={handleClose}
                   textFieldValues={emailValues}
                   handleOpen={handleOpen}
-                  textFieldStatus={textFieldStatus}
                 />
 
                 <TextField
@@ -1124,85 +1095,6 @@ const SingleElement: React.FC<{
                 </div>
               </>
             ) : (
-              // <>
-              //   <TabsData
-              //     open={open!}
-              //     handleClose={handleClose}
-              //     tabValues={tabValues}
-              //     handleOpen={handleOpen}
-              //     element={element}
-              //   ></TabsData>
-              //   <Tabs tabItems={tabValues.tabItems}>
-              //     {tabsItemsData.map((item) => (
-              //       <>
-              //         {console.log(item.dropId)}
-              //         <div className="elements__single_tab">
-              //           <Droppable droppableId={item.dropId}>
-              //             {(provided, snapshot) => (
-              //               <div
-              //                 ref={provided.innerRef}
-              //                 {...provided.droppableProps}
-              //                 className={`elements__tab  ${
-              //                   snapshot.isDraggingOver
-              //                     ? "dragcomplete"
-              //                     : "remove"
-              //                 }`}
-              //               >
-              //                 {item.dropId === "tabsDroppableId" ? (
-              //                   <>
-              //                     {tabElements?.map((element, index) => (
-              //                       <>
-              //                         <SingleElement
-              //                           show={show}
-              //                           index={index}
-              //                           elements={tabElements}
-              //                           element={element}
-              //                           key={element.id}
-              //                           setElements={setTabElements}
-              //                           tabElements={tabElements}
-              //                           tabElements1={tabElements1}
-              //                           setTabElements={setTabElements}
-              //                           columnElements={columnElements}
-              //                           setColumnElements={setColumnElements}
-              //                           column1Elements={column1Elements}
-              //                           setColumn1Elements={setColumn1Elements}
-              //                         />
-              //                       </>
-              //                     ))}
-              //                   </>
-              //                 ) : (
-              //                   <>
-              //                     {tabElements1?.map((element, index) => (
-              //                       <>
-              //                         <SingleElement
-              //                           show={show}
-              //                           index={index}
-              //                           elements={tabElements}
-              //                           element={element}
-              //                           key={element.id}
-              //                           setElements={setTabElements}
-              //                           tabElements={tabElements}
-              //                           tabElements1={tabElements1}
-              //                           setTabElements={setTabElements}
-              //                           columnElements={columnElements}
-              //                           setColumnElements={setColumnElements}
-              //                           column1Elements={column1Elements}
-              //                           setColumn1Elements={setColumn1Elements}
-              //                         />
-              //                       </>
-              //                     ))}
-              //                   </>
-              //                 )}
-
-              //                 {provided.placeholder}
-              //               </div>
-              //             )}
-              //           </Droppable>
-              //         </div>
-              //       </>
-              //     ))}
-              //   </Tabs>
-              // </>
               <>
                 <h1>Not Valid Component</h1>
               </>

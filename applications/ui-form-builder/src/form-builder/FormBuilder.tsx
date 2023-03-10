@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ElementList from "./ElementList";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import {
@@ -13,21 +13,19 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 import axios from "axios";
 import { toast } from "react-toastify";
-import { RootState } from "../store";
-import { useDispatch, useSelector } from "react-redux";
 
 const FormBuilder = () => {
   const [show, setShow] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
-  const { formName, formInitialComponents } = location.state || {};
+  const { formName } = location.state || {};
 
   const storedValue = localStorage.getItem("loginState");
   const retrievedObject = JSON.parse(storedValue!);
 
   const [formData, setFormData] = useState<FormJson>(sample);
-  const [finalSaveFormData, setFinalSaveFormData] =
+  const [finalSaveFormData] =
     useState<FinalSaveFormJson>(finalSample);
   const [formJsonData, setFormJsonData] = useState("");
   const [elements, setElements] = useState<Array<Element>>(components);

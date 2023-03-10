@@ -8,19 +8,14 @@ import {
   Box,
   Container,
   Typography,
-  Link,
   Paper,
 } from "@power-form-builder/ui-components";
 import TextField from "@mui/material/TextField";
-import CircularProgress from "@mui/material/CircularProgress";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { signup } from "./signupSlice";
+import { useDispatch } from "react-redux";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 import AssignmentIndOutlinedIcon from "@mui/icons-material/AssignmentIndOutlined";
-import axios from "axios";
 import { profile } from "./profileSlice";
 import ChangePassword from "./ChangePassword";
 
@@ -33,7 +28,6 @@ type SignUpFormInputs = {
 
 const UserProfile = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [changedPassword, setChangedPassword] = useState("default");
 

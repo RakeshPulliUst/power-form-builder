@@ -1,9 +1,7 @@
 import React from "react";
 import {
   Typography as DefaultTypography,
-  TypographyPropsVariantOverrides,
 } from "@mui/material";
-import { Variant } from "@mui/material/styles/createTypography";
 
 type Props = {
   children: React.ReactNode;
