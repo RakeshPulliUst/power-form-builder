@@ -12,9 +12,12 @@ import {
   TabContext,
   TabPanel,
   TabList,
+  Divider,
 } from "@power-form-builder/ui-components";
 import { TextFieldDiaglog } from "../DialogInterface";
 import { Element } from "../ElementInterface";
+
+import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 
 type TabItemsProps = {
   label: React.ReactNode;
@@ -121,7 +124,13 @@ const TextFieldData: React.FC<{
             ? "Email Details"
             : "Invalid"
         }
-      />
+      >
+        <CloseOutlinedIcon
+          onClick={handleClose}
+          sx={{ cursor: "pointer" }}
+        ></CloseOutlinedIcon>
+      </DialogTitle>
+      <Divider variant="middle" />
       <DialogContent>
         <TabContext value={value}>
           <Box>
@@ -190,7 +199,7 @@ const TextFieldData: React.FC<{
       <DialogActions>
         <Button
           label="Cancel"
-          color="success"
+          color="error"
           onClick={handleClose}
           size="medium"
         />

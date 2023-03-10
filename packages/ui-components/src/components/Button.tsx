@@ -1,4 +1,4 @@
-import { Box, Button as DefaultButton } from "@mui/material";
+import { Box, Button as DefaultButton, SxProps, Theme } from "@mui/material";
 
 type Props = {
   label: React.ReactNode;
@@ -14,6 +14,8 @@ type Props = {
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   fullWidth?: boolean;
   disabled?: boolean;
+  sx?: SxProps<Theme> | undefined;
+  type?: "button" | "submit" | "reset" | undefined;
 };
 
 const Button = ({
@@ -23,6 +25,8 @@ const Button = ({
   onClick,
   fullWidth,
   disabled,
+  sx,
+  type,
   ...rest
 }: Props) => {
   return (
@@ -31,8 +35,8 @@ const Button = ({
       onClick={onClick}
       color={color}
       size={size}
-      type="submit"
-      sx={{ mt: 5, mb: 2 }}
+      type={type ? type : "submit"}
+      sx={sx ? sx : { mt: 5, mb: 2 }}
       fullWidth={fullWidth}
       disabled={disabled}
       {...rest}

@@ -7,7 +7,7 @@
 // export const signup = (data: any) => instance.post("/api/signup", data)
 
 import axios from "axios";
-import { SignupData, SigninData } from "./types";
+import { SignupData, SigninData, ProfileData } from "./types";
 
 const API_BASE_URL = "http://localhost:4000/api";
 
@@ -17,8 +17,11 @@ export const api = {
     return response.data;
   },
   signin: async (signinData: SigninData) => {
-    console.log(signinData)
     const response = await axios.post(`${API_BASE_URL}/signin`, signinData);
+    return response.data;
+  },
+  profile: async (profileData: ProfileData) => {
+    const response = await axios.put(`${API_BASE_URL}/user/update-profile/${profileData.userId}`, profileData);
     return response.data;
   },
 };

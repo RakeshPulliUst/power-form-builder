@@ -10,6 +10,7 @@ import { useState } from "react";
 import UpdateFormBuilder from "./form-builder/UpdateFormBuilder";
 import SignIn from "./SignIn";
 import SignUp from "./SingUp";
+import UserProfile from "./UserProfile";
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
         <Route path="/" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/home" element={<Home />} />
+        <Route path="/user/my-profile" element={<UserProfile />}></Route>
         <Route path="/formbuilder" element={<FormBuilder />}></Route>
         <Route path="/formrender" element={<MaterialForm />}></Route>
         <Route

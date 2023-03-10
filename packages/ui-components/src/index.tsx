@@ -32,6 +32,8 @@ import Typography from "./components/Typography";
 import Link from "./components/Link";
 import MuiLockOutlinedIcon from "./components/MuiLockOutlinedIcon";
 import Paper from "./components/Paper";
+import Divider from "./components/Divider";
+
 export {
   Button,
   Card,
@@ -67,4 +69,5 @@ export {
   Link,
   MuiLockOutlinedIcon,
   Paper,
+  Divider,
 };

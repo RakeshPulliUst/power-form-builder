@@ -6,10 +6,19 @@ export interface User {
 }
 
 export interface SignupData {
+  userId: number,
   firstname: string,
   lastname: string,
   email: string;
   password: string;
+}
+
+export interface ProfileData {
+  userId: number,
+  firstname: string,
+  lastname: string,
+  email: string;
+  password?: string;
 }
 
 export interface SigninData {

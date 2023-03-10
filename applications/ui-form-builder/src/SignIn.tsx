@@ -49,9 +49,10 @@ const SignIn = () => {
         password: password,
       });
       dispatch(signin({ email, password }));
-      console.log(user?.email);
+      console.log(user?.email, error);
     } catch (error) {
       console.error(error);
+      alert("Enter Valid Details");
     }
   };
 
@@ -66,11 +67,11 @@ const SignIn = () => {
     console.log("Auth", { user, isAuthenticated, loading, error });
   }, [user, isAuthenticated, loading, error]);
 
-  if (isAuthenticated) {
-    const state = store.getState();
-    localStorage.setItem("reduxState", JSON.stringify(state));
-    navigate("/home");
-  }
+  // if (isAuthenticated) {
+  //   const state = store.getState();
+  //   localStorage.setItem("reduxState", JSON.stringify(state));
+  //   navigate("/home");
+  // }
 
   const paperStyle = {
     padding: 20,

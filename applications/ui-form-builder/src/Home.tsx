@@ -10,6 +10,7 @@ import {
   DialogContent,
   DialogTitle,
   Box,
+  Divider,
 } from "@power-form-builder/ui-components";
 import React, { useEffect, useState } from "react";
 import "./Home.css";
@@ -25,11 +26,6 @@ import {
 } from "./form-builder/ElementInterface";
 import { useNavigate } from "react-router-dom";
 import { Element } from "./form-builder/ElementInterface";
-import { RootState } from "./store";
-import { useDispatch, useSelector } from "react-redux";
-import Divider from "@material-ui/core/Divider";
-import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from "@material-ui/icons/Close";
 
 import ContentCopyOutlinedIcon from "@mui/icons-material/ContentCopyOutlined";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";

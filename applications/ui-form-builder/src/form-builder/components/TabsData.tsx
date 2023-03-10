@@ -11,12 +11,15 @@ import {
   TabContext,
   TabPanel,
   TabList,
+  Divider,
 } from "@power-form-builder/ui-components";
 import { TabsDialog } from "../DialogInterface";
 import { v4 as uuidv4 } from "uuid";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import { Element } from "../ElementInterface";
+
+import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 
 type Props = {
   id: string;
@@ -143,7 +146,13 @@ const TabsData: React.FC<{
 
   return (
     <Dialog open={open} onClose={handleClose}>
-      <DialogTitle title="Tabs Details" />
+      <DialogTitle title="Tabs Details">
+        <CloseOutlinedIcon
+          onClick={handleClose}
+          sx={{ cursor: "pointer" }}
+        ></CloseOutlinedIcon>
+      </DialogTitle>
+      <Divider variant="middle" />
       <DialogContent>
         <TabContext value={value}>
           <Box>
@@ -204,7 +213,7 @@ const TabsData: React.FC<{
       <DialogActions>
         <Button
           label="Cancel"
-          color="success"
+          color="error"
           onClick={handleClose}
           size="medium"
         />

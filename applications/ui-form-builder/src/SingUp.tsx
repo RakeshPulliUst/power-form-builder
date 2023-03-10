@@ -25,11 +25,23 @@ import { useForm } from "react-hook-form";
 interface SignUpProps extends PropsFromRedux {}
 
 type SignUpFormInputs = {
+  userId: number;
   firstname: string;
   lastname: string;
   email: string;
   password: string;
 };
+
+let generatedNumbers: number[] = [];
+
+function generatedUniqueInt(max: number) {
+  let uniqueInt = Math.floor(Math.random() * max);
+  while (generatedNumbers.includes(uniqueInt)) {
+    uniqueInt = Math.floor(Math.random() * max);
+  }
+  generatedNumbers.push(uniqueInt);
+  return uniqueInt;
+}
 
 const SignUp: React.FC<SignUpProps> = ({ loading, error, signup }) => {
   const dispatch = useDispatch();
@@ -44,18 +56,20 @@ const SignUp: React.FC<SignUpProps> = ({ loading, error, signup }) => {
   const onSubmit = (data: SignUpFormInputs) => {
     try {
       console.log("started");
+      const userId = generatedUniqueInt(1000);
       const firstname = data.firstname;
       const lastname = data.lastname;
       const email = data.email;
       const password = data.password;
       console.log({
+        userId: userId,
         firstname: firstname,
         lastname: lastname,
         email: email,
         password: password,
       });
       navigate("/");
-      dispatch(signup({ firstname, lastname, email, password }));
+      dispatch(signup({ userId, firstname, lastname, email, password }));
     } catch (error) {
       console.error(error);
     }

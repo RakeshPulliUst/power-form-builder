@@ -15,44 +15,46 @@ const initialState: UserState = {
   error: null,
 };
 
-export const signupSlice = createSlice({
+export const profileSlice = createSlice({
   name: "userRegister",
   initialState,
   reducers: {
-    signupStart: (state) => {
+    profileStart: (state) => {
       state.loading = true;
       state.error = null;
     },
-    signupSuccess: (state, action: PayloadAction<User>) => {
+    profileSuccess: (state, action: PayloadAction<User>) => {
       state.loading = false;
       state.user = action.payload;
+      console.log("state ", state);
+      localStorage.setItem("loginState", JSON.stringify(state));
     },
-    signupFailure: (state, action: PayloadAction<string>) => {
+    profileFailure: (state, action: PayloadAction<string>) => {
       state.loading = false;
       state.error = action.payload;
     },
   },
 });
 
-export const { signupStart, signupSuccess, signupFailure } =
-  signupSlice.actions;
+export const { profileStart, profileSuccess, profileFailure } =
+  profileSlice.actions;
 
-export const signup =
+export const profile =
   (userData: {
     userId: number;
     firstname: string;
     lastname: string;
     email: string;
-    password: string;
+    password?: string;
   }): AppThunk =>
   async (dispatch: any) => {
     try {
-      dispatch(signupStart());
-      const response = await api.signup(userData);
-      dispatch(signupSuccess(response.data));
+      dispatch(profileStart());
+      const response = await api.profile(userData);
+      dispatch(profileSuccess(response.data));
     } catch (error: any) {
-      dispatch(signupFailure(error.message));
+      dispatch(profileFailure(error.message));
     }
   };
 
-export default signupSlice.reducer;
+export default profileSlice.reducer;

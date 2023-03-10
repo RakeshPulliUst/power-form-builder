@@ -12,8 +12,11 @@ import {
   TabContext,
   TabPanel,
   TabList,
+  Divider,
 } from "@power-form-builder/ui-components";
 import { TextAreaDiaglog } from "../DialogInterface";
+
+import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 
 type TabItemsProps = {
   label: React.ReactNode;
@@ -79,7 +82,13 @@ const TextAreaData: React.FC<{
 
   return (
     <Dialog open={open} onClose={handleClose}>
-      <DialogTitle title="TextArea Details" />
+      <DialogTitle title="TextArea Details">
+        <CloseOutlinedIcon
+          onClick={handleClose}
+          sx={{ cursor: "pointer" }}
+        ></CloseOutlinedIcon>
+      </DialogTitle>
+      <Divider variant="middle" />
       <DialogContent>
         <TabContext value={value}>
           <Box>
@@ -134,7 +143,7 @@ const TextAreaData: React.FC<{
       <DialogActions>
         <Button
           label="Cancel"
-          color="success"
+          color="error"
           onClick={handleClose}
           size="medium"
         />
