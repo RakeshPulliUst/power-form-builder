@@ -4,5 +4,17 @@
   "welcome_message": "Bienvenue",
   "form_site": "FormulaireSite",
   "build_form": "Créer un formulaire",
-  "welcome_to_our_formsite": "Bienvenue sur notre FormSite"
+  "welcome_to_our_formsite": "Bienvenue sur notre FormSite",
+  "id": "IDENTIFIANT",
+  "form_name": "Nom de forme",
+  "created_date": "Date de création",
+  "modified_date": "Date modifiée",
+  "status": "Statut",
+  "action": "Action",
+  "in_progress": "En cours",
+  "completed": "Complété",
+  "preview": "Aperçu",
+  "edit": "Modifier",
+  "copy_json": "Copier Json",
+  "delete": "Supprimer"
 }

@@ -1,12 +1,13 @@
 import React from "react";
-import { Divider as DefaultDivider } from "@mui/material/";
+import {
+  Divider as DefaultDivider,
+  DividerProps as DefaultDividerProps,
+} from "@mui/material/";
 
-type Props = {
-  variant?: "fullWidth" | "inset" | "middle" | undefined;
-};
+interface DividerProps extends DefaultDividerProps {}
 
-const Divider = ({ variant, ...rest }: Props) => {
-  return <DefaultDivider variant={variant} />;
+const Divider = ({ ...rest }: DividerProps) => {
+  return <DefaultDivider {...rest} />;
 };
 
 export default Divider;

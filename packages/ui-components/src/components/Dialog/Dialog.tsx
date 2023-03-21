@@ -1,16 +1,13 @@
-import React from "react";
-import { Dialog as DefaultDialog } from "@mui/material/";
+import {
+  Dialog as DefaultDialog,
+  DialogProps as DefaultDialogProps,
+} from "@mui/material/";
 
-type Props = {
-  open: boolean;
-  children?: React.ReactNode;
-  onClose:
-    | ((event: {}, reason: "backdropClick" | "escapeKeyDown") => void)
-    | undefined;
-  style?: React.CSSProperties;
-};
+interface DialogProps extends DefaultDialogProps {
+  style?: React.CSSProperties | undefined;
+}
 
-const Dialog = ({ open, style, onClose, children, ...rest }: Props) => {
+const Dialog = ({ style, ...rest }: DialogProps) => {
   return (
     <DefaultDialog
       fullWidth={true}
@@ -23,13 +20,8 @@ const Dialog = ({ open, style, onClose, children, ...rest }: Props) => {
           maxWidth: "42%",
         },
       }}
-      open={open}
-      onClose={onClose}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
-    >
-      {children}
-    </DefaultDialog>
+      {...rest}
+    ></DefaultDialog>
   );
 };
 

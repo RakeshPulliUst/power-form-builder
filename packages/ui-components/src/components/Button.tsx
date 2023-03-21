@@ -1,48 +1,18 @@
-import { Button as DefaultButton, SxProps, Theme } from "@mui/material";
+import {
+  Button as DefaultButton,
+  ButtonProps as DefaultButtonProps,
+} from "@mui/material";
 
-type Props = {
-  label: React.ReactNode;
-  color:
-    | "inherit"
-    | "primary"
-    | "secondary"
-    | "success"
-    | "error"
-    | "info"
-    | "warning";
-  size: "small" | "medium" | "large" | undefined;
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
-  fullWidth?: boolean;
-  disabled?: boolean;
-  sx?: SxProps<Theme> | undefined;
-  type?: "button" | "submit" | "reset" | undefined;
-};
+interface ButtonProps extends DefaultButtonProps {}
 
-const Button = ({
-  label,
-  color,
-  size,
-  onClick,
-  fullWidth,
-  disabled,
-  sx,
-  type,
-  ...rest
-}: Props) => {
+const Button = ({ ...rest }: ButtonProps) => {
   return (
     <DefaultButton
       variant="contained"
-      onClick={onClick}
-      color={color}
-      size={size}
-      type={type ? type : "submit"}
-      sx={sx ? sx : { mt: 5, mb: 2 }}
-      fullWidth={fullWidth}
-      disabled={disabled}
+      sx={{ mt: 5, mb: 2 }}
+      type="submit"
       {...rest}
-    >
-      {label}
-    </DefaultButton>
+    />
   );
 };
 

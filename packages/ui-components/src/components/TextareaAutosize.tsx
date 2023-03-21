@@ -1,41 +1,20 @@
-import { TextareaAutosize as DefaultTextareaAutosize } from "@mui/material";
-import React from "react";
+import {
+  TextareaAutosize as DefaultTextareaAutosize,
+  TextareaAutosizeProps as DefaultTextareaAutosizeProps,
+} from "@mui/material";
 
-type Props = {
+interface TextareaAutosizeProps extends DefaultTextareaAutosizeProps {
   label: string;
-  placeholder: string;
   width: number;
-  required: boolean;
-  minRows: number;
-  value: string;
-  onChange: React.ChangeEventHandler<HTMLTextAreaElement>;
-  name?: string;
-};
+}
 
-const TextareaAutosize = ({
-  label,
-  placeholder,
-  width,
-  required,
-  minRows,
-  value,
-  onChange,
-  name,
-  ...rest
-}: Props) => {
+const TextareaAutosize = ({ label, width, ...rest }: TextareaAutosizeProps) => {
   return (
     <>
       <label>{label}</label>
       <br />
       <DefaultTextareaAutosize
-        aria-label="empty textarea"
-        placeholder={placeholder}
-        minRows={minRows}
         style={{ width: width, marginTop: 20 }}
-        required={required}
-        value={value}
-        onChange={onChange}
-        name={name}
         {...rest}
       />
     </>

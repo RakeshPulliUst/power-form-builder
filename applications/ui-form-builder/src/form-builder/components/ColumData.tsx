@@ -97,12 +97,15 @@ const ColumnData: React.FC<{
   const handleData = () => {
     columnValues.label = columnLabel;
     let colDataSize: string;
+    let colDataValue: number;
     columnItemsData.map((item) => {
       colDataSize = item.columnDataSize.toString();
+      colDataValue = item.columnDataWidth;
       return columnItemsData;
     });
     finalColumnItemsData.map((item) => {
       item.columnDataSize = colDataSize;
+      item.columnDataWidth = colDataValue;
       return item;
     });
 
@@ -197,6 +200,7 @@ const ColumnData: React.FC<{
               required={true}
               value={columnLabel}
               onChange={handleColumnLabel}
+              variant={"outlined"}
             />
 
             {columnItemsData.map((item) => (
@@ -226,6 +230,8 @@ const ColumnData: React.FC<{
                   onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
                     handleChangeInput(item.id, e)
                   }
+                  variant={"outlined"}
+                  sx={{ m: 1 }}
                 />
                 {columnItemsData.length !== 1 ? (
                   <span
@@ -247,18 +253,12 @@ const ColumnData: React.FC<{
         </TabContext>
       </DialogContent>
       <DialogActions>
-        <Button
-          label="Cancel"
-          color="error"
-          onClick={handleClose}
-          size="medium"
-        />
-        <Button
-          label="Save"
-          color="success"
-          onClick={handleData}
-          size="medium"
-        />
+        <Button color="error" onClick={handleClose} size="medium">
+          Cancel
+        </Button>
+        <Button color="success" onClick={handleData} size="medium">
+          Save
+        </Button>
       </DialogActions>
     </Dialog>
   );

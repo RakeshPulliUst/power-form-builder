@@ -1,21 +1,21 @@
 import * as React from "react";
 import FormControl from "@mui/material/FormControl";
-import { Table as DefaultTable } from "@mui/material";
+import {
+  Table as DefaultTable,
+  TableProps as DefaultTableProps,
+} from "@mui/material";
 import TableContainer from "@mui/material/TableContainer";
 import Paper from "@mui/material/Paper";
 
-type Props = {
-  children: React.ReactNode;
+interface TableProps extends DefaultTableProps {
   minWidth: number;
-};
+}
 
-const Table = ({ children, minWidth, ...rest }: Props) => {
+const Table = ({ minWidth, ...rest }: TableProps) => {
   return (
     <FormControl sx={{ m: 1 }}>
       <TableContainer component={Paper}>
-        <DefaultTable sx={{ minWidth: minWidth }} aria-label="simple table">
-          {children}
-        </DefaultTable>
+        <DefaultTable sx={{ minWidth: minWidth }} {...rest} />
       </TableContainer>
     </FormControl>
   );

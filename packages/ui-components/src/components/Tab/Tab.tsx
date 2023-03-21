@@ -1,13 +1,10 @@
 import React from "react";
-import { Tab as DefaultTab } from "@mui/material";
+import { Tab as DefaultTab, TabProps as DefaultTabProps } from "@mui/material";
 
-type Props = {
-  label: React.ReactNode;
-  value: any;
-};
+interface TabProps extends DefaultTabProps {}
 
-const Tab = ({ label, value, ...rest }: Props) => {
-  return <DefaultTab label={label} value={value} />;
+const Tab = ({ ...rest }: TabProps) => {
+  return <DefaultTab {...rest} />;
 };
 
 export default Tab;

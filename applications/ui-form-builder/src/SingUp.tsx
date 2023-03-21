@@ -82,7 +82,7 @@ const SignUp: React.FC<SignUpProps> = ({ loading, error, signup }) => {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container maxWidth="xs">
       <Paper elevation={5} style={paperStyle}>
         <Box
           sx={{
@@ -95,9 +95,7 @@ const SignUp: React.FC<SignUpProps> = ({ loading, error, signup }) => {
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <MuiLockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign up
-          </Typography>
+          <Typography variant="h5">Sign up</Typography>
           <Box
             component="form"
             onSubmit={handleSubmit(onSubmit)}
@@ -193,12 +191,9 @@ const SignUp: React.FC<SignUpProps> = ({ loading, error, signup }) => {
             {loading ? (
               <CircularProgress />
             ) : (
-              <Button
-                label="Sign up"
-                size="medium"
-                color="primary"
-                fullWidth
-              ></Button>
+              <Button size="medium" color="primary" fullWidth>
+                Sign up
+              </Button>
             )}
             {error && (
               <Typography color="error" variant="body2">

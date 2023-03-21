@@ -163,6 +163,7 @@ const TabsData: React.FC<{
               required={true}
               value={tabsLabel}
               onChange={handleTabsLabel}
+              variant={"outlined"}
             />
           </TabPanel>
           <TabPanel value="2">
@@ -178,6 +179,7 @@ const TabsData: React.FC<{
                   onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
                     handleChangeInput(item.id, e)
                   }
+                  variant={"outlined"}
                 />
                 &nbsp;
                 <TextField
@@ -189,6 +191,7 @@ const TabsData: React.FC<{
                   onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
                     handleChangeInput(item.id, e)
                   }
+                  variant={"outlined"}
                 />
                 {tabItemsData.length !== 1 ? (
                   <span
@@ -210,18 +213,12 @@ const TabsData: React.FC<{
         </TabContext>
       </DialogContent>
       <DialogActions>
-        <Button
-          label="Cancel"
-          color="error"
-          onClick={handleClose}
-          size="medium"
-        />
-        <Button
-          label="Save"
-          color="success"
-          onClick={handleData}
-          size="medium"
-        />
+        <Button color="error" onClick={handleClose} size="medium">
+          Cancel
+        </Button>
+        <Button color="success" onClick={handleData} size="medium">
+          Save
+        </Button>
       </DialogActions>
     </Dialog>
   );

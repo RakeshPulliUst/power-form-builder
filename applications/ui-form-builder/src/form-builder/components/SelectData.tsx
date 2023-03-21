@@ -116,7 +116,15 @@ const SelectData: React.FC<{
     setSelectSize([element.size!]);
     setSelectWidth(element.width?.toString()!);
     setMenuItemsData(element.menuItems!);
-  }, [element.label, element.menuItems, element.multipleValues, element.placeholder, element.required, element.size, element.width]);
+  }, [
+    element.label,
+    element.menuItems,
+    element.multipleValues,
+    element.placeholder,
+    element.required,
+    element.size,
+    element.width,
+  ]);
 
   const handleChangeInput = (
     id: string,
@@ -180,6 +188,8 @@ const SelectData: React.FC<{
               required={true}
               value={selectLabel}
               onChange={handleSelectLabel}
+              variant={"outlined"}
+              sx={{ ml: 1 }}
             />
             <br />
             <br />
@@ -189,6 +199,8 @@ const SelectData: React.FC<{
               placeholder={textPlaceholder}
               value={textPlaceholder}
               onChange={handleTextPlaceholder}
+              variant={"outlined"}
+              sx={{ ml: 1 }}
             />
             <br />
             <br />
@@ -198,6 +210,8 @@ const SelectData: React.FC<{
               placeholder="Enter Width"
               value={selectWidth}
               onChange={handleSelectWidth}
+              variant={"outlined"}
+              sx={{ ml: 1 }}
             />
             <br />
             <br />
@@ -234,6 +248,7 @@ const SelectData: React.FC<{
                   onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
                     handleChangeInput(item.id, e)
                   }
+                  variant={"outlined"}
                 />
                 &nbsp;
                 <TextField
@@ -245,6 +260,7 @@ const SelectData: React.FC<{
                   onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
                     handleChangeInput(item.id, e)
                   }
+                  variant={"outlined"}
                 />
                 {menuItemsData.length !== 1 ? (
                   <span
@@ -274,18 +290,12 @@ const SelectData: React.FC<{
         </TabContext>
       </DialogContent>
       <DialogActions>
-        <Button
-          label="Cancel"
-          color="error"
-          onClick={handleClose}
-          size="medium"
-        />
-        <Button
-          label="Save"
-          color="success"
-          onClick={handleData}
-          size="medium"
-        />
+        <Button color="error" onClick={handleClose} size="medium">
+          Cancel
+        </Button>
+        <Button color="success" onClick={handleData} size="medium">
+          Save
+        </Button>
       </DialogActions>
     </Dialog>
   );

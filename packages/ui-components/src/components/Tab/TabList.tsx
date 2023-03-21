@@ -1,17 +1,20 @@
 import React from "react";
-import { TabList as DefaultTabList } from "@mui/lab";
+import {
+  TabList as DefaultTabList,
+  TabListProps as DefaultTabListProps,
+} from "@mui/lab";
 import Tab from "@mui/material/Tab";
-type Props = {
-  onChange: (event: React.ChangeEvent<{}>, value: any) => void;
+
+interface TabListProps extends DefaultTabListProps {
   tabItems: {
     label: React.ReactNode;
     value: string;
   }[];
-};
+}
 
-const TabList = ({ onChange, tabItems, ...rest }: Props) => {
+const TabList = ({ tabItems, ...rest }: TabListProps) => {
   return (
-    <DefaultTabList onChange={onChange}>
+    <DefaultTabList {...rest}>
       {tabItems.map((item, index) => (
         <Tab label={item.label} value={item.value} />
       ))}

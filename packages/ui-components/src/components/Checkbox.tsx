@@ -1,44 +1,16 @@
 import FormControlLabel from "@mui/material/FormControlLabel";
-import { Checkbox as DefaultCheckbox } from "@mui/material";
+import {
+  Checkbox as DefaultCheckbox,
+  CheckboxProps as DefaultCheckBoxProps,
+} from "@mui/material";
 
-type Props = {
+interface CheckboxProps extends DefaultCheckBoxProps {
   label: string;
-  required: boolean;
-  onChange: (
-    event: React.ChangeEvent<HTMLInputElement>,
-    checked: boolean
-  ) => void;
-  checked?: boolean;
-  defaultChecked?: boolean;
-  name?: string;
-  value?: string;
-};
+}
 
-const Checkbox = ({
-  label,
-  required,
-  onChange,
-  checked,
-  defaultChecked,
-  name,
-  value,
-  ...rest
-}: Props) => {
+const Checkbox = ({ label, ...rest }: CheckboxProps) => {
   return (
-    <FormControlLabel
-      control={
-        <DefaultCheckbox
-          name={name}
-          onChange={onChange}
-          checked={checked}
-          required={required}
-          defaultChecked={defaultChecked}
-          value={value}
-          {...rest}
-        />
-      }
-      label={label}
-    />
+    <FormControlLabel control={<DefaultCheckbox {...rest} />} label={label} />
   );
 };
 export default Checkbox;

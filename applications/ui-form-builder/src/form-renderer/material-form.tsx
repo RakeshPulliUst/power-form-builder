@@ -160,9 +160,12 @@ function MaterialForm() {
                         onChange={handleFormDataValueChange}
                         placeholder={data.placeholder}
                         required={data.required!}
-                        minLength={data.minLength!}
-                        maxLength={data.maxLength!}
+                        inputProps={{
+                          minLength: data.minLength!,
+                          maxLength: data.maxLength!,
+                        }}
                         sx={{ mt: 2 }}
+                        variant={"outlined"}
                       />
                     ) : data.element === "Email" ? (
                       <TextField
@@ -172,11 +175,14 @@ function MaterialForm() {
                         onChange={handleFormDataValueChange}
                         placeholder={data.placeholder}
                         required={data.required!}
-                        minLength={data.minLength!}
-                        maxLength={data.maxLength!}
+                        inputProps={{
+                          minLength: data.minLength!,
+                          maxLength: data.maxLength!,
+                        }}
                         helperText={emailHelperText}
                         error={emailError}
                         sx={{ mt: 2 }}
+                        variant={"outlined"}
                       />
                     ) : data.element === "Password" ? (
                       <TextField
@@ -186,11 +192,14 @@ function MaterialForm() {
                         onChange={handleFormDataValueChange}
                         placeholder={data.placeholder}
                         required={data.required!}
-                        minLength={data.minLength!}
-                        maxLength={data.maxLength!}
+                        inputProps={{
+                          minLength: data.minLength!,
+                          maxLength: data.maxLength!,
+                        }}
                         helperText={passwordHelperText}
                         error={passwordError}
                         sx={{ mt: 2 }}
+                        variant={"outlined"}
                       />
                     ) : data.element === "TextArea" ? (
                       <TextField
@@ -199,11 +208,14 @@ function MaterialForm() {
                         placeholder={data.placeholder!}
                         name={data.label?.toLocaleLowerCase()}
                         onChange={handleFormDataValueChange}
-                        minLength={data.minLength!}
-                        maxLength={data.maxLength!}
+                        inputProps={{
+                          minLength: data.minLength!,
+                          maxLength: data.maxLength!,
+                        }}
                         rows={data.rows}
                         multiline={true}
                         sx={{ mt: 2 }}
+                        variant={"outlined"}
                       ></TextField>
                     ) : data.element === "Select" && !data.multipleValues ? (
                       <Select
@@ -270,7 +282,6 @@ function MaterialForm() {
                       />
                     ) : data.element === "Button" ? (
                       <Button
-                        label={data.label!}
                         color={
                           data.theme !== undefined
                             ? data.theme === "primary"
@@ -297,7 +308,9 @@ function MaterialForm() {
                               : "large"
                             : "medium"
                         }
-                      />
+                      >
+                        {data.label!}
+                      </Button>
                     ) : data.element === "Tabs" ? (
                       <>
                         <TabContext value={value}>
@@ -319,9 +332,12 @@ function MaterialForm() {
                                         onChange={handleFormDataValueChange}
                                         placeholder={item1.placeholder}
                                         required={item1.required!}
-                                        minLength={item1.minLength!}
-                                        maxLength={item1.maxLength!}
+                                        inputProps={{
+                                          minLength: item1.minLength!,
+                                          maxLength: item1.maxLength!,
+                                        }}
                                         sx={{ mt: 2 }}
+                                        variant={"outlined"}
                                       />
                                     </GridItem>
                                   ) : item1.element === "Password" ? (
@@ -333,11 +349,14 @@ function MaterialForm() {
                                         onChange={handleFormDataValueChange}
                                         placeholder={item1.placeholder}
                                         required={item1.required!}
-                                        minLength={item1.minLength!}
-                                        maxLength={item1.maxLength!}
+                                        inputProps={{
+                                          minLength: item1.minLength!,
+                                          maxLength: item1.maxLength!,
+                                        }}
                                         helperText={passwordHelperText}
                                         error={passwordError}
                                         sx={{ mt: 2 }}
+                                        variant={"outlined"}
                                       />
                                     </GridItem>
                                   ) : item1.element === "TextArea" ? (
@@ -348,11 +367,14 @@ function MaterialForm() {
                                         placeholder={item1.placeholder!}
                                         name={item1.label?.toLocaleLowerCase()}
                                         onChange={handleFormDataValueChange}
-                                        minLength={item1.minLength!}
-                                        maxLength={item1.maxLength!}
+                                        inputProps={{
+                                          minLength: item1.minLength!,
+                                          maxLength: item1.maxLength!,
+                                        }}
                                         rows={item1.rows}
                                         multiline={true}
                                         sx={{ mt: 2 }}
+                                        variant={"outlined"}
                                       ></TextField>
                                     </GridItem>
                                   ) : item1.element === "Email" ? (
@@ -364,11 +386,14 @@ function MaterialForm() {
                                         onChange={handleFormDataValueChange}
                                         placeholder={item1.placeholder}
                                         required={item1.required!}
-                                        minLength={item1.minLength!}
-                                        maxLength={item1.maxLength!}
+                                        inputProps={{
+                                          minLength: item1.minLength!,
+                                          maxLength: item1.maxLength!,
+                                        }}
                                         helperText={emailHelperText}
                                         error={emailError}
                                         sx={{ mt: 2 }}
+                                        variant={"outlined"}
                                       />
                                     </GridItem>
                                   ) : item1.element === "Select" &&
@@ -426,7 +451,6 @@ function MaterialForm() {
                                   ) : item1.element === "Button" ? (
                                     <GridItem>
                                       <Button
-                                        label={item1.label!}
                                         color={
                                           item1.theme !== undefined
                                             ? item1.theme === "primary"
@@ -453,7 +477,9 @@ function MaterialForm() {
                                               : "large"
                                             : "medium"
                                         }
-                                      />
+                                      >
+                                        {item1.label!}
+                                      </Button>
                                     </GridItem>
                                   ) : (
                                     <>Noo</>
@@ -474,6 +500,7 @@ function MaterialForm() {
                     <Grid alignItems="center" justifyContent="center">
                       {data.columnItems?.map((item, index) => (
                         <>
+                          {console.log(item)}
                           {item.label === "Column1" ? (
                             <GridItem xs={4}>
                               <Grid>
@@ -487,9 +514,12 @@ function MaterialForm() {
                                           onChange={handleFormDataValueChange}
                                           placeholder={item1.placeholder}
                                           required={item1.required!}
-                                          minLength={item1.minLength!}
-                                          maxLength={item1.maxLength!}
+                                          inputProps={{
+                                            minLength: item1.minLength!,
+                                            maxLength: item1.maxLength!,
+                                          }}
                                           sx={{ mt: 2 }}
+                                          variant={"outlined"}
                                         />
                                       </GridItem>
                                     ) : item1.element === "Password" ? (
@@ -501,11 +531,14 @@ function MaterialForm() {
                                           onChange={handleFormDataValueChange}
                                           placeholder={item1.placeholder}
                                           required={item1.required!}
-                                          minLength={item1.minLength!}
-                                          maxLength={item1.maxLength!}
+                                          inputProps={{
+                                            minLength: item1.minLength!,
+                                            maxLength: item1.maxLength!,
+                                          }}
                                           helperText={passwordHelperText}
                                           error={passwordError}
                                           sx={{ mt: 2 }}
+                                          variant={"outlined"}
                                         />
                                       </GridItem>
                                     ) : item1.element === "TextArea" ? (
@@ -516,11 +549,14 @@ function MaterialForm() {
                                           placeholder={item1.placeholder!}
                                           name={item1.label?.toLocaleLowerCase()}
                                           onChange={handleFormDataValueChange}
-                                          minLength={item1.minLength!}
-                                          maxLength={item1.maxLength!}
+                                          inputProps={{
+                                            minLength: item1.minLength!,
+                                            maxLength: item1.maxLength!,
+                                          }}
                                           rows={item1.rows}
                                           multiline={true}
                                           sx={{ mt: 2 }}
+                                          variant={"outlined"}
                                         ></TextField>
                                       </GridItem>
                                     ) : item1.element === "Email" ? (
@@ -532,11 +568,14 @@ function MaterialForm() {
                                           onChange={handleFormDataValueChange}
                                           placeholder={item1.placeholder}
                                           required={item1.required!}
-                                          minLength={item1.minLength!}
-                                          maxLength={item1.maxLength!}
+                                          inputProps={{
+                                            minLength: item1.minLength!,
+                                            maxLength: item1.maxLength!,
+                                          }}
                                           helperText={emailHelperText}
                                           error={emailError}
                                           sx={{ mt: 2 }}
+                                          variant={"outlined"}
                                         />
                                       </GridItem>
                                     ) : item1.element === "Select" &&
@@ -594,7 +633,6 @@ function MaterialForm() {
                                     ) : item1.element === "Button" ? (
                                       <GridItem>
                                         <Button
-                                          label={item1.label!}
                                           color={
                                             item1.theme !== undefined
                                               ? item1.theme === "primary"
@@ -621,7 +659,9 @@ function MaterialForm() {
                                                 : "large"
                                               : "medium"
                                           }
-                                        />
+                                        >
+                                          {item1.label!}
+                                        </Button>
                                       </GridItem>
                                     ) : (
                                       <>Noo</>
@@ -643,9 +683,12 @@ function MaterialForm() {
                                           onChange={handleFormDataValueChange}
                                           placeholder={item1.placeholder}
                                           required={item1.required!}
-                                          minLength={item1.minLength!}
-                                          maxLength={item1.maxLength!}
+                                          inputProps={{
+                                            minLength: item1.minLength!,
+                                            maxLength: item1.maxLength!,
+                                          }}
                                           sx={{ mt: 2 }}
+                                          variant={"outlined"}
                                         />
                                       </GridItem>
                                     ) : item1.element === "Password" ? (
@@ -657,11 +700,14 @@ function MaterialForm() {
                                           onChange={handleFormDataValueChange}
                                           placeholder={item1.placeholder}
                                           required={item1.required!}
-                                          minLength={item1.minLength!}
-                                          maxLength={item1.maxLength!}
+                                          inputProps={{
+                                            minLength: item1.minLength!,
+                                            maxLength: item1.maxLength!,
+                                          }}
                                           helperText={passwordHelperText}
                                           error={passwordError}
                                           sx={{ mt: 2 }}
+                                          variant={"outlined"}
                                         />
                                       </GridItem>
                                     ) : item1.element === "TextArea" ? (
@@ -672,11 +718,14 @@ function MaterialForm() {
                                           placeholder={item1.placeholder!}
                                           name={item1.label?.toLocaleLowerCase()}
                                           onChange={handleFormDataValueChange}
-                                          minLength={item1.minLength!}
-                                          maxLength={item1.maxLength!}
+                                          inputProps={{
+                                            minLength: item1.minLength!,
+                                            maxLength: item1.maxLength!,
+                                          }}
                                           rows={item1.rows}
                                           multiline={true}
                                           sx={{ mt: 2 }}
+                                          variant={"outlined"}
                                         ></TextField>
                                       </GridItem>
                                     ) : item1.element === "Email" ? (
@@ -688,11 +737,14 @@ function MaterialForm() {
                                           onChange={handleFormDataValueChange}
                                           placeholder={item1.placeholder}
                                           required={item1.required!}
-                                          minLength={item1.minLength!}
-                                          maxLength={item1.maxLength!}
+                                          inputProps={{
+                                            minLength: item1.minLength!,
+                                            maxLength: item1.maxLength!,
+                                          }}
                                           helperText={emailHelperText}
                                           error={emailError}
                                           sx={{ mt: 2 }}
+                                          variant={"outlined"}
                                         />
                                       </GridItem>
                                     ) : item1.element === "Select" &&
@@ -750,7 +802,6 @@ function MaterialForm() {
                                     ) : item1.element === "Button" ? (
                                       <GridItem>
                                         <Button
-                                          label={item1.label!}
                                           color={
                                             item1.theme !== undefined
                                               ? item1.theme === "primary"
@@ -777,7 +828,9 @@ function MaterialForm() {
                                                 : "large"
                                               : "medium"
                                           }
-                                        />
+                                        >
+                                          {item1.label!}
+                                        </Button>
                                       </GridItem>
                                     ) : (
                                       <>Noo</>
@@ -805,7 +858,9 @@ function MaterialForm() {
           })}
           <Grid alignItems="center" justifyContent="center">
             <GridItem>
-              <Button label={"Submit"} color={"success"} size={"medium"} />
+              <Button color={"success"} size={"medium"}>
+                Submit
+              </Button>
             </GridItem>
           </Grid>
         </form>

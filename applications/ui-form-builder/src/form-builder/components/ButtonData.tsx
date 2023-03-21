@@ -122,6 +122,8 @@ const ButtonData: React.FC<{
               required={true}
               value={buttonLabel}
               onChange={handleButtonLabel}
+              variant={"outlined"}
+              sx={{ m: 1 }}
             />
             <br />
             <br />
@@ -153,18 +155,12 @@ const ButtonData: React.FC<{
         </TabContext>
       </DialogContent>
       <DialogActions>
-        <Button
-          label="Cancel"
-          color="error"
-          onClick={handleClose}
-          size="medium"
-        />
-        <Button
-          label="Save"
-          color="success"
-          onClick={handleData}
-          size="medium"
-        />
+        <Button color="error" onClick={handleClose} size="medium">
+          Cancel
+        </Button>
+        <Button color="success" onClick={handleData} size="medium">
+          Save
+        </Button>
       </DialogActions>
     </Dialog>
   );

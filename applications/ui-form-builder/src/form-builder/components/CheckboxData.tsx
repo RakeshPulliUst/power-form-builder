@@ -106,6 +106,7 @@ const CheckboxData: React.FC<{
               required={true}
               value={checkboxLabel}
               onChange={handleTextChange}
+              variant={"outlined"}
             />
             <br />
             <br />
@@ -132,23 +133,18 @@ const CheckboxData: React.FC<{
               placeholder="Enter Error Label"
               value={errorLabel}
               onChange={handleErrorLabel}
+              variant={"outlined"}
             />
           </TabPanel>
         </TabContext>
       </DialogContent>
       <DialogActions>
-        <Button
-          label="Cancel"
-          color="error"
-          onClick={handleClose}
-          size="medium"
-        />
-        <Button
-          label="Save"
-          color="success"
-          onClick={handleData}
-          size="medium"
-        />
+        <Button color="error" onClick={handleClose} size="medium">
+          Cancel
+        </Button>
+        <Button color="success" onClick={handleData} size="medium">
+          Save
+        </Button>
       </DialogActions>
     </Dialog>
   );

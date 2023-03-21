@@ -80,7 +80,7 @@ const SignIn = () => {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container maxWidth="xs">
       <Paper elevation={5} style={paperStyle}>
         <Box
           sx={{
@@ -93,9 +93,7 @@ const SignIn = () => {
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <MuiLockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in
-          </Typography>
+          <Typography variant="h5">Sign in</Typography>
           <form onSubmit={handleSubmit(onSubmit)}>
             <TextField
               fullWidth
@@ -137,12 +135,9 @@ const SignIn = () => {
               sx={{ mt: 2 }}
             />
 
-            <Button
-              label="Sign In"
-              color="primary"
-              size="medium"
-              fullWidth={true}
-            />
+            <Button color="primary" size="medium" fullWidth={true}>
+              Sign In
+            </Button>
 
             <Grid>
               <GridItem>

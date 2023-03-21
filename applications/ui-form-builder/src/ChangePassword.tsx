@@ -140,18 +140,16 @@ const ChangePassword = ({
           </TabContext>
         </DialogContent>
         <DialogActions>
+          <Button color="error" onClick={handleClose1} size="medium">
+            Cancel
+          </Button>
           <Button
-            label="Cancel"
-            color="error"
-            onClick={handleClose1}
-            size="medium"
-          />
-          <Button
-            label="Save"
             color="success"
             onClick={handleSubmit(onSubmit)}
             size="medium"
-          />
+          >
+            Save
+          </Button>
         </DialogActions>
       </Dialog>
     </div>

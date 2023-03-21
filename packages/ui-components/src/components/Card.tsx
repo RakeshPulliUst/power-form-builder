@@ -1,14 +1,17 @@
-import { Card as DefaultCard, CardContent } from "@mui/material";
+import {
+  Card as DefaultCard,
+  CardContent,
+  CardProps as DefaultCardProps,
+} from "@mui/material";
 import React from "react";
 
-type Props = {
-  minWidth: number;
+interface CardProps extends DefaultCardProps {
   children: React.ReactNode;
-};
+}
 
-const Card = ({ minWidth, children, ...rest }: Props) => {
+const Card = ({ children, ...rest }: CardProps) => {
   return (
-    <DefaultCard sx={{ minWidth: minWidth }} {...rest}>
+    <DefaultCard {...rest}>
       <CardContent>{children}</CardContent>
     </DefaultCard>
   );

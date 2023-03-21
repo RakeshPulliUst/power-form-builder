@@ -160,6 +160,8 @@ const RadioButtonData: React.FC<{
               required={true}
               value={radioLabel}
               onChange={handleRadioLabelChange}
+              variant={"outlined"}
+              sx={{ m: 1 }}
             />
             <br />
             <br />
@@ -188,6 +190,7 @@ const RadioButtonData: React.FC<{
                   onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
                     handleChangeInput(item.id, e)
                   }
+                  variant={"outlined"}
                 />
                 &nbsp;
                 <TextField
@@ -199,6 +202,7 @@ const RadioButtonData: React.FC<{
                   onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
                     handleChangeInput(item.id, e)
                   }
+                  variant={"outlined"}
                 />
                 {radioItems.length !== 1 ? (
                   <span
@@ -228,18 +232,12 @@ const RadioButtonData: React.FC<{
         </TabContext>
       </DialogContent>
       <DialogActions>
-        <Button
-          label="Cancel"
-          color="error"
-          onClick={handleClose}
-          size="medium"
-        />
-        <Button
-          label="Save"
-          color="success"
-          onClick={handleData}
-          size="medium"
-        />
+        <Button color="error" onClick={handleClose} size="medium">
+          Cancel
+        </Button>
+        <Button color="success" onClick={handleData} size="medium">
+          Save
+        </Button>
       </DialogActions>
     </Dialog>
   );

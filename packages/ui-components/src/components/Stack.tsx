@@ -1,36 +1,12 @@
-import React from "react";
-import { Stack as DefaultStack } from "@mui/material";
-import { ResponsiveStyleValue } from "@mui/system";
+import {
+  Stack as DefaultStack,
+  StackProps as DefaultStackProps,
+} from "@mui/material";
 
-type Props = {
-  width?: string;
-  direction?:
-    | ResponsiveStyleValue<"row" | "row-reverse" | "column" | "column-reverse">
-    | undefined;
-  spacing?: number;
-  padding?: number;
-  children: React.ReactNode;
-};
+interface StackProps extends DefaultStackProps {}
 
-const Stack = ({
-  width,
-  direction,
-  spacing,
-  padding,
-  children,
-  ...rest
-}: Props) => {
-  return (
-    <DefaultStack
-      width={width}
-      spacing={spacing}
-      padding={padding}
-      direction={direction}
-      {...rest}
-    >
-      {children}
-    </DefaultStack>
-  );
+const Stack = ({ ...rest }: StackProps) => {
+  return <DefaultStack {...rest} />;
 };
 
 export default Stack;

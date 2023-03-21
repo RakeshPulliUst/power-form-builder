@@ -9,9 +9,6 @@ import Select from "./components/Select";
 import Grid from "./components/Grid";
 import GridItem from "./components/GridItem";
 import Alert from "./components/Alert";
-import TextFieldSelect from "./components/TextFieldSelect";
-import SelectChangeEvent from "@mui/material/Select";
-import Tabs from "./components/Tabs";
 import Dialog from "./components/Dialog/Dialog";
 import DialogTitle from "./components/Dialog/DialogTitle";
 import DialogContent from "./components/Dialog/DialogContent";
@@ -33,6 +30,7 @@ import Link from "./components/Link";
 import MuiLockOutlinedIcon from "./components/MuiLockOutlinedIcon";
 import Paper from "./components/Paper";
 import Divider from "./components/Divider";
+import Tooltip from "./components/Tooltip";
 
 export {
   Button,
@@ -51,9 +49,6 @@ export {
   Grid,
   GridItem,
   Alert,
-  TextFieldSelect,
-  SelectChangeEvent,
-  Tabs,
   Table,
   TableHead,
   TableBody,
@@ -70,4 +65,5 @@ export {
   MuiLockOutlinedIcon,
   Paper,
   Divider,
+  Tooltip,
 };

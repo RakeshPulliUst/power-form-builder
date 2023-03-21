@@ -1,12 +1,12 @@
-import React from "react";
-import { TabPanel as DefaultTabPanel } from "@mui/lab";
-type Props = {
-  value: string;
-  children: React.ReactNode;
-};
+import {
+  TabPanel as DefaultTabPanel,
+  TabPanelProps as DefaultTabPanelProps,
+} from "@mui/lab";
 
-const TabPanel = ({ value, children }: Props) => {
-  return <DefaultTabPanel value={value}>{children}</DefaultTabPanel>;
+interface TabContextProps extends DefaultTabPanelProps {}
+
+const TabPanel = ({ ...rest }: TabContextProps) => {
+  return <DefaultTabPanel {...rest} />;
 };
 
 export default TabPanel;

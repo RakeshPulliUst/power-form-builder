@@ -139,6 +139,7 @@ const TextFieldData: React.FC<{
               required={true}
               value={textValue}
               onChange={handleTextChange}
+              variant={"outlined"}
             />
             <br />
             <br />
@@ -148,6 +149,7 @@ const TextFieldData: React.FC<{
               placeholder={textPlaceholder}
               value={textPlaceholder}
               onChange={handleTextPlaceholder}
+              variant={"outlined"}
             />
           </TabPanel>
           <TabPanel value="2">
@@ -165,6 +167,7 @@ const TextFieldData: React.FC<{
               value={textMinLength.toString()}
               placeholder="Enter Minimum Length"
               onChange={handleTextMinLength}
+              variant={"outlined"}
             />
             <br />
             <br />
@@ -174,6 +177,7 @@ const TextFieldData: React.FC<{
               placeholder="Enter Maximum Length"
               value={textMaxLength.toString()}
               onChange={handleTextMaxLength}
+              variant={"outlined"}
             />
             <br />
             {element.element === "TextArea" ? (
@@ -185,6 +189,7 @@ const TextFieldData: React.FC<{
                   placeholder="Enter Rows"
                   value={rows.toString()}
                   onChange={handlerows}
+                  variant={"outlined"}
                 />
               </>
             ) : (
@@ -194,18 +199,12 @@ const TextFieldData: React.FC<{
         </TabContext>
       </DialogContent>
       <DialogActions>
-        <Button
-          label="Cancel"
-          color="error"
-          onClick={handleClose}
-          size="medium"
-        />
-        <Button
-          label="Save"
-          color="success"
-          onClick={handleData}
-          size="medium"
-        />
+        <Button color="error" onClick={handleClose} size="medium">
+          Cancel
+        </Button>
+        <Button color="success" onClick={handleData} size="medium">
+          Save
+        </Button>
       </DialogActions>
     </Dialog>
   );

@@ -1,12 +1,13 @@
 import React from "react";
-import { DialogContent as DefaultDialogContent } from "@mui/material";
+import {
+  DialogContent as DefaultDialogContent,
+  DialogContentProps as DefaultDialogContentProps,
+} from "@mui/material";
 
-type Props = {
-  children: React.ReactNode;
-};
+interface DialogContentProps extends DefaultDialogContentProps {}
 
-const DialogContent = ({ children, ...rest }: Props) => {
-  return <DefaultDialogContent>{children}</DefaultDialogContent>;
+const DialogContent = ({ ...rest }: DialogContentProps) => {
+  return <DefaultDialogContent {...rest}></DefaultDialogContent>;
 };
 
 export default DialogContent;

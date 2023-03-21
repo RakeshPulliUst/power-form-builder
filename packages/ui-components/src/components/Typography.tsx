@@ -1,27 +1,13 @@
 import React from "react";
 import {
   Typography as DefaultTypography,
+  TypographyProps as DefaultTypographyProps,
 } from "@mui/material";
 
-type Props = {
-  children: React.ReactNode;
-  component?: any;
-  variant?: any;
-  color?: any;
-};
+interface TypographyProps extends DefaultTypographyProps {}
 
-const Typography = ({
-  children,
-  component,
-  variant,
-  color,
-  ...rest
-}: Props) => {
-  return (
-    <DefaultTypography component={component} variant={variant} color={color}>
-      {children}
-    </DefaultTypography>
-  );
+const Typography = ({ ...rest }: TypographyProps) => {
+  return <DefaultTypography {...rest} />;
 };
 
 export default Typography;

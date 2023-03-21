@@ -67,13 +67,6 @@ export interface TextFieldDiaglog {
     }[],
   }
 
-  export interface ColumnItemsDialog {
-      id: string
-      label: string,
-      columnDataSize: string[],
-      columnDataWidth: number,
-      columnComponents: Element[]
-  }
 
 export interface TabsDialog {
   label: string,

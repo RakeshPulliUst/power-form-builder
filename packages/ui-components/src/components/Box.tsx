@@ -1,41 +1,10 @@
 import React from "react";
-import { Box as DefaultBox, SxProps, Theme } from "@mui/material";
+import { Box as DefaultBox, BoxProps as DefaultBoxProps } from "@mui/material";
 
-type Props = {
-  children: React.ReactNode;
-  sx?: SxProps<Theme> | undefined;
-  component?: "form" & (React.ElementType<any> | undefined);
-  onSubmit?:
-    | React.FormEventHandler<HTMLFormElement | HTMLDivElement>
-    | undefined;
-  flexGrow?: number;
-  display?: string;
-  alignItems?: string;
-};
+interface BoxProps extends DefaultBoxProps {}
 
-const Box = ({
-  children,
-  sx,
-  component,
-  onSubmit,
-  flexGrow,
-  display,
-  alignItems,
-  ...rest
-}: Props) => {
-  return (
-    <DefaultBox
-      sx={sx}
-      component={component}
-      onSubmit={onSubmit}
-      flexGrow={flexGrow}
-      display={display}
-      alignItems={alignItems}
-    >
-      {" "}
-      {children}
-    </DefaultBox>
-  );
+const Box = ({ ...rest }: BoxProps) => {
+  return <DefaultBox {...rest} />;
 };
 
 export default Box;

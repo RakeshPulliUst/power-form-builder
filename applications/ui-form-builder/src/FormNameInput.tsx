@@ -7,6 +7,7 @@ import {
   TabContext,
   TabPanel,
   Divider,
+  //TextField,
 } from "@power-form-builder/ui-components";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@power-form-builder/ui-components";
@@ -22,7 +23,7 @@ type Props = {
   handleClose: () => void;
 };
 
-type FormNameInput = {
+type FormNameInputProps = {
   formName: string;
 };
 
@@ -35,7 +36,7 @@ const FormNameInput = ({ open, handleOpen, handleClose }: Props) => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormNameInput>();
+  } = useForm<FormNameInputProps>();
 
   const handleClose1 = () => {
     console.log(!open1);
@@ -62,9 +63,11 @@ const FormNameInput = ({ open, handleOpen, handleClose }: Props) => {
     );
   };
 
-  const onSubmit = (data: FormNameInput) => {
+  const onSubmit = (data: FormNameInputProps) => {
+    console.log(errors);
     try {
       console.log("started");
+      console.log(errors);
       const formName = data.formName;
       console.log({
         formName: formName,
@@ -83,12 +86,18 @@ const FormNameInput = ({ open, handleOpen, handleClose }: Props) => {
       <Dialog
         open={open1}
         onClose={handleClose}
-        style={{
-          minHeight: "10%",
-          maxHeight: "100%",
-          minWidth: "15%",
-          maxWidth: "25%",
-        }}
+        // style={{
+        //   minHeight: "60%",
+        //   maxHeight: "60%",
+        //   minWidth: "55%",
+        //   maxWidth: "65%",
+        // }}
+        // style={{
+        //   minHeight: "30%",
+        //   maxHeight: "100%",
+        //   minWidth: "30%",
+        //   maxWidth: "50%",
+        // }}
       >
         <DialogTitle title="Form Details">
           <CloseOutlinedIcon
@@ -104,6 +113,7 @@ const FormNameInput = ({ open, handleOpen, handleClose }: Props) => {
               <TextField
                 label="Form Name"
                 placeholder="Enter Form Name"
+                id="formName"
                 {...register("formName", {
                   required: "Form Name is required",
                   maxLength: {
@@ -120,23 +130,23 @@ const FormNameInput = ({ open, handleOpen, handleClose }: Props) => {
                 })}
                 error={Boolean(errors.formName)}
                 helperText={errors.formName?.message}
+                variant="outlined"
               />
+              {errors.formName && <span>Name is required</span>}
             </TabPanel>
           </TabContext>
         </DialogContent>
         <DialogActions>
+          <Button color="error" onClick={handleClose1} size="medium">
+            Cancel
+          </Button>
           <Button
-            label="Cancel"
-            color="error"
-            onClick={handleClose1}
-            size="medium"
-          />
-          <Button
-            label="Save"
             color="success"
             onClick={handleSubmit(onSubmit)}
             size="medium"
-          />
+          >
+            Save
+          </Button>
         </DialogActions>
       </Dialog>
     </div>

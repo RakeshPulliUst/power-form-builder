@@ -1,18 +1,12 @@
 import React from "react";
-import { Link as DefaultLink } from "@mui/material";
+import {
+  Link as DefaultLink,
+  LinkProps as DefaultLinkProps,
+} from "@mui/material";
 
-type Props = {
-  children: React.ReactNode;
-  href?: string | undefined;
-  variant?: any;
+interface LinkProps extends DefaultLinkProps {}
+
+const Link = ({ ...rest }: LinkProps) => {
+  return <DefaultLink {...rest} />;
 };
-
-const Link = ({ children, href, variant, ...rest }: Props) => {
-  return (
-    <DefaultLink href={href} variant={variant}>
-      {children}
-    </DefaultLink>
-  );
-};
-
 export default Link;

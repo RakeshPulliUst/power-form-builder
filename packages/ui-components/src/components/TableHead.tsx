@@ -1,14 +1,14 @@
 import React from "react";
-import { TableHead as DefaultTableHead } from "@mui/material";
-type Props = {
-  children: React.ReactNode;
-};
+import {
+  TableHead as DefaultTableHead,
+  TableHeadProps as DefaultTableHeadProps,
+} from "@mui/material";
 
-function TableHead({ children, ...rest }: Props) {
+interface TableHeadProps extends DefaultTableHeadProps {}
+
+function TableHead({ ...rest }: TableHeadProps) {
   return (
-    <DefaultTableHead sx={{ backgroundColor: "rgb(0,0,0,0.2)" }}>
-      {children}
-    </DefaultTableHead>
+    <DefaultTableHead sx={{ backgroundColor: "rgb(0,0,0,0.2)" }} {...rest} />
   );
 }
 

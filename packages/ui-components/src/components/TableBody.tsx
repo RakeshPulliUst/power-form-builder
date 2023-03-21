@@ -1,11 +1,12 @@
-import React from "react";
-import { TableBody as DefaultTableBody } from "@mui/material";
-type Props = {
-  children: React.ReactNode;
-};
+import {
+  TableBody as DefaultTableBody,
+  TableBodyProps as DefaultTableBodyProps,
+} from "@mui/material";
 
-function TableBody({ children, ...rest }: Props) {
-  return <DefaultTableBody>{children}</DefaultTableBody>;
+interface TableBodyProps extends DefaultTableBodyProps {}
+
+function TableBody({ ...rest }: TableBodyProps) {
+  return <DefaultTableBody {...rest} />;
 }
 
 export default TableBody;

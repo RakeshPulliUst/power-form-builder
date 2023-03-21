@@ -22,11 +22,16 @@
     margin-top: 32px;
     }
     
+    .home-form-table{
+        display: flex;
+    }
+    
     @media screen and (max-width: 960px){
     .home-container > h1{
     font-size: 28px;
     margin-top: -150px;
     }
+    
     }
     
     @media screen and (max-width: 768px){

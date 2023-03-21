@@ -1,12 +1,12 @@
-import React from "react";
-import { TableRow as DefaultTableRow } from "@mui/material";
+import {
+  TableRow as DefaultTableRow,
+  TableRowProps as DefaultTableRowProps,
+} from "@mui/material";
 
-type Props = {
-  children: React.ReactNode;
-};
+interface TableRowProps extends DefaultTableRowProps {}
 
-function TableRow({ children, ...rest }: Props) {
-  return <DefaultTableRow>{children}</DefaultTableRow>;
+function TableRow({ ...rest }: TableRowProps) {
+  return <DefaultTableRow {...rest} />;
 }
 
 export default TableRow;

@@ -27,8 +27,7 @@ const UpdateFormBuilder = () => {
   } = location.state || {};
 
   const [formData, setFormData] = useState<FormJson>(sample);
-  const [finalSaveFormData] =
-    useState<FinalSaveFormJson>(finalSample);
+  const [finalSaveFormData] = useState<FinalSaveFormJson>(finalSample);
   const [formJsonData, setFormJsonData] = useState("");
   const [elements, setElements] = useState<Array<Element>>(components);
   const [CompletedElements, setCompletedElements] = useState<Array<Element>>(
@@ -305,19 +304,23 @@ const UpdateFormBuilder = () => {
       tabElements5
     );
     console.log(formInitialComponents);
-  }, [formInitialComponents, tabElements, tabElements2, tabElements3, tabElements4, tabElements5]);
+  }, [
+    formInitialComponents,
+    tabElements,
+    tabElements2,
+    tabElements3,
+    tabElements4,
+    tabElements5,
+  ]);
   return (
     <>
       <DragDropContext onDragEnd={onDragEnd}>
         <div className="App">
           <span className="heading">Form Builder</span>
           <span className="upperButton">
-            <Button
-              label="Update Form"
-              color="success"
-              size="medium"
-              onClick={handleClick}
-            ></Button>
+            <Button color="success" size="medium" onClick={handleClick}>
+              Update Form
+            </Button>
           </span>
           <ElementList
             show={show}
@@ -343,12 +346,9 @@ const UpdateFormBuilder = () => {
             setColumn1Elements={setColumn1Elements}
           />
 
-          <Button
-            label="Update Form"
-            color="success"
-            size="medium"
-            onClick={handleClick}
-          ></Button>
+          <Button color="success" size="medium" onClick={handleClick}>
+            Update Form
+          </Button>
         </div>
       </DragDropContext>
     </>

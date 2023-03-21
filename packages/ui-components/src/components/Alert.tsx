@@ -1,16 +1,16 @@
 import Stack from "./Stack";
-import { Alert as DefaultAlert } from "@mui/material";
+import {
+  Alert as DefaultAlert,
+  AlertProps as DefaultAlertProps,
+} from "@mui/material";
 
-type Props = {
-  label: string;
-  severity: "error" | "warning" | "info" | "success";
-};
+interface AlertProps extends DefaultAlertProps {}
 
-const Alert = (props: Props) => {
+const Alert = ({ ...rest }: AlertProps) => {
   return (
     <div>
       <Stack width={"100%"} spacing={2}>
-        <DefaultAlert severity={props.severity}>{props.label}</DefaultAlert>
+        <DefaultAlert {...rest} />
       </Stack>
     </div>
   );

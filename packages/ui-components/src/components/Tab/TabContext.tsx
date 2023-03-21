@@ -1,13 +1,13 @@
 import React from "react";
-import { TabContext as DefaultTabContext } from "@mui/lab";
+import {
+  TabContext as DefaultTabContext,
+  TabContextProps as DefaultTabContextProps,
+} from "@mui/lab";
 
-type Props = {
-  value: string;
-  children: React.ReactNode;
-};
+interface TabContextProps extends DefaultTabContextProps {}
 
-const TabContext = ({ value, children, ...rest }: Props) => {
-  return <DefaultTabContext value={value}>{children}</DefaultTabContext>;
+const TabContext = ({ ...rest }: TabContextProps) => {
+  return <DefaultTabContext {...rest} />;
 };
 
 export default TabContext;

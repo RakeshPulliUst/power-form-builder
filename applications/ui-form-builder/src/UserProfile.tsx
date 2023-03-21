@@ -111,7 +111,7 @@ const UserProfile = () => {
 
   return (
     <>
-      <Container component="main">
+      <Container>
         <Paper elevation={5} style={paperStyle}>
           <Box
             sx={{
@@ -124,9 +124,7 @@ const UserProfile = () => {
             <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
               <AssignmentIndOutlinedIcon />
             </Avatar>
-            <Typography component="h1" variant="h5">
-              Profile
-            </Typography>
+            <Typography variant="h5">Profile</Typography>
             <Box
               component="form"
               onSubmit={handleSubmit(onSubmit)}
@@ -201,22 +199,20 @@ const UserProfile = () => {
                 </GridItem>
                 <GridItem xs={16}>
                   <Button
-                    label="Change Password"
                     size="large"
                     color="secondary"
                     sx={{ mt: 1, mb: 3 }}
                     type="button"
                     onClick={handleChangePassword}
-                  />
+                  >
+                    Change Password
+                  </Button>
                 </GridItem>
               </Grid>
 
-              <Button
-                label="Update Profile"
-                size="medium"
-                color="success"
-                fullWidth
-              ></Button>
+              <Button size="medium" color="success" fullWidth>
+                Update Profile
+              </Button>
             </Box>
           </Box>
         </Paper>

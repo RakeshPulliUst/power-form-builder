@@ -4,5 +4,17 @@
   "welcome_message": "Welcome",
   "form_site": "FormSite",
   "build_form": "Build Form",
-  "welcome_to_our_formsite": "Welcome to our FormSite"
+  "welcome_to_our_formsite": "Welcome to our FormSite",
+  "id": "ID",
+  "form_name": "Form Name",
+  "created_date": "Created Date",
+  "modified_date": "Modified Date",
+  "status": "Status",
+  "action": "Action",
+  "in_progress": "In-Progress",
+  "completed": "Completed",
+  "preview": "Preview",
+  "edit": "Edit",
+  "copy_json": "Copy Json",
+  "delete": "Delete"
 }

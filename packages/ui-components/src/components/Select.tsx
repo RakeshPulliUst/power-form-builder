@@ -3,51 +3,32 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
-import { Select as DefaultSelect, SelectChangeEvent } from "@mui/material";
+import {
+  Select as DefaultSelect,
+  SelectProps as DefaultSelectProps,
+} from "@mui/material";
 
-type Props = {
+interface SelectProps extends DefaultSelectProps {
   label: string;
-  multiple: boolean;
   menuItems: {
     selectDataLabel: string;
     selectDataValue: string;
   }[];
   placeholder: string;
-  value?: string[];
-  textFieldWidth?: number;
-  name?: string;
-  required: boolean;
-  size: "small" | "medium";
   width?: number;
-  onChange?: (
-    event: SelectChangeEvent<string[]>,
-    child: React.ReactNode
-  ) => void;
-};
+}
 
 const Select = ({
   label,
-  value,
   menuItems,
-  multiple,
   placeholder,
-  required,
-  size,
   width,
-  name,
-  onChange,
   ...rest
-}: Props) => {
-
+}: SelectProps) => {
   return (
     <FormControl sx={{ m: 1, width: width }}>
       <InputLabel id="demo-multiple-name-label">{label}</InputLabel>
       <DefaultSelect
-        labelId="demo-multiple-name-label"
-        id="demo-multiple-name"
-        multiple={multiple}
-        value={value}
-        onChange={onChange}
         input={<OutlinedInput label={label} />}
         MenuProps={{
           style: {
@@ -55,9 +36,7 @@ const Select = ({
           },
         }}
         placeholder={placeholder}
-        name={name}
-        required={required}
-        size={size}
+        {...rest}
       >
         <MenuItem disabled value="">
           <em>{placeholder}</em>

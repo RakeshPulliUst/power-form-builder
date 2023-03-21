@@ -25,8 +25,7 @@ const FormBuilder = () => {
   const retrievedObject = JSON.parse(storedValue!);
 
   const [formData, setFormData] = useState<FormJson>(sample);
-  const [finalSaveFormData] =
-    useState<FinalSaveFormJson>(finalSample);
+  const [finalSaveFormData] = useState<FinalSaveFormJson>(finalSample);
   const [formJsonData, setFormJsonData] = useState("");
   const [elements, setElements] = useState<Array<Element>>(components);
   const [CompletedElements, setCompletedElements] = useState<Array<Element>>(
@@ -285,12 +284,9 @@ const FormBuilder = () => {
         <div className="App">
           <span className="heading">Form Builder</span>
           <span className="upperButton">
-            <Button
-              label="Save Form"
-              color="success"
-              size="medium"
-              onClick={handleClick}
-            ></Button>
+            <Button color="success" size="medium" onClick={handleClick}>
+              Save Form
+            </Button>
           </span>
           <ElementList
             show={show}
@@ -316,12 +312,9 @@ const FormBuilder = () => {
             setColumn1Elements={setColumn1Elements}
           />
 
-          <Button
-            label="Save Form"
-            color="success"
-            size="medium"
-            onClick={handleClick}
-          ></Button>
+          <Button color="success" size="medium" onClick={handleClick}>
+            Save Form
+          </Button>
         </div>
       </DragDropContext>
     </>

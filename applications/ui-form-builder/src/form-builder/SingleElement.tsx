@@ -239,7 +239,7 @@ const SingleElement: React.FC<{
       id: "1989",
       label: "Column1",
       columnDataSize: "md",
-      columnDataWidth: 220,
+      columnDataWidth: 0,
       columnComponents: [
         {
           id: 1012,
@@ -255,7 +255,7 @@ const SingleElement: React.FC<{
       id: "1989",
       label: "Column1",
       columnDataSize: "md",
-      columnDataWidth: 220,
+      columnDataWidth: 0,
       columnComponents: [
         {
           id: 1012,
@@ -268,7 +268,7 @@ const SingleElement: React.FC<{
       id: "1990",
       label: "Column2",
       columnDataSize: "md",
-      columnDataWidth: 220,
+      columnDataWidth: 0,
       columnComponents: [
         {
           id: 1012,
@@ -342,7 +342,6 @@ const SingleElement: React.FC<{
 
   const handleOpen = () => {
     console.log(element, element.element);
-    let col = false;
     setOpen(!open);
 
     if (element.element === "Button") {
@@ -428,35 +427,22 @@ const SingleElement: React.FC<{
     } else if (element.element === "Column") {
       element.label = columnValues.label;
       element.columnItems = columnValues.columnItems;
-      col = true;
-    }
-    element.show = false;
-    if (col) {
+      console.log("Columnt Items", element.columnItems);
       console.log(element.columnItems);
       console.log("ColumnValues", columnValues);
       console.log("Column1Elements", columnElements);
       console.log("Column2Elements", column1Elements);
       console.log("JSON", JSON.stringify(columnValues));
-
-      // element.columnItems?.map((item, index) => (
-      //   <>
-      //     if(item.label === "Column1")
-      //     {(item.columnComponents = columnElements)}
-      //     else{(item.columnComponents = column1Elements)}
-      //   </>
-      // ));
-
       finalColumnItemsData.map((item, index) =>
         item.label === "Column1"
           ? (item.columnComponents = columnElements)
           : (item.columnComponents = column1Elements)
       );
-
       element.columnItems = finalColumnItemsData;
-
       console.log("Final", finalColumnItemsData);
       console.log("Element Column", element.columnItems);
     }
+    element.show = false;
   };
 
   const handleClose = () => {
@@ -608,8 +594,11 @@ const SingleElement: React.FC<{
                   placeholder={textFieldValues.placeholder}
                   value={textFieldValue}
                   onChange={handleTextFieldValue}
-                  minLength={textFieldValues.minLength}
-                  maxLength={textFieldValues.maxLength}
+                  inputProps={{
+                    maxLength: textFieldValues.maxLength,
+                    minLength: textFieldValues.minLength,
+                  }}
+                  variant={"outlined"}
                   // type="password"
                 ></TextField>
               </>
@@ -630,9 +619,12 @@ const SingleElement: React.FC<{
                   value={textAreaValue}
                   onChange={handleTextAreaValue}
                   rows={textAreaValues.rows}
-                  minLength={textAreaValues.minLength}
-                  maxLength={textAreaValues.maxLength}
+                  inputProps={{
+                    maxLength: textAreaValues.maxLength,
+                    minLength: textAreaValues.minLength,
+                  }}
                   multiline={true}
+                  variant={"outlined"}
                 ></TextField>
               </>
             ) : element.element === "Password" ? (
@@ -651,9 +643,12 @@ const SingleElement: React.FC<{
                   placeholder={passwordValues.placeholder}
                   value={passwordValue}
                   onChange={handlePasswordValue}
-                  minLength={passwordValues.minLength}
-                  maxLength={passwordValues.maxLength}
+                  inputProps={{
+                    maxLength: passwordValues.maxLength,
+                    minLength: passwordValues.minLength,
+                  }}
                   type="password"
+                  variant={"outlined"}
                 ></TextField>
               </>
             ) : element.element === "Email" ? (
@@ -672,9 +667,12 @@ const SingleElement: React.FC<{
                   placeholder={emailValues.placeholder}
                   value={emailValue}
                   onChange={handleEmailValue}
-                  minLength={emailValues.minLength}
-                  maxLength={emailValues.maxLength}
+                  inputProps={{
+                    maxLength: emailValues.maxLength,
+                    minLength: emailValues.minLength,
+                  }}
                   type="email"
+                  variant={"outlined"}
                 ></TextField>
               </>
             ) : element.element === "Checkbox" ? (
@@ -727,7 +725,6 @@ const SingleElement: React.FC<{
                 ></ButtonData>
 
                 <Button
-                  label={buttonValues.label}
                   color={
                     buttonValues.size === "primary"
                       ? "primary"
@@ -751,7 +748,9 @@ const SingleElement: React.FC<{
                       : "large"
                   }
                   onClick={handleButton}
-                />
+                >
+                  {buttonValues.label}
+                </Button>
               </>
             ) : element.element === "RadioButton" ? (
               <>

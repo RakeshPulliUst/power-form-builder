@@ -1,12 +1,12 @@
-import React from "react";
-import { TableCell as DefaultTableCell } from "@mui/material";
+import {
+  TableCell as DefaultTableCell,
+  TableCellProps as DefaultTableCellProps,
+} from "@mui/material";
 
-type Props = {
-  children: React.ReactNode;
-};
+interface TableCellProps extends DefaultTableCellProps {}
 
-function TableCell({ children, ...rest }: Props) {
-  return <DefaultTableCell sx={{ fontSize: 18 }}>{children}</DefaultTableCell>;
+function TableCell({ ...rest }: TableCellProps) {
+  return <DefaultTableCell sx={{ fontSize: 18 }} {...rest} />;
 }
 
 export default TableCell;
