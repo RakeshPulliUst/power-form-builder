@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useState } from "react";
 import {
   Navbar,
@@ -21,6 +21,7 @@ import { useDispatch } from "react-redux";
 import { logout } from "./signinSlice";
 
 const CustomNavbar = () => {
+  const ref = useRef();
   const [isOpen, setIsOpen] = React.useState(false);
   const [open, setOpen] = useState(false);
 
@@ -90,11 +91,11 @@ const CustomNavbar = () => {
                 </NavItem>
 
                 <UncontrolledDropdown inNavbar nav>
-                  <DropdownToggle caret color="dark">
+                  <DropdownToggle caret color="dark" inner={ref}>
                     {/* <DropdownToggle caret nav color="dark"> */}
                     Hello {retrievedObject.user?.firstname}
                   </DropdownToggle>
-                  <DropdownMenu right>
+                  <DropdownMenu end>
                     <DropdownItem tag={ReactLink} to="/user/my-profile">
                       My Profile
                     </DropdownItem>

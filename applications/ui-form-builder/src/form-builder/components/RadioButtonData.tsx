@@ -13,14 +13,13 @@ import {
   TabList,
   TextField,
   Divider,
+  CloseIcon,
 } from "@power-form-builder/ui-components";
 import { RadioButtonDialog } from "../DialogInterface";
 import { Element } from "../ElementInterface";
 import { v4 as uuidv4 } from "uuid";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
-
-import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 
 type Props = {
   id: string;
@@ -143,10 +142,7 @@ const RadioButtonData: React.FC<{
   return (
     <Dialog open={open} onClose={handleClose}>
       <DialogTitle title="RadioButton Details">
-        <CloseOutlinedIcon
-          onClick={handleClose}
-          sx={{ cursor: "pointer" }}
-        ></CloseOutlinedIcon>
+        <CloseIcon onClick={handleClose} sx={{ cursor: "pointer" }}></CloseIcon>
       </DialogTitle>
       <Divider variant="middle" />
       <DialogContent>

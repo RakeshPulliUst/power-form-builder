@@ -7,15 +7,13 @@ import {
   TabContext,
   TabPanel,
   Divider,
-  //TextField,
+  TextField,
+  CloseIcon,
 } from "@power-form-builder/ui-components";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@power-form-builder/ui-components";
 import axios from "axios";
 import { useForm } from "react-hook-form";
-
-import TextField from "@mui/material/TextField";
-import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 
 type Props = {
   open: boolean;
@@ -92,18 +90,18 @@ const FormNameInput = ({ open, handleOpen, handleClose }: Props) => {
         //   minWidth: "55%",
         //   maxWidth: "65%",
         // }}
-        // style={{
-        //   minHeight: "30%",
-        //   maxHeight: "100%",
-        //   minWidth: "30%",
-        //   maxWidth: "50%",
-        // }}
+        style={{
+          minHeight: "30%",
+          maxHeight: "80%",
+          minWidth: "20%",
+          maxWidth: "30%",
+        }}
       >
         <DialogTitle title="Form Details">
-          <CloseOutlinedIcon
+          <CloseIcon
             onClick={handleClose1}
             sx={{ cursor: "pointer" }}
-          ></CloseOutlinedIcon>
+          ></CloseIcon>
         </DialogTitle>
         <Divider variant="middle" />
 
@@ -132,7 +130,6 @@ const FormNameInput = ({ open, handleOpen, handleClose }: Props) => {
                 helperText={errors.formName?.message}
                 variant="outlined"
               />
-              {errors.formName && <span>Name is required</span>}
             </TabPanel>
           </TabContext>
         </DialogContent>

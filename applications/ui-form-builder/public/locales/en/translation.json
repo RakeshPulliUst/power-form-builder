@@ -16,5 +16,9 @@
   "preview": "Preview",
   "edit": "Edit",
   "copy_json": "Copy Json",
-  "delete": "Delete"
+  "delete": "Delete",
+  "delete_form_alert": "Are you sure you want to delete the form",
+  "warning": "Warning",
+  "yes": "Yes",
+  "no": "No"
 }

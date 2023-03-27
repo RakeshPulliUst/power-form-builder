@@ -1,18 +1,19 @@
 import * as React from "react";
-import Avatar from "@mui/material/Avatar";
+import { useRef } from "react";
 import {
   Button,
-  //TextField,
+  TextField,
   Grid,
   GridItem,
   Box,
   Container,
   Typography,
   Link,
-  MuiLockOutlinedIcon,
+  LockIcon,
   Paper,
+  Avatar,
 } from "@power-form-builder/ui-components";
-import TextField from "@mui/material/TextField";
+
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,6 +27,7 @@ type SignInFormInputs = {
 };
 
 const SignIn = () => {
+  const inputRef = useRef<HTMLInputElement>(null);
   const {
     register,
     handleSubmit,
@@ -40,6 +42,9 @@ const SignIn = () => {
 
   const onSubmit = async (data: SignInFormInputs) => {
     try {
+      if (inputRef.current) {
+        inputRef.current.focus();
+      }
       console.log("started");
       const email = data.email;
       const password = data.password;
@@ -91,11 +96,12 @@ const SignIn = () => {
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <MuiLockOutlinedIcon />
+            <LockIcon />
           </Avatar>
           <Typography variant="h5">Sign in</Typography>
           <form onSubmit={handleSubmit(onSubmit)}>
             <TextField
+              inputRef={inputRef}
               fullWidth
               label="Email Address"
               type="email"
@@ -112,6 +118,7 @@ const SignIn = () => {
             />
 
             <TextField
+              inputRef={inputRef}
               fullWidth
               label="Password"
               type="password"

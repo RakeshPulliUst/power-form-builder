@@ -329,6 +329,7 @@ const SingleElement: React.FC<{
   const handleDelete = (id: number) => {
     console.log("Iddddddd", id, element.id);
     setElements(elements.filter((element) => element.id !== id));
+    console.log(elements);
   };
 
   //TextField
@@ -748,6 +749,7 @@ const SingleElement: React.FC<{
                       : "large"
                   }
                   onClick={handleButton}
+                  sx={{ mt: 1, mb: 1 }}
                 >
                   {buttonValues.label}
                 </Button>

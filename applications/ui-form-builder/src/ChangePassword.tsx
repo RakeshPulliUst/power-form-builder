@@ -7,14 +7,13 @@ import {
   TabContext,
   TabPanel,
   Divider,
+  TextField,
+  CloseIcon,
 } from "@power-form-builder/ui-components";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@power-form-builder/ui-components";
 import axios from "axios";
 import { useForm } from "react-hook-form";
-
-import TextField from "@mui/material/TextField";
-import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 
 type Props = {
   setChangedPassword: Dispatch<SetStateAction<string>>;
@@ -84,10 +83,10 @@ const ChangePassword = ({
         }}
       >
         <DialogTitle title="Password Change">
-          <CloseOutlinedIcon
+          <CloseIcon
             onClick={handleClose1}
             sx={{ cursor: "pointer" }}
-          ></CloseOutlinedIcon>
+          ></CloseIcon>
         </DialogTitle>
         <Divider variant="middle" />
 

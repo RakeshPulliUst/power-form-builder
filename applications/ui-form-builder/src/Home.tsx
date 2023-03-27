@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Table,
@@ -10,9 +11,15 @@ import {
   DialogContent,
   DialogTitle,
   Divider,
-  Tooltip,
+  ContentCopyIcon,
+  DeleteForeverIcon,
+  EditIcon,
+  CloseIcon,
+  PreviewIcon,
 } from "@power-form-builder/ui-components";
-import React, { useEffect, useState } from "react";
+
+import PreviewOutlinedIcon from "@mui/icons-material/PreviewOutlined";
+
 import "./Home.css";
 import { UITranslation } from "@power-form-builder/ui-translation";
 import FormNameInput from "./FormNameInput";
@@ -26,12 +33,6 @@ import {
 } from "./form-builder/ElementInterface";
 import { useNavigate } from "react-router-dom";
 import { Element } from "./form-builder/ElementInterface";
-
-import ContentCopyOutlinedIcon from "@mui/icons-material/ContentCopyOutlined";
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
-import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
-import PreviewOutlinedIcon from "@mui/icons-material/PreviewOutlined";
-import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 
 const Home = () => {
   const [open, setOpen] = useState(false);
@@ -176,59 +177,51 @@ const Home = () => {
           </TableHead>
           <TableBody>
             {formData.map((row, index) => (
-              <TableRow>
+              <TableRow key={index}>
                 <TableCell>{index + 1}</TableCell>
                 <TableCell>{row.form_title}</TableCell>
                 <TableCell>{row.date_created}</TableCell>
                 <TableCell>{row.date_modified}</TableCell>
                 <TableCell>{row.status}</TableCell>
                 <TableCell>
-                  <Tooltip title="Preview" placement="top">
-                    <PreviewOutlinedIcon
-                      onClick={() => {
-                        onPreviewClick(row.form_title, row.components);
-                      }}
-                      sx={{ cursor: "pointer", fontSize: "30px" }}
-                      color="action"
-                    />
-                  </Tooltip>
+                  <PreviewIcon
+                    onClick={() => {
+                      onPreviewClick(row.form_title, row.components);
+                    }}
+                    sx={{ cursor: "pointer", fontSize: "30px" }}
+                    color="action"
+                  />
                   &nbsp;
-                  <Tooltip title="Edit" placement="top">
-                    <EditOutlinedIcon
-                      sx={{ cursor: "pointer", fontSize: "30px" }}
-                      color="primary"
-                      onClick={() =>
-                        onEditClick(
-                          row.id,
-                          row.form_title,
-                          row.components,
-                          row.date_created,
-                          row.status
-                        )
-                      }
-                    />
-                  </Tooltip>
+                  <EditIcon
+                    sx={{ cursor: "pointer", fontSize: "30px" }}
+                    color="primary"
+                    onClick={() =>
+                      onEditClick(
+                        row.id,
+                        row.form_title,
+                        row.components,
+                        row.date_created,
+                        row.status
+                      )
+                    }
+                  />
                   &nbsp;
-                  <Tooltip title="Copy Json" placement="top">
-                    <ContentCopyOutlinedIcon
-                      sx={{ cursor: "pointer", fontSize: "30px" }}
-                      onClick={() => {
-                        console.log(JSON.stringify(row.components));
-                        navigator.clipboard.writeText(
-                          JSON.stringify(row.components)
-                        );
-                      }}
-                      color="action"
-                    />
-                  </Tooltip>
+                  <ContentCopyIcon
+                    sx={{ cursor: "pointer", fontSize: "30px" }}
+                    onClick={() => {
+                      console.log(JSON.stringify(row.components));
+                      navigator.clipboard.writeText(
+                        JSON.stringify(row.components)
+                      );
+                    }}
+                    color="action"
+                  />
                   &nbsp;
-                  <Tooltip title="Delete" placement="top">
-                    <DeleteForeverOutlinedIcon
-                      sx={{ cursor: "pointer", fontSize: "30px" }}
-                      color="error"
-                      onClick={() => onDeleteClick(row.id, row.form_title)}
-                    />
-                  </Tooltip>
+                  <DeleteForeverIcon
+                    sx={{ cursor: "pointer", fontSize: "30px" }}
+                    color="error"
+                    onClick={() => onDeleteClick(row.id, row.form_title)}
+                  />
                 </TableCell>
               </TableRow>
             ))}
@@ -241,7 +234,7 @@ const Home = () => {
         </h1>
         <div className="home-btns">
           <Button color="secondary" size="large" onClick={handleBuildForm}>
-            Build Form
+            <UITranslation name="build_form" />
           </Button>
         </div>
         {open ? (
@@ -267,16 +260,19 @@ const Home = () => {
         }}
       >
         <DialogTitle title="Warning">
-          <CloseOutlinedIcon
+          <CloseIcon
             onClick={() => {
               setDialogOpen(!dialogOpen);
             }}
             sx={{ cursor: "pointer" }}
-          ></CloseOutlinedIcon>
+          />
         </DialogTitle>
         <Divider variant="middle" />
         <DialogContent>
-          <p>Are you sure you want to delete the form - {formTitle}?</p>
+          <p>
+            {" "}
+            <UITranslation name="delete_form_alert" /> - {formTitle}?
+          </p>
         </DialogContent>
         <DialogActions>
           <Button
@@ -286,10 +282,10 @@ const Home = () => {
             }}
             size="medium"
           >
-            NO
+            <UITranslation name="no" />
           </Button>
           <Button color="success" onClick={() => handleData(id)} size="medium">
-            YES
+            <UITranslation name="yes" />
           </Button>
         </DialogActions>
       </Dialog>

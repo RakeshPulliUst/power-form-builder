@@ -1,21 +1,20 @@
 import * as React from "react";
-import Avatar from "@mui/material/Avatar";
 import {
   Button,
-  //TextField,
+  TextField,
   Grid,
   GridItem,
   Box,
   Container,
   Typography,
   Paper,
+  AssignmentIndIcon,
+  Avatar,
 } from "@power-form-builder/ui-components";
-import TextField from "@mui/material/TextField";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-import AssignmentIndOutlinedIcon from "@mui/icons-material/AssignmentIndOutlined";
 import { profile } from "./profileSlice";
 import ChangePassword from "./ChangePassword";
 
@@ -73,11 +72,11 @@ const UserProfile = () => {
       });
       if (password === "default") {
         alert("Profile Updated Successfully");
-
+        console.log("Oass", password);
         dispatch(profile({ userId, firstname, lastname, email }));
       } else {
+        console.log("Oass", password);
         alert("Profile Updated Successfully");
-
         dispatch(profile({ userId, firstname, lastname, email, password }));
       }
     } catch (error) {
@@ -122,7 +121,7 @@ const UserProfile = () => {
             }}
           >
             <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-              <AssignmentIndOutlinedIcon />
+              <AssignmentIndIcon />
             </Avatar>
             <Typography variant="h5">Profile</Typography>
             <Box

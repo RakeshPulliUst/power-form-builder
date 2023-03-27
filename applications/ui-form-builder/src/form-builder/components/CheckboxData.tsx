@@ -13,11 +13,10 @@ import {
   TabPanel,
   TabList,
   Divider,
+  CloseIcon,
 } from "@power-form-builder/ui-components";
 import { CheckboxDiaglog } from "../DialogInterface";
 import { Element } from "../ElementInterface";
-
-import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 
 type TabItemsProps = {
   label: React.ReactNode;
@@ -89,10 +88,7 @@ const CheckboxData: React.FC<{
   return (
     <Dialog open={open} onClose={handleClose}>
       <DialogTitle title="Checkbox Details">
-        <CloseOutlinedIcon
-          onClick={handleClose}
-          sx={{ cursor: "pointer" }}
-        ></CloseOutlinedIcon>
+        <CloseIcon onClick={handleClose} sx={{ cursor: "pointer" }}></CloseIcon>
       </DialogTitle>
       <Divider variant="middle" />
       <DialogContent>

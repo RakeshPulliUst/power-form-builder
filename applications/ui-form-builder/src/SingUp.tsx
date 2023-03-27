@@ -1,21 +1,20 @@
 import * as React from "react";
-import Avatar from "@mui/material/Avatar";
 import { connect, ConnectedProps } from "react-redux";
 import { RootState } from "./types";
 import {
   Button,
-  //TextField,
+  TextField,
   Grid,
   GridItem,
   Box,
   Container,
   Typography,
   Link,
-  MuiLockOutlinedIcon,
+  LockIcon,
   Paper,
+  Avatar,
+  CircularProgressIcon,
 } from "@power-form-builder/ui-components";
-import TextField from "@mui/material/TextField";
-import CircularProgress from "@mui/material/CircularProgress";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { signup } from "./signupSlice";
@@ -76,7 +75,7 @@ const SignUp: React.FC<SignUpProps> = ({ loading, error, signup }) => {
 
   const paperStyle = {
     padding: 20,
-    height: "70vh",
+    height: "75vh",
     width: 450,
     margin: "50px auto",
   };
@@ -93,7 +92,7 @@ const SignUp: React.FC<SignUpProps> = ({ loading, error, signup }) => {
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <MuiLockOutlinedIcon />
+            <LockIcon />
           </Avatar>
           <Typography variant="h5">Sign up</Typography>
           <Box
@@ -189,7 +188,7 @@ const SignUp: React.FC<SignUpProps> = ({ loading, error, signup }) => {
             </Grid>
 
             {loading ? (
-              <CircularProgress />
+              <CircularProgressIcon />
             ) : (
               <Button size="medium" color="primary" fullWidth>
                 Sign up

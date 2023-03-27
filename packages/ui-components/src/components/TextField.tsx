@@ -11,8 +11,8 @@ type TextFieldProps =
   | FilledTextFieldProps
   | OutlinedTextFieldProps;
 
-const TextField = ({ ...rest }: TextFieldProps) => {
-  return <DefaultTextField {...rest} />;
-};
+const TextField = React.forwardRef(({ ...rest }: TextFieldProps, ref) => {
+  return <DefaultTextField {...rest} inputRef={ref} />;
+});
 
 export default TextField;

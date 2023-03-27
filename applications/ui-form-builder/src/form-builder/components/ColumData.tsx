@@ -12,14 +12,13 @@ import {
   TabPanel,
   TabList,
   Divider,
+  CloseIcon,
 } from "@power-form-builder/ui-components";
 import { ColumnDialog } from "../DialogInterface";
 import { v4 as uuidv4 } from "uuid";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import { Element } from "../ElementInterface";
-
-import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 
 type Props = {
   id: string;
@@ -183,10 +182,7 @@ const ColumnData: React.FC<{
   return (
     <Dialog open={open} onClose={handleClose}>
       <DialogTitle title="Column Details">
-        <CloseOutlinedIcon
-          onClick={handleClose}
-          sx={{ cursor: "pointer" }}
-        ></CloseOutlinedIcon>
+        <CloseIcon onClick={handleClose} sx={{ cursor: "pointer" }}></CloseIcon>
       </DialogTitle>
       <Divider variant="middle" />
       <DialogContent>

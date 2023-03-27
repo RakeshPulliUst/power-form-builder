@@ -16,5 +16,9 @@
   "preview": "Aperçu",
   "edit": "Modifier",
   "copy_json": "Copier Json",
-  "delete": "Supprimer"
+  "delete": "Supprimer",
+  "delete_form_alert": "Êtes-vous sûr de vouloir supprimer le formulaire",
+  "warning": "Avertissement",
+  "yes": "OUI",
+  "no": "NON"
 }
