@@ -96,7 +96,7 @@ const FormBuilder = () => {
       finalSaveFormData.owner = retrievedObject.user?.email!;
       finalSaveFormData.date_created = new Date().toLocaleString() + "";
       finalSaveFormData.date_modified = new Date().toLocaleString() + "";
-      finalSaveFormData.status = "In-Progress";
+      finalSaveFormData.status = "Completed";
       postDatatoServer(finalSaveFormData);
       navigate("/formrender", { state: { formData: formData } });
       console.log("Final..numTab", numTabElements, finalSaveFormData);

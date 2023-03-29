@@ -12,7 +12,15 @@ import {
 } from "@power-form-builder/ui-components";
 import { Grid, GridItem } from "@power-form-builder/ui-components";
 import { FormJson } from "../form-builder/ElementInterface";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import TextFieldRender from "./TextFieldRender";
+import EmailRender from "./EmailRender";
+import PasswordRender from "./PasswordRender";
+import TextAreaRender from "./TextAreaRender";
+import SelectRender from "./SelectRender";
+import RadioGroupRender from "./RadioGroupRender";
+import ButtonRender from "./ButtonRender";
+import CheckboxRender from "./CheckboxRender";
 
 type TabItemsProps = {
   label: string;
@@ -26,6 +34,7 @@ function MaterialForm() {
 
   const [formDataValue, setFormDataValue] = useState({});
 
+  const navigate = useNavigate();
   //Final Select
   const [selectData, setSelectData] = useState({});
 
@@ -47,6 +56,7 @@ function MaterialForm() {
         setEmailHelperText("Not Valid Email");
         setEmailError(true);
       }
+      console.log(emailError, emailHelperText);
       setFormDataValue({
         ...formDataValue,
         [event.target.name]: event.target.value,
@@ -107,8 +117,8 @@ function MaterialForm() {
       setEmailError(true);
     }
     alert("Done");
-    resetValues();
-    // window.location.reload();
+    navigate("/home");
+    //window.location.reload();
   };
 
   //Tab
@@ -154,163 +164,45 @@ function MaterialForm() {
                 <Grid spacing={2} alignItems="center" justifyContent="center">
                   <GridItem>
                     {data.element === "TextField" ? (
-                      <TextField
-                        label={data.label!}
-                        name={data.label?.toLocaleLowerCase()}
+                      <TextFieldRender
+                        data={data}
                         onChange={handleFormDataValueChange}
-                        placeholder={data.placeholder}
-                        required={data.required!}
-                        inputProps={{
-                          minLength: data.minLength!,
-                          maxLength: data.maxLength!,
-                        }}
-                        sx={{ mt: 2 }}
-                        variant={"outlined"}
                       />
                     ) : data.element === "Email" ? (
-                      <TextField
-                        label={data.label!}
-                        name={data.label?.toLocaleLowerCase()}
-                        type="email"
+                      <EmailRender
+                        data={data}
                         onChange={handleFormDataValueChange}
-                        placeholder={data.placeholder}
-                        required={data.required!}
-                        inputProps={{
-                          minLength: data.minLength!,
-                          maxLength: data.maxLength!,
-                        }}
-                        helperText={emailHelperText}
-                        error={emailError}
-                        sx={{ mt: 2 }}
-                        variant={"outlined"}
+                        emailHelperText={emailHelperText}
+                        emailError={emailError}
                       />
                     ) : data.element === "Password" ? (
-                      <TextField
-                        label={data.label!}
-                        name={data.label?.toLocaleLowerCase()}
-                        type="password"
+                      <PasswordRender
+                        data={data}
                         onChange={handleFormDataValueChange}
-                        placeholder={data.placeholder}
-                        required={data.required!}
-                        inputProps={{
-                          minLength: data.minLength!,
-                          maxLength: data.maxLength!,
-                        }}
-                        helperText={passwordHelperText}
-                        error={passwordError}
-                        sx={{ mt: 2 }}
-                        variant={"outlined"}
+                        passwordError={passwordError}
+                        passwordHelperText={passwordHelperText}
                       />
                     ) : data.element === "TextArea" ? (
-                      <TextField
-                        label={data.label!}
-                        required={data.required!}
-                        placeholder={data.placeholder!}
-                        name={data.label?.toLocaleLowerCase()}
+                      <TextAreaRender
+                        data={data}
                         onChange={handleFormDataValueChange}
-                        inputProps={{
-                          minLength: data.minLength!,
-                          maxLength: data.maxLength!,
-                        }}
-                        rows={data.rows}
-                        multiline={true}
-                        sx={{ mt: 2 }}
-                        variant={"outlined"}
-                      ></TextField>
+                      />
                     ) : data.element === "Select" && !data.multipleValues ? (
-                      <Select
-                        label={data.label!}
-                        placeholder={data.placeholder!}
-                        menuItems={data.menuItems!}
-                        multiple={data.multipleValues!}
-                        name={data.label?.toLocaleLowerCase()}
+                      <SelectRender
+                        data={data}
                         onChange={handleFormDataValueChange}
-                        size={
-                          data.size !== undefined
-                            ? data.size === "small"
-                              ? "small"
-                              : "medium"
-                            : "medium"
-                        }
-                        required={data.required!}
-                        width={data.width}
                       />
                     ) : data.element === "Select" && data.multipleValues ? (
-                      <Select
-                        label={data.label!}
-                        placeholder={data.placeholder!}
-                        menuItems={data.menuItems!}
-                        multiple={data.multipleValues!}
-                        name={data.label?.toLocaleLowerCase()}
-                        onChange={handleSelectData}
-                        size={
-                          data.size !== undefined
-                            ? data.size === "small"
-                              ? "small"
-                              : "medium"
-                            : "medium"
-                        }
-                        required={data.required!}
-                        width={data.width}
-                      />
+                      <SelectRender data={data} onChange={handleSelectData} />
                     ) : data.element === "RadioButton" ? (
-                      <RadioGroup
-                        label={data.label!}
-                        options={
-                          data.options !== undefined
-                            ? data.options === "top"
-                              ? "top"
-                              : data.options === "bottom"
-                              ? "bottom"
-                              : data.options === "start"
-                              ? "start"
-                              : "end"
-                            : "end"
-                        }
-                        name={data.label?.toLocaleLowerCase()}
-                        radioItems={data.radioItems!}
-                        required={data.required!}
+                      <RadioGroupRender
+                        data={data}
                         onChange={handleFormDataValueChange}
                       />
                     ) : data.element === "Checkbox" ? (
-                      <Checkbox
-                        label={data.label!}
-                        name={data.label!}
-                        required={data.required!}
-                        defaultChecked={data.default}
-                        onChange={handleChange}
-                      />
+                      <CheckboxRender data={data} onChange={handleChange} />
                     ) : data.element === "Button" ? (
-                      <Button
-                        color={
-                          data.theme !== undefined
-                            ? data.theme === "primary"
-                              ? "primary"
-                              : data.theme === "secondary"
-                              ? "secondary"
-                              : data.theme === "info"
-                              ? "info"
-                              : data.theme === "success"
-                              ? "success"
-                              : data.theme === "warning"
-                              ? "warning"
-                              : data.theme === "error"
-                              ? "error"
-                              : "inherit"
-                            : "warning"
-                        }
-                        size={
-                          data.size !== undefined
-                            ? data.size === "small"
-                              ? "small"
-                              : data.size === "medium"
-                              ? "medium"
-                              : "large"
-                            : "medium"
-                        }
-                      >
-                        {data.label!}
-                      </Button>
+                      <ButtonRender data={data} />
                     ) : data.element === "Tabs" ? (
                       <>
                         <TabContext value={value}>
@@ -326,160 +218,65 @@ function MaterialForm() {
                                 <>
                                   {item1.element === "TextField" ? (
                                     <GridItem>
-                                      <TextField
-                                        label={item1.label!}
-                                        name={item1.label?.toLocaleLowerCase()}
+                                      <TextFieldRender
+                                        data={item1}
                                         onChange={handleFormDataValueChange}
-                                        placeholder={item1.placeholder}
-                                        required={item1.required!}
-                                        inputProps={{
-                                          minLength: item1.minLength!,
-                                          maxLength: item1.maxLength!,
-                                        }}
-                                        sx={{ mt: 2 }}
-                                        variant={"outlined"}
                                       />
                                     </GridItem>
                                   ) : item1.element === "Password" ? (
                                     <GridItem>
-                                      <TextField
-                                        label={item1.label!}
-                                        name={item1.label?.toLocaleLowerCase()}
-                                        type="password"
+                                      <PasswordRender
+                                        data={item1}
                                         onChange={handleFormDataValueChange}
-                                        placeholder={item1.placeholder}
-                                        required={item1.required!}
-                                        inputProps={{
-                                          minLength: item1.minLength!,
-                                          maxLength: item1.maxLength!,
-                                        }}
-                                        helperText={passwordHelperText}
-                                        error={passwordError}
-                                        sx={{ mt: 2 }}
-                                        variant={"outlined"}
+                                        passwordError={passwordError}
+                                        passwordHelperText={passwordHelperText}
                                       />
                                     </GridItem>
                                   ) : item1.element === "TextArea" ? (
                                     <GridItem>
-                                      <TextField
-                                        label={item1.label!}
-                                        required={item1.required!}
-                                        placeholder={item1.placeholder!}
-                                        name={item1.label?.toLocaleLowerCase()}
+                                      <TextAreaRender
+                                        data={item1}
                                         onChange={handleFormDataValueChange}
-                                        inputProps={{
-                                          minLength: item1.minLength!,
-                                          maxLength: item1.maxLength!,
-                                        }}
-                                        rows={item1.rows}
-                                        multiline={true}
-                                        sx={{ mt: 2 }}
-                                        variant={"outlined"}
-                                      ></TextField>
+                                      />
                                     </GridItem>
                                   ) : item1.element === "Email" ? (
                                     <GridItem>
-                                      <TextField
-                                        label={item1.label!}
-                                        name={item1.label?.toLocaleLowerCase()}
-                                        type="email"
+                                      <EmailRender
+                                        data={item1}
                                         onChange={handleFormDataValueChange}
-                                        placeholder={item1.placeholder}
-                                        required={item1.required!}
-                                        inputProps={{
-                                          minLength: item1.minLength!,
-                                          maxLength: item1.maxLength!,
-                                        }}
-                                        helperText={emailHelperText}
-                                        error={emailError}
-                                        sx={{ mt: 2 }}
-                                        variant={"outlined"}
+                                        emailHelperText={emailHelperText}
+                                        emailError={emailError}
                                       />
                                     </GridItem>
                                   ) : item1.element === "Select" &&
                                     !item1.multipleValues ? (
-                                    <GridItem>
-                                      <Select
-                                        label={item1.label!}
-                                        placeholder={item1.placeholder!}
-                                        menuItems={item1.menuItems!}
-                                        multiple={item1.multipleValues!}
-                                        name={item1.label?.toLocaleLowerCase()}
-                                        onChange={handleSelectData}
-                                        size={
-                                          item1.size !== undefined
-                                            ? item1.size === "small"
-                                              ? "small"
-                                              : "medium"
-                                            : "medium"
-                                        }
-                                        required={item1.required!}
-                                        width={item1.width}
-                                      />
-                                    </GridItem>
+                                    <SelectRender
+                                      data={item1}
+                                      onChange={handleFormDataValueChange}
+                                    />
+                                  ) : item1.element === "Select" &&
+                                    item1.multipleValues ? (
+                                    <SelectRender
+                                      data={data}
+                                      onChange={handleSelectData}
+                                    />
                                   ) : item1.element === "RadioButton" ? (
                                     <GridItem>
-                                      <RadioGroup
-                                        label={item1.label!}
-                                        options={
-                                          item1.options !== undefined
-                                            ? item1.options === "top"
-                                              ? "top"
-                                              : item1.options === "bottom"
-                                              ? "bottom"
-                                              : item1.options === "start"
-                                              ? "start"
-                                              : "end"
-                                            : "end"
-                                        }
-                                        name={item1.label?.toLocaleLowerCase()}
-                                        radioItems={item1.radioItems!}
-                                        required={item1.required!}
+                                      <RadioGroupRender
+                                        data={item1}
                                         onChange={handleFormDataValueChange}
                                       />
                                     </GridItem>
                                   ) : item1.element === "Checkbox" ? (
                                     <GridItem>
-                                      <Checkbox
-                                        label={item1.label!}
-                                        name={item1.label!}
-                                        required={item1.required!}
-                                        defaultChecked={item1.default}
+                                      <CheckboxRender
+                                        data={item1}
                                         onChange={handleChange}
                                       />
                                     </GridItem>
                                   ) : item1.element === "Button" ? (
                                     <GridItem>
-                                      <Button
-                                        color={
-                                          item1.theme !== undefined
-                                            ? item1.theme === "primary"
-                                              ? "primary"
-                                              : item1.theme === "secondary"
-                                              ? "secondary"
-                                              : item1.theme === "info"
-                                              ? "info"
-                                              : item1.theme === "success"
-                                              ? "success"
-                                              : item1.theme === "warning"
-                                              ? "warning"
-                                              : item1.theme === "error"
-                                              ? "error"
-                                              : "inherit"
-                                            : "warning"
-                                        }
-                                        size={
-                                          item1.size !== undefined
-                                            ? item1.size === "small"
-                                              ? "small"
-                                              : item1.size === "medium"
-                                              ? "medium"
-                                              : "large"
-                                            : "medium"
-                                        }
-                                      >
-                                        {item1.label!}
-                                      </Button>
+                                      <ButtonRender data={item1} />
                                     </GridItem>
                                   ) : (
                                     <>Noo</>
@@ -508,160 +305,71 @@ function MaterialForm() {
                                   <>
                                     {item1.element === "TextField" ? (
                                       <GridItem>
-                                        <TextField
-                                          label={item1.label!}
-                                          name={item1.label?.toLocaleLowerCase()}
+                                        <TextFieldRender
+                                          data={item1}
                                           onChange={handleFormDataValueChange}
-                                          placeholder={item1.placeholder}
-                                          required={item1.required!}
-                                          inputProps={{
-                                            minLength: item1.minLength!,
-                                            maxLength: item1.maxLength!,
-                                          }}
-                                          sx={{ mt: 2 }}
-                                          variant={"outlined"}
                                         />
                                       </GridItem>
                                     ) : item1.element === "Password" ? (
                                       <GridItem>
-                                        <TextField
-                                          label={item1.label!}
-                                          name={item1.label?.toLocaleLowerCase()}
-                                          type="password"
+                                        <PasswordRender
+                                          data={item1}
                                           onChange={handleFormDataValueChange}
-                                          placeholder={item1.placeholder}
-                                          required={item1.required!}
-                                          inputProps={{
-                                            minLength: item1.minLength!,
-                                            maxLength: item1.maxLength!,
-                                          }}
-                                          helperText={passwordHelperText}
-                                          error={passwordError}
-                                          sx={{ mt: 2 }}
-                                          variant={"outlined"}
+                                          passwordError={passwordError}
+                                          passwordHelperText={
+                                            passwordHelperText
+                                          }
                                         />
                                       </GridItem>
                                     ) : item1.element === "TextArea" ? (
                                       <GridItem>
-                                        <TextField
-                                          label={item1.label!}
-                                          required={item1.required!}
-                                          placeholder={item1.placeholder!}
-                                          name={item1.label?.toLocaleLowerCase()}
+                                        <TextAreaRender
+                                          data={item1}
                                           onChange={handleFormDataValueChange}
-                                          inputProps={{
-                                            minLength: item1.minLength!,
-                                            maxLength: item1.maxLength!,
-                                          }}
-                                          rows={item1.rows}
-                                          multiline={true}
-                                          sx={{ mt: 2 }}
-                                          variant={"outlined"}
-                                        ></TextField>
+                                        />
                                       </GridItem>
                                     ) : item1.element === "Email" ? (
                                       <GridItem>
-                                        <TextField
-                                          label={item1.label!}
-                                          name={item1.label?.toLocaleLowerCase()}
-                                          type="email"
+                                        <EmailRender
+                                          data={item1}
                                           onChange={handleFormDataValueChange}
-                                          placeholder={item1.placeholder}
-                                          required={item1.required!}
-                                          inputProps={{
-                                            minLength: item1.minLength!,
-                                            maxLength: item1.maxLength!,
-                                          }}
-                                          helperText={emailHelperText}
-                                          error={emailError}
-                                          sx={{ mt: 2 }}
-                                          variant={"outlined"}
+                                          emailHelperText={emailHelperText}
+                                          emailError={emailError}
                                         />
                                       </GridItem>
                                     ) : item1.element === "Select" &&
                                       !item1.multipleValues ? (
                                       <GridItem>
-                                        <Select
-                                          label={item1.label!}
-                                          placeholder={item1.placeholder!}
-                                          menuItems={item1.menuItems!}
-                                          multiple={item1.multipleValues!}
-                                          name={item1.label?.toLocaleLowerCase()}
+                                        <SelectRender
+                                          data={item1}
+                                          onChange={handleFormDataValueChange}
+                                        />
+                                      </GridItem>
+                                    ) : item1.element === "Select" &&
+                                      item1.multipleValues ? (
+                                      <GridItem>
+                                        <SelectRender
+                                          data={data}
                                           onChange={handleSelectData}
-                                          size={
-                                            item1.size !== undefined
-                                              ? item1.size === "small"
-                                                ? "small"
-                                                : "medium"
-                                              : "medium"
-                                          }
-                                          required={item1.required!}
-                                          width={item1.width}
                                         />
                                       </GridItem>
                                     ) : item1.element === "RadioButton" ? (
                                       <GridItem>
-                                        <RadioGroup
-                                          label={item1.label!}
-                                          options={
-                                            item1.options !== undefined
-                                              ? item1.options === "top"
-                                                ? "top"
-                                                : item1.options === "bottom"
-                                                ? "bottom"
-                                                : item1.options === "start"
-                                                ? "start"
-                                                : "end"
-                                              : "end"
-                                          }
-                                          name={item1.label?.toLocaleLowerCase()}
-                                          radioItems={item1.radioItems!}
-                                          required={item1.required!}
+                                        <RadioGroupRender
+                                          data={item1}
                                           onChange={handleFormDataValueChange}
                                         />
                                       </GridItem>
                                     ) : item1.element === "Checkbox" ? (
                                       <GridItem>
-                                        <Checkbox
-                                          label={item1.label!}
-                                          name={item1.label!}
-                                          required={item1.required!}
-                                          defaultChecked={item1.checked}
+                                        <CheckboxRender
+                                          data={item1}
                                           onChange={handleChange}
                                         />
                                       </GridItem>
                                     ) : item1.element === "Button" ? (
                                       <GridItem>
-                                        <Button
-                                          color={
-                                            item1.theme !== undefined
-                                              ? item1.theme === "primary"
-                                                ? "primary"
-                                                : item1.theme === "secondary"
-                                                ? "secondary"
-                                                : item1.theme === "info"
-                                                ? "info"
-                                                : item1.theme === "success"
-                                                ? "success"
-                                                : item1.theme === "warning"
-                                                ? "warning"
-                                                : item1.theme === "error"
-                                                ? "error"
-                                                : "inherit"
-                                              : "warning"
-                                          }
-                                          size={
-                                            item1.size !== undefined
-                                              ? item1.size === "small"
-                                                ? "small"
-                                                : item1.size === "medium"
-                                                ? "medium"
-                                                : "large"
-                                              : "medium"
-                                          }
-                                        >
-                                          {item1.label!}
-                                        </Button>
+                                        <ButtonRender data={item1} />
                                       </GridItem>
                                     ) : (
                                       <>Noo</>
@@ -677,160 +385,71 @@ function MaterialForm() {
                                   <>
                                     {item1.element === "TextField" ? (
                                       <GridItem>
-                                        <TextField
-                                          label={item1.label!}
-                                          name={item1.label?.toLocaleLowerCase()}
+                                        <TextFieldRender
+                                          data={item1}
                                           onChange={handleFormDataValueChange}
-                                          placeholder={item1.placeholder}
-                                          required={item1.required!}
-                                          inputProps={{
-                                            minLength: item1.minLength!,
-                                            maxLength: item1.maxLength!,
-                                          }}
-                                          sx={{ mt: 2 }}
-                                          variant={"outlined"}
                                         />
                                       </GridItem>
                                     ) : item1.element === "Password" ? (
                                       <GridItem>
-                                        <TextField
-                                          label={item1.label!}
-                                          name={item1.label?.toLocaleLowerCase()}
-                                          type="password"
+                                        <PasswordRender
+                                          data={item1}
                                           onChange={handleFormDataValueChange}
-                                          placeholder={item1.placeholder}
-                                          required={item1.required!}
-                                          inputProps={{
-                                            minLength: item1.minLength!,
-                                            maxLength: item1.maxLength!,
-                                          }}
-                                          helperText={passwordHelperText}
-                                          error={passwordError}
-                                          sx={{ mt: 2 }}
-                                          variant={"outlined"}
+                                          passwordError={passwordError}
+                                          passwordHelperText={
+                                            passwordHelperText
+                                          }
                                         />
                                       </GridItem>
                                     ) : item1.element === "TextArea" ? (
                                       <GridItem>
-                                        <TextField
-                                          label={item1.label!}
-                                          required={item1.required!}
-                                          placeholder={item1.placeholder!}
-                                          name={item1.label?.toLocaleLowerCase()}
+                                        <TextAreaRender
+                                          data={item1}
                                           onChange={handleFormDataValueChange}
-                                          inputProps={{
-                                            minLength: item1.minLength!,
-                                            maxLength: item1.maxLength!,
-                                          }}
-                                          rows={item1.rows}
-                                          multiline={true}
-                                          sx={{ mt: 2 }}
-                                          variant={"outlined"}
-                                        ></TextField>
+                                        />
                                       </GridItem>
                                     ) : item1.element === "Email" ? (
                                       <GridItem>
-                                        <TextField
-                                          label={item1.label!}
-                                          name={item1.label?.toLocaleLowerCase()}
-                                          type="email"
+                                        <EmailRender
+                                          data={item1}
                                           onChange={handleFormDataValueChange}
-                                          placeholder={item1.placeholder}
-                                          required={item1.required!}
-                                          inputProps={{
-                                            minLength: item1.minLength!,
-                                            maxLength: item1.maxLength!,
-                                          }}
-                                          helperText={emailHelperText}
-                                          error={emailError}
-                                          sx={{ mt: 2 }}
-                                          variant={"outlined"}
+                                          emailHelperText={emailHelperText}
+                                          emailError={emailError}
                                         />
                                       </GridItem>
                                     ) : item1.element === "Select" &&
                                       !item1.multipleValues ? (
                                       <GridItem>
-                                        <Select
-                                          label={item1.label!}
-                                          placeholder={item1.placeholder!}
-                                          menuItems={item1.menuItems!}
-                                          multiple={item1.multipleValues!}
-                                          name={item1.label?.toLocaleLowerCase()}
+                                        <SelectRender
+                                          data={item1}
+                                          onChange={handleFormDataValueChange}
+                                        />
+                                      </GridItem>
+                                    ) : item1.element === "Select" &&
+                                      item1.multipleValues ? (
+                                      <GridItem>
+                                        <SelectRender
+                                          data={data}
                                           onChange={handleSelectData}
-                                          size={
-                                            item1.size !== undefined
-                                              ? item1.size === "small"
-                                                ? "small"
-                                                : "medium"
-                                              : "medium"
-                                          }
-                                          required={item1.required!}
-                                          width={item1.width}
                                         />
                                       </GridItem>
                                     ) : item1.element === "RadioButton" ? (
                                       <GridItem>
-                                        <RadioGroup
-                                          label={item1.label!}
-                                          options={
-                                            item1.options !== undefined
-                                              ? item1.options === "top"
-                                                ? "top"
-                                                : item1.options === "bottom"
-                                                ? "bottom"
-                                                : item1.options === "start"
-                                                ? "start"
-                                                : "end"
-                                              : "end"
-                                          }
-                                          name={item1.label?.toLocaleLowerCase()}
-                                          radioItems={item1.radioItems!}
-                                          required={item1.required!}
+                                        <RadioGroupRender
+                                          data={item1}
                                           onChange={handleFormDataValueChange}
                                         />
                                       </GridItem>
                                     ) : item1.element === "Checkbox" ? (
                                       <GridItem>
-                                        <Checkbox
-                                          label={item1.label!}
-                                          name={item1.label!}
-                                          required={item1.required!}
-                                          defaultChecked={item1.checked}
+                                        <CheckboxRender
+                                          data={item1}
                                           onChange={handleChange}
                                         />
                                       </GridItem>
                                     ) : item1.element === "Button" ? (
                                       <GridItem>
-                                        <Button
-                                          color={
-                                            item1.theme !== undefined
-                                              ? item1.theme === "primary"
-                                                ? "primary"
-                                                : item1.theme === "secondary"
-                                                ? "secondary"
-                                                : item1.theme === "info"
-                                                ? "info"
-                                                : item1.theme === "success"
-                                                ? "success"
-                                                : item1.theme === "warning"
-                                                ? "warning"
-                                                : item1.theme === "error"
-                                                ? "error"
-                                                : "inherit"
-                                              : "warning"
-                                          }
-                                          size={
-                                            item1.size !== undefined
-                                              ? item1.size === "small"
-                                                ? "small"
-                                                : item1.size === "medium"
-                                                ? "medium"
-                                                : "large"
-                                              : "medium"
-                                          }
-                                        >
-                                          {item1.label!}
-                                        </Button>
+                                        <ButtonRender data={item1} />
                                       </GridItem>
                                     ) : (
                                       <>Noo</>

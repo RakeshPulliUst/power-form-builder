@@ -20,6 +20,7 @@ const initialState: UserState = {
 export const signinSlice = createSlice({
   name: "userLogin",
   initialState,
+  //The reducer is a pure function that accepts 2 parameters: the current state and an action object.
   reducers: {
     signinStart: (state) => {
       state.loading = true;

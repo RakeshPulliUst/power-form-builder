@@ -42,7 +42,9 @@ const CheckboxData: React.FC<{
   const [defaultValue, setDefaultValue] = useState(false);
   const [errorLabel, setErrorLabel] = useState("");
 
-  const handleTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleTextChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setCheckboxLabel(event.target.value);
     console.log(checkboxLabel);
   };
@@ -72,13 +74,11 @@ const CheckboxData: React.FC<{
   };
 
   useEffect(() => {
-    console.log("Checkobx", element);
     setCheckboxLabel(element.label!);
     setDefaultValue(element.default!);
     setRequired(element.required!);
     setErrorLabel(element.error!);
-    console.log("Checkobx", checkboxLabel, defaultValue, errorLabel);
-  }, [checkboxLabel, defaultValue, element, errorLabel]);
+  }, [element.label, element.default, element.error, element.required]);
 
   const tabItems: TabItemsProps = [
     { label: "Display", value: "1" },
@@ -103,6 +103,7 @@ const CheckboxData: React.FC<{
               value={checkboxLabel}
               onChange={handleTextChange}
               variant={"outlined"}
+              sx={{ m: 1 }}
             />
             <br />
             <br />

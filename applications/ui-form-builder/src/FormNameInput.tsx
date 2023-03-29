@@ -115,7 +115,7 @@ const FormNameInput = ({ open, handleOpen, handleClose }: Props) => {
                 {...register("formName", {
                   required: "Form Name is required",
                   maxLength: {
-                    value: 15,
+                    value: 25,
                     message: "Form Name must be max 15 letters",
                   },
                   validate: (value) => {

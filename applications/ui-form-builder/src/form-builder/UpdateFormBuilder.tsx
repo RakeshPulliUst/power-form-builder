@@ -90,6 +90,7 @@ const UpdateFormBuilder = () => {
       finalSaveFormData.date_created = formCreatedDate;
       finalSaveFormData.owner = retrievedObject.user?.email!;
       finalSaveFormData.date_modified = new Date().toLocaleString() + "";
+      finalSaveFormData.status = "In-Progress";
       console.log(new Date().toLocaleString() + "");
       finalSaveFormData.status = formStatus;
       console.log(finalSaveFormData);

@@ -1,7 +1,7 @@
 import React from "react";
 import { Element } from "./ElementInterface";
 import SingleElement from "./SingleElement";
-import {  Droppable } from "react-beautiful-dnd";
+import { Droppable } from "react-beautiful-dnd";
 import { Grid, GridItem } from "@power-form-builder/ui-components";
 import FixedComponentList from "./FixedComponentList";
 
@@ -117,6 +117,7 @@ const ElementList: React.FC<props> = ({
                     />
                   </>
                 ))}
+                {/* to maintain the layout of the elements as they are being moved around. */}
                 {provided.placeholder}
               </div>
             )}

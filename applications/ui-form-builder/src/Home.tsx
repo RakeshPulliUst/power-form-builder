@@ -18,8 +18,6 @@ import {
   PreviewIcon,
 } from "@power-form-builder/ui-components";
 
-import PreviewOutlinedIcon from "@mui/icons-material/PreviewOutlined";
-
 import "./Home.css";
 import { UITranslation } from "@power-form-builder/ui-translation";
 import FormNameInput from "./FormNameInput";
