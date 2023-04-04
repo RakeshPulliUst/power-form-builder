@@ -32,6 +32,10 @@ type TabItemsProps = {
   value: string;
 }[];
 
+type ValidateProps = {
+  required: boolean;
+};
+
 const RadioButtonData: React.FC<{
   open: boolean;
   handleClose: () => void;
@@ -52,6 +56,9 @@ const RadioButtonData: React.FC<{
   const [radioItems, setRadioItems] = useState<Props>([
     { id: uuidv4(), radioButtonDataLabel: "", radioButtonDataValue: "" },
   ]);
+  const [validate, setValidate] = useState<ValidateProps>({
+    required: false,
+  });
 
   const RadioOptionPositionValues = [
     { id: "1", selectDataLabel: "start", selectDataValue: "start" },
@@ -85,17 +92,17 @@ const RadioButtonData: React.FC<{
     console.log(radiobuttonValues);
     radiobuttonValues.label = radioLabel;
     radiobuttonValues.options = radioOptionLabelPosition.toString();
-    radiobuttonValues.required = required;
     radiobuttonValues.radioItems = radioItems;
+    radiobuttonValues.validate.required = required;
     handleOpen();
   };
 
   useEffect(() => {
     setRadioLabel(element.label!);
     setRadioOptionLabelPosition([element.options!]);
-    setRequired(element.required!);
     setRadioItems(element.radioItems!);
-  }, [element.label, element.options, element.radioItems, element.required]);
+    setValidate(element.validate!);
+  }, [element.label, element.options, element.radioItems, element.validate]); //element.required
 
   const handleChangeInput = (
     id: string,

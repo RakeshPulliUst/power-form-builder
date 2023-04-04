@@ -13,19 +13,19 @@ const TextAreaRender = ({ data, onChange }: Props) => {
   return (
     <TextField
       label={data.label!}
-      required={data.required!}
-      placeholder={data.placeholder!}
       name={data.label?.toLocaleLowerCase()}
-      onChange={onChange}
+      placeholder={data.placeholder!}
+      required={data.validate?.required!}
       inputProps={{
-        minLength: data.minLength!,
-        maxLength: data.maxLength!,
+        minLength: data.validate?.minLength!,
+        maxLength: data.validate?.maxLength!,
       }}
-      rows={data.rows}
-      multiline={true}
       sx={{ mt: 2 }}
       variant={"outlined"}
-    ></TextField>
+      onChange={onChange}
+      rows={data.validate?.rows}
+      multiline={true}
+    />
   );
 };
 

@@ -1,9 +1,5 @@
 import React, { FormEvent, useState } from "react";
 import {
-  TextField,
-  Select,
-  RadioGroup,
-  Checkbox,
   Button,
   TabContext,
   Box,
@@ -39,50 +35,14 @@ function MaterialForm() {
   const [selectData, setSelectData] = useState({});
 
   // const [error, setError] = React.useState(false);
-  const [passwordError, setPasswordError] = React.useState(false);
-  const [emailError, setEmailError] = React.useState(false);
-  const [emailHelperText, setEmailHelperText] = React.useState("");
-  const [passwordHelperText, setPasswordHelperText] = React.useState("");
 
   const handleFormDataValueChange = (
     event: React.ChangeEvent<HTMLInputElement> | any
   ) => {
-    if (event.target.name === "email") {
-      var regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-      if (regex.test(event.target.value)) {
-        setEmailHelperText("");
-        setEmailError(false);
-      } else {
-        setEmailHelperText("Not Valid Email");
-        setEmailError(true);
-      }
-      console.log(emailError, emailHelperText);
-      setFormDataValue({
-        ...formDataValue,
-        [event.target.name]: event.target.value,
-      });
-    } else if (event.target.name === "password") {
-      console.log("Password");
-      regex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
-      if (regex.test(event.target.value)) {
-        setPasswordHelperText("");
-        setPasswordError(false);
-      } else {
-        setPasswordHelperText(
-          "Password should contain upper, lower case, number, special letter"
-        );
-        setPasswordError(true);
-      }
-      setFormDataValue({
-        ...formDataValue,
-        [event.target.name]: event.target.value,
-      });
-    } else {
-      setFormDataValue({
-        ...formDataValue,
-        [event.target.name]: event.target.value,
-      });
-    }
+    setFormDataValue({
+      ...formDataValue,
+      [event.target.name]: event.target.value,
+    });
   };
 
   const handleSelectData = (event: any) => {
@@ -106,18 +66,15 @@ function MaterialForm() {
   const submitForm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("select", formDataValue, selectData);
-
-    if (formDataValue) {
+    console.log(Object.keys(formDataValue).length);
+    if (Object.keys(formDataValue).length > 0) {
       console.log("Submit Data");
-      setPasswordError(false);
-      setEmailError(false);
+      alert("Done");
+      navigate("/home");
     } else {
-      console.log("Submit Data");
-      setPasswordError(true);
-      setEmailError(true);
+      console.log("Submit Data Error");
+      alert("Enter Values");
     }
-    alert("Done");
-    navigate("/home");
     //window.location.reload();
   };
 
@@ -159,6 +116,11 @@ function MaterialForm() {
             console.log(formData);
             console.log(formJsonData);
             console.log("data", data);
+            if (data.validate) {
+              console.log("Validate", data.validate);
+            } else {
+              console.log("No");
+            }
             return (
               <>
                 <Grid spacing={2} alignItems="center" justifyContent="center">
@@ -172,15 +134,11 @@ function MaterialForm() {
                       <EmailRender
                         data={data}
                         onChange={handleFormDataValueChange}
-                        emailHelperText={emailHelperText}
-                        emailError={emailError}
                       />
                     ) : data.element === "Password" ? (
                       <PasswordRender
                         data={data}
                         onChange={handleFormDataValueChange}
-                        passwordError={passwordError}
-                        passwordHelperText={passwordHelperText}
                       />
                     ) : data.element === "TextArea" ? (
                       <TextAreaRender
@@ -228,8 +186,6 @@ function MaterialForm() {
                                       <PasswordRender
                                         data={item1}
                                         onChange={handleFormDataValueChange}
-                                        passwordError={passwordError}
-                                        passwordHelperText={passwordHelperText}
                                       />
                                     </GridItem>
                                   ) : item1.element === "TextArea" ? (
@@ -244,8 +200,6 @@ function MaterialForm() {
                                       <EmailRender
                                         data={item1}
                                         onChange={handleFormDataValueChange}
-                                        emailHelperText={emailHelperText}
-                                        emailError={emailError}
                                       />
                                     </GridItem>
                                   ) : item1.element === "Select" &&
@@ -315,10 +269,6 @@ function MaterialForm() {
                                         <PasswordRender
                                           data={item1}
                                           onChange={handleFormDataValueChange}
-                                          passwordError={passwordError}
-                                          passwordHelperText={
-                                            passwordHelperText
-                                          }
                                         />
                                       </GridItem>
                                     ) : item1.element === "TextArea" ? (
@@ -333,8 +283,6 @@ function MaterialForm() {
                                         <EmailRender
                                           data={item1}
                                           onChange={handleFormDataValueChange}
-                                          emailHelperText={emailHelperText}
-                                          emailError={emailError}
                                         />
                                       </GridItem>
                                     ) : item1.element === "Select" &&
@@ -395,10 +343,6 @@ function MaterialForm() {
                                         <PasswordRender
                                           data={item1}
                                           onChange={handleFormDataValueChange}
-                                          passwordError={passwordError}
-                                          passwordHelperText={
-                                            passwordHelperText
-                                          }
                                         />
                                       </GridItem>
                                     ) : item1.element === "TextArea" ? (
@@ -413,8 +357,6 @@ function MaterialForm() {
                                         <EmailRender
                                           data={item1}
                                           onChange={handleFormDataValueChange}
-                                          emailHelperText={emailHelperText}
-                                          emailError={emailError}
                                         />
                                       </GridItem>
                                     ) : item1.element === "Select" &&
@@ -461,12 +403,6 @@ function MaterialForm() {
                           )}
                         </>
                       ))}
-                      {/* <GridItem md={6}>
-                          <>Column1</>
-                        </GridItem>
-                        <GridItem md={6}>
-                          <>Column2</>
-                        </GridItem> */}
                     </Grid>
                   </>
                 ) : (

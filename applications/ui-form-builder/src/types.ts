@@ -1,8 +1,13 @@
+import { Element } from "./form-builder/ElementInterface";
 export interface User {
   id: string;
   firstname: string,
   lastname: string,
   email: string;
+}
+
+export interface formElements {
+  components: Element[]
 }
 
 export interface SignupData {

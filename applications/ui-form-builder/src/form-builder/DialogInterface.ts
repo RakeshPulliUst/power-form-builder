@@ -2,34 +2,28 @@ import { Element } from "./ElementInterface";
 export interface TextFieldDiaglog {
     label : string;
     placeholder: string;
-    required: boolean;
-    minLength: number;
-    maxLength: number;
-    rows?: number;
+    validate: {
+      required: boolean;
+      minLength?: number;       
+      maxLength?: number;     
+      rows?: number  
+    }
   }
-
-  export interface TextAreaDiaglog {
-    label : string;
-    placeholder: string;
-    required: boolean;
-    minRows: number;
-    width: number;
-  }
-
   
   export interface CheckboxDiaglog {
     label : string;
     checked: boolean;
     default: boolean;
-    required: boolean;
-    error: string;
+    validate: {
+      error: string;
+      required: boolean;
+    }
   }
 
   export interface SelectDiaglog {
     label : string;
     placeholder: string;
     multipleValues: boolean
-    required: boolean;
     size: string,
     width: number,
     menuItems: {
@@ -37,6 +31,9 @@ export interface TextFieldDiaglog {
       selectDataLabel: string
       selectDataValue: string
     }[]; 
+    validate:{
+      required: boolean;
+    }
   }
 
   export interface ButtonDialog {
@@ -53,7 +50,9 @@ export interface TextFieldDiaglog {
       radioButtonDataLabel: string
       radioButtonDataValue: string
     }[]; 
-    required: boolean,
+    validate:{
+      required: boolean
+    }
   };
 
   export interface ColumnDialog {

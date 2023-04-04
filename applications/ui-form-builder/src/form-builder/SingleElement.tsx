@@ -117,43 +117,53 @@ const SingleElement: React.FC<{
 }) => {
   const textFieldValues: TextFieldDiaglog = {
     label: "TextField",
-    required: false,
     placeholder: "Enter TextField",
-    minLength: 0,
-    maxLength: 0,
+    validate: {
+      required: false,
+      minLength: 0,
+      maxLength: 0,
+    },
   };
 
   const passwordValues: TextFieldDiaglog = {
     label: "Password",
-    required: false,
     placeholder: "Enter Password",
-    minLength: 0,
-    maxLength: 0,
+    validate: {
+      required: false,
+      minLength: 0,
+      maxLength: 0,
+    },
   };
 
   const emailValues: TextFieldDiaglog = {
     label: "Email",
-    required: false,
     placeholder: "Enter Email",
-    minLength: 0,
-    maxLength: 0,
+    validate: {
+      required: false,
+      minLength: 0,
+      maxLength: 0,
+    },
   };
 
   const textAreaValues: TextFieldDiaglog = {
     label: "TextArea",
-    required: false,
     placeholder: "Enter TextArea",
-    minLength: 0,
-    maxLength: 0,
-    rows: 0,
+    validate: {
+      required: false,
+      minLength: 0,
+      maxLength: 0,
+      rows: 0,
+    },
   };
 
   const checkBoxValues: CheckboxDiaglog = {
     label: "Checkbox",
-    required: false,
     default: false,
     checked: false,
-    error: "",
+    validate: {
+      error: "",
+      required: false,
+    },
   };
 
   const buttonValues: ButtonDialog = {
@@ -283,10 +293,12 @@ const SingleElement: React.FC<{
     label: "Select",
     placeholder: "Select the option",
     multipleValues: false,
-    required: false,
     size: "medium",
     width: 220,
     menuItems: menuItemsData,
+    validate: {
+      required: false,
+    },
   };
 
   const tabValues: TabsDialog = {
@@ -311,7 +323,9 @@ const SingleElement: React.FC<{
     label: "RadioButton",
     options: "",
     radioItems: radioItemsData,
-    required: false,
+    validate: {
+      required: false,
+    },
   };
 
   const columnValues: ColumnDialog = {
@@ -328,8 +342,15 @@ const SingleElement: React.FC<{
 
   const handleDelete = (id: number) => {
     console.log("Iddddddd", id, element.id);
-    setElements(elements.filter((element) => element.id !== id));
-    console.log(elements);
+    if (element.element === "Column") {
+      console.log("COlumns");
+    } else if (element.element === "Tabs") {
+      console.log("Tabsss");
+    } else {
+      console.log("Elements", element);
+      setElements(elements.filter((element) => element.id !== id));
+    }
+    console.log(elements.filter((element) => element.id !== id));
   };
 
   //TextField
@@ -356,34 +377,26 @@ const SingleElement: React.FC<{
       console.log("JSON", JSON.stringify(textFieldValues));
       element.label = textFieldValues.label;
       element.placeholder = textFieldValues.placeholder;
-      element.maxLength = textFieldValues.maxLength;
-      element.minLength = textFieldValues.minLength;
-      element.required = textFieldValues.required;
+      element.validate = textFieldValues.validate;
+      console.log("JSON", JSON.stringify(element));
     } else if (element.element === "Password") {
       console.log(textFieldValues.label);
       console.log("JSON", JSON.stringify(textFieldValues));
       element.label = passwordValues.label;
       element.placeholder = passwordValues.placeholder;
-      element.maxLength = passwordValues.maxLength;
-      element.minLength = passwordValues.minLength;
-      element.required = passwordValues.required;
+      element.validate = passwordValues.validate;
     } else if (element.element === "Email") {
       console.log(emailValues.label);
       console.log("JSON", JSON.stringify(emailValues));
       element.label = emailValues.label;
       element.placeholder = emailValues.placeholder;
-      element.maxLength = emailValues.maxLength;
-      element.minLength = emailValues.minLength;
-      element.required = emailValues.required;
+      element.validate = emailValues.validate;
     } else if (element.element === "TextArea") {
       console.log(textAreaValues);
       console.log("JSON", JSON.stringify(textAreaValues));
       element.label = textAreaValues.label;
       element.placeholder = textAreaValues.placeholder;
-      element.rows = textAreaValues.rows;
-      element.maxLength = textAreaValues.maxLength;
-      element.minLength = textAreaValues.minLength;
-      element.required = textAreaValues.required;
+      element.validate = textAreaValues.validate;
     } else if (element.element === "Select") {
       console.log(selectValues);
       console.log("JSON", JSON.stringify(selectValues));
@@ -391,7 +404,7 @@ const SingleElement: React.FC<{
       element.placeholder = selectValues.placeholder;
       element.multipleValues = selectValues.multipleValues;
       element.menuItems = selectValues.menuItems;
-      element.required = selectValues.required;
+      element.validate = selectValues.validate;
       element.size = selectValues.size.toString();
       element.width = selectValues.width;
     } else if (element.element === "Checkbox") {
@@ -399,15 +412,15 @@ const SingleElement: React.FC<{
       console.log("JSON", JSON.stringify(checkBoxValues));
       element.label = checkBoxValues.label;
       element.default = checkBoxValues.default;
-      element.error = checkBoxValues.error;
-      element.required = checkBoxValues.required;
+      element.validate = checkBoxValues.validate;
     } else if (element.element === "RadioButton") {
       console.log(radiobuttonValues);
       console.log("JSON", JSON.stringify(radiobuttonValues));
       element.label = radiobuttonValues.label;
       element.options = radiobuttonValues.options;
       element.radioItems = radiobuttonValues.radioItems;
-      element.required = radiobuttonValues.required;
+
+      element.validate = radiobuttonValues.validate;
     } else if (element.element === "Tabs") {
       console.log(tabValues);
       console.log("JSON", JSON.stringify(tabValues));
@@ -591,13 +604,13 @@ const SingleElement: React.FC<{
                 />
                 <TextField
                   label={textFieldValues.label}
-                  required={textFieldValues.required}
                   placeholder={textFieldValues.placeholder}
                   value={textFieldValue}
                   onChange={handleTextFieldValue}
+                  required={textFieldValues.validate.required}
                   inputProps={{
-                    maxLength: textFieldValues.maxLength,
-                    minLength: textFieldValues.minLength,
+                    maxLength: textFieldValues.validate.maxLength,
+                    minLength: textFieldValues.validate.minLength,
                   }}
                   variant={"outlined"}
                   // type="password"
@@ -615,14 +628,14 @@ const SingleElement: React.FC<{
 
                 <TextField
                   label={textAreaValues.label}
-                  required={textAreaValues.required}
+                  required={textAreaValues.validate.required}
                   placeholder={textAreaValues.placeholder}
                   value={textAreaValue}
                   onChange={handleTextAreaValue}
-                  rows={textAreaValues.rows}
+                  rows={textAreaValues.validate.rows}
                   inputProps={{
-                    maxLength: textAreaValues.maxLength,
-                    minLength: textAreaValues.minLength,
+                    maxLength: textAreaValues.validate.maxLength,
+                    minLength: textAreaValues.validate.minLength,
                   }}
                   multiline={true}
                   variant={"outlined"}
@@ -640,13 +653,13 @@ const SingleElement: React.FC<{
 
                 <TextField
                   label={passwordValues.label}
-                  required={passwordValues.required}
+                  required={passwordValues.validate.required}
                   placeholder={passwordValues.placeholder}
                   value={passwordValue}
                   onChange={handlePasswordValue}
                   inputProps={{
-                    maxLength: passwordValues.maxLength,
-                    minLength: passwordValues.minLength,
+                    maxLength: passwordValues.validate.maxLength,
+                    minLength: passwordValues.validate.minLength,
                   }}
                   type="password"
                   variant={"outlined"}
@@ -664,13 +677,13 @@ const SingleElement: React.FC<{
 
                 <TextField
                   label={emailValues.label}
-                  required={emailValues.required}
+                  required={emailValues.validate.required}
                   placeholder={emailValues.placeholder}
                   value={emailValue}
                   onChange={handleEmailValue}
                   inputProps={{
-                    maxLength: emailValues.maxLength,
-                    minLength: emailValues.minLength,
+                    maxLength: emailValues.validate.maxLength,
+                    minLength: emailValues.validate.minLength,
                   }}
                   type="email"
                   variant={"outlined"}
@@ -688,7 +701,7 @@ const SingleElement: React.FC<{
 
                 <Checkbox
                   label={checkBoxValues.label}
-                  required={checkBoxValues.required}
+                  required={checkBoxValues.validate.required}
                   checked={checkBoxValues.default}
                   onChange={handleCheck}
                 />
@@ -711,7 +724,7 @@ const SingleElement: React.FC<{
                   value={selectData}
                   onChange={handleSelectData}
                   size={selectValues.size === "small" ? "small" : "medium"}
-                  required={selectValues.required}
+                  required={selectValues.validate.required}
                   width={selectValues.width}
                 />
               </>
@@ -776,7 +789,7 @@ const SingleElement: React.FC<{
                       : "end"
                   }
                   radioItems={radiobuttonValues.radioItems}
-                  required={radiobuttonValues.required}
+                  required={radiobuttonValues.validate.required}
                   value={radioValue}
                   onChange={handleRadioChange}
                 />

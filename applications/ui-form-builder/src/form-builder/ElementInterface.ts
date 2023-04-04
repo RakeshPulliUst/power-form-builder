@@ -20,32 +20,34 @@ export interface Element {
     element: string;
     label?: string;
     placeholder?: string;
-    required?: boolean;
+    
 
-    minLength?: number;
-    maxLength?: number;
-    rows?: number
+    validate?: {
+      required: boolean;
+      minLength?: number;       //validate
+      maxLength?: number;      //validate
+      rows?: number            //validate 
+      error?: string;  //validate
+    }
 
-    minRows?: number;
     width?: number;
 
     checked?: boolean;
     default?: boolean;
-    error?: string;
+
 
     multipleValues?: boolean
-    menuItems?: {
+    menuItems?: {       //data
       id: string
       selectDataLabel: string
       selectDataValue: string
     }[]; 
-    textFieldWidth?: number
 
     theme?: string,
     size?: string, 
     
     options?: string,
-    radioItems?: {
+    radioItems?: {      //data
       id: string
       radioButtonDataLabel: string
       radioButtonDataValue: string
@@ -113,28 +115,35 @@ export interface Element {
       element: "TextField",
       label : '',
       placeholder: '',
-      required: false,
-      minLength: 0,
-      maxLength: 0
+      validate: {
+        required: false,
+        minLength: 0,
+        maxLength: 0
+      }
       },
     {
       id: 3,
       element: "Password",
       label : '',
       placeholder: '',
-      required: false,
-      minLength: 0,
-      maxLength: 0
+      validate: {
+        required: false,
+        minLength: 0,
+        maxLength: 0
+      }
     },
     {
       id: 4,
       element: "TextArea",
       label : '',
       placeholder: '',
-      required: false,
-      minLength: 0,
-      maxLength: 0,
-      rows: 0
+      validate: {
+        required: false,
+        minLength: 0,
+        maxLength: 0,
+        rows: 0
+      }
+      
     },
     {
       id: 5,
@@ -142,14 +151,16 @@ export interface Element {
       label : '',
       placeholder: '',
       multipleValues: false,
-      required: false,
       size: '',
-      textFieldWidth: 150,
+      width: 0,
       menuItems: [{
         id: "",
         selectDataLabel: "",
         selectDataValue: ""
-      }]
+      }],
+      validate: {
+        required: false,
+      }
     },
     {
       id: 6,
@@ -157,8 +168,10 @@ export interface Element {
       label : '',
       checked: false,
       default: false,
-      required: false,
-      error: ''
+      validate: {
+        required: false,
+        error: ''
+      }
     },
     {
       id: 7,
@@ -170,19 +183,38 @@ export interface Element {
         radioButtonDataLabel: '',
         radioButtonDataValue: ''
       }],
-      required: false
+      validate: {
+        required: false
+      }
     },
     {
       id: 8,
       element: "Email",
       label : '',
       placeholder: '',
-      required: false,
-      minLength: 0,
-      maxLength: 0
+      validate:{
+        required: false,
+        minLength: 0,
+        maxLength: 0
+      }
     },
     {
       id: 9,
+      element: "Tabs",
+      label: "",
+      tabItems: [{
+        id: "",
+        dropId:"",
+        tabsDataLabel: "",
+        tabsDataValue: "",
+        tabComponents:  [{
+          id: 1008,
+          element: "Button",
+        }]
+      }],
+    },
+    {
+      id: 10,
       element: "Column",
       label: "",
       columnItems: [{
@@ -197,21 +229,7 @@ export interface Element {
         }]
       }],  
     },
-    {
-      id: 10,
-      element: "Tabs",
-      label: "",
-      tabItems: [{
-        id: "",
-        dropId:"",
-        tabsDataLabel: "",
-        tabsDataValue: "",
-        tabComponents:  [{
-          id: 1008,
-          element: "Button",
-        }]
-      }],
-    },
+
     
   ]
 

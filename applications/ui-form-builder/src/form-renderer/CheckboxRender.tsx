@@ -14,7 +14,7 @@ const CheckboxRender = ({ data, onChange }: Props) => {
     <Checkbox
       label={data.label!}
       name={data.label!}
-      required={data.required!}
+      required={data.validate?.required}
       defaultChecked={data.default}
       onChange={onChange}
     />

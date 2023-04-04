@@ -109,6 +109,7 @@ const Home = () => {
     status: string
   ) => {
     console.log("Edit", id);
+    console.log(components);
     navigate("/updateformbuilder", {
       state: {
         formId: id,
@@ -208,8 +209,61 @@ const Home = () => {
                     sx={{ cursor: "pointer", fontSize: "30px" }}
                     onClick={() => {
                       console.log(JSON.stringify(row.components));
+                      const data = row.components;
+
+                      const filteredData = data.map(
+                        ({
+                          menuItems,
+                          radioItems,
+                          tabItems,
+                          columnItems,
+
+                          ...rest
+                        }) => {
+                          if (
+                            menuItems!.length === 0 &&
+                            radioItems!.length === 0 &&
+                            tabItems!.length === 0 &&
+                            columnItems!.length === 0
+                          ) {
+                            return rest;
+                          }
+
+                          tabItems?.forEach((tab) => {
+                            tab.tabComponents?.forEach((component) => {
+                              if (component.menuItems?.length === 0) {
+                                delete component.menuItems;
+                              }
+                              if (component.radioItems?.length === 0) {
+                                delete component.radioItems;
+                              }
+                            });
+                          });
+
+                          columnItems?.forEach((col) => {
+                            col.columnComponents?.forEach((component) => {
+                              if (component.menuItems?.length === 0) {
+                                delete component.menuItems;
+                              }
+                              if (component.radioItems?.length === 0) {
+                                delete component.radioItems;
+                              }
+                            });
+                          });
+
+                          return {
+                            ...rest,
+                            ...(menuItems?.length && { menuItems }),
+                            ...(tabItems?.length && { tabItems }),
+                            ...(radioItems?.length && { radioItems }),
+                            ...(columnItems?.length && { columnItems }),
+                          };
+                        }
+                      );
+
+                      console.log(filteredData);
                       navigator.clipboard.writeText(
-                        JSON.stringify(row.components)
+                        JSON.stringify(filteredData)
                       );
                     }}
                     color="action"

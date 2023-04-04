@@ -26,7 +26,7 @@ const RadioGroupRender = ({ data, onChange }: Props) => {
       }
       name={data.label?.toLocaleLowerCase()}
       radioItems={data.radioItems!}
-      required={data.required!}
+      required={data.validate?.required!}
       onChange={onChange}
     />
   );

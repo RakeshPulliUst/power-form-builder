@@ -185,10 +185,11 @@ const FormBuilder = () => {
     }
 
     //To drop at Destination Logic by adding at destination index
-    if (destination.droppableId === "ElementsList") {
-      active.splice(destination.index, 0, add!);
-      console.log("Destination[Active]:", active);
-    } else if (destination.droppableId === "columnDroppableId") {
+    // if (destination.droppableId === "ElementsList") {
+    //   active.splice(destination.index, 0, add!);
+    //   console.log("Destination[Active]:", active);
+    // } else 
+    if (destination.droppableId === "columnDroppableId") {
       let newAdd: Element = Object.assign({}, add);
       newAdd.id = randomNumberInRange(9, 100);
       newAdd.show = true;

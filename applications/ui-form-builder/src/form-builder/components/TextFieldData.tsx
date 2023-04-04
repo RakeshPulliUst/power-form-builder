@@ -22,6 +22,13 @@ type TabItemsProps = {
   value: string;
 }[];
 
+type ValidateProps = {
+  required: boolean;
+  minLength?: number;
+  maxLength?: number;
+  rows?: number;
+};
+
 const TextFieldData: React.FC<{
   open: boolean;
   handleClose: () => void;
@@ -37,11 +44,17 @@ const TextFieldData: React.FC<{
   };
 
   //TextField
-  const [textValue, setTextValue] = useState("aa");
+  const [textValue, setTextValue] = useState("");
   const [textPlaceholder, setTextPlaceholder] = useState("");
   const [textMinLength, setTextMinLength] = useState(0);
   const [textMaxLength, setTextMaxLength] = useState(0);
   const [rows, setRows] = useState(0);
+  const [validate, setValidate] = useState<ValidateProps>({
+    required: false,
+    minLength: 0,
+    maxLength: 0,
+    rows: 0,
+  });
 
   const handleTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     console.log(event.target.value);
@@ -56,50 +69,42 @@ const TextFieldData: React.FC<{
 
   const handleTextMinLength = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTextMinLength(parseInt(event.target.value));
+    setValidate({ ...validate, minLength: parseInt(event.target.value) });
   };
 
   const handleTextMaxLength = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTextMaxLength(parseInt(event.target.value));
+    setValidate({ ...validate, maxLength: parseInt(event.target.value) });
   };
 
   const handlerows = (event: React.ChangeEvent<HTMLInputElement>) => {
     setRows(parseInt(event.target.value));
+    setValidate({ ...validate, rows: parseInt(event.target.value) });
   };
 
   //Checkbox
   const [required, setRequired] = useState(false);
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setRequired(event.target.checked);
+    setValidate({ ...validate, required: event.target.checked });
   };
 
   const handleData = () => {
     console.log(open);
     textFieldValues.label = textValue;
     textFieldValues.placeholder = textPlaceholder;
-    textFieldValues.maxLength = textMaxLength;
-    textFieldValues.minLength = textMinLength;
-    textFieldValues.required = required;
-    textFieldValues.rows = rows;
+    textFieldValues.validate = validate;
     console.log(textFieldValues);
-
     handleOpen();
   };
 
   useEffect(() => {
     setTextValue(element.label!);
     setTextPlaceholder(element.placeholder!);
-    setTextMaxLength(element.maxLength!);
-    setTextMinLength(element.minLength!);
-    setRequired(element.required!);
-    setRows(element.rows!);
-  }, [
-    element.label,
-    element.placeholder,
-    element.maxLength,
-    element.minLength,
-    element.required,
-    element.rows,
-  ]);
+    if (element.validate) {
+      setValidate(element.validate);
+    }
+  }, [element.label, element.placeholder, element.validate]);
 
   const tabItems: TabItemsProps = [
     { label: "Display", value: "1" },

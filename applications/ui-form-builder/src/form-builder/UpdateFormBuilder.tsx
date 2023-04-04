@@ -277,6 +277,7 @@ const UpdateFormBuilder = () => {
 
   useEffect(() => {
     setCompletedElements(formInitialComponents);
+    console.log(formInitialComponents);
     formInitialComponents?.map((item: any, index: number) =>
       item.element === "Tabs"
         ? item.tabItems.map((data: any) =>

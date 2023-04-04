@@ -22,7 +22,7 @@ const SelectRender = ({ data, onChange }: Props) => {
             : "medium"
           : "medium"
       }
-      required={data.required!}
+      required={data.validate?.required!}
       width={data.width}
     />
   );

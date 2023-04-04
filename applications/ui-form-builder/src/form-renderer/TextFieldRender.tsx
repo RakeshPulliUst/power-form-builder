@@ -15,10 +15,10 @@ const TextFieldRender = ({ data, onChange }: Props) => {
       label={data.label!}
       name={data.label?.toLocaleLowerCase()}
       placeholder={data.placeholder}
-      required={data.required!}
+      required={data.validate?.required!}
       inputProps={{
-        minLength: data.minLength!,
-        maxLength: data.maxLength!,
+        minLength: data.validate?.minLength!,
+        maxLength: data.validate?.maxLength!,
       }}
       sx={{ mt: 2 }}
       variant={"outlined"}

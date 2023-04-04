@@ -32,6 +32,10 @@ type TabItemsProps = {
   value: string;
 }[];
 
+type ValidateProps = {
+  required: boolean;
+};
+
 const SelectData: React.FC<{
   open: boolean;
   handleClose: () => void;
@@ -54,6 +58,9 @@ const SelectData: React.FC<{
   const [menuItemsData, setMenuItemsData] = useState<Props>([
     { id: uuidv4(), selectDataLabel: "", selectDataValue: "" },
   ]);
+  const [validate, setValidate] = useState<ValidateProps>({
+    required: false,
+  });
 
   const handleSelectLabel = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectLabel(event.target.value);
@@ -96,14 +103,14 @@ const SelectData: React.FC<{
   };
 
   const handleData = () => {
+    console.log("required", required);
     selectValues.label = selectLabel;
     selectValues.placeholder = textPlaceholder;
     selectValues.multipleValues = multipleValues;
-    selectValues.required = required;
     selectValues.size = selectSize.toString();
     selectValues.width = parseInt(selectWidth);
     selectValues.menuItems = menuItemsData;
-    console.log(selectValues);
+    selectValues.validate.required = required;
     handleOpen();
   };
 
@@ -111,7 +118,7 @@ const SelectData: React.FC<{
     setSelectLabel(element.label!);
     setTextPlaceholder(element.placeholder!);
     setMultipleValues(element.multipleValues!);
-    setRequired(element.required!);
+    setValidate(element.validate!);
     setSelectSize([element.size!]);
     setSelectWidth(element.width?.toString()!);
     setMenuItemsData(element.menuItems!);
@@ -120,7 +127,7 @@ const SelectData: React.FC<{
     element.menuItems,
     element.multipleValues,
     element.placeholder,
-    element.required,
+    element.validate,
     element.size,
     element.width,
   ]);

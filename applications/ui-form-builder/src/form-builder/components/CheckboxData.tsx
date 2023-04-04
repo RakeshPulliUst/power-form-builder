@@ -23,6 +23,11 @@ type TabItemsProps = {
   value: string;
 }[];
 
+type ValidateProps = {
+  error?: string;
+  required: boolean;
+};
+
 const CheckboxData: React.FC<{
   open: boolean;
   handleClose: () => void;
@@ -41,6 +46,10 @@ const CheckboxData: React.FC<{
   const [checkboxLabel, setCheckboxLabel] = useState("");
   const [defaultValue, setDefaultValue] = useState(false);
   const [errorLabel, setErrorLabel] = useState("");
+  const [validate, setValidate] = useState<ValidateProps>({
+    error: "",
+    required: false,
+  });
 
   const handleTextChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -67,8 +76,10 @@ const CheckboxData: React.FC<{
     console.log(checkboxLabel);
     checkBoxValues.label = checkboxLabel;
     checkBoxValues.default = defaultValue;
-    checkBoxValues.error = errorLabel;
-    checkBoxValues.required = required;
+    checkBoxValues.validate = {
+      error: errorLabel,
+      required: required,
+    };
     console.log(checkBoxValues);
     handleOpen();
   };
@@ -76,9 +87,8 @@ const CheckboxData: React.FC<{
   useEffect(() => {
     setCheckboxLabel(element.label!);
     setDefaultValue(element.default!);
-    setRequired(element.required!);
-    setErrorLabel(element.error!);
-  }, [element.label, element.default, element.error, element.required]);
+    setValidate(element.validate!);
+  }, [element.label, element.default, element.validate]);
 
   const tabItems: TabItemsProps = [
     { label: "Display", value: "1" },

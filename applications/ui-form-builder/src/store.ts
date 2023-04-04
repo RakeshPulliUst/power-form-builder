@@ -1,13 +1,15 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import signupReducer from "./signupSlice";
 import signinReducer from "./signinSlice";
+import profileReducer from "./profileSlice";
 
 const persistedState = localStorage.getItem("loginState")
 
 export const store = configureStore({
   reducer: {
     userRegister: signupReducer,
-    userLogin: signinReducer
+    userLogin: signinReducer,
+    userProfile: profileReducer
   },
 
   preloadedState: persistedState ?  JSON.parse(persistedState) : undefined,
