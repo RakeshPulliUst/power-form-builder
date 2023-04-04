@@ -82,9 +82,8 @@ const RadioButtonData: React.FC<{
   };
 
   //Checkbox
-  const [required, setRequired] = useState(false);
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRequired(event.target.checked);
+    setValidate({ ...validate, required: event.target.checked });
   };
 
   const handleData = () => {
@@ -93,7 +92,7 @@ const RadioButtonData: React.FC<{
     radiobuttonValues.label = radioLabel;
     radiobuttonValues.options = radioOptionLabelPosition.toString();
     radiobuttonValues.radioItems = radioItems;
-    radiobuttonValues.validate.required = required;
+    radiobuttonValues.validate = validate;
     handleOpen();
   };
 
@@ -227,7 +226,7 @@ const RadioButtonData: React.FC<{
           <TabPanel value="3">
             <Checkbox
               label="Required"
-              checked={required}
+              checked={validate.required}
               required={true}
               onChange={handleCheckboxChange}
             />

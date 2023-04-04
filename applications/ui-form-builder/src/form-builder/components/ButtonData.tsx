@@ -61,11 +61,6 @@ const ButtonData: React.FC<{
   };
 
   const handleButtonTheme = (event: any) => {
-    // const {
-    //   target: { value },
-    // } = event;
-    // setButtonTheme(typeof value === "string" ? value.split(",") : value);
-
     const selectvalue = event.target.value;
     console.log(selectvalue);
     setButtonTheme(

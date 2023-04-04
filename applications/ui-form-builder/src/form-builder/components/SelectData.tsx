@@ -83,9 +83,8 @@ const SelectData: React.FC<{
   };
 
   //Checkbox
-  const [required, setRequired] = useState(false);
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRequired(event.target.checked);
+    setValidate({ ...validate, required: event.target.checked });
   };
 
   //size
@@ -103,14 +102,13 @@ const SelectData: React.FC<{
   };
 
   const handleData = () => {
-    console.log("required", required);
     selectValues.label = selectLabel;
     selectValues.placeholder = textPlaceholder;
     selectValues.multipleValues = multipleValues;
     selectValues.size = selectSize.toString();
     selectValues.width = parseInt(selectWidth);
     selectValues.menuItems = menuItemsData;
-    selectValues.validate.required = required;
+    selectValues.validate = validate;
     handleOpen();
   };
 
@@ -285,7 +283,7 @@ const SelectData: React.FC<{
           <TabPanel value="3">
             <Checkbox
               label="Required"
-              checked={required}
+              checked={validate.required}
               required={true}
               onChange={handleCheckboxChange}
             />

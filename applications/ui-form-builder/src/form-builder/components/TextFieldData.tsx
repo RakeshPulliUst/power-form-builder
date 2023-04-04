@@ -46,12 +46,9 @@ const TextFieldData: React.FC<{
   //TextField
   const [textValue, setTextValue] = useState("");
   const [textPlaceholder, setTextPlaceholder] = useState("");
-  const [textMinLength, setTextMinLength] = useState(0);
-  const [textMaxLength, setTextMaxLength] = useState(0);
-  const [rows, setRows] = useState(0);
   const [validate, setValidate] = useState<ValidateProps>({
     required: false,
-    minLength: 0,
+    minLength: 1,
     maxLength: 0,
     rows: 0,
   });
@@ -68,24 +65,19 @@ const TextFieldData: React.FC<{
   };
 
   const handleTextMinLength = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTextMinLength(parseInt(event.target.value));
     setValidate({ ...validate, minLength: parseInt(event.target.value) });
   };
 
   const handleTextMaxLength = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTextMaxLength(parseInt(event.target.value));
     setValidate({ ...validate, maxLength: parseInt(event.target.value) });
   };
 
   const handlerows = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRows(parseInt(event.target.value));
     setValidate({ ...validate, rows: parseInt(event.target.value) });
   };
 
   //Checkbox
-  const [required, setRequired] = useState(false);
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRequired(event.target.checked);
     setValidate({ ...validate, required: event.target.checked });
   };
 
@@ -156,7 +148,7 @@ const TextFieldData: React.FC<{
           <TabPanel value="2">
             <Checkbox
               label="Required"
-              checked={required}
+              checked={validate.required!}
               required={true}
               onChange={handleCheckboxChange}
             />
@@ -165,7 +157,7 @@ const TextFieldData: React.FC<{
             <TextField
               label="Minimum Length"
               required={true}
-              value={textMinLength.toString()}
+              value={validate.minLength!.toString()}
               placeholder="Enter Minimum Length"
               onChange={handleTextMinLength}
               variant={"outlined"}
@@ -176,7 +168,7 @@ const TextFieldData: React.FC<{
               label="Maximum Length"
               required={true}
               placeholder="Enter Maximum Length"
-              value={textMaxLength.toString()}
+              value={validate.maxLength!.toString()}
               onChange={handleTextMaxLength}
               variant={"outlined"}
             />
@@ -188,7 +180,7 @@ const TextFieldData: React.FC<{
                   label="Rows"
                   required={true}
                   placeholder="Enter Rows"
-                  value={rows.toString()}
+                  value={validate.rows!.toString()}
                   onChange={handlerows}
                   variant={"outlined"}
                 />

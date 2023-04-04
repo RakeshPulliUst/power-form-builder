@@ -45,7 +45,6 @@ const CheckboxData: React.FC<{
   //Checkbox
   const [checkboxLabel, setCheckboxLabel] = useState("");
   const [defaultValue, setDefaultValue] = useState(false);
-  const [errorLabel, setErrorLabel] = useState("");
   const [validate, setValidate] = useState<ValidateProps>({
     error: "",
     required: false,
@@ -63,23 +62,19 @@ const CheckboxData: React.FC<{
   };
 
   const handleErrorLabel = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setErrorLabel(event.target.value);
+    setValidate({ ...validate, error: event.target.value });
   };
 
   //Checkbox
-  const [required, setRequired] = useState(false);
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRequired(event.target.checked);
+    setValidate({ ...validate, required: event.target.checked });
   };
 
   const handleData = () => {
     console.log(checkboxLabel);
     checkBoxValues.label = checkboxLabel;
     checkBoxValues.default = defaultValue;
-    checkBoxValues.validate = {
-      error: errorLabel,
-      required: required,
-    };
+    checkBoxValues.validate = validate;
     console.log(checkBoxValues);
     handleOpen();
   };
@@ -113,7 +108,7 @@ const CheckboxData: React.FC<{
               value={checkboxLabel}
               onChange={handleTextChange}
               variant={"outlined"}
-              sx={{ m: 1 }}
+              sx={{ marginLeft: 1, marginTop: 1 }}
             />
             <br />
             <br />
@@ -122,12 +117,13 @@ const CheckboxData: React.FC<{
               required={true}
               checked={defaultValue}
               onChange={handleDefaultValue}
+              sx={{ marginLeft: 1 }}
             />
           </TabPanel>
           <TabPanel value="2">
             <Checkbox
               label="Required"
-              checked={required}
+              checked={validate.required}
               defaultChecked={defaultValue}
               required={true}
               onChange={handleCheckboxChange}
@@ -138,7 +134,7 @@ const CheckboxData: React.FC<{
               label="Error Label"
               required={true}
               placeholder="Enter Error Label"
-              value={errorLabel}
+              value={validate.error}
               onChange={handleErrorLabel}
               variant={"outlined"}
             />

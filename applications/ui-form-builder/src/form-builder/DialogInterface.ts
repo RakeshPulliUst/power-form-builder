@@ -15,7 +15,7 @@ export interface TextFieldDiaglog {
     checked: boolean;
     default: boolean;
     validate: {
-      error: string;
+      error?: string;
       required: boolean;
     }
   }
