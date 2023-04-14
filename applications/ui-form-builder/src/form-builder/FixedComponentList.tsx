@@ -9,7 +9,7 @@ const FixedComponentList: React.FC<{
   element: Element;
 }> = ({ index, element }) => {
   return (
-    <Draggable draggableId={element.id.toString()} index={index}>
+    <Draggable draggableId={element.id!.toString()} index={index}>
       {(provided, snapshot) => (
         <div
           {...provided.draggableProps}

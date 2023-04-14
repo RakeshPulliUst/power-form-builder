@@ -2,6 +2,7 @@ import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import signupReducer from "./signupSlice";
 import signinReducer from "./signinSlice";
 import profileReducer from "./profileSlice";
+import formElementsReducer from "./formElementsSlice";
 
 const persistedState = localStorage.getItem("loginState")
 
@@ -9,7 +10,8 @@ export const store = configureStore({
   reducer: {
     userRegister: signupReducer,
     userLogin: signinReducer,
-    userProfile: profileReducer
+    userProfile: profileReducer,
+    formElements: formElementsReducer
   },
 
   preloadedState: persistedState ?  JSON.parse(persistedState) : undefined,

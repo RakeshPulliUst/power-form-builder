@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ElementList from "./ElementList";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import {
@@ -14,7 +14,11 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 
+import { addElement, clear } from "../formElementsSlice";
+import { useDispatch } from "react-redux";
+
 const FormBuilder = () => {
+  const dispatch = useDispatch();
   const [show, setShow] = useState(false);
 
   const navigate = useNavigate();
@@ -48,7 +52,7 @@ const FormBuilder = () => {
   const postDatatoServer = (data: any) => {
     axios.post(`http://localhost:4000/api/form`, data).then(
       (response) => {
-        toast.success("Plan Added Successfully");
+        toast.success("Form Added Successfully");
         console.log("Done");
         console.log(response);
       },
@@ -73,7 +77,7 @@ const FormBuilder = () => {
 
   const handleClick = () => {
     if (CompletedElements.length !== 0) {
-      console.log({ CompletedElements });
+      console.log("Completed Elements", { CompletedElements });
       console.log({ tabElements });
       console.log({ tabElements2 });
       console.log({ tabElements3 });
@@ -103,6 +107,7 @@ const FormBuilder = () => {
     } else {
       alert("Please Add Elements");
     }
+    dispatch(clear());
   };
 
   const onDragEnd = (result: DropResult) => {
@@ -188,7 +193,7 @@ const FormBuilder = () => {
     // if (destination.droppableId === "ElementsList") {
     //   active.splice(destination.index, 0, add!);
     //   console.log("Destination[Active]:", active);
-    // } else 
+    // } else
     if (destination.droppableId === "columnDroppableId") {
       let newAdd: Element = Object.assign({}, add);
       newAdd.id = randomNumberInRange(9, 100);
@@ -257,6 +262,8 @@ const FormBuilder = () => {
       complete.splice(destination.index, 0, newAdd);
       console.log("Add", add);
       console.log("Destination[Complete]:", complete);
+      //dispatch(addElement(newAdd));
+      console.log("Added to store");
     }
 
     setTabElements(tabComplete);
@@ -278,6 +285,18 @@ const FormBuilder = () => {
     console.log("TabElements", tabElements);
     console.log("Final...", numTabElements);
   };
+
+  useEffect(() => {
+    try {
+      const components = localStorage.getItem("formElementsState");
+      const retrievedObject = JSON.parse(components!);
+      console.log(retrievedObject);
+      console.log(CompletedElements);
+      setCompletedElements(retrievedObject.components);
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
 
   return (
     <>

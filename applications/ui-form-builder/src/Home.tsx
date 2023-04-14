@@ -16,6 +16,9 @@ import {
   EditIcon,
   CloseIcon,
   PreviewIcon,
+  HistoryIcon,
+  FileUpload,
+  DatePicker,
 } from "@power-form-builder/ui-components";
 
 import "./Home.css";
@@ -31,9 +34,12 @@ import {
 } from "./form-builder/ElementInterface";
 import { useNavigate } from "react-router-dom";
 import { Element } from "./form-builder/ElementInterface";
+import FormHistoryDialog from "./FormHistoryDialog";
 
 const Home = () => {
   const [open, setOpen] = useState(false);
+  const [formHistoryOpen, setFormHistoryOpen] = useState(false);
+  const [formId, setFormId] = useState(0);
   const [formData, setFormData] =
     useState<FinalSaveFormJson[]>(finalTableFormSample);
 
@@ -132,6 +138,12 @@ const Home = () => {
     setFormTitle(formName);
   };
 
+  const onFormHistoryClick = (formId: number) => {
+    //getFormHistoryDataByFormId(formId);
+    setFormHistoryOpen(!formHistoryOpen);
+    setFormId(formId);
+  };
+
   const handleData = (id: number) => {
     deleteForm(id);
     setDialogOpen(!dialogOpen);
@@ -147,9 +159,21 @@ const Home = () => {
     setOpen(!open);
   };
 
+  const handleFormHistoryOpen = () => {
+    console.log(!formHistoryOpen);
+    setFormHistoryOpen(!formHistoryOpen);
+  };
+
+  const handleFormHistoryClose = () => {
+    console.log(!formHistoryOpen);
+    setFormHistoryOpen(!formHistoryOpen);
+  };
+
   return (
     <>
       <div className="home-form-table">
+        {/* <FileUpload />
+        <DatePicker /> */}
         <Table minWidth={1500}>
           <TableHead>
             <TableRow>
@@ -274,6 +298,14 @@ const Home = () => {
                     color="error"
                     onClick={() => onDeleteClick(row.id, row.form_title)}
                   />
+                  &nbsp;
+                  <HistoryIcon
+                    onClick={() => {
+                      onFormHistoryClick(row.id);
+                    }}
+                    sx={{ cursor: "pointer", fontSize: "30px" }}
+                    color="action"
+                  />
                 </TableCell>
               </TableRow>
             ))}
@@ -341,7 +373,16 @@ const Home = () => {
           </Button>
         </DialogActions>
       </Dialog>
-      ;
+      {formHistoryOpen ? (
+        <FormHistoryDialog
+          open={formHistoryOpen}
+          handleOpen={handleFormHistoryOpen}
+          handleClose={handleFormHistoryClose}
+          formId={formId}
+        />
+      ) : (
+        <></>
+      )}
     </>
   );
 };

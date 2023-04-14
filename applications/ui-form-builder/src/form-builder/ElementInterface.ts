@@ -15,9 +15,18 @@ export interface FinalSaveFormJson{
   status: string
 }
 
+export interface FinalSaveFormHistoryJson{
+  id: number,
+  form_id: number,
+  form_title: string,
+  components: Element[],
+  date_modified: string,
+  version: number
+}
+
 export interface Element {
-    id: number;
-    element: string;
+    id?: number;
+    element?: string;
     label?: string;
     placeholder?: string;
     
@@ -91,6 +100,16 @@ export interface Element {
     status: ""
   };
 
+  export const finalFormHistorySample: FinalSaveFormHistoryJson = {
+    id: 1,
+    form_id: 212,
+    form_title: "Form",
+    components: [],
+    date_modified: new Date().toLocaleString() + "",
+    version: 1,
+  };
+
+
   export const finalTableFormSample: FinalSaveFormJson[] = [{
     id: 1,
     form_title: "Form",
@@ -101,6 +120,14 @@ export interface Element {
     status: ""
   }];
 
+  export const finalTableFormHistorySample: FinalSaveFormHistoryJson[] = [{
+    id: 1,
+    form_id: 111,
+    form_title: "Form",
+    components: [],
+    date_modified: new Date().toLocaleString() + "",
+    version: 1
+  }];
 
   export const components: Element[] = [
     {

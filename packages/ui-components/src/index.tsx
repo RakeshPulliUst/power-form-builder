@@ -39,7 +39,9 @@ import PreviewIcon from "./components/Icons/PreviewIcon";
 import CircularProgressIcon from "./components/Icons/PreviewIcon";
 import AssignmentIndIcon from "./components/Icons/PreviewIcon";
 import Avatar from "./components/Avatar";
-
+import HistoryIcon from "./components/Icons/HistoryIcon";
+import FileUpload from "./components/FileUpload";
+import DatePicker from "./components/DatePicker";
 export {
   Button,
   Card,
@@ -71,6 +73,7 @@ export {
   Typography,
   Link,
   LockIcon,
+  HistoryIcon,
   Paper,
   Divider,
   Tooltip,
@@ -82,4 +85,6 @@ export {
   Avatar,
   CircularProgressIcon,
   AssignmentIndIcon,
+  FileUpload,
+  DatePicker,
 };

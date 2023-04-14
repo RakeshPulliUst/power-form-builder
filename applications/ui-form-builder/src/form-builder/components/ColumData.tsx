@@ -109,7 +109,7 @@ const ColumnData: React.FC<{
     });
 
     columnValues.columnItems = finalColumnItemsData;
-    console.log(columnValues);
+    console.log("ColumnValues", columnValues);
     handleOpen();
   };
 

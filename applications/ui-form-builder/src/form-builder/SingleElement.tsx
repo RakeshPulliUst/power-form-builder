@@ -4,7 +4,7 @@ import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 import { Element } from "./ElementInterface";
 import { Draggable, Droppable } from "react-beautiful-dnd";
 import { FaEdit } from "react-icons/fa";
-
+import { useDispatch, useSelector } from "react-redux";
 import "./styles.css";
 
 import {
@@ -36,6 +36,8 @@ import ButtonData from "./components/ButtonData";
 import RadioButtonData from "./components/RadioButtonData";
 import TabsData from "./components/TabsData";
 import ColumnData from "./components/ColumData";
+import { addFormElements } from "../formElementsSlice";
+import { RootState } from "../store";
 
 type Props = {
   id: string;
@@ -115,6 +117,7 @@ const SingleElement: React.FC<{
   column1Elements,
   setColumn1Elements,
 }) => {
+  const dispatch = useDispatch();
   const textFieldValues: TextFieldDiaglog = {
     label: "TextField",
     placeholder: "Enter TextField",
@@ -335,21 +338,21 @@ const SingleElement: React.FC<{
 
   const [edit, setEdit] = useState<boolean>(false);
 
-  const inputRef = useRef<HTMLInputElement>(null);
-  useEffect(() => {
-    inputRef.current?.focus();
-  });
+  // const inputRef = useRef<HTMLInputElement>(null);
+  // useEffect(() => {
+  //   inputRef.current?.focus();
+  // });
 
   const handleDelete = (id: number) => {
     console.log("Iddddddd", id, element.id);
-    if (element.element === "Column") {
-      console.log("COlumns");
-    } else if (element.element === "Tabs") {
-      console.log("Tabsss");
-    } else {
-      console.log("Elements", element);
-      setElements(elements.filter((element) => element.id !== id));
-    }
+    // if (element.element === "Column") {
+    //   console.log("COlumns");
+    // } else if (element.element === "Tabs") {
+    //   console.log("Tabsss");
+    // } else {
+    console.log("Elements", element);
+    setElements(elements.filter((element) => element.id !== id));
+    // }
     console.log(elements.filter((element) => element.id !== id));
   };
 
@@ -365,7 +368,7 @@ const SingleElement: React.FC<{
   const handleOpen = () => {
     console.log(element, element.element);
     setOpen(!open);
-
+    element.show = true;
     if (element.element === "Button") {
       console.log(buttonValues);
       console.log("JSON", JSON.stringify(buttonValues));
@@ -447,6 +450,7 @@ const SingleElement: React.FC<{
       console.log("Column1Elements", columnElements);
       console.log("Column2Elements", column1Elements);
       console.log("JSON", JSON.stringify(columnValues));
+
       finalColumnItemsData.map((item, index) =>
         item.label === "Column1"
           ? (item.columnComponents = columnElements)
@@ -456,7 +460,7 @@ const SingleElement: React.FC<{
       console.log("Final", finalColumnItemsData);
       console.log("Element Column", element.columnItems);
     }
-    element.show = false;
+    dispatch(addFormElements(element));
   };
 
   const handleClose = () => {
@@ -464,7 +468,7 @@ const SingleElement: React.FC<{
     console.log(element);
     if (element.show) {
       console.log(element.show);
-      handleDelete(element.id);
+      handleDelete(element.id!);
     }
     setOpen(!open);
     if (element.element === "Button") {
@@ -580,8 +584,10 @@ const SingleElement: React.FC<{
     { label: "Tab5", value: "5" },
   ]);
 
+  // const { components } = useSelector((state: RootState) => state.formElements);
+  let inc = 0;
   return (
-    <Draggable draggableId={element.id.toString()} index={index}>
+    <Draggable draggableId={element.id!.toString()} index={index}>
       {(provided, snapshot) => (
         <form
           {...provided.draggableProps}
@@ -738,6 +744,36 @@ const SingleElement: React.FC<{
                   element={element}
                 ></ButtonData>
 
+                {/* {components.slice(inc).map((item, index) => (
+                  <Button
+                    color={
+                      buttonValues.size === "primary"
+                        ? "primary"
+                        : buttonValues.size === "secondary"
+                        ? "secondary"
+                        : buttonValues.size === "info"
+                        ? "info"
+                        : buttonValues.size === "success"
+                        ? "success"
+                        : buttonValues.size === "warning"
+                        ? "warning"
+                        : buttonValues.size === "error"
+                        ? "error"
+                        : "inherit"
+                    }
+                    size={
+                      buttonValues.size === "small"
+                        ? "small"
+                        : buttonValues.size === "medium"
+                        ? "medium"
+                        : "large"
+                    }
+                    onClick={handleButton}
+                    sx={{ mt: 1, mb: 1 }}
+                  >
+                    {item.label}
+                  </Button>
+                ))} */}
                 <Button
                   color={
                     buttonValues.size === "primary"
@@ -1125,7 +1161,10 @@ const SingleElement: React.FC<{
                   {edit ? <AiFillEdit /> : <FaEdit />}
                 </span>
 
-                <span className="icon" onClick={() => handleDelete(element.id)}>
+                <span
+                  className="icon"
+                  onClick={() => handleDelete(element.id!)}
+                >
                   <AiFillDelete />
                 </span>
               </div>

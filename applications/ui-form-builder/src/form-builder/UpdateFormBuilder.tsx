@@ -3,8 +3,10 @@ import ElementList from "./ElementList";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import {
   Element,
+  FinalSaveFormHistoryJson,
   FinalSaveFormJson,
   FormJson,
+  finalFormHistorySample,
   finalSample,
 } from "./ElementInterface";
 import { Button } from "@power-form-builder/ui-components";
@@ -27,7 +29,12 @@ const UpdateFormBuilder = () => {
   } = location.state || {};
 
   const [formData, setFormData] = useState<FormJson>(sample);
-  const [finalSaveFormData] = useState<FinalSaveFormJson>(finalSample);
+  const [finalSaveFormData, setFinalSaveFormData] =
+    useState<FinalSaveFormJson>(finalSample);
+  const [finalSaveFormData1, setFinalSaveFormData1] =
+    useState<FinalSaveFormJson>(finalSample);
+  const [finalSaveFormHistoryData, setFinalSaveFormHistoryData] =
+    useState<FinalSaveFormHistoryJson>(finalFormHistorySample);
   const [formJsonData, setFormJsonData] = useState("");
   const [elements, setElements] = useState<Array<Element>>(components);
   const [CompletedElements, setCompletedElements] = useState<Array<Element>>(
@@ -65,6 +72,71 @@ const UpdateFormBuilder = () => {
     );
   };
 
+  const getFormDataByFormId = async (formId: number) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:4000/api/form/show/${formId}`
+      );
+      console.log("kkkkk", response.data);
+      setFinalSaveFormData1(response.data);
+    } catch (error) {
+      console.log(error);
+      console.log("error");
+      toast.error("Something went wrong");
+    }
+  };
+
+  //Creating function to post data on server
+  const postDatatoServer = async (data: any) => {
+    try {
+      const response = await axios.post(
+        `http://localhost:4000/api/formHistory/`,
+        data
+      );
+      console.log("Done");
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+      console.log("error");
+      toast.error("Something went wrong");
+    }
+  };
+
+  let generatedNumbers: number[] = [];
+
+  function generatedUniqueInt(max: number) {
+    let uniqueInt = Math.floor(Math.random() * max);
+    while (generatedNumbers.includes(uniqueInt)) {
+      uniqueInt = Math.floor(Math.random() * max);
+    }
+    generatedNumbers.push(uniqueInt);
+    return uniqueInt;
+  }
+
+  const handleUpdate = () => {
+    updateFormHistory(formId);
+  };
+
+  const updateFormHistory = async (formId: number) => {
+    await getFormDataByFormId(formId);
+    console.log("Insideee UpdateFormHistory", finalSaveFormData1);
+    finalSaveFormHistoryData.id = generatedUniqueInt(1000);
+    finalSaveFormHistoryData.form_id = finalSaveFormData1.id;
+    finalSaveFormHistoryData.form_title = finalSaveFormData1.form_title;
+    finalFormHistorySample.components = finalSaveFormData1.components;
+    finalSaveFormHistoryData.date_modified = new Date().toLocaleString() + "";
+    console.log(
+      "fdfd",
+      finalFormHistorySample.components,
+      "Dfd",
+      finalSaveFormData1.components
+    );
+    console.log("FinalHistorrrry", finalSaveFormHistoryData);
+    postDatatoServer(finalSaveFormHistoryData);
+
+    handleClick();
+  };
+
   const handleClick = () => {
     if (CompletedElements.length !== 0) {
       console.log({ CompletedElements });
@@ -73,6 +145,7 @@ const UpdateFormBuilder = () => {
       console.log({ tabElements3 });
       console.log({ tabElements4 });
       console.log({ tabElements5 });
+
       formData.form_title = formName;
       formData.components = CompletedElements;
       console.log(formData);
@@ -95,6 +168,7 @@ const UpdateFormBuilder = () => {
       finalSaveFormData.status = formStatus;
       console.log(finalSaveFormData);
       editForm(formId, finalSaveFormData);
+
       navigate("/formrender", { state: { formData: formData } });
       console.log("Final..numTab", numTabElements);
     } else {
@@ -320,7 +394,7 @@ const UpdateFormBuilder = () => {
         <div className="App">
           <span className="heading">Form Builder</span>
           <span className="upperButton">
-            <Button color="success" size="medium" onClick={handleClick}>
+            <Button color="success" size="medium" onClick={handleUpdate}>
               Update Form
             </Button>
           </span>
@@ -348,7 +422,7 @@ const UpdateFormBuilder = () => {
             setColumn1Elements={setColumn1Elements}
           />
 
-          <Button color="success" size="medium" onClick={handleClick}>
+          <Button color="success" size="medium" onClick={handleUpdate}>
             Update Form
           </Button>
         </div>

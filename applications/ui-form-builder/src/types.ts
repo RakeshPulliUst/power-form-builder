@@ -1,4 +1,5 @@
 import { Element } from "./form-builder/ElementInterface";
+
 export interface User {
   id: string;
   firstname: string,
@@ -6,8 +7,8 @@ export interface User {
   email: string;
 }
 
-export interface formElements {
-  components: Element[]
+export interface FormElements {
+  components: Element[],
 }
 
 export interface SignupData {
