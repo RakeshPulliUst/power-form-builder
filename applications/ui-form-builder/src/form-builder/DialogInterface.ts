@@ -1,4 +1,6 @@
 import { Element } from "./ElementInterface";
+import dayjs, { Dayjs } from "dayjs";
+
 export interface TextFieldDiaglog {
     label : string;
     placeholder: string;
@@ -76,4 +78,17 @@ export interface TabsDialog {
     tabsDataValue: string
     tabComponents?: Element[]
   }[],
+}
+
+
+export interface DatePickerDialog {
+  label: string,
+  format: string,
+  disablePast: boolean,
+  disableFuture: boolean,
+  validate:{
+    required: boolean,
+    minDate: dayjs.Dayjs,
+    maxDate: dayjs.Dayjs,
+  }
 }

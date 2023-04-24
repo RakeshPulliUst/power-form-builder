@@ -4,7 +4,7 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  TabContext,
+  Tabs,
   TabPanel,
   Divider,
   TextField,
@@ -106,32 +106,31 @@ const FormNameInput = ({ open, handleOpen, handleClose }: Props) => {
         <Divider variant="middle" />
 
         <DialogContent>
-          <TabContext value={value}>
-            <TabPanel value="1">
-              <TextField
-                label="Form Name"
-                placeholder="Enter Form Name"
-                id="formName"
-                {...register("formName", {
-                  required: "Form Name is required",
-                  maxLength: {
-                    value: 25,
-                    message: "Form Name must be max 15 letters",
-                  },
-                  validate: (value) => {
-                    return (
-                      [/^[a-zA-Z0-9 /]*$/].every((pattern) =>
-                        pattern.test(value)
-                      ) || "Only letters, numbers & spaces are allowed"
-                    );
-                  },
-                })}
-                error={Boolean(errors.formName)}
-                helperText={errors.formName?.message}
-                variant="outlined"
-              />
-            </TabPanel>
-          </TabContext>
+          <Tabs value={0} />
+          <TabPanel value={0} index={0}>
+            <TextField
+              label="Form Name"
+              placeholder="Enter Form Name"
+              id="formName"
+              {...register("formName", {
+                required: "Form Name is required",
+                maxLength: {
+                  value: 25,
+                  message: "Form Name must be max 15 letters",
+                },
+                validate: (value) => {
+                  return (
+                    [/^[a-zA-Z0-9 /]*$/].every((pattern) =>
+                      pattern.test(value)
+                    ) || "Only letters, numbers & spaces are allowed"
+                  );
+                },
+              })}
+              error={Boolean(errors.formName)}
+              helperText={errors.formName?.message}
+              variant="outlined"
+            />
+          </TabPanel>
         </DialogContent>
         <DialogActions>
           <Button color="error" onClick={handleClose1} size="medium">

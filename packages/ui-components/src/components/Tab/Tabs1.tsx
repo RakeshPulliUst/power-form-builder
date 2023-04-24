@@ -8,10 +8,14 @@ import Box from "@mui/material/Box";
 import Tab from "./Tab";
 
 interface TabsProps extends DefaultTabsProps {
-  tabItems?: {
-    label: React.ReactNode;
-    value: string;
-  }[];
+  tabItems?:
+    | {
+        id: string;
+        dropId: string;
+        tabsDataLabel: string;
+        tabsDataValue: string;
+      }[]
+    | undefined;
   children?: React.ReactNode;
   value?: number;
   onChange?:
@@ -26,7 +30,7 @@ function a11yProps(index: number) {
   };
 }
 
-const Tabs = ({ tabItems, children, value, onChange, ...rest }: TabsProps) => {
+const Tabs1 = ({ tabItems, children, value, onChange, ...rest }: TabsProps) => {
   return (
     <DefaultTabs
       value={value}
@@ -34,10 +38,10 @@ const Tabs = ({ tabItems, children, value, onChange, ...rest }: TabsProps) => {
       aria-label="basic tabs example"
     >
       {tabItems?.map((item, index) => (
-        <Tab label={item.label} {...a11yProps(index)} />
+        <Tab label={item.tabsDataLabel} {...a11yProps(index)} />
       ))}
     </DefaultTabs>
   );
 };
 
-export default Tabs;
+export default Tabs1;

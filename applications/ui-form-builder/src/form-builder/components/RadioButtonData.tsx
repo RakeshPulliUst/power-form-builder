@@ -8,9 +8,8 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  TabContext,
+  Tabs,
   TabPanel,
-  TabList,
   TextField,
   Divider,
   CloseIcon,
@@ -43,8 +42,8 @@ const RadioButtonData: React.FC<{
   radiobuttonValues: RadioButtonDialog;
   element: Element;
 }> = ({ open, handleClose, radiobuttonValues, handleOpen, element }) => {
-  const [value, setValue] = React.useState("1");
-  const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
+  const [value, setValue] = React.useState(0);
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 
@@ -152,86 +151,88 @@ const RadioButtonData: React.FC<{
       </DialogTitle>
       <Divider variant="middle" />
       <DialogContent>
-        <TabContext value={value}>
-          <Box>
-            <TabList onChange={handleChange} tabItems={tabItems}></TabList>
-          </Box>
-          <TabPanel value="1">
-            <TextField
-              label="Label"
-              required={true}
-              value={radioLabel}
-              onChange={handleRadioLabelChange}
-              variant={"outlined"}
-              sx={{ m: 1 }}
-            />
-            <br />
-            <br />
-            <Select
-              label="Options Label Position"
-              placeholder=""
-              menuItems={RadioOptionPositionValues}
-              value={radioOptionLabelPosition}
-              size="medium"
-              required={false}
-              multiple={false}
-              onChange={handleRadioOptionLabelPosition}
-              width={225}
-            />
-          </TabPanel>
-          <TabPanel value="2">
-            {radioItems.map((item) => (
-              <div>
-                <br />
-                <TextField
-                  label="RadioButtonDataLabel"
-                  name="radioButtonDataLabel"
-                  required={true}
-                  placeholder=""
-                  value={item.radioButtonDataLabel}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
-                    handleChangeInput(item.id, e)
-                  }
-                  variant={"outlined"}
-                />
-                &nbsp;
-                <TextField
-                  label="RadioButtonValue"
-                  required={true}
-                  placeholder=""
-                  name="radioButtonDataValue"
-                  value={item.radioButtonDataValue}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
-                    handleChangeInput(item.id, e)
-                  }
-                  variant={"outlined"}
-                />
-                {radioItems.length !== 1 ? (
-                  <span
-                    className="icon"
-                    onClick={() => handleRemoveFields(item.id)}
-                  >
-                    <RemoveCircleIcon />
-                  </span>
-                ) : (
-                  <></>
-                )}
-                <span className="icon" onClick={handleAddFields}>
-                  <AddCircleIcon />
+        <Box>
+          <Tabs
+            onChange={handleChange}
+            value={value}
+            tabItems={tabItems}
+          ></Tabs>
+        </Box>
+        <TabPanel value={value} index={0}>
+          <TextField
+            label="Label"
+            required={true}
+            value={radioLabel}
+            onChange={handleRadioLabelChange}
+            variant={"outlined"}
+            sx={{ m: 1 }}
+          />
+          <br />
+          <br />
+          <Select
+            label="Options Label Position"
+            placeholder=""
+            menuItems={RadioOptionPositionValues}
+            value={radioOptionLabelPosition}
+            size="medium"
+            required={false}
+            multiple={false}
+            onChange={handleRadioOptionLabelPosition}
+            width={225}
+          />
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          {radioItems.map((item) => (
+            <div>
+              <br />
+              <TextField
+                label="RadioButtonDataLabel"
+                name="radioButtonDataLabel"
+                required={true}
+                placeholder=""
+                value={item.radioButtonDataLabel}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
+                  handleChangeInput(item.id, e)
+                }
+                variant={"outlined"}
+              />
+              &nbsp;
+              <TextField
+                label="RadioButtonValue"
+                required={true}
+                placeholder=""
+                name="radioButtonDataValue"
+                value={item.radioButtonDataValue}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
+                  handleChangeInput(item.id, e)
+                }
+                variant={"outlined"}
+              />
+              {radioItems.length !== 1 ? (
+                <span
+                  className="icon"
+                  onClick={() => handleRemoveFields(item.id)}
+                >
+                  <RemoveCircleIcon />
                 </span>
-              </div>
-            ))}
-            <br />
-          </TabPanel>
-          <TabPanel value="3">
-            <Checkbox
-              label="Required"
-              checked={validate.required}
-              required={true}
-              onChange={handleCheckboxChange}
-            />
-          </TabPanel>
-        </TabContext>
+              ) : (
+                <></>
+              )}
+              <span className="icon" onClick={handleAddFields}>
+                <AddCircleIcon />
+              </span>
+            </div>
+          ))}
+          <br />
+        </TabPanel>
+        <TabPanel value={value} index={2}>
+          <Checkbox
+            label="Required"
+            checked={validate.required}
+            required={true}
+            onChange={handleCheckboxChange}
+          />
+        </TabPanel>
       </DialogContent>
       <DialogActions>
         <Button color="error" onClick={handleClose} size="medium">

@@ -7,12 +7,11 @@ import {
   DialogContent,
   DialogTitle,
   Select,
-  TabContext,
-  TabPanel,
-  TabList,
   TextField,
   Divider,
   CloseIcon,
+  TabPanel,
+  Tabs,
 } from "@power-form-builder/ui-components";
 import { ButtonDialog } from "../DialogInterface";
 import { Element } from "../ElementInterface";
@@ -29,8 +28,8 @@ const ButtonData: React.FC<{
   handleOpen: () => void;
   element: Element;
 }> = ({ open, handleClose, buttonValues, handleOpen, element }) => {
-  const [value, setValue] = React.useState("1");
-  const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
+  const [value, setValue] = React.useState(0);
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 
@@ -103,47 +102,49 @@ const ButtonData: React.FC<{
       </DialogTitle>
       <Divider variant="middle" />
       <DialogContent>
-        <TabContext value={value}>
-          <Box>
-            <TabList onChange={handleChange} tabItems={tabItems}></TabList>
-          </Box>
-          <TabPanel value="1">
-            <TextField
-              label="Label"
-              required={true}
-              value={buttonLabel}
-              onChange={handleButtonLabel}
-              variant={"outlined"}
-              sx={{ m: 1 }}
-            />
-            <br />
-            <br />
-            <Select
-              label="Theme"
-              placeholder="Type To Search"
-              menuItems={ButtonThemeValues}
-              multiple={false}
-              value={buttonTheme}
-              onChange={handleButtonTheme}
-              width={225}
-              size="medium"
-              required={false}
-            />
-            <br />
-            <br />
-            <Select
-              label="Size"
-              placeholder="Type To Search"
-              menuItems={ButtonSizeDataValues}
-              multiple={false}
-              value={buttonSize}
-              onChange={handleButtonSize}
-              width={225}
-              size="medium"
-              required={false}
-            />
-          </TabPanel>
-        </TabContext>
+        <Box>
+          <Tabs
+            onChange={handleChange}
+            value={value}
+            tabItems={tabItems}
+          ></Tabs>
+        </Box>
+        <TabPanel value={value} index={0}>
+          <TextField
+            label="Label"
+            required={true}
+            value={buttonLabel}
+            onChange={handleButtonLabel}
+            variant={"outlined"}
+            sx={{ m: 1 }}
+          />
+          <br />
+          <br />
+          <Select
+            label="Theme"
+            placeholder="Type To Search"
+            menuItems={ButtonThemeValues}
+            multiple={false}
+            value={buttonTheme}
+            onChange={handleButtonTheme}
+            width={225}
+            size="medium"
+            required={false}
+          />
+          <br />
+          <br />
+          <Select
+            label="Size"
+            placeholder="Type To Search"
+            menuItems={ButtonSizeDataValues}
+            multiple={false}
+            value={buttonSize}
+            onChange={handleButtonSize}
+            width={225}
+            size="medium"
+            required={false}
+          />
+        </TabPanel>
       </DialogContent>
       <DialogActions>
         <Button color="error" onClick={handleClose} size="medium">

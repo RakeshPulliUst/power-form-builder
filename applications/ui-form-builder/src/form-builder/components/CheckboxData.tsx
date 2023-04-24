@@ -9,9 +9,8 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  TabContext,
+  Tabs,
   TabPanel,
-  TabList,
   Divider,
   CloseIcon,
 } from "@power-form-builder/ui-components";
@@ -35,11 +34,9 @@ const CheckboxData: React.FC<{
   checkBoxValues: CheckboxDiaglog;
   element: Element;
 }> = ({ open, handleClose, checkBoxValues, handleOpen, element }) => {
-  const [value, setValue] = React.useState("1");
-  const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
-    console.log(newValue);
+  const [value, setValue] = React.useState(0);
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
-    console.log(value);
   };
 
   //Checkbox
@@ -97,49 +94,51 @@ const CheckboxData: React.FC<{
       </DialogTitle>
       <Divider variant="middle" />
       <DialogContent>
-        <TabContext value={value}>
-          <Box>
-            <TabList onChange={handleChange} tabItems={tabItems}></TabList>
-          </Box>
-          <TabPanel value="1">
-            <TextField
-              label="Label"
-              required={true}
-              value={checkboxLabel}
-              onChange={handleTextChange}
-              variant={"outlined"}
-              sx={{ marginLeft: 1, marginTop: 1 }}
-            />
-            <br />
-            <br />
-            <Checkbox
-              label="Default Value"
-              required={true}
-              checked={defaultValue}
-              onChange={handleDefaultValue}
-              sx={{ marginLeft: 1 }}
-            />
-          </TabPanel>
-          <TabPanel value="2">
-            <Checkbox
-              label="Required"
-              checked={validate.required}
-              defaultChecked={defaultValue}
-              required={true}
-              onChange={handleCheckboxChange}
-            />
-            <br />
-            <br />
-            <TextField
-              label="Error Label"
-              required={true}
-              placeholder="Enter Error Label"
-              value={validate.error}
-              onChange={handleErrorLabel}
-              variant={"outlined"}
-            />
-          </TabPanel>
-        </TabContext>
+        <Box>
+          <Tabs
+            onChange={handleChange}
+            value={value}
+            tabItems={tabItems}
+          ></Tabs>
+        </Box>
+        <TabPanel value={value} index={0}>
+          <TextField
+            label="Label"
+            required={true}
+            value={checkboxLabel}
+            onChange={handleTextChange}
+            variant={"outlined"}
+            sx={{ marginLeft: 1, marginTop: 1 }}
+          />
+          <br />
+          <br />
+          <Checkbox
+            label="Default Value"
+            required={true}
+            checked={defaultValue}
+            onChange={handleDefaultValue}
+            sx={{ marginLeft: 1 }}
+          />
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          <Checkbox
+            label="Required"
+            checked={validate.required}
+            defaultChecked={defaultValue}
+            required={true}
+            onChange={handleCheckboxChange}
+          />
+          <br />
+          <br />
+          <TextField
+            label="Error Label"
+            required={true}
+            placeholder="Enter Error Label"
+            value={validate.error}
+            onChange={handleErrorLabel}
+            variant={"outlined"}
+          />
+        </TabPanel>
       </DialogContent>
       <DialogActions>
         <Button color="error" onClick={handleClose} size="medium">

@@ -8,18 +8,16 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  TabContext,
-  TabPanel,
-  TabList,
   Divider,
-  CloseIcon
+  CloseIcon,
+  Tabs,
+  TabPanel,
 } from "@power-form-builder/ui-components";
 import { TabsDialog } from "../DialogInterface";
 import { v4 as uuidv4 } from "uuid";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import { Element } from "../ElementInterface";
-
 
 type Props = {
   id: string;
@@ -41,8 +39,8 @@ const TabsData: React.FC<{
   tabValues: TabsDialog;
   element: Element;
 }> = ({ open, handleClose, tabValues, handleOpen, element }) => {
-  const [value, setValue] = React.useState("1");
-  const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
+  const [value, setValue] = React.useState(0);
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 
@@ -78,7 +76,9 @@ const TabsData: React.FC<{
 
   const handleData = () => {
     tabValues.label = tabsLabel;
-    tabItemsData.map((item, index) => (item.dropId = rr[index]));
+    tabItemsData.forEach((item, index) => {
+      item.dropId = rr[index];
+    });
     tabValues.tabItems = tabItemsData;
     console.log(tabValues);
     handleOpen();
@@ -139,78 +139,78 @@ const TabsData: React.FC<{
   };
 
   const tabItems: TabItemsProps = [
-    { label: "Display", value: "1" },
-    { label: "Data", value: "2" },
+    { label: "Display", value: "0" },
+    { label: "Data", value: "1" },
   ];
 
   return (
     <Dialog open={open} onClose={handleClose}>
       <DialogTitle title="Tabs Details">
-        <CloseIcon
-          onClick={handleClose}
-          sx={{ cursor: "pointer" }}
-        ></CloseIcon>
+        <CloseIcon onClick={handleClose} sx={{ cursor: "pointer" }}></CloseIcon>
       </DialogTitle>
       <Divider variant="middle" />
       <DialogContent>
-        <TabContext value={value}>
-          <Box>
-            <TabList onChange={handleChange} tabItems={tabItems}></TabList>
-          </Box>
-          <TabPanel value="1">
-            <TextField
-              label="Label"
-              required={true}
-              value={tabsLabel}
-              onChange={handleTabsLabel}
-              variant={"outlined"}
-            />
-          </TabPanel>
-          <TabPanel value="2">
-            {tabItemsData.map((item) => (
-              <div>
-                <br />
-                <TextField
-                  label="TabsValueLabel"
-                  name="tabsDataLabel"
-                  required={true}
-                  placeholder=""
-                  value={item.tabsDataLabel}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
-                    handleChangeInput(item.id, e)
-                  }
-                  variant={"outlined"}
-                />
-                &nbsp;
-                <TextField
-                  label="TabsValue"
-                  name="tabsDataValue"
-                  required={true}
-                  placeholder=""
-                  value={item.tabsDataValue}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
-                    handleChangeInput(item.id, e)
-                  }
-                  variant={"outlined"}
-                />
-                {tabItemsData.length !== 1 ? (
-                  <span
-                    className="icon"
-                    onClick={() => handleRemoveFields(item.id)}
-                  >
-                    <RemoveCircleIcon />
-                  </span>
-                ) : (
-                  <></>
-                )}
-                <span className="icon" onClick={handleAddFields}>
-                  <AddCircleIcon />
+        <Box>
+          <Tabs
+            onChange={handleChange}
+            value={value}
+            tabItems={tabItems}
+          ></Tabs>
+        </Box>
+        <TabPanel value={value} index={0}>
+          <br />
+          <TextField
+            label="Label"
+            required={true}
+            value={tabsLabel}
+            onChange={handleTabsLabel}
+            variant={"outlined"}
+          />
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          {tabItemsData.map((item) => (
+            <div>
+              <br />
+              <TextField
+                label="TabsValueLabel"
+                name="tabsDataLabel"
+                required={true}
+                placeholder=""
+                value={item.tabsDataLabel}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
+                  handleChangeInput(item.id, e)
+                }
+                variant={"outlined"}
+              />
+              &nbsp;
+              <TextField
+                label="TabsValue"
+                name="tabsDataValue"
+                required={true}
+                placeholder=""
+                value={item.tabsDataValue}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
+                  handleChangeInput(item.id, e)
+                }
+                variant={"outlined"}
+              />
+              {tabItemsData.length !== 1 ? (
+                <span
+                  className="icon"
+                  onClick={() => handleRemoveFields(item.id)}
+                >
+                  <RemoveCircleIcon />
                 </span>
-              </div>
-            ))}
-            <br />
-          </TabPanel>
-        </TabContext>
+              ) : (
+                <></>
+              )}
+              <span className="icon" onClick={handleAddFields}>
+                <AddCircleIcon />
+              </span>
+            </div>
+          ))}
+          <br />
+        </TabPanel>
       </DialogContent>
       <DialogActions>
         <Button color="error" onClick={handleClose} size="medium">

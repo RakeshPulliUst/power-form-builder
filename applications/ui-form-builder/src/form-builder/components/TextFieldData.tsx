@@ -8,9 +8,8 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  TabContext,
+  Tabs,
   TabPanel,
-  TabList,
   Divider,
   CloseIcon,
 } from "@power-form-builder/ui-components";
@@ -36,11 +35,9 @@ const TextFieldData: React.FC<{
   handleOpen: () => void;
   element: Element;
 }> = ({ open, handleClose, textFieldValues, handleOpen, element }) => {
-  const [value, setValue] = React.useState("1");
-  const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
-    console.log(newValue);
+  const [value, setValue] = React.useState(0);
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
-    console.log(value);
   };
 
   //TextField
@@ -122,74 +119,76 @@ const TextFieldData: React.FC<{
       </DialogTitle>
       <Divider variant="middle" />
       <DialogContent>
-        <TabContext value={value}>
-          <Box>
-            <TabList onChange={handleChange} tabItems={tabItems}></TabList>
-          </Box>
-          <TabPanel value="1">
-            <TextField
-              label="Label"
-              required={true}
-              value={textValue}
-              onChange={handleTextChange}
-              variant={"outlined"}
-            />
-            <br />
-            <br />
-            <TextField
-              label="Placeholder"
-              required={true}
-              placeholder={textPlaceholder}
-              value={textPlaceholder}
-              onChange={handleTextPlaceholder}
-              variant={"outlined"}
-            />
-          </TabPanel>
-          <TabPanel value="2">
-            <Checkbox
-              label="Required"
-              checked={validate.required!}
-              required={true}
-              onChange={handleCheckboxChange}
-            />
-            <br />
-            <br />
-            <TextField
-              label="Minimum Length"
-              required={true}
-              value={validate.minLength!.toString()}
-              placeholder="Enter Minimum Length"
-              onChange={handleTextMinLength}
-              variant={"outlined"}
-            />
-            <br />
-            <br />
-            <TextField
-              label="Maximum Length"
-              required={true}
-              placeholder="Enter Maximum Length"
-              value={validate.maxLength!.toString()}
-              onChange={handleTextMaxLength}
-              variant={"outlined"}
-            />
-            <br />
-            {element.element === "TextArea" ? (
-              <>
-                <br />
-                <TextField
-                  label="Rows"
-                  required={true}
-                  placeholder="Enter Rows"
-                  value={validate.rows!.toString()}
-                  onChange={handlerows}
-                  variant={"outlined"}
-                />
-              </>
-            ) : (
-              <></>
-            )}
-          </TabPanel>
-        </TabContext>
+        <Box>
+          <Tabs
+            onChange={handleChange}
+            value={value}
+            tabItems={tabItems}
+          ></Tabs>
+        </Box>
+        <TabPanel value={value} index={0}>
+          <TextField
+            label="Label"
+            required={true}
+            value={textValue}
+            onChange={handleTextChange}
+            variant={"outlined"}
+          />
+          <br />
+          <br />
+          <TextField
+            label="Placeholder"
+            required={true}
+            placeholder={textPlaceholder}
+            value={textPlaceholder}
+            onChange={handleTextPlaceholder}
+            variant={"outlined"}
+          />
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          <Checkbox
+            label="Required"
+            checked={validate.required!}
+            required={true}
+            onChange={handleCheckboxChange}
+          />
+          <br />
+          <br />
+          <TextField
+            label="Minimum Length"
+            required={true}
+            value={validate.minLength!.toString()}
+            placeholder="Enter Minimum Length"
+            onChange={handleTextMinLength}
+            variant={"outlined"}
+          />
+          <br />
+          <br />
+          <TextField
+            label="Maximum Length"
+            required={true}
+            placeholder="Enter Maximum Length"
+            value={validate.maxLength!.toString()}
+            onChange={handleTextMaxLength}
+            variant={"outlined"}
+          />
+          <br />
+          {element.element === "TextArea" ? (
+            <>
+              <br />
+              <TextField
+                label="Rows"
+                required={true}
+                placeholder="Enter Rows"
+                value={validate.rows!.toString()}
+                onChange={handlerows}
+                variant={"outlined"}
+              />
+            </>
+          ) : (
+            <></>
+          )}
+        </TabPanel>
       </DialogContent>
       <DialogActions>
         <Button color="error" onClick={handleClose} size="medium">

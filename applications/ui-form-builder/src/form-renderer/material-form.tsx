@@ -1,11 +1,12 @@
 import React, { FormEvent, useState } from "react";
 import {
   Button,
-  TabContext,
   Box,
   TabPanel,
-  TabList1,
+  FileUpload,
+  Tabs1,
 } from "@power-form-builder/ui-components";
+import dayjs, { Dayjs } from "dayjs";
 import { Grid, GridItem } from "@power-form-builder/ui-components";
 import { FormJson } from "../form-builder/ElementInterface";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -17,6 +18,8 @@ import SelectRender from "./SelectRender";
 import RadioGroupRender from "./RadioGroupRender";
 import ButtonRender from "./ButtonRender";
 import CheckboxRender from "./CheckboxRender";
+import DatePickerRender from "./DatePickerRender";
+import FileUploadRender from "./FileUploadRender";
 
 type TabItemsProps = {
   label: string;
@@ -34,6 +37,7 @@ function MaterialForm() {
   //Final Select
   const [selectData, setSelectData] = useState({});
 
+  const [datePickerValue, setDatePickerValue] = useState<Dayjs | null>();
   // const [error, setError] = React.useState(false);
 
   const handleFormDataValueChange = (
@@ -63,9 +67,13 @@ function MaterialForm() {
     console.log("Checkbox ValuesL", formDataValue);
   };
 
+  const handleDatePickerChange = (newValue: dayjs.Dayjs) => {
+    setDatePickerValue(newValue);
+  };
+
   const submitForm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("select", formDataValue, selectData);
+    console.log("select", formDataValue, selectData, datePickerValue?.toDate());
     console.log(Object.keys(formDataValue).length);
     if (Object.keys(formDataValue).length > 0) {
       console.log("Submit Data");
@@ -87,8 +95,8 @@ function MaterialForm() {
     { label: "Tab5", value: "5" },
   ];
 
-  const [value, setValue] = React.useState("1");
-  const handleTabChange = (event: React.ChangeEvent<{}>, newValue: string) => {
+  const [value, setValue] = React.useState(0);
+  const handleTabChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
   };
 
@@ -102,7 +110,12 @@ function MaterialForm() {
       {formJsonData.form_title !== "" ? (
         <form onSubmit={submitForm}>
           <>
-            {console.log("Values....", formDataValue, selectData)}
+            {console.log(
+              "Values....",
+              formDataValue,
+              selectData,
+              datePickerValue?.toDate()
+            )}
             {/* {show && !error ? { formDataValue } : ""} */}
           </>
           {
@@ -161,85 +174,106 @@ function MaterialForm() {
                       <CheckboxRender data={data} onChange={handleChange} />
                     ) : data.element === "Button" ? (
                       <ButtonRender data={data} />
+                    ) : data.element === "DatePicker" ? (
+                      <GridItem>
+                        <DatePickerRender
+                          data={data}
+                          onChange={handleDatePickerChange}
+                        />
+                      </GridItem>
+                    ) : data.element === "FileUpload" ? (
+                      <GridItem>
+                        <FileUploadRender />
+                      </GridItem>
                     ) : data.element === "Tabs" ? (
                       <>
-                        <TabContext value={value}>
-                          <Box>
-                            <TabList1
-                              onChange={handleTabChange}
-                              tabItems={data.tabItems}
-                            ></TabList1>
-                          </Box>
-                          {data.tabItems!.map((item, index) => (
-                            <TabPanel value={tabItems.at(index)?.value!}>
-                              {item.tabComponents!.map((item1, index1) => (
-                                <>
-                                  {item1.element === "TextField" ? (
-                                    <GridItem>
-                                      <TextFieldRender
-                                        data={item1}
-                                        onChange={handleFormDataValueChange}
-                                      />
-                                    </GridItem>
-                                  ) : item1.element === "Password" ? (
-                                    <GridItem>
-                                      <PasswordRender
-                                        data={item1}
-                                        onChange={handleFormDataValueChange}
-                                      />
-                                    </GridItem>
-                                  ) : item1.element === "TextArea" ? (
-                                    <GridItem>
-                                      <TextAreaRender
-                                        data={item1}
-                                        onChange={handleFormDataValueChange}
-                                      />
-                                    </GridItem>
-                                  ) : item1.element === "Email" ? (
-                                    <GridItem>
-                                      <EmailRender
-                                        data={item1}
-                                        onChange={handleFormDataValueChange}
-                                      />
-                                    </GridItem>
-                                  ) : item1.element === "Select" &&
-                                    !item1.multipleValues ? (
-                                    <SelectRender
+                        <Box>
+                          <Tabs1
+                            onChange={handleTabChange}
+                            tabItems={data.tabItems}
+                            value={value}
+                          ></Tabs1>
+                        </Box>
+                        {data.tabItems!.map((item, index) => (
+                          <TabPanel value={value} index={index}>
+                            {item.tabComponents!.map((item1, index1) => (
+                              <>
+                                {item1.element === "TextField" ? (
+                                  <GridItem>
+                                    <TextFieldRender
                                       data={item1}
                                       onChange={handleFormDataValueChange}
                                     />
-                                  ) : item1.element === "Select" &&
-                                    item1.multipleValues ? (
-                                    <SelectRender
-                                      data={data}
-                                      onChange={handleSelectData}
+                                  </GridItem>
+                                ) : item1.element === "Password" ? (
+                                  <GridItem>
+                                    <PasswordRender
+                                      data={item1}
+                                      onChange={handleFormDataValueChange}
                                     />
-                                  ) : item1.element === "RadioButton" ? (
-                                    <GridItem>
-                                      <RadioGroupRender
-                                        data={item1}
-                                        onChange={handleFormDataValueChange}
-                                      />
-                                    </GridItem>
-                                  ) : item1.element === "Checkbox" ? (
-                                    <GridItem>
-                                      <CheckboxRender
-                                        data={item1}
-                                        onChange={handleChange}
-                                      />
-                                    </GridItem>
-                                  ) : item1.element === "Button" ? (
-                                    <GridItem>
-                                      <ButtonRender data={item1} />
-                                    </GridItem>
-                                  ) : (
-                                    <>Noo</>
-                                  )}
-                                </>
-                              ))}
-                            </TabPanel>
-                          ))}
-                        </TabContext>
+                                  </GridItem>
+                                ) : item1.element === "TextArea" ? (
+                                  <GridItem>
+                                    <TextAreaRender
+                                      data={item1}
+                                      onChange={handleFormDataValueChange}
+                                    />
+                                  </GridItem>
+                                ) : item1.element === "Email" ? (
+                                  <GridItem>
+                                    <EmailRender
+                                      data={item1}
+                                      onChange={handleFormDataValueChange}
+                                    />
+                                  </GridItem>
+                                ) : item1.element === "Select" &&
+                                  !item1.multipleValues ? (
+                                  <SelectRender
+                                    data={item1}
+                                    onChange={handleFormDataValueChange}
+                                  />
+                                ) : item1.element === "Select" &&
+                                  item1.multipleValues ? (
+                                  <SelectRender
+                                    data={data}
+                                    onChange={handleSelectData}
+                                  />
+                                ) : item1.element === "RadioButton" ? (
+                                  <GridItem>
+                                    <RadioGroupRender
+                                      data={item1}
+                                      onChange={handleFormDataValueChange}
+                                    />
+                                  </GridItem>
+                                ) : item1.element === "Checkbox" ? (
+                                  <GridItem>
+                                    <CheckboxRender
+                                      data={item1}
+                                      onChange={handleChange}
+                                    />
+                                  </GridItem>
+                                ) : item1.element === "Button" ? (
+                                  <GridItem>
+                                    <ButtonRender data={item1} />
+                                  </GridItem>
+                                ) : item1.element === "DatePicker" ? (
+                                  <GridItem>
+                                    <DatePickerRender
+                                      data={item1}
+                                      onChange={handleDatePickerChange}
+                                    />
+                                  </GridItem>
+                                ) : data.element === "FileUpload" ? (
+                                  <GridItem>
+                                    <FileUpload />
+                                  </GridItem>
+                                ) : (
+                                  <>Noo</>
+                                )}
+                              </>
+                            ))}
+                          </TabPanel>
+                        ))}
                       </>
                     ) : (
                       ""
@@ -319,6 +353,17 @@ function MaterialForm() {
                                       <GridItem>
                                         <ButtonRender data={item1} />
                                       </GridItem>
+                                    ) : item1.element === "DatePicker" ? (
+                                      <GridItem>
+                                        <DatePickerRender
+                                          data={item1}
+                                          onChange={handleDatePickerChange}
+                                        />
+                                      </GridItem>
+                                    ) : data.element === "FileUpload" ? (
+                                      <GridItem>
+                                        <FileUpload />
+                                      </GridItem>
                                     ) : (
                                       <>Noo</>
                                     )}
@@ -392,6 +437,17 @@ function MaterialForm() {
                                     ) : item1.element === "Button" ? (
                                       <GridItem>
                                         <ButtonRender data={item1} />
+                                      </GridItem>
+                                    ) : item1.element === "DatePicker" ? (
+                                      <GridItem>
+                                        <DatePickerRender
+                                          data={item1}
+                                          onChange={handleDatePickerChange}
+                                        />
+                                      </GridItem>
+                                    ) : data.element === "FileUpload" ? (
+                                      <GridItem>
+                                        <FileUpload />
                                       </GridItem>
                                     ) : (
                                       <>Noo</>

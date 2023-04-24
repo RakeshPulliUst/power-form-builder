@@ -3,8 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "^4.12.4",
-    "@material-ui/lab": "^4.0.0-alpha.61",
     "@power-form-builder/ui-components": "^0.1.0",
     "@power-form-builder/ui-translation": "^0.1.0",
     "@reduxjs/toolkit": "^1.9.2",

@@ -17,8 +17,6 @@ import {
   CloseIcon,
   PreviewIcon,
   HistoryIcon,
-  FileUpload,
-  DatePicker,
 } from "@power-form-builder/ui-components";
 
 import "./Home.css";
@@ -172,8 +170,6 @@ const Home = () => {
   return (
     <>
       <div className="home-form-table">
-        {/* <FileUpload />
-        <DatePicker /> */}
         <Table minWidth={1500}>
           <TableHead>
             <TableRow>

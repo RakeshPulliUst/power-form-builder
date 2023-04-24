@@ -1,3 +1,4 @@
+import dayjs, { Dayjs } from "dayjs";
 
 export interface FormJson{
   form_title: string,
@@ -37,6 +38,9 @@ export interface Element {
       maxLength?: number;      //validate
       rows?: number            //validate 
       error?: string;  //validate
+
+      minDate?: dayjs.Dayjs;
+      maxDate?: dayjs.Dayjs;
     }
 
     width?: number;
@@ -78,6 +82,11 @@ export interface Element {
         columnComponents:  Element[]
       }[],  
 
+    format?: string,
+
+    disablePast?: boolean,
+    disableFuture?: boolean,
+  
     show?: boolean
   }
 
@@ -256,7 +265,23 @@ export interface Element {
         }]
       }],  
     },
-
+    {
+      id: 11,
+      element: "DatePicker",
+      label: "",
+      format: "",
+      disablePast: false,
+      disableFuture: false,
+      validate:{
+        required: false,
+        minDate: dayjs('2023-04-17'),
+        maxDate: dayjs('2023-05-17'),
+      }
+    },
+    {
+      id: 12,
+      element: "FileUpload",
+    }
     
   ]
 

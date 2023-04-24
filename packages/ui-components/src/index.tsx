@@ -19,11 +19,7 @@ import TableBody from "./components/TableBody";
 import TableRow from "./components/TableRow";
 import TableCell from "./components/TableCell";
 import Tab from "./components/Tab/Tab";
-import TabContext from "./components/Tab/TabContext";
-import TabList from "./components/Tab/TabList";
-import TabPanel from "./components/Tab/TabPanel";
 import Box from "./components/Box";
-import TabList1 from "./components/Tab/TabList1";
 import Container from "./components/Container";
 import Typography from "./components/Typography";
 import Link from "./components/Link";
@@ -42,6 +38,10 @@ import Avatar from "./components/Avatar";
 import HistoryIcon from "./components/Icons/HistoryIcon";
 import FileUpload from "./components/FileUpload";
 import DatePicker from "./components/DatePicker";
+import Tabs from "./components/Tab/Tabs";
+import TabPanel from "./components/Tab/TabPanel";
+import Tabs1 from "./components/Tab/Tabs1";
+
 export {
   Button,
   Card,
@@ -65,11 +65,7 @@ export {
   TableRow,
   TableCell,
   Tab,
-  TabContext,
-  TabList,
-  TabPanel,
   Box,
-  TabList1,
   Typography,
   Link,
   LockIcon,
@@ -87,4 +83,7 @@ export {
   AssignmentIndIcon,
   FileUpload,
   DatePicker,
+  Tabs,
+  Tabs1,
+  TabPanel,
 };

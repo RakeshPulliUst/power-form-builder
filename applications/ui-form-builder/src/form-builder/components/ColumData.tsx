@@ -8,11 +8,10 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  TabContext,
-  TabPanel,
-  TabList,
   Divider,
   CloseIcon,
+  Tabs,
+  TabPanel,
 } from "@power-form-builder/ui-components";
 import { ColumnDialog } from "../DialogInterface";
 import { v4 as uuidv4 } from "uuid";
@@ -48,8 +47,8 @@ const ColumnData: React.FC<{
   columnValues: ColumnDialog;
   element: Element;
 }> = ({ open, handleClose, columnValues, handleOpen, element }) => {
-  const [value, setValue] = React.useState("1");
-  const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
+  const [value, setValue] = React.useState(0);
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 
@@ -186,67 +185,69 @@ const ColumnData: React.FC<{
       </DialogTitle>
       <Divider variant="middle" />
       <DialogContent>
-        <TabContext value={value}>
-          <Box>
-            <TabList onChange={handleChange} tabItems={tabItems}></TabList>
-          </Box>
-          <TabPanel value="1">
-            <TextField
-              label="Label"
-              required={true}
-              value={columnLabel}
-              onChange={handleColumnLabel}
-              variant={"outlined"}
-            />
+        <Box>
+          <Tabs
+            onChange={handleChange}
+            value={value}
+            tabItems={tabItems}
+          ></Tabs>
+        </Box>
+        <TabPanel value={value} index={0}>
+          <TextField
+            label="Label"
+            required={true}
+            value={columnLabel}
+            onChange={handleColumnLabel}
+            variant={"outlined"}
+          />
 
-            {columnItemsData.map((item) => (
-              <div>
-                <br />
-                <Select
-                  label="Column Size"
-                  name="columnDataSize"
-                  placeholder="Type To Search"
-                  menuItems={ColumnSizeDataValues}
-                  multiple={false}
-                  value={item.columnDataSize}
-                  onChange={(
-                    e: React.ChangeEvent<HTMLInputElement> | any
-                  ): void => handleChangeInput(item.id, e)}
-                  width={135}
-                  size="medium"
-                  required={false}
-                />
-                &nbsp;
-                <TextField
-                  label="ColumnValue"
-                  name="columnDataWidth"
-                  required={true}
-                  placeholder=""
-                  value={item.columnDataWidth.toString()}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
-                    handleChangeInput(item.id, e)
-                  }
-                  variant={"outlined"}
-                  sx={{ m: 1 }}
-                />
-                {columnItemsData.length !== 1 ? (
-                  <span
-                    className="icon"
-                    onClick={() => handleRemoveFields(item.id)}
-                  >
-                    <RemoveCircleIcon />
-                  </span>
-                ) : (
-                  <></>
-                )}
-                <span className="icon" onClick={handleAddFields}>
-                  <AddCircleIcon />
+          {columnItemsData.map((item) => (
+            <div>
+              <br />
+              <Select
+                label="Column Size"
+                name="columnDataSize"
+                placeholder="Type To Search"
+                menuItems={ColumnSizeDataValues}
+                multiple={false}
+                value={item.columnDataSize}
+                onChange={(
+                  e: React.ChangeEvent<HTMLInputElement> | any
+                ): void => handleChangeInput(item.id, e)}
+                width={135}
+                size="medium"
+                required={false}
+              />
+              &nbsp;
+              <TextField
+                label="ColumnValue"
+                name="columnDataWidth"
+                required={true}
+                placeholder=""
+                value={item.columnDataWidth.toString()}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
+                  handleChangeInput(item.id, e)
+                }
+                variant={"outlined"}
+                sx={{ m: 1 }}
+              />
+              {columnItemsData.length !== 1 ? (
+                <span
+                  className="icon"
+                  onClick={() => handleRemoveFields(item.id)}
+                >
+                  <RemoveCircleIcon />
                 </span>
-              </div>
-            ))}
-            <br />
-          </TabPanel>
-        </TabContext>
+              ) : (
+                <></>
+              )}
+              <span className="icon" onClick={handleAddFields}>
+                <AddCircleIcon />
+              </span>
+            </div>
+          ))}
+          <br />
+        </TabPanel>
       </DialogContent>
       <DialogActions>
         <Button color="error" onClick={handleClose} size="medium">

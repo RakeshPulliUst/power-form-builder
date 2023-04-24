@@ -4,11 +4,11 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  TabContext,
   TabPanel,
   Divider,
   TextField,
   CloseIcon,
+  Tabs,
 } from "@power-form-builder/ui-components";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@power-form-builder/ui-components";
@@ -21,6 +21,11 @@ type Props = {
   handleOpen: () => void;
   handleClose: () => void;
 };
+
+type TabItemsProps = {
+  label: React.ReactNode;
+  value: string;
+}[];
 
 type ChangePassword = {
   password: string;
@@ -70,6 +75,8 @@ const ChangePassword = ({
     }
   };
 
+  const tabItems: TabItemsProps = [{ label: "Display", value: "0" }];
+
   return (
     <div>
       <Dialog
@@ -91,52 +98,51 @@ const ChangePassword = ({
         <Divider variant="middle" />
 
         <DialogContent>
-          <TabContext value={value}>
-            <TabPanel value="1">
-              <TextField
-                fullWidth
-                label="Password"
-                type="password"
-                {...register("password", {
-                  required: "Password is required",
-                  minLength: {
-                    value: 8,
-                    message: "Password must be 8 letters long",
-                  },
-                  validate: (value) => {
-                    return (
-                      [/[a-z]/, /[A-Z]/, /[0-9]/, /[^a-zA-Z0-9]/].every(
-                        (pattern) => pattern.test(value)
-                      ) ||
-                      "Password must include lower & upper letters, number and special characters"
-                    );
-                  },
-                })}
-                error={Boolean(errors.password)}
-                helperText={errors.password?.message}
-              />
-              <TextField
-                fullWidth
-                label="Confirm Password"
-                type="password"
-                {...register("confirmPassword", {
-                  required: "Password is required",
-                  minLength: {
-                    value: 8,
-                    message: "Password must be 8 letters long",
-                  },
-                  validate: (value) => {
-                    if (watch("password") != value) {
-                      return "Your passwords do no match";
-                    }
-                  },
-                })}
-                error={Boolean(errors.confirmPassword)}
-                helperText={errors.confirmPassword?.message}
-                sx={{ marginTop: "10px" }}
-              />
-            </TabPanel>
-          </TabContext>
+          <Tabs value={0}></Tabs>
+          <TabPanel value={0} index={0}>
+            <TextField
+              fullWidth
+              label="Password"
+              type="password"
+              {...register("password", {
+                required: "Password is required",
+                minLength: {
+                  value: 8,
+                  message: "Password must be 8 letters long",
+                },
+                validate: (value) => {
+                  return (
+                    [/[a-z]/, /[A-Z]/, /[0-9]/, /[^a-zA-Z0-9]/].every(
+                      (pattern) => pattern.test(value)
+                    ) ||
+                    "Password must include lower & upper letters, number and special characters"
+                  );
+                },
+              })}
+              error={Boolean(errors.password)}
+              helperText={errors.password?.message}
+            />
+            <TextField
+              fullWidth
+              label="Confirm Password"
+              type="password"
+              {...register("confirmPassword", {
+                required: "Password is required",
+                minLength: {
+                  value: 8,
+                  message: "Password must be 8 letters long",
+                },
+                validate: (value) => {
+                  if (watch("password") != value) {
+                    return "Your passwords do no match";
+                  }
+                },
+              })}
+              error={Boolean(errors.confirmPassword)}
+              helperText={errors.confirmPassword?.message}
+              sx={{ marginTop: "10px" }}
+            />
+          </TabPanel>
         </DialogContent>
         <DialogActions>
           <Button color="error" onClick={handleClose1} size="medium">
