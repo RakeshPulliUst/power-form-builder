@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { FormElements, User } from "./types";
 import { api } from "./api";
 import { AppThunk } from "./store";
-import { Element } from "./form-builder/ElementInterface";
+import { Element } from "../form-builder/ElementInterface";
 
 interface ElementState {
   components: Element[];

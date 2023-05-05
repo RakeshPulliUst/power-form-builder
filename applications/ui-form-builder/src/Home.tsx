@@ -17,6 +17,7 @@ import {
   CloseIcon,
   PreviewIcon,
   HistoryIcon,
+  Box,
 } from "@power-form-builder/ui-components";
 
 import "./Home.css";
@@ -33,6 +34,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { Element } from "./form-builder/ElementInterface";
 import FormHistoryDialog from "./FormHistoryDialog";
+import { FormRendererPlayGround } from "./form-renderer/FormRendererPlayGround";
 
 const Home = () => {
   const [open, setOpen] = useState(false);
@@ -169,6 +171,16 @@ const Home = () => {
 
   return (
     <>
+      {/* <Box
+        sx={{
+          height: "1000px",
+          width: "100%",
+          ml: "100px",
+        }}
+      >
+        <FormRendererPlayGround />
+      </Box> */}
+
       <div className="home-form-table">
         <Table minWidth={1500}>
           <TableHead>

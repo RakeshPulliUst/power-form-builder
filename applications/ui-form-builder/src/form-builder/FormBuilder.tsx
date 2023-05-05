@@ -14,7 +14,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-import { addElement, clear } from "../formElementsSlice";
+import { addElement, clear } from "../store/formElementsSlice";
 import { useDispatch } from "react-redux";
 
 const FormBuilder = () => {

@@ -1,11 +1,15 @@
-import { Button, FileUpload, Stack } from "@power-form-builder/ui-components";
+import {
+  Button,
+  FileUpload as BaseFileUpload,
+  Stack,
+} from "@power-form-builder/ui-components";
 import { ChangeEvent, useState } from "react";
 
 type Props = {
   onChange: any;
 };
 
-const FileUploadRender = () => {
+const FileUpload = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   const handleFileSelect = (event: ChangeEvent<HTMLInputElement>) => {
@@ -38,10 +42,14 @@ const FileUploadRender = () => {
         console.error("Failed to upload file", error);
       });
   };
-  
+
   return (
     <Stack direction="row" alignItems="center" spacing={2}>
-      <FileUpload name={"dfdf"} required={true} onChange={handleFileSelect} />
+      <BaseFileUpload
+        name={"dfdf"}
+        required={true}
+        onChange={handleFileSelect}
+      />
       <Button
         variant="contained"
         disabled={!selectedFile}
@@ -54,4 +62,4 @@ const FileUploadRender = () => {
   );
 };
 
-export default FileUploadRender;
+export default FileUpload;

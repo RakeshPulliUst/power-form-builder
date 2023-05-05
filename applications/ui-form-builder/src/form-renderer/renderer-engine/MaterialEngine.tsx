@@ -1,35 +1,36 @@
+import { RenderEngineOptions } from "../index.types";
 import React, { FormEvent, useState } from "react";
 import {
-  Button,
+  Button as BaseButton,
   Box,
   TabPanel,
-  FileUpload,
+  FileUpload as BaseFileUpload,
   Tabs1,
 } from "@power-form-builder/ui-components";
 import dayjs, { Dayjs } from "dayjs";
 import { Grid, GridItem } from "@power-form-builder/ui-components";
-import { FormJson } from "../form-builder/ElementInterface";
+import { FormJson } from "../../form-builder/ElementInterface";
 import { useLocation, useNavigate } from "react-router-dom";
-import TextFieldRender from "./TextFieldRender";
-import EmailRender from "./EmailRender";
-import PasswordRender from "./PasswordRender";
-import TextAreaRender from "./TextAreaRender";
-import SelectRender from "./SelectRender";
-import RadioGroupRender from "./RadioGroupRender";
-import ButtonRender from "./ButtonRender";
-import CheckboxRender from "./CheckboxRender";
-import DatePickerRender from "./DatePickerRender";
-import FileUploadRender from "./FileUploadRender";
+import TextField from "../components/templates/material/TextField";
+import Email from "../components/templates/material/Email";
+import Password from "../components/templates/material/Password";
+import TextArea from "../components/templates/material/TextArea";
+import Select from "../components/templates/material/Select";
+import RadioGroup from "../components/templates/material/RadioGroup";
+import Button from "../components/templates/material/Button";
+import Checkbox from "../components/templates/material/Checkbox";
+import DatePicker from "../components/templates/material/DatePicker";
+import FileUpload from "../components/templates/material/FileUpload";
 
 type TabItemsProps = {
   label: string;
   value: string;
 }[];
 
-function MaterialForm() {
+const MaterialEngine = ({ builderJSON, submission }: RenderEngineOptions) => {
   const location = useLocation();
   const { formData } = location.state || {};
-  const [formJsonData] = useState<FormJson>(formData);
+  const [formJsonData] = useState<FormJson>(builderJSON);
 
   const [formDataValue, setFormDataValue] = useState({});
 
@@ -139,51 +140,48 @@ function MaterialForm() {
                 <Grid spacing={2} alignItems="center" justifyContent="center">
                   <GridItem>
                     {data.element === "TextField" ? (
-                      <TextFieldRender
+                      <TextField
                         data={data}
                         onChange={handleFormDataValueChange}
                       />
                     ) : data.element === "Email" ? (
-                      <EmailRender
-                        data={data}
-                        onChange={handleFormDataValueChange}
-                      />
+                      <Email data={data} onChange={handleFormDataValueChange} />
                     ) : data.element === "Password" ? (
-                      <PasswordRender
+                      <Password
                         data={data}
                         onChange={handleFormDataValueChange}
                       />
                     ) : data.element === "TextArea" ? (
-                      <TextAreaRender
+                      <TextArea
                         data={data}
                         onChange={handleFormDataValueChange}
                       />
                     ) : data.element === "Select" && !data.multipleValues ? (
-                      <SelectRender
+                      <Select
                         data={data}
                         onChange={handleFormDataValueChange}
                       />
                     ) : data.element === "Select" && data.multipleValues ? (
-                      <SelectRender data={data} onChange={handleSelectData} />
+                      <Select data={data} onChange={handleSelectData} />
                     ) : data.element === "RadioButton" ? (
-                      <RadioGroupRender
+                      <RadioGroup
                         data={data}
                         onChange={handleFormDataValueChange}
                       />
                     ) : data.element === "Checkbox" ? (
-                      <CheckboxRender data={data} onChange={handleChange} />
+                      <Checkbox data={data} onChange={handleChange} />
                     ) : data.element === "Button" ? (
-                      <ButtonRender data={data} />
+                      <Button data={data} />
                     ) : data.element === "DatePicker" ? (
                       <GridItem>
-                        <DatePickerRender
+                        <DatePicker
                           data={data}
                           onChange={handleDatePickerChange}
                         />
                       </GridItem>
                     ) : data.element === "FileUpload" ? (
                       <GridItem>
-                        <FileUploadRender />
+                        <FileUpload />
                       </GridItem>
                     ) : data.element === "Tabs" ? (
                       <>
@@ -200,65 +198,65 @@ function MaterialForm() {
                               <>
                                 {item1.element === "TextField" ? (
                                   <GridItem>
-                                    <TextFieldRender
+                                    <TextField
                                       data={item1}
                                       onChange={handleFormDataValueChange}
                                     />
                                   </GridItem>
                                 ) : item1.element === "Password" ? (
                                   <GridItem>
-                                    <PasswordRender
+                                    <Password
                                       data={item1}
                                       onChange={handleFormDataValueChange}
                                     />
                                   </GridItem>
                                 ) : item1.element === "TextArea" ? (
                                   <GridItem>
-                                    <TextAreaRender
+                                    <TextArea
                                       data={item1}
                                       onChange={handleFormDataValueChange}
                                     />
                                   </GridItem>
                                 ) : item1.element === "Email" ? (
                                   <GridItem>
-                                    <EmailRender
+                                    <Email
                                       data={item1}
                                       onChange={handleFormDataValueChange}
                                     />
                                   </GridItem>
                                 ) : item1.element === "Select" &&
                                   !item1.multipleValues ? (
-                                  <SelectRender
+                                  <Select
                                     data={item1}
                                     onChange={handleFormDataValueChange}
                                   />
                                 ) : item1.element === "Select" &&
                                   item1.multipleValues ? (
-                                  <SelectRender
+                                  <Select
                                     data={data}
                                     onChange={handleSelectData}
                                   />
                                 ) : item1.element === "RadioButton" ? (
                                   <GridItem>
-                                    <RadioGroupRender
+                                    <RadioGroup
                                       data={item1}
                                       onChange={handleFormDataValueChange}
                                     />
                                   </GridItem>
                                 ) : item1.element === "Checkbox" ? (
                                   <GridItem>
-                                    <CheckboxRender
+                                    <Checkbox
                                       data={item1}
                                       onChange={handleChange}
                                     />
                                   </GridItem>
                                 ) : item1.element === "Button" ? (
                                   <GridItem>
-                                    <ButtonRender data={item1} />
+                                    <Button data={item1} />
                                   </GridItem>
                                 ) : item1.element === "DatePicker" ? (
                                   <GridItem>
-                                    <DatePickerRender
+                                    <DatePicker
                                       data={item1}
                                       onChange={handleDatePickerChange}
                                     />
@@ -293,28 +291,28 @@ function MaterialForm() {
                                   <>
                                     {item1.element === "TextField" ? (
                                       <GridItem>
-                                        <TextFieldRender
+                                        <TextField
                                           data={item1}
                                           onChange={handleFormDataValueChange}
                                         />
                                       </GridItem>
                                     ) : item1.element === "Password" ? (
                                       <GridItem>
-                                        <PasswordRender
+                                        <Password
                                           data={item1}
                                           onChange={handleFormDataValueChange}
                                         />
                                       </GridItem>
                                     ) : item1.element === "TextArea" ? (
                                       <GridItem>
-                                        <TextAreaRender
+                                        <TextArea
                                           data={item1}
                                           onChange={handleFormDataValueChange}
                                         />
                                       </GridItem>
                                     ) : item1.element === "Email" ? (
                                       <GridItem>
-                                        <EmailRender
+                                        <Email
                                           data={item1}
                                           onChange={handleFormDataValueChange}
                                         />
@@ -322,7 +320,7 @@ function MaterialForm() {
                                     ) : item1.element === "Select" &&
                                       !item1.multipleValues ? (
                                       <GridItem>
-                                        <SelectRender
+                                        <Select
                                           data={item1}
                                           onChange={handleFormDataValueChange}
                                         />
@@ -330,32 +328,32 @@ function MaterialForm() {
                                     ) : item1.element === "Select" &&
                                       item1.multipleValues ? (
                                       <GridItem>
-                                        <SelectRender
+                                        <Select
                                           data={data}
                                           onChange={handleSelectData}
                                         />
                                       </GridItem>
                                     ) : item1.element === "RadioButton" ? (
                                       <GridItem>
-                                        <RadioGroupRender
+                                        <RadioGroup
                                           data={item1}
                                           onChange={handleFormDataValueChange}
                                         />
                                       </GridItem>
                                     ) : item1.element === "Checkbox" ? (
                                       <GridItem>
-                                        <CheckboxRender
+                                        <Checkbox
                                           data={item1}
                                           onChange={handleChange}
                                         />
                                       </GridItem>
                                     ) : item1.element === "Button" ? (
                                       <GridItem>
-                                        <ButtonRender data={item1} />
+                                        <Button data={item1} />
                                       </GridItem>
                                     ) : item1.element === "DatePicker" ? (
                                       <GridItem>
-                                        <DatePickerRender
+                                        <DatePicker
                                           data={item1}
                                           onChange={handleDatePickerChange}
                                         />
@@ -378,28 +376,28 @@ function MaterialForm() {
                                   <>
                                     {item1.element === "TextField" ? (
                                       <GridItem>
-                                        <TextFieldRender
+                                        <TextField
                                           data={item1}
                                           onChange={handleFormDataValueChange}
                                         />
                                       </GridItem>
                                     ) : item1.element === "Password" ? (
                                       <GridItem>
-                                        <PasswordRender
+                                        <Password
                                           data={item1}
                                           onChange={handleFormDataValueChange}
                                         />
                                       </GridItem>
                                     ) : item1.element === "TextArea" ? (
                                       <GridItem>
-                                        <TextAreaRender
+                                        <TextArea
                                           data={item1}
                                           onChange={handleFormDataValueChange}
                                         />
                                       </GridItem>
                                     ) : item1.element === "Email" ? (
                                       <GridItem>
-                                        <EmailRender
+                                        <Email
                                           data={item1}
                                           onChange={handleFormDataValueChange}
                                         />
@@ -407,7 +405,7 @@ function MaterialForm() {
                                     ) : item1.element === "Select" &&
                                       !item1.multipleValues ? (
                                       <GridItem>
-                                        <SelectRender
+                                        <Select
                                           data={item1}
                                           onChange={handleFormDataValueChange}
                                         />
@@ -415,32 +413,32 @@ function MaterialForm() {
                                     ) : item1.element === "Select" &&
                                       item1.multipleValues ? (
                                       <GridItem>
-                                        <SelectRender
+                                        <Select
                                           data={data}
                                           onChange={handleSelectData}
                                         />
                                       </GridItem>
                                     ) : item1.element === "RadioButton" ? (
                                       <GridItem>
-                                        <RadioGroupRender
+                                        <RadioGroup
                                           data={item1}
                                           onChange={handleFormDataValueChange}
                                         />
                                       </GridItem>
                                     ) : item1.element === "Checkbox" ? (
                                       <GridItem>
-                                        <CheckboxRender
+                                        <Checkbox
                                           data={item1}
                                           onChange={handleChange}
                                         />
                                       </GridItem>
                                     ) : item1.element === "Button" ? (
                                       <GridItem>
-                                        <ButtonRender data={item1} />
+                                        <Button data={item1} />
                                       </GridItem>
                                     ) : item1.element === "DatePicker" ? (
                                       <GridItem>
-                                        <DatePickerRender
+                                        <DatePicker
                                           data={item1}
                                           onChange={handleDatePickerChange}
                                         />
@@ -469,9 +467,9 @@ function MaterialForm() {
           })}
           <Grid alignItems="center" justifyContent="center">
             <GridItem>
-              <Button color={"success"} size={"medium"}>
+              <BaseButton color={"success"} size={"medium"}>
                 Submit
-              </Button>
+              </BaseButton>
             </GridItem>
           </Grid>
         </form>
@@ -480,6 +478,6 @@ function MaterialForm() {
       )}
     </>
   );
-}
+};
 
-export default MaterialForm;
+export default MaterialEngine;

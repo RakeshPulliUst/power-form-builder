@@ -1,6 +1,6 @@
-import { TextField } from "@power-form-builder/ui-components";
+import { TextField as BaseSelect } from "@power-form-builder/ui-components";
 import React from "react";
-import { Element } from "../form-builder/ElementInterface";
+import { Element } from "../../../../form-builder/ElementInterface";
 
 type Props = {
   data: Element;
@@ -9,9 +9,9 @@ type Props = {
     | undefined;
 };
 
-const TextFieldRender = ({ data, onChange }: Props) => {
+const TextField = ({ data, onChange }: Props) => {
   return (
-    <TextField
+    <BaseSelect
       label={data.label!}
       name={data.label?.toLocaleLowerCase()}
       placeholder={data.placeholder}
@@ -27,4 +27,4 @@ const TextFieldRender = ({ data, onChange }: Props) => {
   );
 };
 
-export default TextFieldRender;
+export default TextField;

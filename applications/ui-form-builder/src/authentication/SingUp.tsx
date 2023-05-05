@@ -1,6 +1,6 @@
 import * as React from "react";
 import { connect, ConnectedProps } from "react-redux";
-import { RootState } from "./types";
+import { RootState } from "../store/types";
 import {
   Button,
   TextField,
@@ -17,7 +17,7 @@ import {
 } from "@power-form-builder/ui-components";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { signup } from "./signupSlice";
+import { signup } from "../store/signupSlice";
 import { useForm } from "react-hook-form";
 
 interface SignUpProps extends PropsFromRedux {}

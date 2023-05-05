@@ -15,10 +15,10 @@ import {
 import { NavLink, NavLink as ReactLink, useNavigate } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.min.css";
-import FormNameInput from "./FormNameInput";
+import FormNameInput from "../FormNameInput";
 import { Header, UITranslation } from "@power-form-builder/ui-translation";
 import { useDispatch } from "react-redux";
-import { logout } from "./signinSlice";
+import { logout } from "../store/signinSlice";
 
 const CustomNavbar = () => {
   const ref = useRef();

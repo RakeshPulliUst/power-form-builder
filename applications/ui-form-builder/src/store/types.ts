@@ -1,28 +1,28 @@
-import { Element } from "./form-builder/ElementInterface";
+import { Element } from "../form-builder/ElementInterface";
 
 export interface User {
   id: string;
-  firstname: string,
-  lastname: string,
+  firstname: string;
+  lastname: string;
   email: string;
 }
 
 export interface FormElements {
-  components: Element[],
+  components: Element[];
 }
 
 export interface SignupData {
-  userId: number,
-  firstname: string,
-  lastname: string,
+  userId: number;
+  firstname: string;
+  lastname: string;
   email: string;
   password: string;
 }
 
 export interface ProfileData {
-  userId: number,
-  firstname: string,
-  lastname: string,
+  userId: number;
+  firstname: string;
+  lastname: string;
   email: string;
   password?: string;
 }

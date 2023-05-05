@@ -1,6 +1,6 @@
-import { TextField } from "@power-form-builder/ui-components";
+import { TextField as BaseSelect } from "@power-form-builder/ui-components";
 import React from "react";
-import { Element } from "../form-builder/ElementInterface";
+import { Element } from "../../../../form-builder/ElementInterface";
 
 type Props = {
   data: Element;
@@ -9,12 +9,12 @@ type Props = {
     | undefined;
 };
 
-const TextAreaRender = ({ data, onChange }: Props) => {
+const TextField = ({ data, onChange }: Props) => {
   return (
-    <TextField
+    <BaseSelect
       label={data.label!}
       name={data.label?.toLocaleLowerCase()}
-      placeholder={data.placeholder!}
+      placeholder={data.placeholder}
       required={data.validate?.required!}
       inputProps={{
         minLength: data.validate?.minLength!,
@@ -23,10 +23,8 @@ const TextAreaRender = ({ data, onChange }: Props) => {
       sx={{ mt: 2 }}
       variant={"outlined"}
       onChange={onChange}
-      rows={data.validate?.rows}
-      multiline={true}
     />
   );
 };
 
-export default TextAreaRender;
+export default TextField;

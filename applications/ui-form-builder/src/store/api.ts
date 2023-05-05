@@ -13,7 +13,10 @@ export const api = {
     return response.data;
   },
   profile: async (profileData: ProfileData) => {
-    const response = await axios.put(`${API_BASE_URL}/user/update-profile/${profileData.userId}`, profileData);
+    const response = await axios.put(
+      `${API_BASE_URL}/user/update-profile/${profileData.userId}`,
+      profileData
+    );
     return response.data;
   },
 };

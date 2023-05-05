@@ -15,7 +15,7 @@ import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-import { profile } from "./profileSlice";
+import { profile } from "../store/profileSlice";
 import ChangePassword from "./ChangePassword";
 
 type SignUpFormInputs = {

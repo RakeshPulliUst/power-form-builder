@@ -38,8 +38,8 @@ import ButtonData from "./components/ButtonData";
 import RadioButtonData from "./components/RadioButtonData";
 import TabsData from "./components/TabsData";
 import ColumnData from "./components/ColumData";
-import { addFormElements } from "../formElementsSlice";
-import { RootState } from "../store";
+import { addFormElements } from "../store/formElementsSlice";
+import { RootState } from "../store/store";
 import DatePickerData from "./components/DatePickerData";
 
 type Props = {

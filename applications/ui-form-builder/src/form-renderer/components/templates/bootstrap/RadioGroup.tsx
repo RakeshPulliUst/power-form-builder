@@ -1,5 +1,5 @@
-import { RadioGroup } from "@power-form-builder/ui-components";
-import { Element } from "../form-builder/ElementInterface";
+import { RadioGroup as BaseRadioGroup } from "@power-form-builder/ui-components";
+import { Element } from "../../../../form-builder/ElementInterface";
 import { ChangeEvent } from "react";
 
 type Props = {
@@ -9,9 +9,9 @@ type Props = {
     | undefined;
 };
 
-const RadioGroupRender = ({ data, onChange }: Props) => {
+const RadioGroup = ({ data, onChange }: Props) => {
   return (
-    <RadioGroup
+    <BaseRadioGroup
       label={data.label!}
       options={
         data.options !== undefined
@@ -32,4 +32,4 @@ const RadioGroupRender = ({ data, onChange }: Props) => {
   );
 };
 
-export default RadioGroupRender;
+export default RadioGroup;

@@ -1,6 +1,6 @@
 import { TextField } from "@power-form-builder/ui-components";
 import React, { useState } from "react";
-import { Element } from "../form-builder/ElementInterface";
+import { Element } from "../../../../form-builder/ElementInterface";
 
 type Props = {
   data: Element;
@@ -9,7 +9,7 @@ type Props = {
     | undefined;
 };
 
-const PasswordRender = ({ data, onChange }: Props) => {
+const Password = ({ data, onChange }: Props) => {
   const [passwordError, setPasswordError] = useState(false);
   const [passwordHelperText, setPasswordHelperText] = useState("");
 
@@ -54,4 +54,4 @@ const PasswordRender = ({ data, onChange }: Props) => {
   );
 };
 
-export default PasswordRender;
+export default Password;

@@ -1,14 +1,14 @@
-import { Select } from "@power-form-builder/ui-components";
-import { Element } from "../form-builder/ElementInterface";
+import { Select as BaseSelect } from "@power-form-builder/ui-components";
+import { Element } from "../../../../form-builder/ElementInterface";
 
 type Props = {
   data: Element;
   onChange: any;
 };
 
-const SelectRender = ({ data, onChange }: Props) => {
+const Select = ({ data, onChange }: Props) => {
   return (
-    <Select
+    <BaseSelect
       label={data.label!}
       placeholder={data.placeholder!}
       menuItems={data.menuItems!}
@@ -28,4 +28,4 @@ const SelectRender = ({ data, onChange }: Props) => {
   );
 };
 
-export default SelectRender;
+export default Select;

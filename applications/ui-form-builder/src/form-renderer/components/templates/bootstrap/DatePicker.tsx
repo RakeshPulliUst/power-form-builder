@@ -1,5 +1,5 @@
-import { DatePicker } from "@power-form-builder/ui-components";
-import { Element } from "../form-builder/ElementInterface";
+import { DatePicker as BaseDatePicker } from "@power-form-builder/ui-components";
+import { Element } from "../../../../form-builder/ElementInterface";
 import dayjs, { Dayjs } from "dayjs";
 
 type Props = {
@@ -7,9 +7,9 @@ type Props = {
   onChange: any;
 };
 
-const DatePickerRender = ({ data, onChange }: Props) => {
+const DatePicker = ({ data, onChange }: Props) => {
   return (
-    <DatePicker
+    <BaseDatePicker
       label={data.label!}
       format={data.format!}
       disableFuture={data.disableFuture!}
@@ -21,4 +21,4 @@ const DatePickerRender = ({ data, onChange }: Props) => {
   );
 };
 
-export default DatePickerRender;
+export default DatePicker;

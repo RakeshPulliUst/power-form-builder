@@ -1,6 +1,6 @@
 import { TextField } from "@power-form-builder/ui-components";
 import React, { useState } from "react";
-import { Element } from "../form-builder/ElementInterface";
+import { Element } from "../../../../form-builder/ElementInterface";
 
 type Props = {
   data: Element;
@@ -9,7 +9,7 @@ type Props = {
     | undefined;
 };
 
-const EmailRender = ({ data, onChange }: Props) => {
+const Email = ({ data, onChange }: Props) => {
   const [emailError, setEmailError] = useState(false);
   const [emailHelperText, setEmailHelperText] = useState("");
 
@@ -50,4 +50,4 @@ const EmailRender = ({ data, onChange }: Props) => {
   );
 };
 
-export default EmailRender;
+export default Email;

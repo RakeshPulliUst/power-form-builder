@@ -1,12 +1,12 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import FormBuilder from "./form-builder/FormBuilder";
-import MaterialForm from "./form-renderer/material-form";
+import MaterialEngine from "./form-renderer/renderer-engine/MaterialEngine";
 import Home from "./Home";
-import CustomNavbar from "./CustomNavbar";
+import CustomNavbar from "./layout/CustomNavbar";
 import UpdateFormBuilder from "./form-builder/UpdateFormBuilder";
-import SignIn from "./SignIn";
-import SignUp from "./SingUp";
-import UserProfile from "./UserProfile";
+import SignIn from "./authentication/SignIn";
+import SignUp from "./authentication/SingUp";
+import UserProfile from "./authentication/UserProfile";
 
 const App = () => {
   return (
@@ -18,7 +18,7 @@ const App = () => {
         <Route path="/home" element={<Home />} />
         <Route path="/user/my-profile" element={<UserProfile />}></Route>
         <Route path="/formbuilder" element={<FormBuilder />}></Route>
-        <Route path="/formrender" element={<MaterialForm />}></Route>
+        <Route path="/formrender" element={<MaterialEngine />}></Route>
         <Route
           path="/updateformbuilder"
           element={<UpdateFormBuilder />}

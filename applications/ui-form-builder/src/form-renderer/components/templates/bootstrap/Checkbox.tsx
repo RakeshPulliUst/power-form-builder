@@ -1,5 +1,5 @@
-import { Checkbox } from "@power-form-builder/ui-components";
-import { Element } from "../form-builder/ElementInterface";
+import { Checkbox as BaseCheckbox } from "@power-form-builder/ui-components";
+import { Element } from "../../../../form-builder/ElementInterface";
 import { ChangeEvent } from "react";
 
 type Props = {
@@ -9,9 +9,9 @@ type Props = {
     | undefined;
 };
 
-const CheckboxRender = ({ data, onChange }: Props) => {
+const Checkbox = ({ data, onChange }: Props) => {
   return (
-    <Checkbox
+    <BaseCheckbox
       label={data.label!}
       name={data.label!}
       required={data.validate?.required}
@@ -21,4 +21,4 @@ const CheckboxRender = ({ data, onChange }: Props) => {
   );
 };
 
-export default CheckboxRender;
+export default Checkbox;

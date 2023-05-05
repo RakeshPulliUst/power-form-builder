@@ -1,14 +1,14 @@
-import { Button } from "@power-form-builder/ui-components";
+import { Button as BaseButton } from "@power-form-builder/ui-components";
 import React from "react";
-import { Element } from "../form-builder/ElementInterface";
+import { Element } from "../../../../form-builder/ElementInterface";
 
 type Props = {
   data: Element;
 };
 
-const ButtonRender = ({ data }: Props) => {
+const Button = ({ data }: Props) => {
   return (
-    <Button
+    <BaseButton
       color={
         data.theme !== undefined
           ? data.theme === "primary"
@@ -37,8 +37,8 @@ const ButtonRender = ({ data }: Props) => {
       }
     >
       {data.label}
-    </Button>
+    </BaseButton>
   );
 };
 
-export default ButtonRender;
+export default Button;
