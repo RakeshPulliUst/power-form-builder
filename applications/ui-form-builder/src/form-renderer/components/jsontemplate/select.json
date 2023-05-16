@@ -1,0 +1,21 @@
+{
+    "id": 75,
+    "element": "Select",
+    "label": "",
+    "key": "",
+    "placeholder": "",
+    "multipleValues": false,
+    "size": "",
+    "width": 0,
+    "menuItems": [
+      {
+        "id": "",
+        "selectDataLabel": "",
+        "selectDataValue": ""
+      }
+    ],
+    "validate": {
+      "required": false
+    },
+    "show": true
+  }

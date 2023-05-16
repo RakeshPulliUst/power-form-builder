@@ -119,7 +119,6 @@ const ButtonData: React.FC<{
             sx={{ m: 1 }}
           />
           <br />
-          <br />
           <Select
             label="Theme"
             placeholder="Type To Search"
@@ -131,7 +130,6 @@ const ButtonData: React.FC<{
             size="medium"
             required={false}
           />
-          <br />
           <br />
           <Select
             label="Size"

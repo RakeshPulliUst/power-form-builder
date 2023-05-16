@@ -1,0 +1,13 @@
+{
+    "id": 85,
+    "element": "Checkbox",
+    "label": "",
+    "key": "",
+    "checked": false,
+    "default": false,
+    "validate": {
+      "required": false,
+      "error": ""
+    },
+    "show": true
+  }

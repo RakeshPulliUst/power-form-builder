@@ -1,6 +1,16 @@
 {
-  "label": "Tabs",
-  "key": "tabs",
-  "_id": "abc3343f3f43343",
-  "components": []
+  "id": 23,
+  "element": "Tabs",
+  "label": "",
+  "key": "",
+  "tabItems": [
+    {
+      "id": "",
+      "dropId": "tabsDroppableId",
+      "tabsDataLabel": "",
+      "tabsDataValue": "",
+      "tabComponents": []
+    }
+  ],
+  "show": true
 }

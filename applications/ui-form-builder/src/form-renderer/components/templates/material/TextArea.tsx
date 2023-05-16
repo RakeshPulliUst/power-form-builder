@@ -13,7 +13,7 @@ const TextArea = ({ data, onChange }: Props) => {
   return (
     <TextField
       label={data.label!}
-      name={data.label?.toLocaleLowerCase()}
+      name={data.key}
       placeholder={data.placeholder!}
       required={data.validate?.required!}
       inputProps={{

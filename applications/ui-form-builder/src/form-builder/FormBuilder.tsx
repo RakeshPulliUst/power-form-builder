@@ -75,6 +75,26 @@ const FormBuilder = () => {
     return uniqueInt;
   }
 
+  const updateKeyWithLowercaseLabel = (formData: FormJson) => {
+    const labelCounts: { [label: string]: number } = {};
+
+    const updatedComponents = formData.components.map((component) => {
+      const lowercaseLabel = component.label!.toLowerCase().replace(/\s/g, "_");
+      const count = labelCounts[lowercaseLabel] || 0;
+      labelCounts[lowercaseLabel] = count + 1;
+
+      const key = count > 0 ? `${lowercaseLabel}_${count}` : lowercaseLabel;
+
+      return {
+        ...component,
+        key: key,
+      };
+    });
+
+    console.log(updatedComponents);
+    return updatedComponents;
+  };
+
   const handleClick = () => {
     if (CompletedElements.length !== 0) {
       console.log("Completed Elements", { CompletedElements });
@@ -93,6 +113,9 @@ const FormBuilder = () => {
       setFormJsonData(formJsonData);
       console.log(formJsonData);
       console.log(formData);
+      const updatedFormDataComponents = updateKeyWithLowercaseLabel(formData);
+      console.log(updatedFormDataComponents);
+      formData.components = updatedFormDataComponents;
       finalSaveFormData.id = generatedUniqueInt(1000);
       console.log(finalSaveFormData.id, "Idddd");
       finalSaveFormData.form_title = formData.form_title;

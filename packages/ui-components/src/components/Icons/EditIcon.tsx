@@ -1,7 +1,6 @@
 import React from "react";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { SxProps, Theme } from "@mui/material";
-import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "../Tooltip";
 
 type Props = {

@@ -24,7 +24,7 @@ const RadioGroup = ({ data, onChange }: Props) => {
             : "end"
           : "end"
       }
-      name={data.label?.toLocaleLowerCase()}
+      name={data.key}
       radioItems={data.radioItems!}
       required={data.validate?.required!}
       onChange={onChange}

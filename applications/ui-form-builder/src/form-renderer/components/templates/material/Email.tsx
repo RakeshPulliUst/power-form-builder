@@ -32,7 +32,7 @@ const Email = ({ data, onChange }: Props) => {
   return (
     <TextField
       label={data.label!}
-      name={data.label?.toLocaleLowerCase()}
+      name={data.key}
       type="email"
       placeholder={data.placeholder}
       required={data.validate?.required}

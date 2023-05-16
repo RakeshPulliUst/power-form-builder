@@ -22,5 +22,5 @@
   },
   "include": [
     "src", "craco.config.js" 
-  ]
+, "../../packages/ui-components/src/components/Icons/RemoveCircleIcon1.tsx"  ]
 }

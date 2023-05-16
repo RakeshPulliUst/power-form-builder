@@ -171,16 +171,6 @@ const Home = () => {
 
   return (
     <>
-      {/* <Box
-        sx={{
-          height: "1000px",
-          width: "100%",
-          ml: "100px",
-        }}
-      >
-        <FormRendererPlayGround />
-      </Box> */}
-
       <div className="home-form-table">
         <Table minWidth={1500}>
           <TableHead>

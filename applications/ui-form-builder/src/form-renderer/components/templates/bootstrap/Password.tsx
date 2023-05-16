@@ -1,4 +1,4 @@
-import { TextField } from "@power-form-builder/ui-components";
+import { BTextField as BaseTextField } from "@power-form-builder/ui-components";
 import React, { useState } from "react";
 import { Element } from "../../../../form-builder/ElementInterface";
 
@@ -33,9 +33,9 @@ const Password = ({ data, onChange }: Props) => {
   };
 
   return (
-    <TextField
+    <BaseTextField
       label={data.label!}
-      name={data.label?.toLocaleLowerCase()}
+      name={data.key}
       type="password"
       onChange={handlePasswordChange}
       placeholder={data.placeholder}

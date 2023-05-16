@@ -1,20 +1,14 @@
-import {
-  Button,
-  FileUpload as BaseFileUpload,
-  Stack,
-} from "@power-form-builder/ui-components";
 import { ChangeEvent, useState } from "react";
-
-type Props = {
-  onChange: any;
-};
+import {
+  BFileUpload,
+  BButton as Button,
+} from "@power-form-builder/ui-components";
 
 const FileUpload = () => {
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [selectedFile, setSelectedFile] = useState<FileList | null>(null);
 
-  const handleFileSelect = (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    setSelectedFile(file!);
+  const handleFileSelect = (files: FileList | null) => {
+    setSelectedFile(files);
   };
 
   const handleUpload = () => {
@@ -24,7 +18,7 @@ const FileUpload = () => {
 
     // Create a FormData object to send the file to the server
     const formData = new FormData();
-    formData.append("file", selectedFile);
+    formData.append("file", selectedFile[0]);
 
     // Make an API request to upload the file
     fetch("http://localhost:4000/api/upload", {
@@ -44,21 +38,12 @@ const FileUpload = () => {
   };
 
   return (
-    <Stack direction="row" alignItems="center" spacing={2}>
-      <BaseFileUpload
-        name={"dfdf"}
-        required={true}
-        onChange={handleFileSelect}
-      />
-      <Button
-        variant="contained"
-        disabled={!selectedFile}
-        onClick={handleUpload}
-      >
+    <>
+      <BFileUpload label="FileUpload" name="dfdf" onChange={handleFileSelect} />
+      <Button variant="primary" disabled={!selectedFile} onClick={handleUpload}>
         Upload
       </Button>
-      {selectedFile && <span>{selectedFile.name}</span>}
-    </Stack>
+    </>
   );
 };
 

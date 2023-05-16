@@ -1,6 +1,23 @@
 {
-  "label": "Columns",
-  "key": "column",
-  "_id": "abc3343f3f43343",
-  "components": []
+  "id": 10,
+  "element": "Column",
+  "label": "",
+  "key": "",
+  "columnItems": [
+    {
+      "id": "1989",
+      "label": "Column1",
+      "columnDataSize": "md",
+      "columnDataWidth": 0,
+      "columnComponents": []
+    },
+    {
+      "id": "1990",
+      "label": "Column2",
+      "columnDataSize": "md",
+      "columnDataWidth": 0,
+      "columnComponents": []
+    }
+  ],
+  "show": true
 }

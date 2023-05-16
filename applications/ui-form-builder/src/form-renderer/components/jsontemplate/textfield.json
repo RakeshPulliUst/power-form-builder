@@ -1,12 +1,13 @@
 {
-  "_id": "abc3343f3f43343",
-  "label": "First Name",
-  "key": "firstName",
-  "type": "textfield",
-  "validation": {
+  "id": 96,
+  "element": "TextField",
+  "label": "",
+  "key": "",
+  "placeholder": "",
+  "validate": {
     "required": false,
-    "min": 100,
-    "max": 150
+    "minLength": 0,
+    "maxLength": 0
   },
   "classes": "a, b, c",
   "attributes": [
@@ -19,5 +20,5 @@
       "value": "value2"
     }
   ],
-  "conditional": {}
+  "show": true
 }

@@ -1,4 +1,4 @@
-import { TextField as BaseSelect } from "@power-form-builder/ui-components";
+import { TextField as BaseTextField } from "@power-form-builder/ui-components";
 import React from "react";
 import { Element } from "../../../../form-builder/ElementInterface";
 
@@ -11,9 +11,9 @@ type Props = {
 
 const TextField = ({ data, onChange }: Props) => {
   return (
-    <BaseSelect
+    <BaseTextField
       label={data.label!}
-      name={data.label?.toLocaleLowerCase()}
+      name={data.key}
       placeholder={data.placeholder}
       required={data.validate?.required!}
       inputProps={{

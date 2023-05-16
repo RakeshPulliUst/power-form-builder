@@ -10,7 +10,7 @@ import {
 import dayjs, { Dayjs } from "dayjs";
 import { Grid, GridItem } from "@power-form-builder/ui-components";
 import { FormJson } from "../../form-builder/ElementInterface";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import TextField from "../components/templates/material/TextField";
 import Email from "../components/templates/material/Email";
 import Password from "../components/templates/material/Password";
@@ -28,8 +28,6 @@ type TabItemsProps = {
 }[];
 
 const MaterialEngine = ({ builderJSON, submission }: RenderEngineOptions) => {
-  const location = useLocation();
-  const { formData } = location.state || {};
   const [formJsonData] = useState<FormJson>(builderJSON);
 
   const [formDataValue, setFormDataValue] = useState({});
@@ -127,7 +125,6 @@ const MaterialEngine = ({ builderJSON, submission }: RenderEngineOptions) => {
             </Grid>
           }
           {formJsonData.components.map((data) => {
-            console.log(formData);
             console.log(formJsonData);
             console.log("data", data);
             if (data.validate) {

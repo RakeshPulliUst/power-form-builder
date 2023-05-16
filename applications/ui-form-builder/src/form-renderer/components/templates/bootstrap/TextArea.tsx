@@ -1,4 +1,4 @@
-import { TextField } from "@power-form-builder/ui-components";
+import { BTextField as BaseTextField } from "@power-form-builder/ui-components";
 import React from "react";
 import { Element } from "../../../../form-builder/ElementInterface";
 
@@ -11,10 +11,10 @@ type Props = {
 
 const TextArea = ({ data, onChange }: Props) => {
   return (
-    <TextField
+    <BaseTextField
       label={data.label!}
-      name={data.label?.toLocaleLowerCase()}
-      placeholder={data.placeholder!}
+      name={data.key}
+      placeholder={data.placeholder}
       required={data.validate?.required!}
       inputProps={{
         minLength: data.validate?.minLength!,
@@ -23,8 +23,6 @@ const TextArea = ({ data, onChange }: Props) => {
       sx={{ mt: 2 }}
       variant={"outlined"}
       onChange={onChange}
-      rows={data.validate?.rows}
-      multiline={true}
     />
   );
 };

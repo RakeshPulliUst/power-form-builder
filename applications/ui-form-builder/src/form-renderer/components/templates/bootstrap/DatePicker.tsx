@@ -1,21 +1,24 @@
-import { DatePicker as BaseDatePicker } from "@power-form-builder/ui-components";
+import { BDatePicker as BaseDatePicker } from "@power-form-builder/ui-components";
 import { Element } from "../../../../form-builder/ElementInterface";
 import dayjs, { Dayjs } from "dayjs";
 
 type Props = {
   data: Element;
   onChange: any;
+  selected: Date | null | undefined;
 };
 
-const DatePicker = ({ data, onChange }: Props) => {
+const DatePicker = ({ data, onChange, selected }: Props) => {
   return (
     <BaseDatePicker
       label={data.label!}
-      format={data.format!}
-      disableFuture={data.disableFuture!}
-      disablePast={data.disablePast!}
-      minDate={dayjs(data.validate?.minDate)}
-      maxDate={dayjs(data.validate?.maxDate)}
+      selected={selected}
+      name={data.key!}
+      dateFormat={data.format!}
+      // disableFuture={data.disableFuture!}
+      // disablePast={data.disablePast!}
+      // minDate={data.validate?.minDate?.toDate()}
+      // maxDate={data.validate?.maxDate?.toDate()}
       onChange={onChange}
     />
   );

@@ -15,8 +15,10 @@ import {
 } from "@power-form-builder/ui-components";
 import { ColumnDialog } from "../DialogInterface";
 import { v4 as uuidv4 } from "uuid";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
-import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
+import {
+  AddCircleIcon1,
+  RemoveCircleIcon1,
+} from "@power-form-builder/ui-components";
 import { Element } from "../ElementInterface";
 
 type Props = {
@@ -193,6 +195,7 @@ const ColumnData: React.FC<{
           ></Tabs>
         </Box>
         <TabPanel value={value} index={0}>
+          <br />
           <TextField
             label="Label"
             required={true}
@@ -236,13 +239,13 @@ const ColumnData: React.FC<{
                   className="icon"
                   onClick={() => handleRemoveFields(item.id)}
                 >
-                  <RemoveCircleIcon />
+                  <RemoveCircleIcon1 />
                 </span>
               ) : (
                 <></>
               )}
               <span className="icon" onClick={handleAddFields}>
-                <AddCircleIcon />
+                <AddCircleIcon1 />
               </span>
             </div>
           ))}

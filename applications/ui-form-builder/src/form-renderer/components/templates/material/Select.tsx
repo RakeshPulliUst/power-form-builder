@@ -13,7 +13,7 @@ const Select = ({ data, onChange }: Props) => {
       placeholder={data.placeholder!}
       menuItems={data.menuItems!}
       multiple={data.multipleValues!}
-      name={data.label?.toLocaleLowerCase()}
+      name={data.key}
       onChange={onChange}
       size={
         data.size !== undefined

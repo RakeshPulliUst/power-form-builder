@@ -29,8 +29,9 @@ export interface Element {
     id?: number;
     element?: string;
     label?: string;
+    key?: string;
     placeholder?: string;
-    
+
 
     validate?: {
       required: boolean;
@@ -143,6 +144,7 @@ export interface Element {
       id: 1,
       element: "Button",
       label: '', 
+      key: '',
       theme: 'success', 
       size: 'medium'
     },
@@ -150,6 +152,7 @@ export interface Element {
       id: 2,
       element: "TextField",
       label : '',
+      key: '',
       placeholder: '',
       validate: {
         required: false,
@@ -161,6 +164,7 @@ export interface Element {
       id: 3,
       element: "Password",
       label : '',
+      key: '',
       placeholder: '',
       validate: {
         required: false,
@@ -172,6 +176,7 @@ export interface Element {
       id: 4,
       element: "TextArea",
       label : '',
+      key: '',
       placeholder: '',
       validate: {
         required: false,
@@ -185,6 +190,7 @@ export interface Element {
       id: 5,
       element: "Select",
       label : '',
+      key: '',
       placeholder: '',
       multipleValues: false,
       size: '',
@@ -202,6 +208,7 @@ export interface Element {
       id: 6,
       element: "Checkbox",
       label : '',
+      key: '',
       checked: false,
       default: false,
       validate: {
@@ -213,6 +220,7 @@ export interface Element {
       id: 7,
       element: "RadioButton",
       label: '',
+      key: '',
       options: '',
       radioItems: [{
         id: "",
@@ -227,6 +235,7 @@ export interface Element {
       id: 8,
       element: "Email",
       label : '',
+      key: '',
       placeholder: '',
       validate:{
         required: false,
@@ -238,6 +247,7 @@ export interface Element {
       id: 9,
       element: "Tabs",
       label: "",
+      key: '',
       tabItems: [{
         id: "",
         dropId:"",
@@ -253,6 +263,7 @@ export interface Element {
       id: 10,
       element: "Column",
       label: "",
+      key: '',
       columnItems: [{
         id: "",
         label: "",
@@ -269,6 +280,7 @@ export interface Element {
       id: 11,
       element: "DatePicker",
       label: "",
+      key: '',
       format: "",
       disablePast: false,
       disableFuture: false,

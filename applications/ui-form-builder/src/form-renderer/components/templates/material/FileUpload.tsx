@@ -44,7 +44,7 @@ const FileUpload = () => {
   };
 
   return (
-    <Stack direction="row" alignItems="center" spacing={2}>
+    <Stack direction="row" alignItems="center" spacing={2} sx={{ mt: 2}}>
       <BaseFileUpload
         name={"dfdf"}
         required={true}

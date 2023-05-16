@@ -13,7 +13,7 @@ const Checkbox = ({ data, onChange }: Props) => {
   return (
     <BaseCheckbox
       label={data.label!}
-      name={data.label!}
+      name={data.key!}
       required={data.validate?.required}
       defaultChecked={data.default}
       onChange={onChange}

@@ -35,7 +35,7 @@ const Password = ({ data, onChange }: Props) => {
   return (
     <TextField
       label={data.label!}
-      name={data.label?.toLocaleLowerCase()}
+      name={data.key}
       type="password"
       onChange={handlePasswordChange}
       placeholder={data.placeholder}

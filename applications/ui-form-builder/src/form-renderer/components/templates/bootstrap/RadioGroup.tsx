@@ -1,12 +1,10 @@
-import { RadioGroup as BaseRadioGroup } from "@power-form-builder/ui-components";
+import { BRadioGroup as BaseRadioGroup } from "@power-form-builder/ui-components";
 import { Element } from "../../../../form-builder/ElementInterface";
 import { ChangeEvent } from "react";
 
 type Props = {
   data: Element;
-  onChange:
-    | ((event: ChangeEvent<HTMLInputElement>, value: string) => void)
-    | undefined;
+  onChange: any;
 };
 
 const RadioGroup = ({ data, onChange }: Props) => {
@@ -24,7 +22,7 @@ const RadioGroup = ({ data, onChange }: Props) => {
             : "end"
           : "end"
       }
-      name={data.label?.toLocaleLowerCase()}
+      name={data.key}
       radioItems={data.radioItems!}
       required={data.validate?.required!}
       onChange={onChange}

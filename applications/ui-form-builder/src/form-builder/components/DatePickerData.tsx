@@ -25,8 +25,8 @@ type TabItemsProps = {
 
 type ValidateProps = {
   required: boolean;
-  minDate: Dayjs;
-  maxDate: Dayjs;
+  minDate: dayjs.Dayjs;
+  maxDate: dayjs.Dayjs;
 };
 
 const DatePickerData: React.FC<{
@@ -166,12 +166,11 @@ const DatePickerData: React.FC<{
           <DatePicker
             label="Select Mininum Date"
             value={validate.minDate}
+            format="DD/MM/YYYY"
             onChange={(newValue: dayjs.Dayjs) => {
               setValidate({
                 ...validate,
-                minDate: dayjs(
-                  new Date(newValue.toDate().toLocaleDateString())
-                ),
+                minDate: newValue,
               });
             }}
             required={true}
@@ -180,6 +179,7 @@ const DatePickerData: React.FC<{
           <DatePicker
             label="Select Maximum Date"
             value={validate.maxDate}
+            format="DD/MM/YYYY"
             onChange={(newValue: dayjs.Dayjs) =>
               setValidate({ ...validate, maxDate: newValue })
             }

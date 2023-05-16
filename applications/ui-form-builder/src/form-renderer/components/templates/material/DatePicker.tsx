@@ -11,11 +11,12 @@ const DatePicker = ({ data, onChange }: Props) => {
   return (
     <BaseDatePicker
       label={data.label!}
+      //name={data.key}
       format={data.format!}
       disableFuture={data.disableFuture!}
       disablePast={data.disablePast!}
-      minDate={dayjs(data.validate?.minDate)}
-      maxDate={dayjs(data.validate?.maxDate)}
+      minDate={data.validate?.minDate}
+      maxDate={data.validate?.maxDate}
       onChange={onChange}
     />
   );

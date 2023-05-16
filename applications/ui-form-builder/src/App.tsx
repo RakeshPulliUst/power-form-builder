@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import FormBuilder from "./form-builder/FormBuilder";
-import MaterialEngine from "./form-renderer/renderer-engine/MaterialEngine";
+import { FormRendererPlayGround } from "./form-renderer/FormRendererPlayGround";
 import Home from "./Home";
 import CustomNavbar from "./layout/CustomNavbar";
 import UpdateFormBuilder from "./form-builder/UpdateFormBuilder";
@@ -18,7 +18,7 @@ const App = () => {
         <Route path="/home" element={<Home />} />
         <Route path="/user/my-profile" element={<UserProfile />}></Route>
         <Route path="/formbuilder" element={<FormBuilder />}></Route>
-        <Route path="/formrender" element={<MaterialEngine />}></Route>
+        <Route path="/formrender" element={<FormRendererPlayGround />}></Route>
         <Route
           path="/updateformbuilder"
           element={<UpdateFormBuilder />}

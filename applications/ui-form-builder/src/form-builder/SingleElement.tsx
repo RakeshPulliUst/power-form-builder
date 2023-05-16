@@ -873,11 +873,11 @@ const SingleElement: React.FC<{
 
                 <DatePicker
                   label={datePickerValues.label}
-                  // format={datePickerValues.format}
+                  format={datePickerValues.format}
                   disablePast={datePickerValues.disablePast}
                   disableFuture={datePickerValues.disableFuture}
-                  minDate={datePickerValues.validate.minDate.toDate()}
-                  maxDate={datePickerValues.validate.maxDate.toDate()}
+                  minDate={datePickerValues.validate.minDate}
+                  maxDate={datePickerValues.validate.maxDate}
                   required={datePickerValues.validate.required}
                 />
               </>

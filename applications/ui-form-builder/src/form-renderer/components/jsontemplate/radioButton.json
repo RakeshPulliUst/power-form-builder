@@ -1,0 +1,18 @@
+{
+    "id": 91,
+    "element": "RadioButton",
+    "label": "",
+    "key": "",
+    "options": "",
+    "radioItems": [
+      {
+        "id": "",
+        "radioButtonDataLabel": "",
+        "radioButtonDataValue": ""
+      }
+    ],
+    "validate": {
+      "required": false
+    },
+    "show": true
+  }

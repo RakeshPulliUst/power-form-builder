@@ -1,4 +1,4 @@
-import { Select as BaseSelect } from "@power-form-builder/ui-components";
+import { BSelect as BaseSelect } from "@power-form-builder/ui-components";
 import { Element } from "../../../../form-builder/ElementInterface";
 
 type Props = {
@@ -12,17 +12,17 @@ const Select = ({ data, onChange }: Props) => {
       label={data.label!}
       placeholder={data.placeholder!}
       menuItems={data.menuItems!}
-      multiple={data.multipleValues!}
-      name={data.label?.toLocaleLowerCase()}
+      //multiple={data.multipleValues!}
+      //name={data.label?.toLocaleLowerCase()}
       onChange={onChange}
-      size={
-        data.size !== undefined
-          ? data.size === "small"
-            ? "small"
-            : "medium"
-          : "medium"
-      }
-      required={data.validate?.required!}
+      // size={
+      //   data.size !== undefined
+      //     ? data.size === "small"
+      //       ? "small"
+      //       : "medium"
+      //     : "medium"
+      // }
+      //required={data.validate?.required!}
       width={data.width}
     />
   );

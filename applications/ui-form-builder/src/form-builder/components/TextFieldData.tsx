@@ -127,6 +127,7 @@ const TextFieldData: React.FC<{
           ></Tabs>
         </Box>
         <TabPanel value={value} index={0}>
+          <br />
           <TextField
             label="Label"
             required={true}

@@ -1,0 +1,26 @@
+{
+    "id": 96,
+    "element": "TextField",
+    "label": "",
+    "key": "",
+    "placeholder": "",
+    "validate": {
+      "required": false,
+      "minLength": 0,
+      "maxLength": 0,
+      "rows": 0
+    },
+    "classes": "a, b, c",
+    "attributes": [
+      {
+        "key": "key1",
+        "value": "value1"
+      },
+      {
+        "key": "key2",
+        "value": "value2"
+      }
+    ],
+    "show": true
+  }
+  

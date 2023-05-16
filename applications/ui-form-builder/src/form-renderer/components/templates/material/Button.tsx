@@ -9,6 +9,7 @@ type Props = {
 const Button = ({ data }: Props) => {
   return (
     <BaseButton
+      name={data.key}
       color={
         data.theme !== undefined
           ? data.theme === "primary"

@@ -1,4 +1,4 @@
-import { Button as BaseButton } from "@power-form-builder/ui-components";
+import { BButton as BaseButton } from "@power-form-builder/ui-components";
 import React from "react";
 import { Element } from "../../../../form-builder/ElementInterface";
 
@@ -9,7 +9,8 @@ type Props = {
 const Button = ({ data }: Props) => {
   return (
     <BaseButton
-      color={
+      name={data.key}
+      variant={
         data.theme !== undefined
           ? data.theme === "primary"
             ? "primary"
@@ -21,24 +22,16 @@ const Button = ({ data }: Props) => {
             ? "success"
             : data.theme === "warning"
             ? "warning"
-            : data.theme === "error"
-            ? "error"
-            : "inherit"
-          : "warning"
+            : data.theme === "light" //light and dark are in react-boostrap
+            ? "light"
+            : "dark"
+          : "primary"
       }
-      size={
-        data.size !== undefined
-          ? data.size === "small"
-            ? "small"
-            : data.size === "medium"
-            ? "medium"
-            : "large"
-          : "medium"
-      }
+      size="sm"
     >
       {data.label}
     </BaseButton>
   );
 };
-
+//
 export default Button;
