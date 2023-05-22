@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import BootstrapEngine from "./renderer-engine/BootstrapEngine";
 import MaterialEngine from "./renderer-engine/MaterialEngine";
 export { type ReactNode } from "react";
-export type Template = "material" | "bootstrap";
+export type Template = "Material-UI" | "Bootstrap";
 
 export type FormRendererOptions = {
   template: Template;
@@ -20,12 +20,12 @@ export const FormRenderer = ({
   let FormContent: ReactNode = <></>;
 
   switch (template) {
-    case "material":
+    case "Material-UI":
       FormContent = (
         <MaterialEngine builderJSON={builderJSON} submission={_submission} />
       );
       break;
-    case "bootstrap":
+    case "Bootstrap":
       FormContent = (
         <BootstrapEngine builderJSON={builderJSON} submission={_submission} />
       );

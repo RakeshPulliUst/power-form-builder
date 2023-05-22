@@ -35,6 +35,7 @@ import { useNavigate } from "react-router-dom";
 import { Element } from "./form-builder/ElementInterface";
 import FormHistoryDialog from "./FormHistoryDialog";
 import { FormRendererPlayGround } from "./form-renderer/FormRendererPlayGround";
+import TemplateInput from "./TemplateInput";
 
 const Home = () => {
   const [open, setOpen] = useState(false);
@@ -43,6 +44,7 @@ const Home = () => {
   const [formData, setFormData] =
     useState<FinalSaveFormJson[]>(finalTableFormSample);
 
+  const [template, setTemplate] = useState(false);
   // const { user, isAuthenticated, loading, error } = useSelector(
   //   (state: RootState) => state.userLogin
   // );
@@ -97,13 +99,14 @@ const Home = () => {
   //Preview the form
   const [formDataPreview, setFormDataPreview] = useState<FormJson>(sample);
   const navigate = useNavigate();
+
   const onPreviewClick = (form_title: string, components: Element[]) => {
-    console.log("Preview", id);
     formDataPreview.form_title = form_title;
     formDataPreview.components = components;
-    console.log(formData);
-    setFormDataPreview(formDataPreview);
-    navigate("/formrender", { state: { formData: formDataPreview } });
+    console.log(formDataPreview);
+    setTemplate(!template);
+    console.log(!template);
+    console.log("Preview", id);
   };
 
   //Edit the form
@@ -167,6 +170,16 @@ const Home = () => {
   const handleFormHistoryClose = () => {
     console.log(!formHistoryOpen);
     setFormHistoryOpen(!formHistoryOpen);
+  };
+
+  const handleTemplateOpen = () => {
+    console.log(!template);
+    setTemplate(!template);
+  };
+
+  const handleTemplateClose = () => {
+    console.log(!template);
+    setTemplate(!template);
   };
 
   return (
@@ -377,6 +390,17 @@ const Home = () => {
           handleOpen={handleFormHistoryOpen}
           handleClose={handleFormHistoryClose}
           formId={formId}
+        />
+      ) : (
+        <></>
+      )}
+
+      {template ? (
+        <TemplateInput
+          open={template}
+          handleOpen={handleTemplateOpen}
+          handleClose={handleTemplateClose}
+          formData={formDataPreview}
         />
       ) : (
         <></>

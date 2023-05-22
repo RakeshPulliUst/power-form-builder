@@ -3,11 +3,13 @@ import React, { FormEvent, useState } from "react";
 import {
   BButton as BaseButton,
   Box,
-  TabPanel,
+  BTabPane,
   FileUpload as BaseFileUpload,
   Tabs1,
   BRow,
   BCol,
+  BTabs,
+  BTab,
 } from "@power-form-builder/ui-components";
 import dayjs, { Dayjs } from "dayjs";
 import { FormJson } from "../../form-builder/ElementInterface";
@@ -41,6 +43,23 @@ const BootstrapEngine = ({ builderJSON, submission }: RenderEngineOptions) => {
   const [datePickerValue, setDatePickerValue] = useState<Date | null>();
   // const [error, setError] = React.useState(false);
 
+  //Code to create submission json
+  const convertToJson = () => {
+    let mergedData = { ...formDataValue };
+
+    if (selectData !== null) {
+      mergedData = { ...mergedData, ...selectData };
+    }
+    if (datePickerValue !== null) {
+      mergedData = { ...mergedData, datePickerValue };
+    }
+    if (checkboxValue !== null) {
+      mergedData = { ...mergedData, checkboxValue };
+    }
+    const submissionJsonData = JSON.stringify(mergedData);
+    console.log(submissionJsonData);
+  };
+
   const handleFormDataValueChange = (
     event: React.ChangeEvent<HTMLInputElement> | any
   ) => {
@@ -64,15 +83,15 @@ const BootstrapEngine = ({ builderJSON, submission }: RenderEngineOptions) => {
     setCheckboxValue(event.target.checked);
   };
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // console.log("Checkbox");
-    // // setChecked({ ...checked, [event.target.name]: event.target.checked });
-    // setFormDataValue({
-    //   ...formDataValue,
-    //   [event.target.name]: event.target.checked,
-    // });
-    // console.log("Checkbox ValuesL", formDataValue);
-  };
+  // const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   console.log("Checkbox");
+  //   // setChecked({ ...checked, [event.target.name]: event.target.checked });
+  //   setFormDataValue({
+  //     ...formDataValue,
+  //     [event.target.name]: event.target.checked,
+  //   });
+  //   console.log("Checkbox ValuesL", formDataValue);
+  // };
 
   const handleDatePickerChange = (newValue: Date) => {
     setDatePickerValue(newValue);
@@ -82,6 +101,7 @@ const BootstrapEngine = ({ builderJSON, submission }: RenderEngineOptions) => {
     e.preventDefault();
     console.log("select", formDataValue, selectData, datePickerValue);
     console.log(Object.keys(formDataValue).length);
+    convertToJson();
     if (Object.keys(formDataValue).length > 0) {
       console.log("Submit Data");
       alert("Done");
@@ -103,7 +123,7 @@ const BootstrapEngine = ({ builderJSON, submission }: RenderEngineOptions) => {
   ];
 
   const [value, setValue] = React.useState(0);
-  const handleTabChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+  const handleTabChange = (newValue: number) => {
     setValue(newValue);
   };
 
@@ -192,98 +212,101 @@ const BootstrapEngine = ({ builderJSON, submission }: RenderEngineOptions) => {
                       <FileUpload />
                     ) : data.element === "Tabs" ? (
                       <>
-                        <Box>
-                          <Tabs1
-                            onChange={handleTabChange}
-                            tabItems={data.tabItems}
-                            value={value}
-                          ></Tabs1>
-                        </Box>
-                        {data.tabItems!.map((item, index) => (
-                          <TabPanel value={value} index={index}>
-                            {item.tabComponents!.map((item1, index1) => (
-                              <>
-                                {item1.element === "TextField" ? (
-                                  <BCol className="mb-4">
-                                    <TextField
-                                      data={item1}
-                                      onChange={handleFormDataValueChange}
-                                    />
-                                  </BCol>
-                                ) : item1.element === "Password" ? (
-                                  <BCol className="mb-4">
-                                    <Password
-                                      data={item1}
-                                      onChange={handleFormDataValueChange}
-                                    />
-                                  </BCol>
-                                ) : item1.element === "TextArea" ? (
-                                  <BCol className="mb-4">
-                                    <TextArea
-                                      data={item1}
-                                      onChange={handleFormDataValueChange}
-                                    />
-                                  </BCol>
-                                ) : item1.element === "Email" ? (
-                                  <BCol className="mb-4">
-                                    <Email
-                                      data={item1}
-                                      onChange={handleFormDataValueChange}
-                                    />
-                                  </BCol>
-                                ) : item1.element === "Select" &&
-                                  !item1.multipleValues ? (
-                                  <BCol className="mb-4">
-                                    <Select
-                                      data={item1}
-                                      onChange={handleFormDataValueChange}
-                                    />
-                                  </BCol>
-                                ) : item1.element === "Select" &&
-                                  item1.multipleValues ? (
-                                  <BCol className="mb-4">
-                                    <Select
-                                      data={data}
-                                      onChange={handleSelectData}
-                                    />
-                                  </BCol>
-                                ) : item1.element === "RadioButton" ? (
-                                  <BCol className="mb-4">
-                                    <RadioGroup
-                                      data={item1}
-                                      onChange={handleFormDataValueChange}
-                                    />
-                                  </BCol>
-                                ) : item1.element === "Checkbox" ? (
-                                  <BCol className="mb-4">
-                                    <Checkbox
-                                      data={item1}
-                                      checked={checkboxValue}
-                                      onChange={handleCheckboxChange}
-                                    />
-                                  </BCol>
-                                ) : item1.element === "Button" ? (
-                                  <BCol className="mb-4">
-                                    <Button data={item1} />
-                                  </BCol>
-                                ) : item1.element === "DatePicker" ? (
-                                  <BCol className="mb-4">
-                                    {/* <DatePicker
+                        <BTabs
+                          onChange={handleTabChange}
+                          tabItems={data.tabItems}
+                          value={value}
+                        >
+                          {data.tabItems!.map((item, index) => (
+                            <BTab
+                              eventKey={index}
+                              title={item.tabsDataLabel}
+                              style={{ marginTop: "10px" }}
+                            >
+                              {item.tabComponents!.map((item1, index1) => (
+                                <>
+                                  {item1.element === "TextField" ? (
+                                    <BCol className="mb-4">
+                                      <TextField
+                                        data={item1}
+                                        onChange={handleFormDataValueChange}
+                                      />
+                                    </BCol>
+                                  ) : item1.element === "Password" ? (
+                                    <BCol className="mb-4">
+                                      <Password
+                                        data={item1}
+                                        onChange={handleFormDataValueChange}
+                                      />
+                                    </BCol>
+                                  ) : item1.element === "TextArea" ? (
+                                    <BCol className="mb-4">
+                                      <TextArea
+                                        data={item1}
+                                        onChange={handleFormDataValueChange}
+                                      />
+                                    </BCol>
+                                  ) : item1.element === "Email" ? (
+                                    <BCol className="mb-4">
+                                      <Email
+                                        data={item1}
+                                        onChange={handleFormDataValueChange}
+                                      />
+                                    </BCol>
+                                  ) : item1.element === "Select" &&
+                                    !item1.multipleValues ? (
+                                    <BCol className="mb-4">
+                                      <Select
+                                        data={item1}
+                                        onChange={handleFormDataValueChange}
+                                      />
+                                    </BCol>
+                                  ) : item1.element === "Select" &&
+                                    item1.multipleValues ? (
+                                    <BCol className="mb-4">
+                                      <Select
+                                        data={data}
+                                        onChange={handleSelectData}
+                                      />
+                                    </BCol>
+                                  ) : item1.element === "RadioButton" ? (
+                                    <BCol className="mb-4">
+                                      <RadioGroup
+                                        data={item1}
+                                        onChange={handleFormDataValueChange}
+                                      />
+                                    </BCol>
+                                  ) : item1.element === "Checkbox" ? (
+                                    <BCol className="mb-4">
+                                      <Checkbox
+                                        data={item1}
+                                        checked={checkboxValue}
+                                        onChange={handleCheckboxChange}
+                                      />
+                                    </BCol>
+                                  ) : item1.element === "Button" ? (
+                                    <BCol className="mb-4">
+                                      <Button data={item1} />
+                                    </BCol>
+                                  ) : item1.element === "DatePicker" ? (
+                                    <BCol className="mb-4">
+                                      {/* <DatePicker
                                       data={item1}
                                       onChange={handleDatePickerChange}
                                     /> */}
-                                  </BCol>
-                                ) : data.element === "FileUpload" ? (
-                                  <BCol className="mb-4">
-                                    <FileUpload />
-                                  </BCol>
-                                ) : (
-                                  <>Noo</>
-                                )}
-                              </>
-                            ))}
-                          </TabPanel>
-                        ))}
+                                    </BCol>
+                                  ) : data.element === "FileUpload" ? (
+                                    <BCol className="mb-4">
+                                      <FileUpload />
+                                    </BCol>
+                                  ) : (
+                                    <>Noo</>
+                                  )}
+                                </>
+                              ))}
+                            </BTab>
+                          ))}
+                        </BTabs>
                       </>
                     ) : (
                       ""
@@ -294,7 +317,7 @@ const BootstrapEngine = ({ builderJSON, submission }: RenderEngineOptions) => {
                   <>
                     <BRow
                       className="justify-content-center align-items-center"
-                      xs={2}
+                      xs={12}
                     >
                       {data.columnItems?.map((item, index) => (
                         <>

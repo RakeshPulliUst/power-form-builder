@@ -7,7 +7,7 @@ import {
   FormJson,
   finalSample,
 } from "./ElementInterface";
-import { Button } from "@power-form-builder/ui-components";
+import { Button, Select } from "@power-form-builder/ui-components";
 import { components, sample } from "./ElementInterface";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -16,10 +16,13 @@ import { toast } from "react-toastify";
 
 import { addElement, clear } from "../store/formElementsSlice";
 import { useDispatch } from "react-redux";
+import TemplateInput from "../TemplateInput";
 
 const FormBuilder = () => {
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
+
+  const [template, setTemplate] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -48,9 +51,19 @@ const FormBuilder = () => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
+  const handleTemplateOpen = () => {
+    console.log(!template);
+    setTemplate(!template);
+  };
+
+  const handleTemplateClose = () => {
+    console.log(!template);
+    setTemplate(!template);
+  };
+
   //Creating function to post data on server
-  const postDatatoServer = (data: any) => {
-    axios.post(`http://localhost:4000/api/form`, data).then(
+  const postDatatoServer = async (data: any) => {
+    await axios.post(`http://localhost:4000/api/form`, data).then(
       (response) => {
         toast.success("Form Added Successfully");
         console.log("Done");
@@ -95,7 +108,28 @@ const FormBuilder = () => {
     return updatedComponents;
   };
 
-  const handleClick = () => {
+  // const handleSubmit = () => {
+  //   setOpen(!open);
+  //   console.log(cssFramework);
+  //   //handleClick();
+  // };
+
+  //Select Css Framework
+  const SelectCssFramework = [
+    { selectDataLabel: "Material-UI", selectDataValue: "Material-UI" },
+    { selectDataLabel: "Bootstrap", selectDataValue: "Bootstrap" },
+  ];
+  const [selectCssFramework, setSelectCssFramework] = useState<string[]>([]);
+
+  const handleSelectCssFramework = (event: any) => {
+    const selectvalue = event.target.value;
+    setSelectCssFramework(
+      typeof selectvalue === "string" ? selectvalue.split(",") : selectvalue
+    );
+    console.log(selectvalue);
+  };
+
+  const handleSubmit = async () => {
     if (CompletedElements.length !== 0) {
       console.log("Completed Elements", { CompletedElements });
       console.log({ tabElements });
@@ -124,9 +158,10 @@ const FormBuilder = () => {
       finalSaveFormData.date_created = new Date().toLocaleString() + "";
       finalSaveFormData.date_modified = new Date().toLocaleString() + "";
       finalSaveFormData.status = "Completed";
-      postDatatoServer(finalSaveFormData);
-      navigate("/formrender", { state: { formData: formData } });
       console.log("Final..numTab", numTabElements, finalSaveFormData);
+      await postDatatoServer(finalSaveFormData);
+
+      setTemplate(!template);
     } else {
       alert("Please Add Elements");
     }
@@ -326,11 +361,38 @@ const FormBuilder = () => {
       <DragDropContext onDragEnd={onDragEnd}>
         <div className="App">
           <span className="heading">Form Builder</span>
-          <span className="upperButton">
-            <Button color="success" size="medium" onClick={handleClick}>
-              Save Form
-            </Button>
-          </span>
+
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <Select
+              label="Select Template"
+              placeholder="Type To Search"
+              menuItems={SelectCssFramework}
+              multiple={false}
+              value={selectCssFramework}
+              width={150}
+              size="small"
+              onChange={handleSelectCssFramework}
+              required={true}
+            />
+            <div
+              style={{
+                marginBottom: "10px",
+                marginTop: "-10px",
+                marginRight: "30px",
+              }}
+            >
+              <Button color="success" size="medium" onClick={handleSubmit}>
+                Save Form
+              </Button>
+            </div>
+          </div>
+
           <ElementList
             show={show}
             elements={elements}
@@ -355,11 +417,21 @@ const FormBuilder = () => {
             setColumn1Elements={setColumn1Elements}
           />
 
-          <Button color="success" size="medium" onClick={handleClick}>
+          <Button color="success" size="medium" onClick={handleSubmit}>
             Save Form
           </Button>
         </div>
       </DragDropContext>
+      {template ? (
+        <TemplateInput
+          open={template}
+          handleOpen={handleTemplateOpen}
+          handleClose={handleTemplateClose}
+          formData={formData}
+        />
+      ) : (
+        <></>
+      )}
     </>
   );
 };

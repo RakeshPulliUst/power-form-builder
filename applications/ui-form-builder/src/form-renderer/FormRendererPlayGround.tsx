@@ -4,7 +4,7 @@ import { FormRenderer } from "./FormRenderer";
 // component key inside the form must be unique
 export const FormRendererPlayGround = () => {
   const location = useLocation();
-  const { formData } = location.state || {};
+  const { formData, cssFramework } = location.state || {};
 
   const submission = {
     firstName: "Rakesh Pulli",
@@ -24,8 +24,9 @@ export const FormRendererPlayGround = () => {
 
   return (
     <>
+      {console.log(cssFramework)}
       <FormRenderer
-        template="material"
+        template={cssFramework.toString()}
         builderJSON={formData}
         submission={submission}
       />

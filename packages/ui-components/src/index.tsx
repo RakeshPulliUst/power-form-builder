@@ -53,6 +53,9 @@ import AddCircleIcon1 from "./components/Icons/AddCircleIcon1";
 import RemoveCircleIcon1 from "./components/Icons/RemoveCircleIcon1";
 import BRow from "./bootstrap/BRow";
 import BCol from "./bootstrap/BCol";
+import BTabPane from "./bootstrap/BTabPane";
+import BTabs from "./bootstrap/BTabs";
+import BTab from "./bootstrap/BTab";
 
 export {
   Button,
@@ -109,4 +112,7 @@ export {
   RemoveCircleIcon1,
   BRow,
   BCol,
+  BTabs,
+  BTabPane,
+  BTab,
 };

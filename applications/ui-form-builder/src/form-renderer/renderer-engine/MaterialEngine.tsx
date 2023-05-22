@@ -39,6 +39,20 @@ const MaterialEngine = ({ builderJSON, submission }: RenderEngineOptions) => {
   const [datePickerValue, setDatePickerValue] = useState<Dayjs | null>();
   // const [error, setError] = React.useState(false);
 
+  //Code to create submission json
+  const convertToJson = () => {
+    let mergedData = { ...formDataValue };
+
+    if (selectData !== null) {
+      mergedData = { ...mergedData, ...selectData };
+    }
+    if (datePickerValue !== null) {
+      mergedData = { ...mergedData, datePickerValue };
+    }
+    const submissionJsonData = JSON.stringify(mergedData);
+    console.log(submissionJsonData);
+  };
+
   const handleFormDataValueChange = (
     event: React.ChangeEvent<HTMLInputElement> | any
   ) => {
@@ -72,8 +86,10 @@ const MaterialEngine = ({ builderJSON, submission }: RenderEngineOptions) => {
 
   const submitForm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     console.log("select", formDataValue, selectData, datePickerValue?.toDate());
     console.log(Object.keys(formDataValue).length);
+    convertToJson();
     if (Object.keys(formDataValue).length > 0) {
       console.log("Submit Data");
       alert("Done");
@@ -82,6 +98,7 @@ const MaterialEngine = ({ builderJSON, submission }: RenderEngineOptions) => {
       console.log("Submit Data Error");
       alert("Enter Values");
     }
+
     //window.location.reload();
   };
 
