@@ -14,6 +14,7 @@ import { components, sample } from "./ElementInterface";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+import TemplateInput from "../TemplateInput";
 
 const UpdateFormBuilder = () => {
   const [show, setShow] = useState(false);
@@ -51,6 +52,8 @@ const UpdateFormBuilder = () => {
 
   const storedValue = localStorage.getItem("loginState");
   const retrievedObject = JSON.parse(storedValue!);
+
+  const [template, setTemplate] = useState(false);
 
   function randomNumberInRange(min: number, max: number) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -137,7 +140,7 @@ const UpdateFormBuilder = () => {
     handleClick();
   };
 
-  const handleClick = () => {
+  const handleClick = async () => {
     if (CompletedElements.length !== 0) {
       console.log({ CompletedElements });
       console.log({ tabElements });
@@ -167,10 +170,10 @@ const UpdateFormBuilder = () => {
       console.log(new Date().toLocaleString() + "");
       finalSaveFormData.status = formStatus;
       console.log(finalSaveFormData);
-      editForm(formId, finalSaveFormData);
-
-      navigate("/formrender", { state: { formData: formData } });
+      await editForm(formId, finalSaveFormData);
       console.log("Final..numTab", numTabElements);
+
+      setTemplate(!template);
     } else {
       alert("Please Add Elements");
     }
@@ -388,6 +391,17 @@ const UpdateFormBuilder = () => {
     tabElements4,
     tabElements5,
   ]);
+
+  const handleTemplateOpen = () => {
+    console.log(!template);
+    setTemplate(!template);
+  };
+
+  const handleTemplateClose = () => {
+    console.log(!template);
+    setTemplate(!template);
+  };
+
   return (
     <>
       <DragDropContext onDragEnd={onDragEnd}>
@@ -427,6 +441,17 @@ const UpdateFormBuilder = () => {
           </Button>
         </div>
       </DragDropContext>
+
+      {template ? (
+        <TemplateInput
+          open={template}
+          handleOpen={handleTemplateOpen}
+          handleClose={handleTemplateClose}
+          formData={formData}
+        />
+      ) : (
+        <></>
+      )}
     </>
   );
 };
